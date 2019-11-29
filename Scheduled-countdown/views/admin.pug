@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .topRow(style='cursor: pointer;' onclick='toggleMainContentBox()')
+    #nowTopRow.topRowText
+  #mainContentBox.row.mainContentBox
+    div
+    #adminTitle ScheduledTimes
+    div
+      form(method='POST' action='/admin/submit')
+        each person, index in scheduledTimes
+          input(type='text', value=person.title, name="title" + index)
+          input(type='text', value=person.startTime, name="startTime" + index)
+          br
+        button(type='submit') update
+      div
+        form(method='POST' action='/admin/loadDefault')
+          button(type='submit') loadDefault
+        form(method='POST' action='/admin/writeToDefault')
+          button(type='submit') writeToDefault
+
+
+        <script src="static\javascripts\adminScript.js"></script>
+        script(src='https://code.jquery.com/jquery-3.2.1.min.js')

@@ -1,18 +1,18 @@
 {
-  "name": "simple-node-website",
-  "version": "0.1.0",
-  "description": "A simple website built with Node, Express and Pug",
-  "main": "server.js",
+  "name": "wallmansclock-v2",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "npx nodemon server.js"
+    "start": "npx nodemon ./bin/www"
   },
-  "author": "Ayo Isaiah",
-  "license": "MIT",
   "dependencies": {
-    "express": "^4.16.3",
-    "pug": "^2.0.3"
-  },
-  "devDependencies": {
-    "nodemon": "^1.19.0"
+    "cookie-parser": "~1.4.4",
+    "csv-array": "0.0.22",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "morgan": "~1.9.1",
+    "pug": "2.0.0-beta11",
+    "socket.io": "^2.3.0"
   }
 }

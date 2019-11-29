@@ -1,12 +1,24 @@
-extends default
+extends layout
 
 block content
-  div.container
-    each person in people
-      div.person
-        div.person-image(style=`background: url('/images/${person.imgSrc}') top center
-        no-repeat; background-size: cover;`)
-        h2.person-name
-          | #{person.firstname} #{person.lastname}
-        a(href=`/profile?id=${person.id}`)
-          | View Profile
+  .topRow(style='cursor: pointer;' onclick='toggleMainContentBox()')
+    #nowTopRow.topRowText
+  #mainContentBox.row.mainContentBox
+    #centerNowText.Column.centerNowText
+      h1#now
+
+    #titleContentBox.titleContentBox
+      h1#title Title
+      h1#start
+    .downSite
+      #5minute.fiveMinute
+      #cueTime.cueTime
+
+
+
+
+
+
+
+
+  <script src="static\javascripts\script.js"></script>

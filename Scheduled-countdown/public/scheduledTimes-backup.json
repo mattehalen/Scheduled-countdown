@@ -1,0 +1,54 @@
+{
+    "profiles": [
+        {
+            "title": "Greatest Show backup",
+            "startTime": "18:25",
+            "id": "tom"
+        },
+        {
+            "title": "WWWY",
+            "startTime": "19:00",
+            "id": "sarah"
+        },
+        {
+            "title": "Magic",
+            "startTime": "19:45",
+            "id": "caroline"
+        },
+        {
+            "title": "Eurythmics",
+            "startTime": "20:10",
+            "id": "caroline"
+        },
+        {
+            "title": "Celebration",
+            "startTime": "20:40",
+            "id": "caroline"
+        },
+        {
+            "title": "Star Catchers",
+            "startTime": "21:05",
+            "id": "caroline"
+        },
+        {
+            "title": "Blue Xmas",
+            "startTime": "21:30",
+            "id": "caroline"
+        },
+        {
+            "title": "Peggy Sued",
+            "startTime": "21:55",
+            "id": "caroline"
+        },
+        {
+            "title": "Uptown Funk",
+            "startTime": "22:15",
+            "id": "caroline"
+        },
+        {
+            "title": "Queen",
+            "startTime": "22:40",
+            "id": "caroline"
+        }
+    ]
+}
