@@ -1,3 +1,4 @@
-för att starta servern och hemsidan skriv in:
+# Setup and run
 
-npm start
+* `npm install`
+* `npm start`
