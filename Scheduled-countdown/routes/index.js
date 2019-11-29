@@ -97,6 +97,45 @@ router.post('/admin/writeToDefault', function(req, res, next){
 });
 //-------------------------------------------------------------------------
 
+//--------------------------------------------------
+//-----addNewRowDefault button press
+//--------------------------------------------------
+router.post('/admin/addNewRowDefault', function(req, res, next){
+  console.log("addNewRowDefault knappen funkar");
+  var addString = "";
+
+
+
+
+  // fs.appendFile('./public/scheduledTimes.json', JSON.stringify(addNewRowDefault, null, 4) , (err) => {
+  //     if (err) throw err;
+  // });
+
+  fs.readFile("./public/scheduledTimes.json", function (err, data) {
+    var json = JSON.parse(data);
+    //var json = JSON.stringify(data, null, 4);
+    var feed = {title: "Hej", startTime: "12:00", id: "4"};
+
+    json.profiles.push(feed);
+    addString = JSON.stringify(json, null, 4);
+    console.log("1");
+
+    });
+
+    sleep(1000).then(() => {
+      fs.writeFile('./public/scheduledTimes.json', addString , (err) => {
+          if (err) throw err;
+      });
+    });
+
+
+
+
+
+  res.redirect("/admin");
+});
+//-------------------------------------------------------------------------
+
 
 
 
