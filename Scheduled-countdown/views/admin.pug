@@ -21,6 +21,7 @@ block content
         each person, index in scheduledTimes
           input(type='text', value=person.title, name="title" + index)
           input(type='text', value=person.startTime, name="startTime" + index)
+          button.delete(name="deleteButton" + index) x
           br
         button(type='submit') update
       div
