@@ -32,38 +32,15 @@ router.post('/admin/submit', function(req, res, next){
         console.log('Error reading file:',err)
         return
     }
-    // increase customer order count by 1
-    //customer.profiles[0].title = JSON.stringify(req.body.title0);
-    customer.profiles[0].title = JSON.parse(JSON.stringify(req.body.title0));
-    customer.profiles[1].title = JSON.parse(JSON.stringify(req.body.title1));
-    customer.profiles[2].title = JSON.parse(JSON.stringify(req.body.title2));
-    customer.profiles[3].title = JSON.parse(JSON.stringify(req.body.title3));
-    customer.profiles[4].title = JSON.parse(JSON.stringify(req.body.title4));
-    customer.profiles[5].title = JSON.parse(JSON.stringify(req.body.title5));
-    customer.profiles[6].title = JSON.parse(JSON.stringify(req.body.title6));
-    customer.profiles[7].title = JSON.parse(JSON.stringify(req.body.title7));
-    customer.profiles[8].title = JSON.parse(JSON.stringify(req.body.title8));
-    customer.profiles[9].title = JSON.parse(JSON.stringify(req.body.title9));
 
-    customer.profiles[0].startTime = JSON.parse(JSON.stringify(req.body.startTime0));
-    customer.profiles[1].startTime = JSON.parse(JSON.stringify(req.body.startTime1));
-    customer.profiles[2].startTime = JSON.parse(JSON.stringify(req.body.startTime2));
-    customer.profiles[3].startTime = JSON.parse(JSON.stringify(req.body.startTime3));
-    customer.profiles[4].startTime = JSON.parse(JSON.stringify(req.body.startTime4));
-    customer.profiles[5].startTime = JSON.parse(JSON.stringify(req.body.startTime5));
-    customer.profiles[6].startTime = JSON.parse(JSON.stringify(req.body.startTime6));
-    customer.profiles[7].startTime = JSON.parse(JSON.stringify(req.body.startTime7));
-    customer.profiles[8].startTime = JSON.parse(JSON.stringify(req.body.startTime8));
-    customer.profiles[9].startTime = JSON.parse(JSON.stringify(req.body.startTime9));
-
-    console.log(JSON.stringify(customer, null, 4));
+    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))}
+    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))}
 
 
 fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
     })
 })
-  console.log("submit knappen funkar");
   res.redirect("/admin");
 });
 //--------------------------------------------------
@@ -104,21 +81,12 @@ router.post('/admin/addNewRowDefault', function(req, res, next){
   console.log("addNewRowDefault knappen funkar");
   var addString = "";
 
-
-
-
-  // fs.appendFile('./public/scheduledTimes.json', JSON.stringify(addNewRowDefault, null, 4) , (err) => {
-  //     if (err) throw err;
-  // });
-
   fs.readFile("./public/scheduledTimes.json", function (err, data) {
     var json = JSON.parse(data);
-    //var json = JSON.stringify(data, null, 4);
-    var feed = {title: "Hej", startTime: "12:00", id: "4"};
+    var feed = {title: "New row added", startTime: "12:00", id: "4"};
 
     json.profiles.push(feed);
     addString = JSON.stringify(json, null, 4);
-    console.log("1");
 
     });
 
@@ -127,10 +95,6 @@ router.post('/admin/addNewRowDefault', function(req, res, next){
           if (err) throw err;
       });
     });
-
-
-
-
 
   res.redirect("/admin");
 });
@@ -157,20 +121,14 @@ router.post('/admin/addNewRowDefault', function(req, res, next){
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express 2',now: "s"});
 });
-router.get('/test', function(req, res, next) {
-  res.render('test', { title: 'Express 2',now: "s"});
-});
 //-------------------------------------------------------------------------
 
 router.get('/admin', function(req, res, next) {
-
-
   res.render('admin', {
     title: 'Express 2',
     now: "now",
     scheduledTimes : scheduledTimes.profiles,
   });
-
 });
 
 module.exports = router;
