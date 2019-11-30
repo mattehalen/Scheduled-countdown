@@ -4,7 +4,9 @@ const fs = require('fs');
 //var scheduledTimes = require('../scheduledTimes.json');
 var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
+var variables = require('../public/variables.json');
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+//console.log(variables.offsetTime);
 
 
 
@@ -102,6 +104,75 @@ router.post('/admin/addNewRowDefault', function(req, res, next){
 
 
 
+//--------------------------------------------------
+//-----offsetPlus button press
+//--------------------------------------------------
+router.post('/admin/offsetPlus', function(req, res, next){
+  const fs = require('fs')
+  function jsonReader(filePath, cb) {
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              return cb && cb(err)
+          }
+          try {
+              const object = JSON.parse(fileData)
+              return cb && cb(null, object)
+          } catch(err) {
+              return cb && cb(err)
+          }
+      })
+  }
+  jsonReader('./public/variables.json', (err, variables2) => {
+    if (err) {
+        console.log('Error reading file:',err)
+        return
+    }
+
+    variables.offsetTime += 1;
+
+  fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+        if (err) console.log('Error writing file:', err)
+    })
+  })
+
+  res.redirect("/admin");
+});
+//-------------------------------------------------------------------------
+
+//--------------------------------------------------
+//-----offsetMinus button press
+//--------------------------------------------------
+router.post('/admin/offsetMinus', function(req, res, next){
+  const fs = require('fs')
+  function jsonReader(filePath, cb) {
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              return cb && cb(err)
+          }
+          try {
+              const object = JSON.parse(fileData)
+              return cb && cb(null, object)
+          } catch(err) {
+              return cb && cb(err)
+          }
+      })
+  }
+  jsonReader('./public/variables.json', (err, variables2) => {
+    if (err) {
+        console.log('Error reading file:',err)
+        return
+    }
+
+    variables.offsetTime -= 1;
+
+  fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+        if (err) console.log('Error writing file:', err)
+    })
+  })
+
+  res.redirect("/admin");
+});
+//-------------------------------------------------------------------------
 
 
 
@@ -119,15 +190,16 @@ router.post('/admin/addNewRowDefault', function(req, res, next){
 //-------------------------------------------------------------------------
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express 2',now: "s"});
+  res.render('index', { title: 'Scheduled-CountDown',now: "s"});
 });
 //-------------------------------------------------------------------------
 
 router.get('/admin', function(req, res, next) {
   res.render('admin', {
-    title: 'Express 2',
+    title: 'Scheduled-CountDown',
     now: "now",
     scheduledTimes : scheduledTimes.profiles,
+    offsetTime: variables.offsetTime
   });
 });
 

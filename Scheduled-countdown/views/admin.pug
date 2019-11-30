@@ -4,8 +4,18 @@ block content
   .topRow(style='cursor: pointer;' onclick='toggleMainContentBox()')
     #nowTopRow.topRowText
   #mainContentBox.row.mainContentBox
+    .offsetTime
+      p#offsetTime.offsetTime= offsetTime
+      div
+        form.offsetButton(method='POST' action='/admin/offsetPlus')
+          button(type='submit') offset +
+        form.offsetButton(method='POST' action='/admin/offsetMinus')
+          button(type='submit') offset -
+
+
+
     div
-    #adminTitle ScheduledTimes
+
     div
       form(method='POST' action='/admin/submit')
         each person, index in scheduledTimes

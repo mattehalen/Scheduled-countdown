@@ -9,16 +9,7 @@ var offsetTime = document.getElementById("offsetTime");
 var offsetTimeInit = 0;
 var myArray = "";
 var scheduledTimesArray = [];
-
-//var scheduledTimes = require('../scheduledTimes.json');
-
-
-
-
-
-
-
-
+var offsetTimejson = [];
 //--------------------------------------------------
 // - Variables & Booleans
 //--------------------------------------------------
@@ -51,31 +42,6 @@ var fiveMinuteFromMsToTime = 0;
 
 var setTimeoutTime = 150;
 
-// //--------------------------------------------------
-// var monArray = ["18:30:00", "19:00:00", "19:35:00", "19:55:00", "20:25:00", "20:55:00", "21:25:00", "21:55:00", "22:15:00"];
-// var tusArray = ["18:30:00", "19:00:00", "19:35:00", "19:55:00", "20:25:00", "20:55:00", "21:25:00", "21:55:00", "22:15:00"];
-// var wenArray = ["18:30:00", "19:00:00", "19:35:00", "19:55:00", "20:25:00", "20:55:00", "21:25:00", "21:55:00", "22:15:00"];
-// var thuArray = ["18:30:00", "19:00:00", "19:35:00", "19:55:00", "20:25:00", "20:55:00", "21:25:00", "21:55:00", "22:15:00"];
-// var friArray = ["18:30:00", "19:00:00", "19:35:00", "19:55:00", "20:25:00", "20:55:00", "21:25:00", "21:55:00", "22:15:00"];
-// var satArray = ["16:30:00", "02:00:00", "03:00:00", "04:00:00", "05:00:00", "06:00:00", "07:00:00", "08:00:00", "09:00:00", "10:00:00"];
-// var sunArray = ["01:30:00", "02:10:00", "02:20:00", "19:55:00", "20:25:00", "20:55:00", "21:25:00", "21:55:00", "22:15:00"];
-// //--------------------------------------------------
-// var monTitleArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var tusTitleArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var wenTitleArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var thuTitleArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var friTitleArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var satTitleArray = ["Number 1", "Number 2", "Number 3", "Number 4", "Number 5", "Number 6", " Number 7", "Number 8", "Number 9", "Number 10"];
-// var sunTitleArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// //--------------------------------------------------
-// var monCueArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var tusCueArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var wenCueArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var thuCueArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var friCueArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-// var satCueArray = ["Number 1", "Number 2", "Number 3", "Number 4", "Number 5", "Number 6", " Number 7", "Number 8", "Number 9", "Number 10"];
-// var sunCueArray = ["Come Alive", "Adele", "Pillowtalk", "West Side", "Grygoriy", "Celebration", " AC/DC", "Igor", "Pinball POP!"];
-
 //--------------------------------------------------
 // - getscheduledTimes
 //--------------------------------------------------
@@ -84,8 +50,6 @@ function getscheduledTimes(){
       const response = await fetch('/scheduledTimes.json');
       const json = await response.json();
       scheduledTimesArray = json;
-      //console.log(scheduledTimesArray.profiles[0].title);
-      //console.log(scheduledTimesArray.profiles.length  + "the length of the array");
 
       var i;
       var a;
@@ -97,15 +61,29 @@ function getscheduledTimes(){
         startTitleArray.push(a);
         b = scheduledTimesArray.profiles[i].startTime;
         startTimeArray.push(b);
-        //console.log(a);
-        //console.log(b);
-        //console.log(startTimeArray);
       }
   }
 
   request();
 };
 getscheduledTimes();
+//--------------------------------------------------
+
+//--------------------------------------------------
+// - getscheduledTimes
+//--------------------------------------------------
+function getOffsetTime(){
+  const request = async () => {
+      const response = await fetch('/variables.json');
+      const json = await response.json();
+      offsetTimejson = json;
+      console.log("Hello: "+offsetTimejson.offsetTime);
+      offsetTimeInit = offsetTimejson.offsetTime;
+  }
+
+  request();
+};
+getOffsetTime();
 //--------------------------------------------------
 
 
@@ -117,78 +95,24 @@ getscheduledTimes();
 //--------------------------------------------------
 function timeArray() {
   var day = "";
-  //console.log(startTimeArray)
-
-
-  //--------------------------------------------------
-  // switch (new Date().getDay()) {
-  //   case 0:
-  //     day = "Sunday";
-  //     startTimeArray = sunArray;
-  //     startTitleArray = sunTitleArray;
-  //     cueArray = sunCueArray;
-  //     break;
-  //   case 1:
-  //     day = "Monday";
-  //     startTimeArray = monArray;
-  //     startTitleArray = monTitleArray;
-  //     cueArray = monCueArray;
-  //     break;
-  //   case 2:
-  //     day = "Tuesday";
-  //     startTimeArray = tusArray;
-  //     startTitleArray = tusTitleArray;
-  //     cueArray = tusCueArray;
-  //     break;
-  //   case 3:
-  //     day = "Wednesday";
-  //     startTimeArray = wenArray;
-  //     startTitleArray = wenTitleArray;
-  //     cueArray = wenCueArray;
-  //     break;
-  //   case 4:
-  //     day = "Thursday";
-  //     startTimeArray = thuArray;
-  //     startTitleArray = thuTitleArray;
-  //     cueArray = thuCueArray;
-  //     break;
-  //   case 5:
-  //     day = "Friday";
-  //     startTimeArray = friArray;
-  //     startTitleArray = friTitleArray;
-  //     cueArray = friCueArray;
-  //     break;
-  //   case 6:
-  //     day = "Saturday";
-  //     startTimeArray = satArray;
-  //     startTitleArray = satTitleArray;
-  //     cueArray = satCueArray;
-  // }
   //--------------------------------------------------
 
-//console.log("nowInMs = " + new Date(nowInMs) + " - " + startTimeInMs)
   if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs + countUp)) {
     titleText.textContent = startTitleArray[startTimeIndex-1];
-    //console.log(startTitleArray[startTimeIndex-1]);
     hideNowClock();
   } else {
     new ShowNowClock();
 
     if (startTimeIndex >= startTimeArray.length) {
       startTimeIndex = 0;
-    //console.log(startTimeIndex + " - " + startTimeArray.length)
     }
 
     startTimeArray[startTimeIndex];
     startTimeAt = startTimeArray[startTimeIndex];
     startTimeIndex ++;
 
-
     startText.textContent = ("");
     titleText.textContent = ("");
-
-    //console.log(startTimeAt + " " +startTimeIndex + " - " + startTitleArray);
-
   }
   setTimeout(timeArray, setTimeoutTime);
 }
@@ -205,7 +129,7 @@ function nowClock() {
   s += (10 > d.getHours  () ? "0": "") + d.getHours  () + ":";
   s += (10 > d.getMinutes() ? "0": "") + d.getMinutes() + ":";
   s += (10 > d.getSeconds() ? "0": "") + d.getSeconds();
-  //$('#now').html(s);
+
   nowText.textContent = s;
   nowTopRow.textContent = s;
   setTimeout(nowClock, setTimeoutTime - d.getTime() % 1000 + 20);
@@ -221,11 +145,10 @@ function nowClock() {
 //- 5minute CountDown
 //--------------------------------------------------
 function fiveMinuteCountDown () {
-  //console.log("THis one works" + nowInMs +" - "+ startTimeInMs)
   if (nowInMs > (startTimeInMs - fiveMinuteInMs) && nowInMs < (startTimeInMs)) {
     fiveMinuteString = fiveMinuteFromMsToTime +1 + " min to show";
     fiveMinuteText.textContent = fiveMinuteString;
-    //console.log("5 Minute CountDown" + " - " + fiveMinuteFromMsToTime);
+
   } else {
     fiveMinuteText.textContent = ""
   }
@@ -251,10 +174,8 @@ function msToTime(s) {
   if (displayTimeBool === true) {
     if (positiveDiffTimeBoole === true) {
       startText.textContent = ('+' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-      //$('#start').html('+' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
     } else {
       startText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-      //$('#start').html('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
     }
   }
   fiveMinuteFromMsToTime = mins;
@@ -266,12 +187,10 @@ function msToTime(s) {
 //- Convert Cue String to ms
 //--------------------------------------------------
 function timeStringToMs(t){
-  //var t = "00:50:00";
   var r = Number(t.split(':')[0])*(60*60000)+Number(t.split(':')[1])*(60000)+Number(t.split(':')[2])*(1000);
 return r;
 
 }
-//console.log(timeStringToMs)
 //--------------------------------------------------
 
 
@@ -289,14 +208,9 @@ function cueStartTime(){
   var cueMS = cueStartTimeAt.getTime();
   var s = "";
 
-  //if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs + countUp))
   if (nowInMs > (cueStartTimeAt - countDown) && nowInMs < (cueStartTimeAt + countUp)){
-    //console.log(nowClock()>cueStartTimeAt)
-
   }
 
-  //console.log(cueStartTimeAt)
-  //console.log(dd + " - " + new Date(cueStartTimeInMs))
   setTimeout(cueStartTime, setTimeoutTime);
   return dd;
 
@@ -338,15 +252,11 @@ function startTime() {
 function addOffsetTime() {
   offsetTimeInit = offsetTimeInit +1;
   document.getElementById("offsetTime").textContent = offsetTimeInit;
-
-  //console.log(offsetTimeInit);
 }
+
 function subOffsetTime() {
   offsetTimeInit = offsetTimeInit -1;
   document.getElementById("offsetTime").textContent = offsetTimeInit;
-
-  //console.log(offsetTimeInit);
-
 }
 
 function hideAdmin() {
@@ -358,13 +268,10 @@ function showAdmin() {
 
 function hideNowClock() {
   document.getElementById("centerNowText").style.display = "none";
-  //document.getElementById("5minute").style.display = "block";
   document.getElementById("titleContentBox").style.display = "block";
-
 }
 function ShowNowClock() {
   document.getElementById("centerNowText").style.display = "block";
-  //document.getElementById("5minute").style.display = "none";
   document.getElementById("titleContentBox").style.display = "none";
 }
 
@@ -376,9 +283,7 @@ function toggleMainContentBox() {
   } else {
     document.getElementById("mainContentBox").style.display = "none";
     document.getElementById("adminContentBox").style.display = "block";
-
   }
-
 }
 
 
