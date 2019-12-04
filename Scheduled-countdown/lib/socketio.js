@@ -74,20 +74,19 @@ var users = [];
 
     socket.on("writeToScheduledTimesjson", function (data){
         console.log("writeToScheduledTimesjson");
-      //console.log(data.startTitleArray);
       startTitleArray = data.startTitleArray;
       startTimeArray = data.startTimeArray;
       updateScheduledTimesjson();
 
     });
-    socket.on("message_from_Adminpage", function(data){
-      console.log("message_from_Adminpage");
-      io.emit("adminPage_TO_mainPage",{"meddelande": "Detta är från adminPage"})
-    });
+    // socket.on("message_from_Adminpage", function(data){
+    //   console.log("message_from_Adminpage: " + data);
+    //   io.emit("adminPage_TO_mainPage",{"meddelande": "Detta är från adminPage"})
+    // });
 
     socket.on("updateScheduledTimesArray", function(data){
-      console.log("updateScheduledTimesArray to main page");
-      io.emit("updateDB_From_Socket",{"meddelande": "Detta är från adminPage"})
+      console.log("updateScheduledTimesArray: " + data.startTitleArray);
+      io.emit("updateDB_From_Socket",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
     });
     //--------------------------------------------------
 

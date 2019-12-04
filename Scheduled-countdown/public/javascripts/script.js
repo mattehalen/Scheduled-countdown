@@ -98,7 +98,7 @@ function timeArray() {
   if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs + countUp)) {
     titleText.textContent = startTitleArray[startTimeIndex-1];
     hideNowClock();
-    console.log("här är jag nu:"+ startTimeInMs);
+    //console.log("startTimeInMs: From timeArray"+ startTimeInMs);
   } else {
     new ShowNowClock();
 
@@ -112,7 +112,6 @@ function timeArray() {
 
     startText.textContent = ("");
     titleText.textContent = ("");
-    console.log("startTimeAt: "+ startTimeAt);
   }
 
   setTimeout(timeArray, setTimeoutTime);
@@ -218,6 +217,7 @@ function cueStartTime(){
 }
 
 function startTime() {
+  //console.log("startTimeInMs from startTime: " + startTimeInMs);
   var d = new Date();
   var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${startTimeAt}`);
   startTimeInMs = dd.getTime();
@@ -323,24 +323,16 @@ fiveMinuteCountDown();
 
 var socket = io.connect('http://localhost:3000');
 //---------- My sockets NOT IN USE???
-socket.on("sendDB_TO_Main", function(data){
-  //console.log("sendDB_TO_Main:" + JSON.stringify(data));
-  console.log("sendDB_TO_Main:" + JSON.stringify(data.socketDBArray.startTitleArray));
-  console.log("sendDB_TO_Main:" + JSON.stringify(data.socketDBArray.startTimeArray));
-  console.log("sendDB_TO_Main:" + data.socketDBArray.startTimeArray);
-   startTitleArray = data.socketDBArray.startTitleArray;
-   startTimeArray = data.socketDBArray.startTimeArray;
-   startTimeIndex = 0;
-   displayTimeBool = false;
-   startTimeInMs = 0;
-   ShowNowClock();
-  // displayTimeBool = true;
-  // timeArray();
-  // startTime();
-});
-
 socket.on("updateDB_From_Socket", function (data){
 console.log("updateDB_From_Socket: Hello Here i am");
+startTitleArray = data.startTitleArray;
+startTimeArray = data.startTimeArray;
+
+startTimeInMs = 0;
+startTimeAt= null;
+startTimeIndex = 0;
+
+console.log(data);
 });
 //--------------------------------------------------
 
