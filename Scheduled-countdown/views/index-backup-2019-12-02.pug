@@ -1,0 +1,39 @@
+extends layout
+
+block content
+  .topRow(style='cursor: pointer;' onclick='toggleMainContentBox()')
+    #nowTopRow.topRowText
+  #mainContentBox.row.mainContentBox
+    #centerNowText.Column.centerNowText
+      h1#now
+
+    #titleContentBox.titleContentBox
+      h1#title 
+      h1#start
+    .downSite
+      #5minute.fiveMinute
+      #cueTime.cueTime
+        
+        
+    
+
+
+
+
+
+
+
+
+  //<script src="static\javascripts\script.js"></script>
+  script(src='/socket.io/socket.io.js')
+  script(src='https://code.jquery.com/jquery-3.2.1.min.js')   
+  script
+    |var socket = io.connect('http://localhost:3000');
+    |var username = Math.random().toString(36).substr(2,8); 
+    |socket.emit('join', { username: username });
+    |socket.on('user joined', function (data) {
+    |  $(".js-userjoined").html(data.username + ' Joined chat room');
+    |  $.each(data.users, function(index, user) { 
+    |   $(".js-usersinchat").append('<span id ='+user+'>  <strong>'+user+'</strong></span>');
+    |});
+    |});

@@ -10,42 +10,42 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 
 
 
-//--------------------------------------------------
-// - Knappar på adminPage ./public/scheduledTimes.json
-//--------------------------------------------------
-router.post('/admin/submit', function(req, res, next){
-//---------- Denna funkar att skriva över med men fattas array from admin
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
-  jsonReader('./public/scheduledTimes.json', (err, customer) => {
-    if (err) {
-        console.log('Error reading file:',err)
-        return
+  //--------------------------------------------------
+  // - Knappar på adminPage ./public/scheduledTimes.json
+  //--------------------------------------------------
+  router.post('/admin/submit', function(req, res, next){
+  //---------- Denna funkar att skriva över med men fattas array from admin
+    const fs = require('fs')
+    function jsonReader(filePath, cb) {
+        fs.readFile(filePath, (err, fileData) => {
+            if (err) {
+                return cb && cb(err)
+            }
+            try {
+                const object = JSON.parse(fileData)
+                return cb && cb(null, object)
+            } catch(err) {
+                return cb && cb(err)
+            }
+        })
     }
+    jsonReader('./public/scheduledTimes.json', (err, customer) => {
+      if (err) {
+          console.log('Error reading file:',err)
+          return
+      }
 
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))}
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))}
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))}
 
 
-fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
-        if (err) console.log('Error writing file:', err)
-    })
-})
-  res.redirect("/admin");
-});
-//--------------------------------------------------
+  fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
+          if (err) console.log('Error writing file:', err)
+      })
+   })
+    res.redirect("/admin");
+  });
+  //--------------------------------------------------
 
 
 

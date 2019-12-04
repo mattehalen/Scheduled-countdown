@@ -15,15 +15,16 @@ block content
 
 
     div
-
+      button#scheduledTimesSubmit Hello
     div
       form(method='POST' action='/admin/submit')
         each person, index in scheduledTimes
-          input(type='text', value=person.title, name="title" + index)
-          input(type='text', value=person.startTime, name="startTime" + index)
+          input(type='text', value=person.title, name="title" + index, id="title" + index)
+          input(type='text', value=person.startTime, name="startTime" + index, id="startTime" + index)
           button.delete(name="deleteButton" + index) x
           br
-        button(type='submit') update
+        //button(type='submit') update
+      button#updateScheduledTimesArray update Socketio
       div
         form(method='POST' action='/admin/loadDefault')
           button(type='submit') loadDefault
@@ -33,5 +34,12 @@ block content
           button(type='submit') addNewRowDefault
 
 
-        <script src="static\javascripts\adminScript.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        script(src='/socket.io/socket.io.js')
         script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+        script(src="static/javascripts/chat-script.js")             
+        //script(src='static/javascripts/adminSocket.js') 
+        script(src="static/javascripts/adminScript.js")
+
+        

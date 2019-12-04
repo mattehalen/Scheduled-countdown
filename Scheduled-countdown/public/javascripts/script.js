@@ -43,7 +43,7 @@ var fiveMinuteFromMsToTime = 0;
 var setTimeoutTime = 150;
 
 //--------------------------------------------------
-// - getscheduledTimes
+// - getScheduledTimes
 //--------------------------------------------------
 function getscheduledTimes(){
   const request = async () => {
@@ -70,14 +70,14 @@ getscheduledTimes();
 //--------------------------------------------------
 
 //--------------------------------------------------
-// - getscheduledTimes
+// - getOffsetTime
 //--------------------------------------------------
 function getOffsetTime(){
   const request = async () => {
       const response = await fetch('/variables.json');
       const json = await response.json();
       offsetTimejson = json;
-      console.log("Hello: "+offsetTimejson.offsetTime);
+      //console.log("Get offsetTime: "+offsetTimejson.offsetTime);
       offsetTimeInit = offsetTimejson.offsetTime;
   }
 
@@ -94,12 +94,11 @@ getOffsetTime();
 //- timeArray
 //--------------------------------------------------
 function timeArray() {
-  var day = "";
   //--------------------------------------------------
-
   if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs + countUp)) {
     titleText.textContent = startTitleArray[startTimeIndex-1];
     hideNowClock();
+    console.log("här är jag nu:"+ startTimeInMs);
   } else {
     new ShowNowClock();
 
@@ -113,7 +112,9 @@ function timeArray() {
 
     startText.textContent = ("");
     titleText.textContent = ("");
+    console.log("startTimeAt: "+ startTimeAt);
   }
+
   setTimeout(timeArray, setTimeoutTime);
 }
 //--------------------------------------------------
@@ -300,8 +301,129 @@ function openFullscreen() {
 }
 //--------------------------------------------------
 
-
 nowClock();
 startTime();
 timeArray();
 fiveMinuteCountDown();
+
+
+
+
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+
+
+var socket = io.connect('http://localhost:3000');
+//---------- My sockets
+socket.on("sendDB_TO_Main", function(data){
+  //console.log("sendDB_TO_Main:" + JSON.stringify(data));
+  console.log("sendDB_TO_Main:" + JSON.stringify(data.socketDBArray.startTitleArray));
+  console.log("sendDB_TO_Main:" + JSON.stringify(data.socketDBArray.startTimeArray));
+  console.log("sendDB_TO_Main:" + data.socketDBArray.startTimeArray);
+   startTitleArray = data.socketDBArray.startTitleArray;
+   startTimeArray = data.socketDBArray.startTimeArray;
+   startTimeIndex = 0;
+   displayTimeBool = false;
+   startTimeInMs = 0;
+   ShowNowClock();
+  // displayTimeBool = true;
+  // timeArray();
+  // startTime();
+});
+
+//--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+    //
+    // var username = Math.random().toString(36).substr(2,8);
+    // socket.emit('join', { username: username });
+    //
+    // socket.on('user joined', function (data) {
+    //     $(".js-userjoined").html(data.username + ' Joined chat room');
+    //      $.each(data.users, function(index, user) {
+    //          $(".js-usersinchat").append('<span id ='+user+'>  <strong>'+user+'</strong></span>');
+    //      });
+    //  });
+
+     socket.on('user disconnected', function (data) {
+        $("#"+data.username).remove();
+     });
+
+    //an event emitted from server
+    // socket.on('chat message', function (data) {
+    //     var string = '<div class="row message-bubble"><p class="text-muted">' + data.username+'</p><p>'+data.message+'</p></div>';
+    //     $('#messages').append(string);
+    //
+    // });
+    $(function () {
+        var timeout;
+        function timeoutFunction() {
+            typing = false;
+            socket.emit("typing", { message: '', username: '' });
+        }
+       // $("#sendmessage").on('click', function () {
+       //   var message = $("#txtmessage").val();
+       //   $("#txtmessage").val('');
+       //   $('.typing').html("");
+       //   socket.emit('new_message', { message: message, username: username });
+       // });
+       //----
+       // $("scheduledTimesSubmit").on('click', function () {
+       //   console.log("den fukar");
+       //   //var message = $("#txtmessage").val();
+       //   //$("#txtmessage").val('');
+       //   //$('.typing').html("");
+       //   //socket.emit('new_message', { message: message, username: username });
+       // });
+
+
+   //  socket.on('typing', function (data) {
+   //     if (data.username && data.message) {
+   //          $('.typing').html("User: " + data.username+' '+ data.message);
+   //    } else {
+   //         $('.typing').html("");
+   //     }
+   //
+   // });
+      //  $('#txtmessage').keyup(function () {
+      //      console.log('typing');
+      //      typing = true;
+      //      socket.emit('typing', { message: 'typing...', username: username});
+      //     clearTimeout(timeout);
+      //     timeout = setTimeout(timeoutFunction, 2000);
+      // });
+
+ });
+
+var typing = false;
+var timeout = undefined;
+function timeoutFunction(){
+  typing = false;
+  socket.emit(noLongerTypingMessage);
+}
+function onKeyDownNotEnter(){
+  if(typing == false) {
+    typing = true
+    socket.emit();
+    timeout = setTimeout(timeoutFunction, 5000);
+  } else {
+    clearTimeout(timeout);
+    timeout = setTimeout(timeoutFunction, 5000);
+  }
+}
