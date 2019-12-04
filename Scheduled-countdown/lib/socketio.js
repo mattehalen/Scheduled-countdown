@@ -1,6 +1,7 @@
 var scheduledTimes = require('../public/scheduledTimes.json');
 const fs = require('fs');
 var startTitleArray = [];
+var startTimeArray = [];
 
 function updateScheduledTimesjson(){
   console.log("startTitleArray: "+startTitleArray);
@@ -26,7 +27,7 @@ function updateScheduledTimesjson(){
     }
 
     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = startTitleArray[i]}
-
+    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
 
   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
@@ -75,6 +76,7 @@ var users = [];
         console.log("writeToScheduledTimesjson");
       //console.log(data.startTitleArray);
       startTitleArray = data.startTitleArray;
+      startTimeArray = data.startTimeArray;
       updateScheduledTimesjson();
 
     });
@@ -85,7 +87,7 @@ var users = [];
 
     socket.on("updateScheduledTimesArray", function(data){
       console.log("updateScheduledTimesArray to main page");
-      //io.emit("adminPage_TO_mainPage",{"meddelande": "Detta är från adminPage"})
+      io.emit("updateDB_From_Socket",{"meddelande": "Detta är från adminPage"})
     });
     //--------------------------------------------------
 

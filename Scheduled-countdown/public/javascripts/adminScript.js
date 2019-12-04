@@ -71,14 +71,12 @@ sleep(1000).then(() => {
 $("#updateScheduledTimesArray").on('click', function () {
   console.log("updateScheduledTimesArray");
 
-  console.log("startTitleArray before: "+startTitleArray);
+  //console.log("startTitleArray before: "+startTitleArray);
   for(let i=0; i < startTitleArray.length; i++) {startTitleArray[i] = $("#title"+i).val()}
-  console.log("startTitleArray after: "+startTitleArray);
-  socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray})
-
-
-  //var message = "updateScheduledTimesArray";
-  //socket.emit('updateScheduledTimesArray', { message: message});
+  for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
+  //console.log("startTitleArray after: "+startTitleArray + startTimeArray);
+  socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+  socket.emit('updateScheduledTimesArray',{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
 });
 //--------------------------------------------------
 

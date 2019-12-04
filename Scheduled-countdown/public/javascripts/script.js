@@ -322,7 +322,7 @@ fiveMinuteCountDown();
 
 
 var socket = io.connect('http://localhost:3000');
-//---------- My sockets
+//---------- My sockets NOT IN USE???
 socket.on("sendDB_TO_Main", function(data){
   //console.log("sendDB_TO_Main:" + JSON.stringify(data));
   console.log("sendDB_TO_Main:" + JSON.stringify(data.socketDBArray.startTitleArray));
@@ -339,6 +339,9 @@ socket.on("sendDB_TO_Main", function(data){
   // startTime();
 });
 
+socket.on("updateDB_From_Socket", function (data){
+console.log("updateDB_From_Socket: Hello Here i am");
+});
 //--------------------------------------------------
 
 
