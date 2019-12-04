@@ -8,14 +8,19 @@ block content
       h1#now
 
     #titleContentBox.titleContentBox
-      h1#title 
+      h1#title
       h1#start
     .downSite
       #5minute.fiveMinute
       #cueTime.cueTime
 
 
-
+      audio.countDownSound#music1(src='static/audio/1min.mp3')
+      audio.countDownSound#music2(src='static/audio/2min.mp3')
+      audio.countDownSound#music3(src='static/audio/3min.mp3')
+      audio.countDownSound#music4(src='static/audio/4min.mp3')
+      audio.countDownSound#music5(src='static/audio/5min.mp3')
+      button#play(hidden='') Play
 
 
 
@@ -24,13 +29,13 @@ block content
 
 
   .container
-   .row 
+   .row
      h1 Using socket.io with NodeJS
    .row
     .panel.panel-default
       .panel-heading #{title}
         .js-userjoined
-        .js-usersinchat Users in Chat: 
+        .js-usersinchat Users in Chat:
         .typing
       .panel-body
         .container#messages
@@ -40,8 +45,8 @@ block content
              input#txtmessage.form-control(type='text')
              span.input-group-btn
                button#sendmessage.btn.btn-default(type='button') Send
-               
+
       script(src='/socket.io/socket.io.js')
       script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-      script(src="static/javascripts/chat-script.js")             
-      script(src='static/javascripts/script.js') 
+      script(src="static/javascripts/chat-script.js")
+      script(src='static/javascripts/script.js')
