@@ -148,10 +148,6 @@ var users = [];
       updateScheduledTimesjson();
 
     });
-    // socket.on("message_from_Adminpage", function(data){
-    //   console.log("message_from_Adminpage: " + data);
-    //   io.emit("adminPage_TO_mainPage",{"meddelande": "Detta är från adminPage"})
-    // });
 
     socket.on("updateScheduledTimesArray", function(data){
       console.log("updateScheduledTimesArray: " + data.startTitleArray);

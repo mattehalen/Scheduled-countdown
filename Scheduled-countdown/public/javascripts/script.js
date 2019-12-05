@@ -360,9 +360,10 @@ fiveMinuteCountDown();
 
 
 var socket = io.connect('http://192.168.100.85:3000');
+
 //---------- My sockets NOT IN USE???
 socket.on("updateDB_From_Socket", function(data) {
-  console.log("updateDB_From_Socket: Hello Here i am");
+  //console.log("updateDB_From_Socket: Hello Here i am");
   startTitleArray = data.startTitleArray;
   startTimeArray = data.startTimeArray;
 
@@ -372,7 +373,6 @@ socket.on("updateDB_From_Socket", function(data) {
 
   startPlayback();
 
-  console.log(data);
 });
 
 
@@ -385,33 +385,6 @@ socket.on("updateOffsetTime_From_Socket", function(data) {
      socket.on('user disconnected', function (data) {
         $("#"+data.username).remove();
      });
-// $(function () {
-//         var timeout;
-//         function timeoutFunction() {
-//             typing = false;
-//             socket.emit("typing", { message: '', username: '' });
-//         }
-//
-//  });
-//
-// var typing = false;
-// var timeout = undefined;
-// function timeoutFunction(){
-//   typing = false;
-//   socket.emit(noLongerTypingMessage);
-// }
-// function onKeyDownNotEnter(){
-//   if(typing == false) {
-//     typing = true
-//     socket.emit();
-//     timeout = setTimeout(timeoutFunction, 5000);
-//   } else {
-//     clearTimeout(timeout);
-//     timeout = setTimeout(timeoutFunction, 5000);
-//   }
-// }
-
-
 
 //--------------------------------------------------
 var playButton = document.querySelector('#play');
