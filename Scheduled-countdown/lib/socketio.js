@@ -3,6 +3,12 @@ const fs = require('fs');
 var startTitleArray = [];
 var startTimeArray = [];
 var offsetTimeInit = [];
+var ip = require("ip");
+
+
+
+var myLocalip = ip.address();
+console.log(myLocalip);
 
 function updateScheduledTimesjson(){
   console.log("startTitleArray: "+startTitleArray);
@@ -132,6 +138,8 @@ var users = [];
 
     // My sockets
     //--------------------------------------------------
+    io.emit("getMyLocalip", {"myLocalip":myLocalip});
+
     socket.on("start", function(data){
       io.emit("updatingDB");
     });

@@ -2,6 +2,7 @@ var startTimeArray  = [];
 var startTitleArray = [];
 var offsetTimejson  = [];
 var offsetTimeInit  = [];
+var myLocalip = "";
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var offsetTime = document.getElementById("offsetTime");
@@ -120,7 +121,10 @@ $("#offsetMinus").on('click', function() {
   });
 });
 //--------------------------------------------------
-
+socket.on('getMyLocalip', function (data) {
+  console.log(data.myLocalip);
+  myLocalip = data.myLocalip;
+ });
 
 
 
