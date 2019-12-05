@@ -75,8 +75,8 @@ getOffsetTime();
 //--------------------------------------------------
 //--------------------------------------------------
 //--------------------------------------------------
-
-var socket = io.connect('http://localhost:3000');
+// iP 192.168.100.85
+var socket = io.connect('http://192.168.100.85:3000');
 console.log("adminSocketScript Loaded");
 //---------- My sockets
 socket.emit("start", { });

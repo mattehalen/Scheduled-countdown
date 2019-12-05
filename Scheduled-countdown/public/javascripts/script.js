@@ -359,7 +359,7 @@ fiveMinuteCountDown();
 //--------------------------------------------------
 
 
-var socket = io.connect('http://localhost:3000');
+var socket = io.connect('http://192.168.100.85:3000');
 //---------- My sockets NOT IN USE???
 socket.on("updateDB_From_Socket", function(data) {
   console.log("updateDB_From_Socket: Hello Here i am");
