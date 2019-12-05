@@ -163,7 +163,7 @@ var users = [];
       offsetTimeInit = data.offsetTime;
       console.log(offsetTimeInit);
       updateOffsetTimePlusjson();
-      //io.emit("updateDB_From_Socket",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+      io.emit("updateOffsetTime_From_Socket",{offsetTime: offsetTimeInit});
     });
     //--------------------------------------------------
     socket.on("updateOffsetTimeMinus", function(data){
@@ -171,7 +171,7 @@ var users = [];
       offsetTimeInit = data.offsetTime;
       console.log(offsetTimeInit);
       updateOffsetTimeMinusjson();
-      //io.emit("updateDB_From_Socket",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+      io.emit("updateOffsetTime_From_Socket",{offsetTime: offsetTimeInit});
     });
     //--------------------------------------------------
 

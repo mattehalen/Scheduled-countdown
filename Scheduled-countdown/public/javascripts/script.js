@@ -374,6 +374,12 @@ socket.on("updateDB_From_Socket", function(data) {
 
   console.log(data);
 });
+
+
+socket.on("updateOffsetTime_From_Socket", function(data) {
+  console.log("updateOffsetTime_From_Socket: "+data.offsetTime);
+  offsetTimeInit = data.offsetTime
+});
 //--------------------------------------------------
 
      socket.on('user disconnected', function (data) {
