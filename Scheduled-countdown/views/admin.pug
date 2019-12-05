@@ -7,15 +7,14 @@ block content
     .offsetTime
       p#offsetTime.offsetTime= offsetTime
       div
-        form.offsetButton(method='POST' action='/admin/offsetPlus')
+        button#offsetPlus offset + Socketio
+        button#offsetMinus offset - Socketio
+        //form.offsetButton(method='POST' action='/admin/offsetPlus')
           button(type='submit') offset +
-        form.offsetButton(method='POST' action='/admin/offsetMinus')
+        //form.offsetButton(method='POST' action='/admin/offsetMinus')
           button(type='submit') offset -
 
 
-
-    div
-      button#scheduledTimesSubmit Hello
     div
       form(method='POST' action='/admin/submit')
         each person, index in scheduledTimes

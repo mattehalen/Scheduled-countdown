@@ -1,6 +1,10 @@
-var startTimeArray = [];
+var startTimeArray  = [];
 var startTitleArray = [];
+var offsetTimejson  = [];
+var offsetTimeInit  = [];
+
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+var offsetTime = document.getElementById("offsetTime");
 
 //--------------------------------------------------
 // - getscheduledTimes
@@ -32,6 +36,22 @@ getscheduledTimes();
 //--------------------------------------------------
 
 
+//--------------------------------------------------
+// - getOffsetTime
+//--------------------------------------------------
+function getOffsetTime(){
+  const request = async () => {
+      const response = await fetch('/variables.json');
+      const json = await response.json();
+      offsetTimejson = json;
+      //console.log("Get offsetTime: "+offsetTimejson.offsetTime);
+      offsetTimeInit = offsetTimejson.offsetTime;
+  }
+
+  request();
+};
+getOffsetTime();
+//--------------------------------------------------
 
 
 
@@ -77,6 +97,27 @@ $("#updateScheduledTimesArray").on('click', function () {
   //console.log("startTitleArray after: "+startTitleArray + startTimeArray);
   socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
   socket.emit('updateScheduledTimesArray',{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+});
+
+
+// Button offsetPlus
+$("#offsetPlus").on('click', function() {
+  offsetTimeInit += 1;
+
+  $("#offsetTime").html(offsetTimeInit);
+  socket.emit('updateOffsetTimePlus', {
+    offsetTime: offsetTimeInit
+  });
+});
+//--------------------------------------------------
+// Button offsetMinus
+$("#offsetMinus").on('click', function() {
+  offsetTimeInit -= 1;
+
+  $("#offsetTime").html(offsetTimeInit);
+  socket.emit('updateOffsetTimeMinus', {
+    offsetTime: offsetTimeInit
+  });
 });
 //--------------------------------------------------
 

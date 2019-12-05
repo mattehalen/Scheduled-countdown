@@ -79,6 +79,7 @@ function getOffsetTime(){
       offsetTimejson = json;
       //console.log("Get offsetTime: "+offsetTimejson.offsetTime);
       offsetTimeInit = offsetTimejson.offsetTime;
+
   }
 
   request();
@@ -96,9 +97,44 @@ getOffsetTime();
 function timeArray() {
   //--------------------------------------------------
   if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs + countUp)) {
+    var countDownTimeInMS = startTimeInMs - nowInMs;
+    //console.log(countDownTimeInMS);
+    //console.log(5*1000*60);
     titleText.textContent = startTitleArray[startTimeIndex-1];
+
+
+    // Audio Alarms
+    //--------------------------------------------------
+    var timeBuffer    = 1*1000
+    var fiveMinuteMs  = (5*1000*60);
+    var fourMinuteMs  = (4*1000*60);
+    var threeMinuteMs = (3*1000*60);
+    var twoMinuteMs   = (2*1000*60);
+    var oneMinuteMs   = (1*1000*60);
+
+    // 5min Alarm
+      if (countDownTimeInMS > fiveMinuteMs && countDownTimeInMS < (fiveMinuteMs+timeBuffer)){
+        document.getElementById('music5').play();
+      }
+    // 4min Alarm
+    if (countDownTimeInMS > fourMinuteMs && countDownTimeInMS < (fourMinuteMs+timeBuffer)){
+      document.getElementById('music4').play();
+    }
+    // 3min Alarm
+    if (countDownTimeInMS > threeMinuteMs && countDownTimeInMS < (threeMinuteMs+timeBuffer)){
+      document.getElementById('music3').play();
+    }
+    // 2min Alarm
+    if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs+timeBuffer)){
+      document.getElementById('music2').play();
+    }
+    // 1min Alarm
+    if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs+timeBuffer)){
+      document.getElementById('music1').play();
+    }
+    //--------------------------------------------------
     hideNowClock();
-    //console.log("startTimeInMs: From timeArray"+ startTimeInMs);
+
   } else {
     new ShowNowClock();
 
@@ -325,127 +361,74 @@ fiveMinuteCountDown();
 
 var socket = io.connect('http://localhost:3000');
 //---------- My sockets NOT IN USE???
-socket.on("updateDB_From_Socket", function (data){
-console.log("updateDB_From_Socket: Hello Here i am");
-startTitleArray = data.startTitleArray;
-startTimeArray = data.startTimeArray;
+socket.on("updateDB_From_Socket", function(data) {
+  console.log("updateDB_From_Socket: Hello Here i am");
+  startTitleArray = data.startTitleArray;
+  startTimeArray = data.startTimeArray;
 
-startTimeInMs = 0;
-startTimeAt= null;
-startTimeIndex = 0;
+  startTimeInMs = 0;
+  startTimeAt = null;
+  startTimeIndex = 0;
 
-startPlayback();
+  startPlayback();
 
-console.log(data);
+  console.log(data);
 });
 //--------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-    //
-    // var username = Math.random().toString(36).substr(2,8);
-    // socket.emit('join', { username: username });
-    //
-    // socket.on('user joined', function (data) {
-    //     $(".js-userjoined").html(data.username + ' Joined chat room');
-    //      $.each(data.users, function(index, user) {
-    //          $(".js-usersinchat").append('<span id ='+user+'>  <strong>'+user+'</strong></span>');
-    //      });
-    //  });
 
      socket.on('user disconnected', function (data) {
         $("#"+data.username).remove();
      });
+// $(function () {
+//         var timeout;
+//         function timeoutFunction() {
+//             typing = false;
+//             socket.emit("typing", { message: '', username: '' });
+//         }
+//
+//  });
+//
+// var typing = false;
+// var timeout = undefined;
+// function timeoutFunction(){
+//   typing = false;
+//   socket.emit(noLongerTypingMessage);
+// }
+// function onKeyDownNotEnter(){
+//   if(typing == false) {
+//     typing = true
+//     socket.emit();
+//     timeout = setTimeout(timeoutFunction, 5000);
+//   } else {
+//     clearTimeout(timeout);
+//     timeout = setTimeout(timeoutFunction, 5000);
+//   }
+// }
 
-    //an event emitted from server
-    // socket.on('chat message', function (data) {
-    //     var string = '<div class="row message-bubble"><p class="text-muted">' + data.username+'</p><p>'+data.message+'</p></div>';
-    //     $('#messages').append(string);
-    //
-    // });
-    $(function () {
-        var timeout;
-        function timeoutFunction() {
-            typing = false;
-            socket.emit("typing", { message: '', username: '' });
-        }
-       // $("#sendmessage").on('click', function () {
-       //   var message = $("#txtmessage").val();
-       //   $("#txtmessage").val('');
-       //   $('.typing').html("");
-       //   socket.emit('new_message', { message: message, username: username });
-       // });
-       //----
-       // $("scheduledTimesSubmit").on('click', function () {
-       //   console.log("den fukar");
-       //   //var message = $("#txtmessage").val();
-       //   //$("#txtmessage").val('');
-       //   //$('.typing').html("");
-       //   //socket.emit('new_message', { message: message, username: username });
-       // });
-
-
-   //  socket.on('typing', function (data) {
-   //     if (data.username && data.message) {
-   //          $('.typing').html("User: " + data.username+' '+ data.message);
-   //    } else {
-   //         $('.typing').html("");
-   //     }
-   //
-   // });
-      //  $('#txtmessage').keyup(function () {
-      //      console.log('typing');
-      //      typing = true;
-      //      socket.emit('typing', { message: 'typing...', username: username});
-      //     clearTimeout(timeout);
-      //     timeout = setTimeout(timeoutFunction, 2000);
-      // });
-
- });
-
-var typing = false;
-var timeout = undefined;
-function timeoutFunction(){
-  typing = false;
-  socket.emit(noLongerTypingMessage);
-}
-function onKeyDownNotEnter(){
-  if(typing == false) {
-    typing = true
-    socket.emit();
-    timeout = setTimeout(timeoutFunction, 5000);
-  } else {
-    clearTimeout(timeout);
-    timeout = setTimeout(timeoutFunction, 5000);
-  }
-}
 
 
 //--------------------------------------------------
 var playButton = document.querySelector('#play');
 playButton.hidden = false;
+
 function startPlayback() {
   return document.querySelector('.countDownSound').play();
+  playButton.hidden = true;
 }
 
-console.log('Attempting to play automatically...');
+//console.log('Attempting to play automatically...');
 startPlayback().then(function() {
-  console.log('The play() Promise fulfilled! Rock on!');
+  //console.log('The play() Promise fulfilled! Rock on!');
 }).catch(function(error) {
-  console.log('The play() Promise rejected!');
-  console.log('Use the Play button instead.');
+  //console.log('The play() Promise rejected!');
+  //console.log('Use the Play button instead.');
   console.log(error);
-
-
   // The user interaction requirement is met if
   // playback is triggered via a click event.
   playButton.addEventListener('click', startPlayback);
+});
 
+// BUTTON PUSH
+$("#play").on('click', function () {
+  playButton.hidden = true;
 });

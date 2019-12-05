@@ -4,6 +4,7 @@ block content
   .topRow(style='cursor: pointer;' onclick='toggleMainContentBox()')
     #nowTopRow.topRowText
   #mainContentBox.row.mainContentBox
+    button#play(hidden='') Push to activate Audio
     #centerNowText.Column.centerNowText
       h1#now
 
@@ -20,7 +21,7 @@ block content
       audio.countDownSound#music3(src='static/audio/3min.mp3')
       audio.countDownSound#music4(src='static/audio/4min.mp3')
       audio.countDownSound#music5(src='static/audio/5min.mp3')
-      button#play(hidden='') Play
+      
 
 
 

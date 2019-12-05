@@ -2,6 +2,7 @@ var scheduledTimes = require('../public/scheduledTimes.json');
 const fs = require('fs');
 var startTitleArray = [];
 var startTimeArray = [];
+var offsetTimeInit = [];
 
 function updateScheduledTimesjson(){
   console.log("startTitleArray: "+startTitleArray);
@@ -33,12 +34,80 @@ function updateScheduledTimesjson(){
         if (err) console.log('Error writing file:', err)
     })
   })
+};
 
 
+//--------------------------------------------------
+//-----offsetPlus button press
+//--------------------------------------------------
+function updateOffsetTimePlusjson(){
+  const fs = require('fs')
+  function jsonReader(filePath, cb) {
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              return cb && cb(err)
+          }
+          try {
+              const object = JSON.parse(fileData)
+              return cb && cb(null, object)
+          } catch(err) {
+              return cb && cb(err)
+          }
+      })
+  }
+  jsonReader('./public/variables.json', (err, variables) => {
+    if (err) {
+        console.log('Error reading file:',err)
+        return
+    }
 
+    variables.offsetTime += 1;
+    console.log("updateOffsetTimejson: ");
+    console.log(variables);
 
+  fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+        if (err) console.log('Error writing file:', err)
+    })
+  })
 
 };
+//-------------------------------------------------------------------------
+
+//--------------------------------------------------
+//-----offsetPlus button press
+//--------------------------------------------------
+function updateOffsetTimeMinusjson(){
+  const fs = require('fs')
+  function jsonReader(filePath, cb) {
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              return cb && cb(err)
+          }
+          try {
+              const object = JSON.parse(fileData)
+              return cb && cb(null, object)
+          } catch(err) {
+              return cb && cb(err)
+          }
+      })
+  }
+  jsonReader('./public/variables.json', (err, variables) => {
+    if (err) {
+        console.log('Error reading file:',err)
+        return
+    }
+
+    variables.offsetTime -= 1;
+    console.log("updateOffsetTimejson: ");
+    console.log(variables);
+
+  fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+        if (err) console.log('Error writing file:', err)
+    })
+  })
+
+};
+//-------------------------------------------------------------------------
 
 
 
@@ -87,6 +156,22 @@ var users = [];
     socket.on("updateScheduledTimesArray", function(data){
       console.log("updateScheduledTimesArray: " + data.startTitleArray);
       io.emit("updateDB_From_Socket",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+    });
+
+    socket.on("updateOffsetTimePlus", function(data){
+      console.log("updateOffsetTime: " + data.offsetTime);
+      offsetTimeInit = data.offsetTime;
+      console.log(offsetTimeInit);
+      updateOffsetTimePlusjson();
+      //io.emit("updateDB_From_Socket",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+    });
+    //--------------------------------------------------
+    socket.on("updateOffsetTimeMinus", function(data){
+      console.log("updateOffsetTimeMinus: " + data.offsetTime);
+      offsetTimeInit = data.offsetTime;
+      console.log(offsetTimeInit);
+      updateOffsetTimeMinusjson();
+      //io.emit("updateDB_From_Socket",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
     });
     //--------------------------------------------------
 
