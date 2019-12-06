@@ -119,44 +119,44 @@ function timeArray() {
     var oneMinuteMs   = (1*1000*60);
 
     // 5min Alarm
-      if (countDownTimeInMS > fiveMinuteMs && countDownTimeInMS < (fiveMinuteMs+timeBuffer)){
-        document.getElementById('music5').play();
-      }
+    if (countDownTimeInMS > fiveMinuteMs && countDownTimeInMS < (fiveMinuteMs + timeBuffer)) {
+      document.getElementById('music5').play();
+    }
     // 4min Alarm
-    if (countDownTimeInMS > fourMinuteMs && countDownTimeInMS < (fourMinuteMs+timeBuffer)){
+    if (countDownTimeInMS > fourMinuteMs && countDownTimeInMS < (fourMinuteMs + timeBuffer)) {
       document.getElementById('music4').play();
     }
     // 3min Alarm
-    if (countDownTimeInMS > threeMinuteMs && countDownTimeInMS < (threeMinuteMs+timeBuffer)){
+    if (countDownTimeInMS > threeMinuteMs && countDownTimeInMS < (threeMinuteMs + timeBuffer)) {
       document.getElementById('music3').play();
     }
     // 2min Alarm
-    if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs+timeBuffer)){
+    if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs + timeBuffer)) {
       document.getElementById('music2').play();
     }
     // 1min Alarm
-    if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs+timeBuffer)){
+    if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs + timeBuffer)) {
       document.getElementById('music1').play();
     }
     //--------------------------------------------------
     hideNowClock();
 
   } else {
-    new ShowNowClock();
+        new ShowNowClock();
 
 
 
-    if (startTimeIndex >= startTimeArray.length) {
-      startTimeIndex = 0;
-    }
+        if (startTimeIndex >= startTimeArray.length) {
+          startTimeIndex = 0;
+        }
 
-    startTimeArray[startTimeIndex];
-    startTimeAt = startTimeArray[startTimeIndex];
-    startTimeIndex ++;
+        startTimeArray[startTimeIndex];
+        startTimeAt = startTimeArray[startTimeIndex];
+        startTimeIndex++;
 
-    startText.textContent = ("");
-    titleText.textContent = ("");
-  }
+        startText.textContent = ("");
+        titleText.textContent = ("");
+      }
 
   setTimeout(timeArray, setTimeoutTime);
 }
@@ -218,7 +218,7 @@ function msToTime(s) {
 
   if (displayTimeBool === true) {
     if (positiveDiffTimeBoole === true) {
-      startText.textContent = ('+' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
+      startText.textContent = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
     } else {
       startText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
     }
@@ -263,22 +263,30 @@ function cueStartTime(){
 
 function startTime() {
   //console.log("startTimeInMs from startTime: " + startTimeInMs);
+  //console.log(startTimeAt + ":" + offsetTimeInit + ":" + (startTimeAt+offsetTimeInit));
   var d = new Date();
   var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${startTimeAt}`);
   startTimeInMs = dd.getTime();
   startTimeInMs = startTimeInMs + (offsetTimeInit*60000);
+
+  var dInMs = d.getTime();
+  var ddInMs =dd.getTime();
+  ddInMs = ddInMs+(offsetTimeInit*60000)
   var s = "";
 
 
   // Use subtrack time depending on now(d) vs start(dd) time
-  if (dd > d) {
-    s = dd - d + 1000;
-    s = s + (offsetTimeInit*60000)
+  //if (dd > d) {
+  if (ddInMs > dInMs) {
+    //s = dd - d + 1000;
+    s = ddInMs - dInMs + 1000;
+    //s = s + (offsetTimeInit*60000)
     msToTime(s);
     positiveDiffTimeBoole = false;
   } else {
-    s = d - dd;
-    s = s + (offsetTimeInit*60000)
+    //s = d - dd;
+    s = dInMs - ddInMs;
+    //  s = s + (offsetTimeInit*60000)
     msToTime(s);
     positiveDiffTimeBoole = true;
   }
