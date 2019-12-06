@@ -8,7 +8,9 @@ var variables = require('../public/variables.json');
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 //console.log(variables.offsetTime);
 
-
+var ip = require("ip");
+var myLocalip = ip.address();
+console.log(myLocalip);
 
   //--------------------------------------------------
   // - Knappar på adminPage ./public/scheduledTimes.json
@@ -190,7 +192,11 @@ router.post('/admin/offsetMinus', function(req, res, next){
 //-------------------------------------------------------------------------
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Scheduled-CountDown',now: "s"});
+  res.render('index', {
+    title: 'Scheduled-CountDown',
+    now: "s",
+    myLocalip: myLocalip
+  });
 });
 //-------------------------------------------------------------------------
 
@@ -199,7 +205,8 @@ router.get('/admin', function(req, res, next) {
     title: 'Scheduled-CountDown',
     now: "now",
     scheduledTimes : scheduledTimes.profiles,
-    offsetTime: variables.offsetTime
+    offsetTime: variables.offsetTime,
+    myLocalip: myLocalip
   });
 });
 

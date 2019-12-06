@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  p(hidden='')#myLocalip= myLocalip
   .topRow(style='cursor: pointer;' onclick='toggleMainContentBox()')
     #nowTopRow.topRowText
   #mainContentBox.row.mainContentBox

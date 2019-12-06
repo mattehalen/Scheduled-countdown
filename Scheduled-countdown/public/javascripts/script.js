@@ -1,4 +1,10 @@
 "use strict";
+
+var myLocalip = document.getElementById("myLocalip").textContent;
+var myLocalipAndPort = myLocalip+":3000"
+console.log(myLocalipAndPort);
+
+
 var nowText = document.getElementById("now");
 var nowTopRow = document.getElementById("nowTopRow");
 var titleText = document.getElementById("title");
@@ -359,7 +365,7 @@ fiveMinuteCountDown();
 //--------------------------------------------------
 
 
-var socket = io.connect('http://192.168.100.85:3000');
+var socket = io.connect(myLocalipAndPort);
 
 //---------- My sockets NOT IN USE???
 socket.on("updateDB_From_Socket", function(data) {

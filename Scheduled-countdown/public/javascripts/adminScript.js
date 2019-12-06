@@ -2,10 +2,14 @@ var startTimeArray  = [];
 var startTitleArray = [];
 var offsetTimejson  = [];
 var offsetTimeInit  = [];
-var myLocalip = "";
+
+var myLocalip = document.getElementById("myLocalip").textContent;
+var myLocalipAndPort = myLocalip+":3000"
+console.log(myLocalipAndPort);
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var offsetTime = document.getElementById("offsetTime");
+
 
 //--------------------------------------------------
 // - getscheduledTimes
@@ -77,7 +81,7 @@ getOffsetTime();
 //--------------------------------------------------
 //--------------------------------------------------
 // iP 192.168.100.85
-var socket = io.connect('http://192.168.100.85:3000');
+var socket = io.connect(myLocalipAndPort);
 console.log("adminSocketScript Loaded");
 //---------- My sockets
 socket.emit("start", { });
