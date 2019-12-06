@@ -126,7 +126,17 @@ socket.on("updateDB_From_Socket", function(data) {
   });
 });
 //--------------------------------------------------
+//pushGetscheduledTimes
+socket.on("pushGetscheduledTimes", function(data) {
+  console.log("pushGetscheduledTimes: ");
+  getscheduledTimes();
 
+  sleep(100).then(() => {
+    console.log("JFKLDJKLFdklsfk");
+    printArraysToElements();
+  });
+
+});
 
 
 
@@ -165,8 +175,8 @@ $("#loadDefaultArray").on('click', function() {
   socket.emit('loadDefaultToSocket', {
     message: "hello"
   });
-
 });
+
 //--------------------------------------------------
 //--------------------------------------------------
 //updateOffsetTime_From_Socket

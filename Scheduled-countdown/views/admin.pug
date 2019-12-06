@@ -17,14 +17,15 @@ block content
       form(method='POST' action='/admin/submit')
         each person, index in scheduledTimes
           input(type='text', value=person.title, name="title" + index, id="title" + index)
-          input(type='text', value=person.startTime, name="startTime" + index, id="startTime" + index)
+          //input(type='text', value=person.startTime, name="startTime" + index, id="startTime" + index)
+          input(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
           button.delete(name="deleteButton" + index) x
           br
         //button(type='submit') update
       button#updateScheduledTimesArray update Socketio
       button#loadDefaultArray loadDefault Socketio
       div
-        form(method='POST' action='/admin/loadDefault')
+        //form(method='POST' action='/admin/loadDefault')
           button(type='submit') loadDefault
         form(method='POST' action='/admin/writeToDefault')
           button(type='submit') writeToDefault

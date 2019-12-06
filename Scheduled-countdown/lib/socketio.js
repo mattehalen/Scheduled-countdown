@@ -5,6 +5,8 @@ var startTitleArray = [];
 var startTimeArray = [];
 var offsetTimeInit = [];
 var ip = require("ip");
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+
 
 
 
@@ -234,6 +236,12 @@ var users = [];
     socket.on("loadDefaultToSocket", function(data){
       console.log("loadDefaultToSocket: " + data.message);
       loadDefaultjson();
+
+      sleep(10).then(() => {
+        console.log("lkjkljfdsaölkjfdlasjfjdslakjkldfsakafsdöjklö");
+        io.emit("pushGetscheduledTimes",{offsetTime: offsetTimeInit});
+        });
+
     });
     //--------------------------------------------------
 
