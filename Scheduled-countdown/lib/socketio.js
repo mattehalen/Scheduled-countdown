@@ -8,16 +8,9 @@ var ip = require("ip");
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 
-
-
-var myLocalip = ip.address();
-console.log(myLocalip);
-
-
-
-
-
-
+//--------------------------------------------------
+//-----updateScheduledTimesjson
+//--------------------------------------------------
 function updateScheduledTimesjson(){
   console.log("startTitleArray: "+startTitleArray);
   const fs = require('fs')
@@ -49,7 +42,7 @@ function updateScheduledTimesjson(){
     })
   })
 };
-
+//--------------------------------------------------
 
 //--------------------------------------------------
 //-----offsetPlus button press
@@ -85,7 +78,7 @@ function updateOffsetTimePlusjson(){
   })
 
 };
-//-------------------------------------------------------------------------
+//--------------------------------------------------
 
 //--------------------------------------------------
 //-----offsetMinus button press
@@ -121,7 +114,7 @@ function updateOffsetTimeMinusjson(){
   })
 
 };
-//-------------------------------------------------------------------------
+//--------------------------------------------------
 
 //--------------------------------------------------
 //-----offsetReset button press
@@ -157,7 +150,7 @@ function updateOffsetTimeResetjson(){
   })
 
 };
-//-------------------------------------------------------------------------
+//--------------------------------------------------
 //loadDefaultjson();
 function loadDefaultjson(){
   const fs = require('fs')
@@ -165,7 +158,7 @@ function loadDefaultjson(){
       if (err) throw err;
   });
 };
-//-------------------------------------------------------------------------
+//--------------------------------------------------
 //loadDefaultjson();
 function writeDefaultjson(){
   console.log("startTitleArray: "+startTitleArray);
@@ -198,7 +191,7 @@ function writeDefaultjson(){
     })
   })
   };
-//-------------------------------------------------------------------------
+//--------------------------------------------------
 
 
 
@@ -221,8 +214,6 @@ var users = [];
 
     // My sockets
     //--------------------------------------------------
-    io.emit("getMyLocalip", {"myLocalip":myLocalip});
-
     socket.on("start", function(data){
       io.emit("updatingDB");
     });
