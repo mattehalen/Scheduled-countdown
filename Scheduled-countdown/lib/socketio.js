@@ -1,4 +1,5 @@
 var scheduledTimes = require('../public/scheduledTimes.json');
+var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 const fs = require('fs');
 var startTitleArray = [];
 var startTimeArray = [];
@@ -150,8 +151,15 @@ function updateOffsetTimeResetjson(){
 
 };
 //-------------------------------------------------------------------------
+//loadDefaultjson();
+function loadDefaultjson(){
+  const fs = require('fs')
+  fs.writeFile('./public/scheduledTimes.json', JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
+      if (err) throw err;
+  });
 
-
+};
+//-------------------------------------------------------------------------
 
 
 
@@ -222,7 +230,12 @@ var users = [];
       updateOffsetTimeResetjson();
       io.emit("updateOffsetTime_From_Socket",{offsetTime: offsetTimeInit});
     });
-
+    //--------------------------------------------------
+    socket.on("loadDefaultToSocket", function(data){
+      console.log("loadDefaultToSocket: " + data.message);
+      loadDefaultjson();
+    });
+    //--------------------------------------------------
 
 
     socket.on('join', function (user){

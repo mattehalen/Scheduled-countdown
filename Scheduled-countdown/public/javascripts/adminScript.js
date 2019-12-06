@@ -159,6 +159,16 @@ $("#offsetReset").on('click', function() {
   });
 });
 //--------------------------------------------------
+//---------- loadDefault
+$("#loadDefaultArray").on('click', function() {
+  console.log("loadDefaultArray");
+  socket.emit('loadDefaultToSocket', {
+    message: "hello"
+  });
+
+});
+//--------------------------------------------------
+//--------------------------------------------------
 //updateOffsetTime_From_Socket
 socket.on("updateOffsetTime_From_Socket", function (data){
   console.log("updateOffsetTime_From_Socket");
