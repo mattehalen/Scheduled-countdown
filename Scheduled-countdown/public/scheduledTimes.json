@@ -1,7 +1,7 @@
 {
     "profiles": [
         {
-            "title": "Greatest Show",
+            "title": "Greatest Show 2",
             "startTime": "18:25",
             "id": "tom"
         },
@@ -49,11 +49,6 @@
             "title": "Queen",
             "startTime": "22:40",
             "id": "caroline"
-        },
-        {
-            "title": "Johan Gustav",
-            "startTime": "18:10",
-            "id": "4"
         }
     ]
 }

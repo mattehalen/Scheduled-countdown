@@ -99,11 +99,8 @@ sleep(1000).then(() => {
 //---------- I think i can delete this
 //--------------------------------------------------
 socket.on("sendDB_TO_Admin", function (data){
-  console.log("sendDB_TO_Admin: " + data);
-  //console.log(data.socketDBArray.startTimeArray);
   startTimeArray  = data.socketDBArray.startTimeArray;
   startTitleArray = data.socketDBArray.startTitleArray;
-  // printArraysToElements();
 });
 //--------------------------------------------------
 $("#updateScheduledTimesArray").on('click', function () {
@@ -173,10 +170,25 @@ $("#offsetReset").on('click', function() {
 $("#loadDefaultArray").on('click', function() {
   console.log("loadDefaultArray");
   socket.emit('loadDefaultToSocket', {
-    message: "hello"
+    message: "loadDefaultToSocket: Sent"
   });
 });
+//--------------------------------------------------
+//---------- writeDefaultArray
+$("#writeDefaultArray").on('click', function() {
+  console.log("writeDefaultArray");
 
+  getElementsToArrays();
+
+  sleep(100).then(() => {
+    console.log("AFTER SLEEP: " + startTitleArray);
+    socket.emit('writeDefaultToSocket', {
+      startTitleArray: startTitleArray,
+      startTimeArray: startTimeArray});
+
+  });
+
+});
 //--------------------------------------------------
 //--------------------------------------------------
 //updateOffsetTime_From_Socket
@@ -193,6 +205,12 @@ function printArraysToElements(){
   console.log("printArraysToElements");
      for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
      for(let i=0; i < startTimeArray.length; i++)   {document.getElementById("startTime"+i).value = startTimeArray[i]};
+};
+function getElementsToArrays(){
+  console.log("getElementsToArrays()");
+  for(let i=0; i < startTitleArray.length; i++) {startTitleArray[i] = $("#title"+i).val()}
+  for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
+  console.log(startTimeArray);
 };
 
      socket.on('user disconnected', function (data) {
