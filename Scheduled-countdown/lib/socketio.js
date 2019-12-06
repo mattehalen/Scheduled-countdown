@@ -80,7 +80,7 @@ function updateOffsetTimePlusjson(){
 //-------------------------------------------------------------------------
 
 //--------------------------------------------------
-//-----offsetPlus button press
+//-----offsetMinus button press
 //--------------------------------------------------
 function updateOffsetTimeMinusjson(){
   const fs = require('fs')
@@ -104,6 +104,42 @@ function updateOffsetTimeMinusjson(){
     }
 
     variables.offsetTime -= 1;
+    console.log("updateOffsetTimejson: ");
+    console.log(variables);
+
+  fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+        if (err) console.log('Error writing file:', err)
+    })
+  })
+
+};
+//-------------------------------------------------------------------------
+
+//--------------------------------------------------
+//-----offsetReset button press
+//--------------------------------------------------
+function updateOffsetTimeResetjson(){
+  const fs = require('fs')
+  function jsonReader(filePath, cb) {
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              return cb && cb(err)
+          }
+          try {
+              const object = JSON.parse(fileData)
+              return cb && cb(null, object)
+          } catch(err) {
+              return cb && cb(err)
+          }
+      })
+  }
+  jsonReader('./public/variables.json', (err, variables) => {
+    if (err) {
+        console.log('Error reading file:',err)
+        return
+    }
+
+    variables.offsetTime = 0;
     console.log("updateOffsetTimejson: ");
     console.log(variables);
 
@@ -179,6 +215,13 @@ var users = [];
       io.emit("updateOffsetTime_From_Socket",{offsetTime: offsetTimeInit});
     });
     //--------------------------------------------------
+    socket.on("updateOffsetTimeReset", function(data){
+      console.log("updateOffsetTimeReset: " + data.offsetTime);
+      offsetTimeInit = data.offsetTime;
+      console.log(offsetTimeInit);
+      updateOffsetTimeResetjson();
+      io.emit("updateOffsetTime_From_Socket",{offsetTime: offsetTimeInit});
+    });
 
 
 

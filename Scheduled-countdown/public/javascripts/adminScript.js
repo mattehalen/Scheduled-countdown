@@ -154,7 +154,7 @@ $("#offsetMinus").on('click', function() {
 $("#offsetReset").on('click', function() {
   offsetTimeInit = 0;
   //$("#offsetTime").html(offsetTimeInit);
-  socket.emit('updateOffsetTimeMinus', {
+  socket.emit('updateOffsetTimeReset', {
     offsetTime: offsetTimeInit
   });
 });

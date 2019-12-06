@@ -167,6 +167,7 @@ function timeArray() {
 //- CurrentTime
 //--------------------------------------------------
 function nowClock() {
+  //console.log("hello");
   var d = new Date();
   nowInMs = d.getTime();
   var s = "";
