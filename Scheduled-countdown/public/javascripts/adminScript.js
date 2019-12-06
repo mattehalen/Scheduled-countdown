@@ -89,21 +89,23 @@ socket.emit("start", { });
 sleep(1000).then(() => {
   //console.log(startTitleArray);
   //console.log(startTimeArray);
-  socket.emit("sendDB_To_Socket", {"startTitleArray": startTitleArray,"startTimeArray":startTimeArray});
+  socket.emit("sendDB_To_Socket", {startTitleArray: startTitleArray, startTimeArray: startTimeArray});
   });
+//--------------------------------------------------
 
+
+
+
+//---------- I think i can delete this
 //--------------------------------------------------
 socket.on("sendDB_TO_Admin", function (data){
-  //console.log("sendDB_TO_Admin: " + data);
+  console.log("sendDB_TO_Admin: " + data);
   //console.log(data.socketDBArray.startTimeArray);
-
   startTimeArray  = data.socketDBArray.startTimeArray;
   startTitleArray = data.socketDBArray.startTitleArray;
-
   // printArraysToElements();
 });
 //--------------------------------------------------
-
 $("#updateScheduledTimesArray").on('click', function () {
   console.log("updateScheduledTimesArray");
 
@@ -114,7 +116,7 @@ $("#updateScheduledTimesArray").on('click', function () {
    socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
    socket.emit('updateScheduledTimesArray',{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
 });
-
+//--------------------------------------------------
 socket.on("updateDB_From_Socket", function(data) {
   //console.log("updateDB_From_Socket: ");
   startTimeArray = data.startTimeArray;
@@ -123,12 +125,18 @@ socket.on("updateDB_From_Socket", function(data) {
     printArraysToElements();
   });
 });
+//--------------------------------------------------
 
+
+
+
+
+
+
+//--------------------------------------------------
 // Button offsetPlus
 $("#offsetPlus").on('click', function() {
   offsetTimeInit += 1;
-
-  $("#offsetTime").html(offsetTimeInit);
   socket.emit('updateOffsetTimePlus', {
     offsetTime: offsetTimeInit
   });
@@ -137,52 +145,37 @@ $("#offsetPlus").on('click', function() {
 // Button offsetMinus
 $("#offsetMinus").on('click', function() {
   offsetTimeInit -= 1;
-
-  $("#offsetTime").html(offsetTimeInit);
+  //$("#offsetTime").html(offsetTimeInit);
+  socket.emit('updateOffsetTimeMinus', {
+    offsetTime: offsetTimeInit
+  });
+});
+//offsetReset
+$("#offsetReset").on('click', function() {
+  offsetTimeInit = 0;
+  //$("#offsetTime").html(offsetTimeInit);
   socket.emit('updateOffsetTimeMinus', {
     offsetTime: offsetTimeInit
   });
 });
 //--------------------------------------------------
-// socket.on('getMyLocalip', function (data) {
-//   console.log(data.myLocalip);
-//   myLocalip = data.myLocalip;
-//  });
+//updateOffsetTime_From_Socket
+socket.on("updateOffsetTime_From_Socket", function (data){
+  console.log("updateOffsetTime_From_Socket");
+  console.log(data);
+  offsetTimeInit = data.offsetTime;
+  $("#offsetTime").html(offsetTimeInit);
+});
+//--------------------------------------------------
 
 
 function printArraysToElements(){
   console.log("printArraysToElements");
-  console.log();
-  //document.getElementById("title0").value = "ITS WORKING"
      for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
      for(let i=0; i < startTimeArray.length; i++)   {document.getElementById("startTime"+i).value = startTimeArray[i]};
-
-  // sleep(1000).then(() => {
-  //   for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
-  //   for(let i=0; i < startTimeArray.length; i++)    {document.getElementById("startTime"+i).value = startTimeArray[i]};
-  //   });
-
-
 };
 
-
-
-
-
-
-
-    // var username = Math.random().toString(36).substr(2,8);
-    // socket.emit('join', { username: username });
-    //
-    // socket.on('user joined', function (data) {
-    //     $(".js-userjoined").html(data.username + ' Joined chat room');
-    //      $.each(data.users, function(index, user) {
-    //          $(".js-usersinchat").append('<span id ='+user+'>  <strong>'+user+'</strong></span>');
-    //      });
-    //  });
-
      socket.on('user disconnected', function (data) {
-        //$("#"+data.username).remove();
      });
 
     // //an event emitted from server
@@ -223,19 +216,19 @@ function printArraysToElements(){
 
  //});
 
-var typing = false;
-var timeout = undefined;
-function timeoutFunction(){
-  typing = false;
-  socket.emit(noLongerTypingMessage);
-}
-function onKeyDownNotEnter(){
-  if(typing == false) {
-    typing = true
-    socket.emit();
-    timeout = setTimeout(timeoutFunction, 5000);
-  } else {
-    clearTimeout(timeout);
-    timeout = setTimeout(timeoutFunction, 5000);
-  }
-}
+// var typing = false;
+// var timeout = undefined;
+// function timeoutFunction(){
+//   typing = false;
+//   socket.emit(noLongerTypingMessage);
+// }
+// function onKeyDownNotEnter(){
+//   if(typing == false) {
+//     typing = true
+//     socket.emit();
+//     timeout = setTimeout(timeoutFunction, 5000);
+//   } else {
+//     clearTimeout(timeout);
+//     timeout = setTimeout(timeoutFunction, 5000);
+//   }
+// }
