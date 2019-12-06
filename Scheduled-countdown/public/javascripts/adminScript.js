@@ -92,18 +92,37 @@ sleep(1000).then(() => {
   socket.emit("sendDB_To_Socket", {"startTitleArray": startTitleArray,"startTimeArray":startTimeArray});
   });
 
+//--------------------------------------------------
+socket.on("sendDB_TO_Admin", function (data){
+  //console.log("sendDB_TO_Admin: " + data);
+  //console.log(data.socketDBArray.startTimeArray);
+
+  startTimeArray  = data.socketDBArray.startTimeArray;
+  startTitleArray = data.socketDBArray.startTitleArray;
+
+  // printArraysToElements();
+});
+//--------------------------------------------------
 
 $("#updateScheduledTimesArray").on('click', function () {
   console.log("updateScheduledTimesArray");
 
-  //console.log("startTitleArray before: "+startTitleArray);
   for(let i=0; i < startTitleArray.length; i++) {startTitleArray[i] = $("#title"+i).val()}
   for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
+  console.log(startTimeArray);
   //console.log("startTitleArray after: "+startTitleArray + startTimeArray);
-  socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
-  socket.emit('updateScheduledTimesArray',{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+   socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+   socket.emit('updateScheduledTimesArray',{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
 });
 
+socket.on("updateDB_From_Socket", function(data) {
+  //console.log("updateDB_From_Socket: ");
+  startTimeArray = data.startTimeArray;
+  startTitleArray = data.startTitleArray;
+  sleep(100).then(() => {
+    printArraysToElements();
+  });
+});
 
 // Button offsetPlus
 $("#offsetPlus").on('click', function() {
@@ -125,13 +144,26 @@ $("#offsetMinus").on('click', function() {
   });
 });
 //--------------------------------------------------
-socket.on('getMyLocalip', function (data) {
-  console.log(data.myLocalip);
-  myLocalip = data.myLocalip;
- });
+// socket.on('getMyLocalip', function (data) {
+//   console.log(data.myLocalip);
+//   myLocalip = data.myLocalip;
+//  });
 
 
+function printArraysToElements(){
+  console.log("printArraysToElements");
+  console.log();
+  //document.getElementById("title0").value = "ITS WORKING"
+     for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
+     for(let i=0; i < startTimeArray.length; i++)   {document.getElementById("startTime"+i).value = startTimeArray[i]};
 
+  // sleep(1000).then(() => {
+  //   for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
+  //   for(let i=0; i < startTimeArray.length; i++)    {document.getElementById("startTime"+i).value = startTimeArray[i]};
+  //   });
+
+
+};
 
 
 
