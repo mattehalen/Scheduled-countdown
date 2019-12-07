@@ -10,7 +10,7 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 
 var ip = require("ip");
 var myLocalip = ip.address();
-console.log("index.js: "+ myLocalip);
+console.log("index.js: "+ myLocalip+":3000");
 
   //--------------------------------------------------
   // - Knappar på adminPage ./public/scheduledTimes.json

@@ -112,19 +112,24 @@ function timeArray() {
     // Audio Alarms
     //--------------------------------------------------
     var timeBuffer    = 1*1000
+    var sixMinuteMs  = (6*1000*60);
     var fiveMinuteMs  = (5*1000*60);
     var fourMinuteMs  = (4*1000*60);
     var threeMinuteMs = (3*1000*60);
     var twoMinuteMs   = (2*1000*60);
     var oneMinuteMs   = (1*1000*60);
 
+    // 5min 6larm
+    if (countDownTimeInMS > sixMinuteMs && countDownTimeInMS < (sixMinuteMs + timeBuffer)) {
+      document.getElementById('musiclong6').play();
+    }
     // 5min Alarm
     if (countDownTimeInMS > fiveMinuteMs && countDownTimeInMS < (fiveMinuteMs + timeBuffer)) {
       document.getElementById('music5').play();
     }
     // 4min Alarm
     if (countDownTimeInMS > fourMinuteMs && countDownTimeInMS < (fourMinuteMs + timeBuffer)) {
-      document.getElementById('music4').play();
+      document.getElementById('musiclong4').play();
     }
     // 3min Alarm
     if (countDownTimeInMS > threeMinuteMs && countDownTimeInMS < (threeMinuteMs + timeBuffer)) {
@@ -132,7 +137,7 @@ function timeArray() {
     }
     // 2min Alarm
     if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs + timeBuffer)) {
-      document.getElementById('music2').play();
+      document.getElementById('musiclong2').play();
     }
     // 1min Alarm
     if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs + timeBuffer)) {

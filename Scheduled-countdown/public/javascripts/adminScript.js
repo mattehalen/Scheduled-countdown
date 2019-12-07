@@ -137,7 +137,11 @@ socket.on("pushGetscheduledTimes", function(data) {
 
 
 
-
+function delete_button_click(listIndex)
+  {
+      //alert(listIndex);
+      document.getElementById(listIndex).remove();
+  }
 
 
 //--------------------------------------------------

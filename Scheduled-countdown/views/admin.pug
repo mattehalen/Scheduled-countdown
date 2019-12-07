@@ -16,11 +16,12 @@ block content
     div
       form(method='POST' action='/admin/submit')
         each person, index in scheduledTimes
-          input(type='text', value=person.title, name="title" + index, id="title" + index)
-          //input(type='text', value=person.startTime, name="startTime" + index, id="startTime" + index)
-          input(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
-          button.delete(name="deleteButton" + index) x
-          br
+          div(id="listIndex" + index)
+            input(type='text', value=person.title, name="title" + index, id="title" + index)
+            //input(type='text', value=person.startTime, name="startTime" + index, id="startTime" + index)
+            input(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
+            button.delete(type="reset",name="deleteButton" + index, id="listIndex" + index, onClick="delete_button_click(this.id)") x
+            br
         //button(type='submit') update
       button#updateScheduledTimesArray update Socketio
       button#loadDefaultArray loadDefault Socketio
