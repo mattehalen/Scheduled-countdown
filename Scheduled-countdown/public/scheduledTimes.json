@@ -49,6 +49,11 @@
             "title": "Queen",
             "startTime": "22:40",
             "id": "caroline"
+        },
+        {
+            "title": "New row added",
+            "startTime": "12:00",
+            "id": "4"
         }
     ]
 }

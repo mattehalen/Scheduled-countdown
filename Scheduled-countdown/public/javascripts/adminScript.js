@@ -58,7 +58,55 @@ function getOffsetTime(){
 getOffsetTime();
 //--------------------------------------------------
 
+//--------------------------------------------------
+// - sortscheduledTimes
+//--------------------------------------------------
+function sortscheduledTimes(){
+  const request = async () => {
+      const response = await fetch('/scheduledTimes.json');
+      const json = await response.json();
+      scheduledTimesArray = json;
+      console.log("Before Sorting");
+      console.log(scheduledTimesArray.profiles);
 
+//--------------------------------------------------
+      // sleep(1000).then(() => {
+      //   console.log("Sleep");
+      //   scheduledTimesArray.profiles.sort(function (a, b)
+      //     {
+      //       return a.startTime.localeCompare(b.startTime);
+      //     });
+      //   });
+//--------------------------------------------------
+
+
+
+
+      // for(let i=0; i < startTitleArray.length; i++)   {scheduledTimesArray.profiles[i].title = startTitleArray[i]};
+      // for(let i=0; i < startTimeArray.length; i++)   {scheduledTimesArray.profiles[i].startTime = startTimeArray[i]};
+
+      //scheduledTimesArray.profiles.startTime
+
+      // printArraysToElements();
+// //----------------------------------------
+//       var i;
+//       var a;
+//       var b;
+// //      startTimeArray = [];
+// //      startTitleArray = [];
+//       for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
+//         a = scheduledTimesArray.profiles[i].title;
+//         startTitleArray.push(a);
+//         b = scheduledTimesArray.profiles[i].startTime;
+//         startTimeArray.push(b);
+//       }
+//   //----------------------------------------
+  }
+
+  request();
+};
+ sortscheduledTimes();
+//--------------------------------------------------
 
 
 
@@ -137,11 +185,7 @@ socket.on("pushGetscheduledTimes", function(data) {
 
 
 
-function delete_button_click(listIndex)
-  {
-      //alert(listIndex);
-      document.getElementById(listIndex).remove();
-  }
+
 
 
 //--------------------------------------------------
@@ -204,11 +248,15 @@ socket.on("updateOffsetTime_From_Socket", function (data){
 });
 //--------------------------------------------------
 
-
+function delete_button_click(listIndex){
+      //alert(listIndex);
+      document.getElementById(listIndex).remove();
+  };
 function printArraysToElements(){
   console.log("printArraysToElements");
      for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
      for(let i=0; i < startTimeArray.length; i++)   {document.getElementById("startTime"+i).value = startTimeArray[i]};
+
 };
 function getElementsToArrays(){
   console.log("getElementsToArrays()");
