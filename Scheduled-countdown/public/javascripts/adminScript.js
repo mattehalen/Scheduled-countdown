@@ -2,6 +2,8 @@ var startTimeArray  = [];
 var startTitleArray = [];
 var offsetTimejson  = [];
 var offsetTimeInit  = [];
+var scheduledTimesArrayGlobal = [];
+var scheduledTimesArrayBuffer     = [];
 
 var myLocalip = document.getElementById("myLocalip").textContent;
 var myLocalipAndPort = myLocalip+":3000"
@@ -70,42 +72,30 @@ function sortscheduledTimes(){
       console.log(scheduledTimesArray.profiles);
 
 //--------------------------------------------------
-      // sleep(1000).then(() => {
-      //   console.log("Sleep");
-      //   scheduledTimesArray.profiles.sort(function (a, b)
-      //     {
-      //       return a.startTime.localeCompare(b.startTime);
-      //     });
-      //   });
+      sleep(100).then(() => {
+        console.log("Sleep");
+        scheduledTimesArray.profiles.sort(function (a, b)
+          {
+            return a.startTime.localeCompare(b.startTime);
+          });
+          scheduledTimesArrayBuffer = scheduledTimesArray;
+          console.log(scheduledTimesArrayBuffer.profiles[0].title);
+
+          for(let i=0; i < startTitleArray.length; i++)   {startTitleArray[i] = scheduledTimesArrayBuffer.profiles[i].title};
+          for(let i=0; i < startTimeArray.length; i++)   {startTimeArray[i] = scheduledTimesArrayBuffer.profiles[i].startTime};
+
+          sleep(100).then(() => {
+            console.log("sleep inside of SLEEP");
+            printArraysToElements();
+            socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+
+          });
+        });
 //--------------------------------------------------
-
-
-
-
-      // for(let i=0; i < startTitleArray.length; i++)   {scheduledTimesArray.profiles[i].title = startTitleArray[i]};
-      // for(let i=0; i < startTimeArray.length; i++)   {scheduledTimesArray.profiles[i].startTime = startTimeArray[i]};
-
-      //scheduledTimesArray.profiles.startTime
-
-      // printArraysToElements();
-// //----------------------------------------
-//       var i;
-//       var a;
-//       var b;
-// //      startTimeArray = [];
-// //      startTitleArray = [];
-//       for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
-//         a = scheduledTimesArray.profiles[i].title;
-//         startTitleArray.push(a);
-//         b = scheduledTimesArray.profiles[i].startTime;
-//         startTimeArray.push(b);
-//       }
-//   //----------------------------------------
   }
-
   request();
 };
- sortscheduledTimes();
+ //sortscheduledTimes();
 //--------------------------------------------------
 
 
@@ -187,7 +177,10 @@ socket.on("pushGetscheduledTimes", function(data) {
 
 
 
-
+$("#sorting").on('click', function() {
+  console.log("knapp funkar");
+sortscheduledTimes();
+});
 //--------------------------------------------------
 // Button offsetPlus
 $("#offsetPlus").on('click', function() {

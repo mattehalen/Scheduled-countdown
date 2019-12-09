@@ -1,7 +1,7 @@
 {
     "profiles": [
         {
-            "title": "Greatest Show 2",
+            "title": "Greatest Show",
             "startTime": "18:25",
             "id": "tom"
         },
@@ -49,11 +49,6 @@
             "title": "Queen",
             "startTime": "22:40",
             "id": "caroline"
-        },
-        {
-            "title": "New row added",
-            "startTime": "12:00",
-            "id": "4"
         }
     ]
 }

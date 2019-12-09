@@ -14,6 +14,7 @@ var cueTimeText = document.getElementById("cueTime");
 var offsetTime = document.getElementById("offsetTime");
 var offsetTimeInit = 0;
 var myArray = "";
+scheduledTimesArrayGlobal = [];
 var scheduledTimesArray = [];
 var offsetTimejson = [];
 //--------------------------------------------------
