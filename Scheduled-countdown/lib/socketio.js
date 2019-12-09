@@ -8,6 +8,8 @@ var ip = require("ip");
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 
+var files = fs.readdirSync('./public/photos');
+console.log(files);
 //--------------------------------------------------
 //-----updateScheduledTimesjson
 //--------------------------------------------------

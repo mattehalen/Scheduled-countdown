@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  p(hidden='')#myLocalip= myLocalip
+  #topRow.topRow(hidden='')
+    #nowTopRow.topRowText
+  #mainContentBox.row.mainContentBox(hidden='')
+    #5minute.fiveMinuteCenter hello
+  //div(style='overflow:hidden; height:100%' hidden="")
+  div(style='overflow:hidden; height:100%' id="slideshow")
+    object(data='https://slides.com/mathiashalen/okej-vad-ar-detta/fullscreen' width='100%' height='112%' type='text/html' style="overflow:hidden")
+    | Alternative Content
+
+  
+  
+  
+  script(src='/socket.io/socket.io.js')
+  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+  script(src='static/javascripts/script_Slideshow_1.js')

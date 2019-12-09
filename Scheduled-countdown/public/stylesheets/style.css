@@ -228,3 +228,11 @@ input[type=time] {
 
 
 }
+
+.fiveMinuteCenter{
+  text-align: center;
+  margin: auto;
+  font-size: 23vh;
+  padding-top: 20vh;
+
+}

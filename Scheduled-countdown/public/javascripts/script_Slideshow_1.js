@@ -103,52 +103,52 @@ getOffsetTime();
 //--------------------------------------------------
 function timeArray() {
   //--------------------------------------------------
-  if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs + countUp)) {
+  if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs)) {
     var countDownTimeInMS = startTimeInMs - nowInMs;
     //console.log(countDownTimeInMS);
     //console.log(5*1000*60);
-    titleText.textContent = startTitleArray[startTimeIndex-1];
+    //titleText.textContent = startTitleArray[startTimeIndex-1];
 
 
-    // Audio Alarms
-    //--------------------------------------------------
-    var timeBuffer    = 1*1000
-    var sixMinuteMs  = (6*1000*60);
-    var fiveMinuteMs  = (5*1000*60);
-    var fourMinuteMs  = (4*1000*60);
-    var threeMinuteMs = (3*1000*60);
-    var twoMinuteMs   = (2*1000*60);
-    var oneMinuteMs   = (1*1000*60);
-
-    // 5min 6larm
-    if (countDownTimeInMS > sixMinuteMs && countDownTimeInMS < (sixMinuteMs + timeBuffer)) {
-      document.getElementById('musiclong6').play();
-    }
-    // 5min Alarm
-    if (countDownTimeInMS > fiveMinuteMs && countDownTimeInMS < (fiveMinuteMs + timeBuffer)) {
-      document.getElementById('music5').play();
-    }
-    // 4min Alarm
-    if (countDownTimeInMS > fourMinuteMs && countDownTimeInMS < (fourMinuteMs + timeBuffer)) {
-      document.getElementById('musiclong4').play();
-    }
-    // 3min Alarm
-    if (countDownTimeInMS > threeMinuteMs && countDownTimeInMS < (threeMinuteMs + timeBuffer)) {
-      document.getElementById('music3').play();
-    }
-    // 2min Alarm
-    if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs + timeBuffer)) {
-      document.getElementById('musiclong2').play();
-    }
-    // 1min Alarm
-    if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs + timeBuffer)) {
-      document.getElementById('music1').play();
-    }
-    //--------------------------------------------------
-    hideNowClock();
+    // // Audio Alarms
+    // //--------------------------------------------------
+    // var timeBuffer    = 1*1000
+    // var sixMinuteMs  = (6*1000*60);
+    // var fiveMinuteMs  = (5*1000*60);
+    // var fourMinuteMs  = (4*1000*60);
+    // var threeMinuteMs = (3*1000*60);
+    // var twoMinuteMs   = (2*1000*60);
+    // var oneMinuteMs   = (1*1000*60);
+    //
+    // // 5min 6larm
+    // if (countDownTimeInMS > sixMinuteMs && countDownTimeInMS < (sixMinuteMs + timeBuffer)) {
+    //   document.getElementById('musiclong6').play();
+    // }
+    // // 5min Alarm
+    // if (countDownTimeInMS > fiveMinuteMs && countDownTimeInMS < (fiveMinuteMs + timeBuffer)) {
+    //   document.getElementById('music5').play();
+    // }
+    // // 4min Alarm
+    // if (countDownTimeInMS > fourMinuteMs && countDownTimeInMS < (fourMinuteMs + timeBuffer)) {
+    //   document.getElementById('musiclong4').play();
+    // }
+    // // 3min Alarm
+    // if (countDownTimeInMS > threeMinuteMs && countDownTimeInMS < (threeMinuteMs + timeBuffer)) {
+    //   document.getElementById('music3').play();
+    // }
+    // // 2min Alarm
+    // if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs + timeBuffer)) {
+    //   document.getElementById('musiclong2').play();
+    // }
+    // // 1min Alarm
+    // if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs + timeBuffer)) {
+    //   document.getElementById('music1').play();
+    // }
+    // //--------------------------------------------------
+    showFiveMinuteClock();
 
   } else {
-        new ShowNowClock();
+        new hideFiveMinuteClock();
 
 
 
@@ -160,8 +160,8 @@ function timeArray() {
         startTimeAt = startTimeArray[startTimeIndex];
         startTimeIndex++;
 
-        startText.textContent = ("");
-        titleText.textContent = ("");
+        // startText.textContent = ("");
+        // titleText.textContent = ("");
       }
 
   setTimeout(timeArray, setTimeoutTime);
@@ -181,7 +181,7 @@ function nowClock() {
   s += (10 > d.getMinutes() ? "0": "") + d.getMinutes() + ":";
   s += (10 > d.getSeconds() ? "0": "") + d.getSeconds();
 
-  nowText.textContent = s;
+  //nowText.textContent = s;
   nowTopRow.textContent = s;
   setTimeout(nowClock, setTimeoutTime - d.getTime() % 1000 + 20);
   return d;
@@ -224,9 +224,9 @@ function msToTime(s) {
 
   if (displayTimeBool === true) {
     if (positiveDiffTimeBoole === true) {
-      startText.textContent = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
+      //startText.textContent = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
     } else {
-      startText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
+      //startText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
     }
   }
   fiveMinuteFromMsToTime = mins;
@@ -326,13 +326,22 @@ function showAdmin() {
   document.getElementById("adminPage").style.display = "block";
 }
 
-function hideNowClock() {
-  document.getElementById("centerNowText").style.display = "none";
-  document.getElementById("titleContentBox").style.display = "block";
+function hideFiveMinuteClock() {
+  //console.log("hideFiveMinuteClock");
+  document.getElementById("mainContentBox").style.display = "none";
+  document.getElementById("topRow").style.display = "none";
+  document.getElementById("slideshow").style.display = "block";
+
+  // document.getElementById("centerNowText").style.display = "none";
+  // document.getElementById("titleContentBox").style.display = "block";
 }
-function ShowNowClock() {
-  document.getElementById("centerNowText").style.display = "block";
-  document.getElementById("titleContentBox").style.display = "none";
+function showFiveMinuteClock() {
+  //console.log("showFiveMinuteClock");
+    document.getElementById("mainContentBox").style.display = "block";
+    document.getElementById("topRow").style.display = "block";
+    document.getElementById("slideshow").style.display = "none";
+  // document.getElementById("centerNowText").style.display = "block";
+  // document.getElementById("titleContentBox").style.display = "none";
 }
 
 function toggleMainContentBox() {
@@ -407,28 +416,28 @@ socket.on("updateOffsetTime_From_Socket", function(data) {
         $("#"+data.username).remove();
      });
 
-//--------------------------------------------------
-var playButton = document.querySelector('#play');
-playButton.hidden = false;
+// //--------------------------------------------------
+// var playButton = document.querySelector('#play');
+// playButton.hidden = false;
 
-function startPlayback() {
-  return document.querySelector('.countDownSound').play();
-  playButton.hidden = true;
-}
+// function startPlayback() {
+//   return document.querySelector('.countDownSound').play();
+//   playButton.hidden = true;
+// }
 
-//console.log('Attempting to play automatically...');
-startPlayback().then(function() {
-  //console.log('The play() Promise fulfilled! Rock on!');
-}).catch(function(error) {
-  //console.log('The play() Promise rejected!');
-  //console.log('Use the Play button instead.');
-  console.log(error);
-  // The user interaction requirement is met if
-  // playback is triggered via a click event.
-  playButton.addEventListener('click', startPlayback);
-});
+// //console.log('Attempting to play automatically...');
+// startPlayback().then(function() {
+//   //console.log('The play() Promise fulfilled! Rock on!');
+// }).catch(function(error) {
+//   //console.log('The play() Promise rejected!');
+//   //console.log('Use the Play button instead.');
+//   console.log(error);
+//   // The user interaction requirement is met if
+//   // playback is triggered via a click event.
+//   playButton.addEventListener('click', startPlayback);
+// });
 
 // BUTTON PUSH
-$("#play").on('click', function () {
-  playButton.hidden = true;
-});
+// $("#play").on('click', function () {
+//   playButton.hidden = true;
+// });

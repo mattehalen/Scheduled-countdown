@@ -175,7 +175,9 @@ socket.on("pushGetscheduledTimes", function(data) {
 
 
 
-
+$("#getPhotos").on('click', function() {
+  console.log("getPhotos knapp funkar");
+});
 
 $("#sorting").on('click', function() {
   console.log("knapp funkar");

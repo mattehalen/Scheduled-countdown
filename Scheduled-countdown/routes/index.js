@@ -210,4 +210,14 @@ router.get('/admin', function(req, res, next) {
   });
 });
 
+router.get('/slideshow_1', function(req, res, next) {
+  res.render('slideshow_1', {
+    title: 'Scheduled-CountDown',
+    now: "now",
+    scheduledTimes : scheduledTimes.profiles,
+    offsetTime: variables.offsetTime,
+    myLocalip: myLocalip
+  });
+});
+
 module.exports = router;
