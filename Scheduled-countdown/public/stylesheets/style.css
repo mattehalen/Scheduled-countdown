@@ -29,6 +29,9 @@ h2 {
 p {
   font-size: 30px;
   font-size: 1.5vw;
+  margin-block-start: 10px;
+  margin-block-end: 10px;
+  color:#FFF;
 }
 
 button {
@@ -136,10 +139,12 @@ button {
 }
 .offsetTime {
   color: white;
-  padding-top: 2%;
   font-size: 60px;
   font-size: 5.5vw;
+}
 
+.buttondiv {
+  font-size: 0.5em;
 }
 
 .floatl{

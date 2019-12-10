@@ -7,23 +7,24 @@ block content
   #mainContentBox.mainContentBox
     .floatl.offsetTime
       p#offsetTime.offsetTime= offsetTime
-      div(style="white-space: pre")
         p Adjust Time
-        button#offsetMinus.commandButton -
-        button#offsetPlus.commandButton +
-        button#offsetReset.commandButton Reset
-        br
-        button#sorting.commandButton Sort
-        button#updateScheduledTimesArray.commandButton Update
-        br
-        button#loadDefaultArray.commandButton Load Default
-        button#writeDefaultArray.commandButton Save Default
+        .buttondiv
+          button#offsetMinus.commandButton -
+          button#offsetPlus.commandButton +
+          button#offsetReset.commandButton Reset
+        .buttondiv
+          button#sorting.commandButton Sort
+          button#updateScheduledTimesArray.commandButton Update
+        .buttondiv
+          button#loadDefaultArray.commandButton Load
+          button#writeDefaultArray.commandButton Save
           //form(method='POST' action='/admin/loadDefault')
             button(type='submit') loadDefault
           //form(method='POST' action='/admin/writeToDefault')
             button(type='submit') writeToDefault
-        form(method='POST' action='/admin/addNewRowDefault')
-          button(type='submit' class='commandButton') Add Row
+        .buttondiv
+          form(method='POST' action='/admin/addNewRowDefault')
+            button(type='submit' class='commandButton') Add Row
         
 
 
@@ -41,7 +42,7 @@ block content
 
     div.floatl#preview
       p Preview
-      iframe.preview(src='http://192.168.100.9:3000')
+      iframe.preview(src='http://' + myLocalip + ':3000')
       
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   script(src='/socket.io/socket.io.js')
