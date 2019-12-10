@@ -3,52 +3,52 @@
         {
             "title": "Greatest Show",
             "startTime": "18:25",
-            "id": "tom"
+            "cueLength": "tom"
         },
         {
             "title": "WWWY",
             "startTime": "19:10",
-            "id": "sarah"
+            "cueLength": "sarah"
         },
         {
             "title": "Magic",
             "startTime": "19:45",
-            "id": "caroline"
+            "cueLength": "caroline"
         },
         {
             "title": "Eurythmics",
             "startTime": "20:10",
-            "id": "caroline"
+            "cueLength": "caroline"
         },
         {
             "title": "Celebration",
             "startTime": "20:40",
-            "id": "caroline"
+            "cueLength": "caroline"
         },
         {
             "title": "Star Catchers",
             "startTime": "21:05",
-            "id": "caroline"
+            "cueLength": "caroline"
         },
         {
             "title": "Blue Xmas",
             "startTime": "21:30",
-            "id": "caroline"
+            "cueLength": "caroline"
         },
         {
             "title": "Peggy Sued",
             "startTime": "21:55",
-            "id": "caroline"
+            "cueLength": "caroline"
         },
         {
             "title": "Uptown Funk",
             "startTime": "22:15",
-            "id": "caroline"
+            "cueLength": "caroline"
         },
         {
             "title": "Queen",
             "startTime": "22:40",
-            "id": "caroline"
+            "cueLength": "caroline"
         }
     ]
 }

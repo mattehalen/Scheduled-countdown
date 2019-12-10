@@ -3,13 +3,11 @@ var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 const fs = require('fs');
 var startTitleArray = [];
 var startTimeArray = [];
+var cueLengthArray  = [];
 var offsetTimeInit = [];
 var ip = require("ip");
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
-
-
-var files = fs.readdirSync('./public/photos');
-console.log(files);
+var countDownTime = "";
 //--------------------------------------------------
 //-----updateScheduledTimesjson
 //--------------------------------------------------
@@ -36,8 +34,10 @@ function updateScheduledTimesjson(){
         return
     }
 
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = startTitleArray[i]}
+    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
+    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
+
 
   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
@@ -185,8 +185,11 @@ function writeDefaultjson(){
         return
     }
 
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = startTitleArray[i]}
+    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
+    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
+
+
     console.log("startTitleArray: "+ startTitleArray);
   fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(customer, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
@@ -229,14 +232,19 @@ var users = [];
     socket.on("writeToScheduledTimesjson", function (data){
         console.log("writeToScheduledTimesjson");
       startTitleArray = data.startTitleArray;
-      startTimeArray = data.startTimeArray;
+      startTimeArray  = data.startTimeArray;
+      cueLengthArray  = data.cueLengthArray;
       updateScheduledTimesjson();
 
     });
     //--------------------------------------------------
     socket.on("updateScheduledTimesArray", function(data){
       console.log("updateScheduledTimesArray: " + data.startTimeArray);
-      io.emit("updateDB_From_Socket",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+      io.emit("updateDB_From_Socket",{
+        startTitleArray: startTitleArray,
+        startTimeArray: startTimeArray,
+        cueLengthArray: cueLengthArray
+      });
     });
     //--------------------------------------------------
     socket.on("updateOffsetTimePlus", function(data){
@@ -276,33 +284,45 @@ var users = [];
     socket.on("writeDefaultToSocket", function(data){
       console.log("writeDefaultToSocket: " + data.startTimeArray);
 
-       startTimeArray = data.startTimeArray;
-       startTitleArray = data.startTitleArray;
+       startTimeArray   = data.startTimeArray;
+       startTitleArray  = data.startTitleArray;
+       cueLengthArray   = data.cueLengthArray;
 
       writeDefaultjson();
     });
     //--------------------------------------------------
+    socket.on("fiveMinPageLoad_To_Socket", function (data){
+        console.log("fiveMinPageLoad_To_Socket: "+data);
+        console.log(data.countDownTime);
+        io.emit("sendMin_To_countDown",{
+           countDownTime: data
+         });
+    });
+    socket.on("fiveMinPageStart", function (data){
 
-
-    socket.on('join', function (user){
-       socket.username = user.username;
-       users.push(socket.username);
-       io.emit('user joined', { 'username': user.username, users:users });
     });
 
-    socket.on('typing', function (msg) {
-        io.emit('typing', { 'message': msg.message, 'username': msg.username });
-    });
 
-    socket.on('new_message', function (msg) {
-         io.emit('chat message', { 'message': msg.message, 'username': msg.username });
-    });
 
-    socket.on('disconnect', function(){
-        console.log('user disconnected');
-        users.splice(users.indexOf(socket.username), 1);
-      io.emit('user disconnected', { 'username': socket.username });
-    });
+    // socket.on('join', function (user){
+    //    socket.username = user.username;
+    //    users.push(socket.username);
+    //    io.emit('user joined', { 'username': user.username, users:users });
+    // });
+    //
+    // socket.on('typing', function (msg) {
+    //     io.emit('typing', { 'message': msg.message, 'username': msg.username });
+    // });
+    //
+    // socket.on('new_message', function (msg) {
+    //      io.emit('chat message', { 'message': msg.message, 'username': msg.username });
+    // });
+    //
+    // socket.on('disconnect', function(){
+    //     console.log('user disconnected');
+    //     users.splice(users.indexOf(socket.username), 1);
+    //   io.emit('user disconnected', { 'username': socket.username });
+    // });
  });
 
 module.exports = socketio;

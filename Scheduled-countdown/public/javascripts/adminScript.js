@@ -1,5 +1,6 @@
 var startTimeArray  = [];
 var startTitleArray = [];
+var cueLengthArray  = [];
 var offsetTimejson  = [];
 var offsetTimeInit  = [];
 var scheduledTimesArrayGlobal = [];
@@ -28,13 +29,17 @@ function getscheduledTimes(){
       var i;
       var a;
       var b;
+      var c;
       startTimeArray = [];
       startTitleArray = [];
+      cueLengthArray  = [];
       for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
         a = scheduledTimesArray.profiles[i].title;
         startTitleArray.push(a);
         b = scheduledTimesArray.profiles[i].startTime;
         startTimeArray.push(b);
+        c = scheduledTimesArray.profiles[i].cueLength;
+        cueLengthArray.push(c);
 //----------------------------------------
       }
   }
@@ -85,12 +90,17 @@ function sortscheduledTimes(){
 
           for(let i=0; i < startTitleArray.length; i++)   {startTitleArray[i] = scheduledTimesArrayBuffer.profiles[i].title};
           for(let i=0; i < startTimeArray.length; i++)   {startTimeArray[i] = scheduledTimesArrayBuffer.profiles[i].startTime};
+          for(let i=0; i < cueLengthArray.length; i++)   {cueLengthArray[i] = scheduledTimesArrayBuffer.profiles[i].cueLength};
+          //cueLengthArray
 
           sleep(100).then(() => {
             console.log("sleep inside of SLEEP");
             printArraysToElements();
-            socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
-
+            socket.emit("writeToScheduledTimesjson",{
+              startTitleArray: startTitleArray,
+              startTimeArray: startTimeArray,
+              cueLengthArray: cueLengthArray
+            });
           });
         });
 //--------------------------------------------------
@@ -169,7 +179,11 @@ socket.emit("start", { });
 sleep(1000).then(() => {
   //console.log(startTitleArray);
   //console.log(startTimeArray);
-  socket.emit("sendDB_To_Socket", {startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+  socket.emit("sendDB_To_Socket", {
+    startTitleArray: startTitleArray,
+    startTimeArray: startTimeArray,
+    cueLengthArray: cueLengthArray
+  });
   });
 //--------------------------------------------------
 
@@ -181,6 +195,7 @@ sleep(1000).then(() => {
 socket.on("sendDB_TO_Admin", function (data){
   startTimeArray  = data.socketDBArray.startTimeArray;
   startTitleArray = data.socketDBArray.startTitleArray;
+  cueLengthArray  = data.socketDBArray.cueLengthArray;
 });
 //--------------------------------------------------
 $("#updateScheduledTimesArray").on('click', function () {
@@ -188,16 +203,27 @@ $("#updateScheduledTimesArray").on('click', function () {
 
   for(let i=0; i < startTitleArray.length; i++) {startTitleArray[i] = $("#title"+i).val()}
   for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
-  console.log(startTimeArray);
+  for(let i=0; i < cueLengthArray.length; i++) {cueLengthArray[i] = $("#cueLength"+i).val()}
+
+  console.log(cueLengthArray);
   //console.log("startTitleArray after: "+startTitleArray + startTimeArray);
-   socket.emit("writeToScheduledTimesjson",{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
-   socket.emit('updateScheduledTimesArray',{startTitleArray: startTitleArray, startTimeArray: startTimeArray});
+   socket.emit("writeToScheduledTimesjson",{
+     startTitleArray: startTitleArray,
+     startTimeArray: startTimeArray,
+     cueLengthArray: cueLengthArray
+   });
+   socket.emit('updateScheduledTimesArray',{
+     startTitleArray: startTitleArray,
+     startTimeArray: startTimeArray,
+     cueLengthArray: cueLengthArray
+   });
 });
 //--------------------------------------------------
 socket.on("updateDB_From_Socket", function(data) {
   //console.log("updateDB_From_Socket: ");
-  startTimeArray = data.startTimeArray;
+  startTimeArray  = data.startTimeArray;
   startTitleArray = data.startTitleArray;
+  cueLengthArray  = data.cueLengthArray;
   sleep(100).then(() => {
     printArraysToElements();
   });
@@ -209,17 +235,11 @@ socket.on("pushGetscheduledTimes", function(data) {
   getscheduledTimes();
 
   sleep(100).then(() => {
-    console.log("JFKLDJKLFdklsfk");
     printArraysToElements();
   });
 
 });
 
-
-
-$("#getPhotos").on('click', function() {
-  console.log("getPhotos knapp funkar");
-});
 
 $("#sorting").on('click', function() {
   console.log("knapp funkar");
@@ -269,7 +289,9 @@ $("#writeDefaultArray").on('click', function() {
     console.log("AFTER SLEEP: " + startTitleArray);
     socket.emit('writeDefaultToSocket', {
       startTitleArray: startTitleArray,
-      startTimeArray: startTimeArray});
+      startTimeArray: startTimeArray,
+      cueLengthArray: cueLengthArray
+    });
 
   });
 
@@ -293,12 +315,15 @@ function printArraysToElements(){
   console.log("printArraysToElements");
      for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
      for(let i=0; i < startTimeArray.length; i++)   {document.getElementById("startTime"+i).value = startTimeArray[i]};
+     for(let i=0; i < cueLengthArray.length; i++)   {document.getElementById("cueLength"+i).value = cueLengthArray[i]};
+
 
 };
 function getElementsToArrays(){
   console.log("getElementsToArrays()");
   for(let i=0; i < startTitleArray.length; i++) {startTitleArray[i] = $("#title"+i).val()}
   for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
+  for(let i=0; i < cueLengthArray.length; i++) {cueLengthArray[i] = $("#cueLength"+i).val()}
   console.log(startTimeArray);
 };
 

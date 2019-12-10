@@ -26,12 +26,13 @@ var countUp = 5; // how many minutes after
 countUp = countUp *60000; // convert to M
 var offsetTime = 0;
 
-var startTimeAt = "";
-var startTimeArray = [""];
+var startTimeAt     = "";
+var startTimeArray  = [""];
 var startTitleArray = [""];
-var startTimeIndex = 0;
+var cueLengthArray  = [""];
+var startTimeIndex  = 0;
 
-var cueStartTimeAt = "";
+var cueStartTimeAt  = "";
 var cueStartTimeInMs = "";
 var cueTimeInMs = 0;
 var cueArray = [""];
@@ -42,6 +43,7 @@ var startTimeInMs = 0;
 
 var displayTimeBool = false;
 var positiveDiffTimeBoole = false;
+var sendMin_To_countDownBoole = 0;
 
 var fiveMinuteString = "";
 var fiveMinuteInMs = 5 *60000;
@@ -61,6 +63,7 @@ function getscheduledTimes(){
       var i;
       var a;
       var b;
+      var c;
       startTimeArray = [];
       startTitleArray = [];
       for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
@@ -68,6 +71,8 @@ function getscheduledTimes(){
         startTitleArray.push(a);
         b = scheduledTimesArray.profiles[i].startTime;
         startTimeArray.push(b);
+        c = scheduledTimesArray.profiles[i].cueLength;
+        startTimeArray.push(c);
       }
   }
 
@@ -120,35 +125,66 @@ function timeArray() {
     var twoMinuteMs   = (2*1000*60);
     var oneMinuteMs   = (1*1000*60);
 
-    // 5min 6larm
+    //  6larm
     if (countDownTimeInMS > sixMinuteMs && countDownTimeInMS < (sixMinuteMs + timeBuffer)) {
       document.getElementById('musiclong6').play();
     }
     // 5min Alarm
     if (countDownTimeInMS > fiveMinuteMs && countDownTimeInMS < (fiveMinuteMs + timeBuffer)) {
       document.getElementById('music5').play();
+
+      if (sendMin_To_countDownBoole != 5){
+        sendMin_To_countDownBoole = 5;
+        socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+
+      };
     }
     // 4min Alarm
     if (countDownTimeInMS > fourMinuteMs && countDownTimeInMS < (fourMinuteMs + timeBuffer)) {
       document.getElementById('musiclong4').play();
+
+      if (sendMin_To_countDownBoole != 4){
+        sendMin_To_countDownBoole = 4;
+        socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+      };
     }
     // 3min Alarm
     if (countDownTimeInMS > threeMinuteMs && countDownTimeInMS < (threeMinuteMs + timeBuffer)) {
       document.getElementById('music3').play();
+
+      if (sendMin_To_countDownBoole != 3){
+        sendMin_To_countDownBoole = 3;
+        socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+
+      };
     }
     // 2min Alarm
     if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs + timeBuffer)) {
       document.getElementById('musiclong2').play();
+
+      if (sendMin_To_countDownBoole != 2){
+        sendMin_To_countDownBoole = 2;
+        socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+
+      };
     }
     // 1min Alarm
     if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs + timeBuffer)) {
       document.getElementById('music1').play();
+
+      if (sendMin_To_countDownBoole != 1){
+        sendMin_To_countDownBoole = 1;
+        socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+
+      };
     }
     //--------------------------------------------------
     hideNowClock();
+    //console.log("sendMin_To_countDownBoole: "+sendMin_To_countDownBoole);
 
   } else {
         new ShowNowClock();
+        sendMin_To_countDownBoole = 0;
 
 
 
@@ -386,7 +422,8 @@ var socket = io.connect(myLocalipAndPort);
 socket.on("updateDB_From_Socket", function(data) {
   //console.log("updateDB_From_Socket: Hello Here i am");
   startTitleArray = data.startTitleArray;
-  startTimeArray = data.startTimeArray;
+  startTimeArray  = data.startTimeArray;
+  cueLengthArray  = data.cueLengthArray;
 
   startTimeInMs = 0;
   startTimeAt = null;

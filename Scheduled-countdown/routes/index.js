@@ -39,6 +39,8 @@ console.log("index.js: "+ myLocalip+":3000");
 
       for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))}
       for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))}
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))}
+
 
 
   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
@@ -87,7 +89,7 @@ router.post('/admin/addNewRowDefault', function(req, res, next){
 
   fs.readFile("./public/scheduledTimes.json", function (err, data) {
     var json = JSON.parse(data);
-    var feed = {title: "New row added", startTime: "12:00", id: "4"};
+    var feed = {title: "New row added", startTime: "12:00", cueLength: "00:01:10"};
 
     json.profiles.push(feed);
     addString = JSON.stringify(json, null, 4);
@@ -210,9 +212,9 @@ router.get('/admin', function(req, res, next) {
   });
 });
 
-router.get('/transparentTest', function(req, res, next) {
-  res.render('transparentTest', {
-    title: 'transparentTest',
+router.get('/Countdown', function(req, res, next) {
+  res.render('Countdown', {
+    title: 'Countdown',
     now: "now",
     scheduledTimes : scheduledTimes.profiles,
     offsetTime: variables.offsetTime,
