@@ -2,20 +2,21 @@ extends layout
 
 block content
   p(hidden='')#myLocalip= myLocalip
-  .topRow(style='cursor: pointer;' onclick='toggleMainContentBox()')
+  .topRow(style="position: fixed")
     #nowTopRow.topRowText
   #mainContentBox.row.mainContentBox
     .offsetTime
       p#offsetTime.offsetTime= offsetTime
-      div
+      div(style="white-space: pre")
         button#offsetPlus offset + Socketio
         button#offsetMinus offset - Socketio
+        br
         button#offsetReset Reset - Socketio
         button#sorting Sorting
         
 
 
-    div
+    div()
       form(method='POST' action='/admin/submit')
         each person, index in scheduledTimes
           div(id="listIndex" + index)
@@ -27,6 +28,7 @@ block content
         //button(type='submit') update
       button#updateScheduledTimesArray update Socketio
       button#loadDefaultArray loadDefault Socketio
+      br
       button#writeDefaultArray writeToDefault Socketio
       div
         //form(method='POST' action='/admin/loadDefault')

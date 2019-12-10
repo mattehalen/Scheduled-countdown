@@ -32,7 +32,7 @@
         },
         {
             "title": "Blue Xmas",
-            "startTime": "21:38",
+            "startTime": "21:30",
             "id": "caroline"
         },
         {
@@ -49,6 +49,14 @@
             "title": "Queen",
             "startTime": "22:40",
             "id": "caroline"
+        },
+        {
+            "title": "New row added",
+            "startTime": "10:05",
+            "id": "4"
+        },
+        {
+            "id": "4"
         }
     ]
 }

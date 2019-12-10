@@ -4,6 +4,8 @@ var offsetTimejson  = [];
 var offsetTimeInit  = [];
 var scheduledTimesArrayGlobal = [];
 var scheduledTimesArrayBuffer     = [];
+var nowTopRow = document.getElementById("nowTopRow");
+var setTimeoutTime = 150;
 
 var myLocalip = document.getElementById("myLocalip").textContent;
 var myLocalipAndPort = myLocalip+":3000"
@@ -113,6 +115,46 @@ function sortscheduledTimes(){
 //--------------------------------------------------
 //--------------------------------------------------
 //--------------------------------------------------
+//--------------------------------------------------
+//- CurrentTime
+//--------------------------------------------------
+function nowClock() {
+  //console.log("hello");
+  var d = new Date();
+  nowInMs = d.getTime();
+  var s = "";
+  s += (10 > d.getHours  () ? "0": "") + d.getHours  () + ":";
+  s += (10 > d.getMinutes() ? "0": "") + d.getMinutes() + ":";
+  s += (10 > d.getSeconds() ? "0": "") + d.getSeconds();
+
+  //nowText.textContent = s;
+  nowTopRow.textContent = s;
+  setTimeout(nowClock, setTimeoutTime - d.getTime() % 1000 + 20);
+  return d;
+
+}
+nowClock();
+//--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //--------------------------------------------------
 //--------------------------------------------------
 //--------------------------------------------------
@@ -262,58 +304,3 @@ function getElementsToArrays(){
 
      socket.on('user disconnected', function (data) {
      });
-
-    // //an event emitted from server
-    // socket.on('chat message', function (data) {
-    //     var string = '<div class="row message-bubble"><p class="text-muted">' + data.username+'</p><p>'+data.message+'</p></div>';
-    //     $('#messages').append(string);
-    //
-    // });
-    // $(function () {
-    //     var timeout;
-    //     function timeoutFunction() {
-    //         typing = false;
-    //         socket.emit("typing", { message: '', username: '' });
-    //     }
-    //    $("#sendmessage").on('click', function () {
-    //      var message = $("#txtmessage").val();
-    //      $("#txtmessage").val('');
-    //      $('.typing').html("");
-    //      socket.emit('new_message', { message: message, username: username });
-    //    });
-    //
-    //
-    // socket.on('typing', function (data) {
-    //    if (data.username && data.message) {
-    //         $('.typing').html("User: " + data.username+' '+ data.message);
-    //   } else {
-    //        $('.typing').html("");
-    //    }
-
-   // });
-      //  $('#txtmessage').keyup(function () {
-      //      console.log('typing');
-      //      typing = true;
-      //      socket.emit('typing', { message: 'typing...', username: username});
-      //     clearTimeout(timeout);
-      //     timeout = setTimeout(timeoutFunction, 2000);
-      // });
-
- //});
-
-// var typing = false;
-// var timeout = undefined;
-// function timeoutFunction(){
-//   typing = false;
-//   socket.emit(noLongerTypingMessage);
-// }
-// function onKeyDownNotEnter(){
-//   if(typing == false) {
-//     typing = true
-//     socket.emit();
-//     timeout = setTimeout(timeoutFunction, 5000);
-//   } else {
-//     clearTimeout(timeout);
-//     timeout = setTimeout(timeoutFunction, 5000);
-//   }
-// }
