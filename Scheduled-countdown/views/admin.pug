@@ -4,19 +4,30 @@ block content
   p(hidden='')#myLocalip= myLocalip
   .topRow(style="position: fixed")
     #nowTopRow.topRowText
-  #mainContentBox.row.mainContentBox
-    .offsetTime
+  #mainContentBox.mainContentBox
+    .floatl.offsetTime
       p#offsetTime.offsetTime= offsetTime
       div(style="white-space: pre")
-        button#offsetPlus offset + Socketio
-        button#offsetMinus offset - Socketio
+        p Adjust Time
+        button#offsetMinus.commandButton -
+        button#offsetPlus.commandButton +
+        button#offsetReset.commandButton Reset
         br
-        button#offsetReset Reset - Socketio
-        button#sorting Sorting
+        button#sorting.commandButton Sort
+        button#updateScheduledTimesArray.commandButton Update
+        br
+        button#loadDefaultArray.commandButton Load Default
+        button#writeDefaultArray.commandButton Save Default
+          //form(method='POST' action='/admin/loadDefault')
+            button(type='submit') loadDefault
+          //form(method='POST' action='/admin/writeToDefault')
+            button(type='submit') writeToDefault
+        form(method='POST' action='/admin/addNewRowDefault')
+          button(type='submit' class='commandButton') Add Row
         
 
 
-    div()
+    div.floatl()
       form(method='POST' action='/admin/submit')
         each person, index in scheduledTimes
           div(id="listIndex" + index)
@@ -26,22 +37,13 @@ block content
             button.delete(type="reset",name="deleteButton" + index, id="listIndex" + index, onClick="delete_button_click(this.id)") x
             br
         //button(type='submit') update
-      button#updateScheduledTimesArray update Socketio
-      button#loadDefaultArray loadDefault Socketio
-      br
-      button#writeDefaultArray writeToDefault Socketio
-      div
-        //form(method='POST' action='/admin/loadDefault')
-          button(type='submit') loadDefault
-        //form(method='POST' action='/admin/writeToDefault')
-          button(type='submit') writeToDefault
-        form(method='POST' action='/admin/addNewRowDefault')
-          button(type='submit') addNewRowDefault
 
 
-
-
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
-        script(src='/socket.io/socket.io.js')
-        script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-        script(src="static/javascripts/adminScript.js")
+    div.floatl#preview
+      p Preview
+      iframe.preview(src='http://192.168.100.9:3000')
+      
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  script(src='/socket.io/socket.io.js')
+  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+  script(src="static/javascripts/adminScript.js")
