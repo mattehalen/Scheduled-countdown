@@ -210,6 +210,16 @@ router.get('/admin', function(req, res, next) {
   });
 });
 
+router.get('/transparentTest', function(req, res, next) {
+  res.render('transparentTest', {
+    title: 'transparentTest',
+    now: "now",
+    scheduledTimes : scheduledTimes.profiles,
+    offsetTime: variables.offsetTime,
+    myLocalip: myLocalip
+  });
+});
+
 router.get('/slideshow_1', function(req, res, next) {
   res.render('slideshow_1', {
     title: 'Scheduled-CountDown',
