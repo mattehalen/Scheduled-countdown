@@ -64,16 +64,20 @@ function getscheduledTimes(){
       var a;
       var b;
       var c;
-      startTimeArray = [];
+      startTimeArray  = [];
       startTitleArray = [];
+      cueLengthArray  = [];
+
       for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
         a = scheduledTimesArray.profiles[i].title;
         startTitleArray.push(a);
         b = scheduledTimesArray.profiles[i].startTime;
         startTimeArray.push(b);
         c = scheduledTimesArray.profiles[i].cueLength;
-        startTimeArray.push(c);
+        cueLengthArray.push(c);
       }
+      console.log("cueLengthArray: from getscheduledTimes");
+      console.log(cueLengthArray);
   }
 
   request();
@@ -188,13 +192,15 @@ function timeArray() {
 
 
 
-        if (startTimeIndex >= startTimeArray.length) {
-          startTimeIndex = 0;
+        if (startTimeIndex  >= startTimeArray.length) {
+          startTimeIndex    = 0;
+          cueArrayIndex     = startTimeIndex;
         }
 
         startTimeArray[startTimeIndex];
         startTimeAt = startTimeArray[startTimeIndex];
         startTimeIndex++;
+        cueArrayIndex     = startTimeIndex;
 
         startText.textContent = ("");
         titleText.textContent = ("");
@@ -288,20 +294,40 @@ function cueStartTime(){
   var d = new Date();
   var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${startTimeAt}`);
   cueStartTimeInMs = dd.getTime();
+  console.log("cueStartTimeInMs");
+  console.log(cueStartTimeInMs);
 
-  var cueStartTimeOffset = timeStringToMs(cueArray[startTimeIndex-1]);
-  cueStartTimeInMs = cueStartTimeInMs + (offsetTimeInit*60000) + cueStartTimeOffset;
-  cueStartTimeAt = new Date(cueStartTimeInMs);
-  var cueMS = cueStartTimeAt.getTime();
-  var s = "";
+
+
+   var cueStartTimeOffset = timeStringToMs(cueLengthArray[startTimeIndex-1]);
+   console.log("cueLengthArray: from cueStartTime");
+   console.log(cueLengthArray);
+   console.log("startTimeIndex");
+   console.log(startTimeIndex-1);
+   console.log("cueLengthArray[startTimeIndex-1]");
+   console.log(cueLengthArray[startTimeIndex-1]);
+
+   console.log("cueStartTimeOffset");
+   console.log(cueStartTimeOffset);
+
+
+   //cueStartTimeInMs = cueStartTimeInMs + (offsetTimeInit*60000) + cueStartTimeOffset;
+   // console.log("cueStartTimeInMs + offsetTimeInit");
+   // console.log(cueStartTimeInMs + (offsetTimeInit*60000));
+  // cueStartTimeAt = new Date(cueStartTimeInMs);
+  // var cueMS = cueStartTimeAt.getTime();
+  // var s = "";
+
 
   if (nowInMs > (cueStartTimeAt - countDown) && nowInMs < (cueStartTimeAt + countUp)){
+    console.log("okej det kanske funkar?");
   }
 
   setTimeout(cueStartTime, setTimeoutTime);
   return dd;
 
 }
+
 
 function startTime() {
   //console.log("startTimeInMs from startTime: " + startTimeInMs);
@@ -343,7 +369,6 @@ function startTime() {
   setTimeout(startTime, setTimeoutTime - d.getTime() % 1000 + 20);
 
 }
-
 
 function addOffsetTime() {
   offsetTimeInit = offsetTimeInit +1;
@@ -400,6 +425,7 @@ nowClock();
 startTime();
 timeArray();
 fiveMinuteCountDown();
+cueStartTime();
 
 
 
@@ -420,7 +446,7 @@ var socket = io.connect(myLocalipAndPort);
 
 //---------- My sockets NOT IN USE???
 socket.on("updateDB_From_Socket", function(data) {
-  //console.log("updateDB_From_Socket: Hello Here i am");
+  console.log("updateDB_From_Socket: Hello Here i am");
   startTitleArray = data.startTitleArray;
   startTimeArray  = data.startTimeArray;
   cueLengthArray  = data.cueLengthArray;

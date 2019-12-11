@@ -1,11 +1,6 @@
 {
     "profiles": [
         {
-            "title": "Queen",
-            "startTime": "12:40",
-            "cueLength": "10:00:00"
-        },
-        {
             "title": "Greatest Show",
             "startTime": "18:25",
             "cueLength": "01:00:00"
@@ -49,6 +44,11 @@
             "title": "Uptown Funk",
             "startTime": "22:15",
             "cueLength": "09:00:00"
+        },
+        {
+            "title": "Queen",
+            "startTime": "22:40",
+            "cueLength": "10:00:00"
         }
     ]
 }

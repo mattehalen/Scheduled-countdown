@@ -2,7 +2,7 @@ extends layout
 
 block content
   p(hidden='')#myLocalip= myLocalip
-  .topRow(style='cursor: pointer;' onclick='toggleMainContentBox()')
+  .topRow()
     div.audiobutton
       button#play.commandButton(hidden='') Activate Audio
     #nowTopRow.topRowText

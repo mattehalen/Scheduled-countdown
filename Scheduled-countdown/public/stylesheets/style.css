@@ -75,7 +75,7 @@ button {
 	background-color:#7892c2;
 	border-radius:10px;
 	border:1px solid #4e6096;
-	display:inline-block;
+	/* display:inline-block; */
 	cursor:pointer;
 	color:#ffffff;
 	font-family:Arial;
