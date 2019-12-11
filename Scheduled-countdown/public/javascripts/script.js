@@ -5,6 +5,7 @@ var myLocalipAndPort = myLocalip+":3000"
 console.log(myLocalipAndPort);
 
 
+
 var nowText = document.getElementById("now");
 var nowTopRow = document.getElementById("nowTopRow");
 var titleText = document.getElementById("title");
@@ -29,14 +30,14 @@ var offsetTime = 0;
 var startTimeAt     = "";
 var startTimeArray  = [""];
 var startTitleArray = [""];
-var cueLengthArray  = [""];
 var startTimeIndex  = 0;
 
 var cueStartTimeAt  = "";
 var cueStartTimeInMs = "";
+var cueStartTimeOffset = "";
 var cueTimeInMs = 0;
-var cueArray = [""];
-var cueArrayIndex = 0;
+var cueLengthArray = [""];
+var cueLengthArrayIndex = 0;
 
 var nowInMs = 0;
 var startTimeInMs = 0;
@@ -50,6 +51,10 @@ var fiveMinuteInMs = 5 *60000;
 var fiveMinuteFromMsToTime = 0;
 
 var setTimeoutTime = 150;
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+var newArrayIndex = 0;
+var startTitleTextFromnewArrayIndex = "";
+
 
 //--------------------------------------------------
 // - getScheduledTimes
@@ -103,10 +108,6 @@ function getOffsetTime(){
 getOffsetTime();
 //--------------------------------------------------
 
-
-
-
-
 //--------------------------------------------------
 //- timeArray
 //--------------------------------------------------
@@ -116,7 +117,8 @@ function timeArray() {
     var countDownTimeInMS = startTimeInMs - nowInMs;
     //console.log(countDownTimeInMS);
     //console.log(5*1000*60);
-    titleText.textContent = startTitleArray[startTimeIndex-1];
+    //titleText.textContent = startTitleArray[startTimeIndex-1];
+    titleText.textContent = startTitleTextFromnewArrayIndex;
 
 
     // Audio Alarms
@@ -194,13 +196,11 @@ function timeArray() {
 
         if (startTimeIndex  >= startTimeArray.length) {
           startTimeIndex    = 0;
-          cueArrayIndex     = startTimeIndex;
         }
 
         startTimeArray[startTimeIndex];
         startTimeAt = startTimeArray[startTimeIndex];
         startTimeIndex++;
-        cueArrayIndex     = startTimeIndex;
 
         startText.textContent = ("");
         titleText.textContent = ("");
@@ -209,6 +209,31 @@ function timeArray() {
   setTimeout(timeArray, setTimeoutTime);
 }
 //--------------------------------------------------
+
+// //--------------------------------------------------
+// //- cueTimeArray
+// //--------------------------------------------------
+// function cueTimeArray() {
+//   //--------------------------------------------------
+//   if (nowInMs > (cueStartTimeInMs - countDown) && nowInMs < (cueStartTimeInMs + countUp)) {
+//     var countDownCueTimeInMS = cueStartTimeInMs - nowInMs;
+//     //cueTimeText.textContent = s;
+//   } else {
+//         if (cueLengthArrayIndex  >= cueLengthArray.length) {
+//           cueLengthArrayIndex    = 0;
+//         }
+//
+//         cueLengthArray[cueLengthArrayIndex];
+//         cueStartTimeAt = cueLengthArray[cueLengthArrayIndex];
+//         cueLengthArrayIndex++;
+//       }
+//
+//       //console.log(cueStartTimeInMs);
+//   cueTimeText.textContent =cueStartTimeAt +" | "+ new Date();
+//   setTimeout(cueTimeArray, setTimeoutTime);
+// }
+// //--------------------------------------------------
+
 
 
 //--------------------------------------------------
@@ -238,6 +263,8 @@ function nowClock() {
 //- 5minute CountDown
 //--------------------------------------------------
 function fiveMinuteCountDown () {
+  // console.log("startTimeInMs: "+ startTimeInMs);
+  // console.log(nowInMs > (startTimeInMs - fiveMinuteInMs) && nowInMs < (startTimeInMs));
   if (nowInMs > (startTimeInMs - fiveMinuteInMs) && nowInMs < (startTimeInMs)) {
     fiveMinuteString = fiveMinuteFromMsToTime +1 + " min to show";
     fiveMinuteText.textContent = fiveMinuteString;
@@ -291,43 +318,37 @@ return r;
 //- CueStartTime
 //--------------------------------------------------
 function cueStartTime(){
-  var d = new Date();
-  var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${startTimeAt}`);
-  cueStartTimeInMs = dd.getTime();
-  console.log("cueStartTimeInMs");
-  console.log(cueStartTimeInMs);
+  // var d = new Date();
+  // var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${cueStartTimeAt}`);
+  // cueStartTimeInMs = dd.getTime();
 
 
+    cueStartTimeOffset = timeStringToMs(cueLengthArray[startTimeIndex-1]);
+    var cueStartTimeWithOffset = cueStartTimeInMs - cueStartTimeOffset;
+    var cueStartCountDown = cueStartTimeWithOffset - nowInMs;
 
-   var cueStartTimeOffset = timeStringToMs(cueLengthArray[startTimeIndex-1]);
-   console.log("cueLengthArray: from cueStartTime");
-   console.log(cueLengthArray);
-   console.log("startTimeIndex");
-   console.log(startTimeIndex-1);
-   console.log("cueLengthArray[startTimeIndex-1]");
-   console.log(cueLengthArray[startTimeIndex-1]);
+    //console.log(new Date(cueStartCountDown));
 
-   console.log("cueStartTimeOffset");
-   console.log(cueStartTimeOffset);
+   var ddd = new Date(cueStartTimeAt);
 
-
-   //cueStartTimeInMs = cueStartTimeInMs + (offsetTimeInit*60000) + cueStartTimeOffset;
-   // console.log("cueStartTimeInMs + offsetTimeInit");
-   // console.log(cueStartTimeInMs + (offsetTimeInit*60000));
-  // cueStartTimeAt = new Date(cueStartTimeInMs);
-  // var cueMS = cueStartTimeAt.getTime();
-  // var s = "";
-
+   var s = "";
+   s += (10 > ddd.getHours  () ? "0": "") + ddd.getHours  () + ":";
+   s += (10 > ddd.getMinutes() ? "0": "") + ddd.getMinutes() + ":";
+   s += (10 > ddd.getSeconds() ? "0": "") + ddd.getSeconds();
 
   if (nowInMs > (cueStartTimeAt - countDown) && nowInMs < (cueStartTimeAt + countUp)){
     console.log("okej det kanske funkar?");
+    // cueTimeText.textContent = s;
+  }
+  else {
+    // cueTimeText.textContent = "OutSide";
   }
 
   setTimeout(cueStartTime, setTimeoutTime);
   return dd;
 
 }
-
+//--------------------------------------------------
 
 function startTime() {
   //console.log("startTimeInMs from startTime: " + startTimeInMs);
@@ -421,11 +442,68 @@ function openFullscreen() {
 }
 //--------------------------------------------------
 
+
+function newTimeArraySorting(){
+
+    var tempStartTime = ""
+    var doc = [];
+    doc = scheduledTimesArray;
+    //for(let i=0; i < scheduledTimesArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
+
+
+    sleep(100).then(() => {
+      if (newArrayIndex < scheduledTimesArray.profiles.length) {
+          var time = scheduledTimesArray.profiles[newArrayIndex].startTime
+          var timInMs = 0;
+
+          console.log(time);
+
+          var d = new Date();
+          var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
+          console.log(nowInMs > dd.getTime());
+          if (nowInMs > dd.getTime()) {
+            newArrayIndex++;
+          }else {
+                startTitleTextFromnewArrayIndex     = scheduledTimesArray.profiles[newArrayIndex].title
+                startTimeAt         = scheduledTimesArray.profiles[newArrayIndex].startTime
+                cueStartTimeOffset  = scheduledTimesArray.profiles[newArrayIndex].cueLength
+          }
+      };
+      // for(let i=0; i < scheduledTimesArray.profiles.length; i++)
+      //   {
+      //       //console.log(scheduledTimesArray.profiles[0].startTime[i]);
+      //   };
+
+
+      var d = new Date();
+      var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${tempStartTime}`);
+      //console.log(dd);
+
+    });
+
+
+
+    var d = new Date();
+    var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${tempStartTime}`);
+
+  //console.log(dd);
+  setTimeout(newTimeArraySorting, setTimeoutTime);
+
+
+};
+newTimeArraySorting();
+
+
+
+
+
+
 nowClock();
 startTime();
 timeArray();
+//cueTimeArray();
 fiveMinuteCountDown();
-cueStartTime();
+//cueStartTime();
 
 
 
