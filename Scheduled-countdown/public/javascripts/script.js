@@ -496,6 +496,7 @@ function newTimeArraySorting(){
         //console.log(nowInMs > dd.getTime());
 
         if (nowInMs > dd.getTime()) {
+        if (nowInMs > (dd.getTime()+countUp)) {
           newArrayIndex++;
         } else {
           startTitleHolder = scheduledTimesArray.profiles[newArrayIndex].title;
@@ -572,7 +573,6 @@ playButton.hidden = false;
 
 function startPlayback() {
   return document.querySelector('.countDownSound').play();
-  playButton.hidden = true;
 }
 
 //console.log('Attempting to play automatically...');
