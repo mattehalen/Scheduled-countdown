@@ -6,49 +6,45 @@ console.log(myLocalipAndPort);
 
 
 
-var nowText         = document.getElementById("now");
-var nowTopRow       = document.getElementById("nowTopRow");
-var titleText       = document.getElementById("title");
-var startText       = document.getElementById("start");
-var fiveMinuteText  = document.getElementById("5minute");
-var cueTimeText     = document.getElementById("cueTime");
-var offsetTime      = document.getElementById("offsetTime");
-var offsetTimeInit  = 0;
-var myArray         = "";
+var nowText = document.getElementById("now");
+var nowTopRow = document.getElementById("nowTopRow");
+var titleText = document.getElementById("title");
+var startText = document.getElementById("start");
+var fiveMinuteText = document.getElementById("5minute");
+var cueTimeText = document.getElementById("cueTime");
+var offsetTime = document.getElementById("offsetTime");
+var offsetTimeInit = 0;
+var myArray = "";
 var scheduledTimesArrayGlobal = [];
-var scheduledTimesArray       = [];
-var offsetTimejson            = [];
+var scheduledTimesArray = [];
+var offsetTimejson = [];
 //--------------------------------------------------
 // - Variables & Booleans
 //--------------------------------------------------
-var countDown             = 7; // how many minutes before
-countDown                 = countDown *60000; // convert to Ms
-var countUp               = 5; // how many minutes after
-countUp                   = countUp *60000; // convert to M
-var offsetTime            = 0;
+var countDown = 7; // how many minutes before
+countDown = countDown *60000; // convert to Ms
+var countUp = 5; // how many minutes after
+countUp = countUp *60000; // convert to M
+var offsetTime = 0;
 
-var startTimeAt           = "";
-var startTimeArray        = [""];
-var startTitleArray       = [""];
-var startTimeIndex        = 0;
+var startTimeAt     = "";
+var startTimeArray  = [""];
+var startTitleArray = [""];
+var startTimeIndex  = 0;
 
-var cueStartTimeAt        = "";
-var cueStartTimeInMs      = "";
-var cueStartTimeOffset    = "";
-var cueTimeInMs           = 0;
-var cueLengthArray        = [""];
-var cueLengthArrayIndex   = 0;
-var cueLengthInMs         = 0;
+var cueStartTimeAt  = "";
+var cueStartTimeInMs = "";
+var cueStartTimeOffset = "";
+var cueTimeInMs = 0;
+var cueLengthArray = [""];
+var cueLengthArrayIndex = 0;
+var cueLengthInMs = 0;
 
 var nowInMs = 0;
 var startTimeInMs = 0;
 
 var displayTimeBool = false;
 var positiveDiffTimeBoole = false;
-
-var displayCueTimeBool = false;
-var positiveDiffCueTimeBoole = false;
-
 var sendMin_To_countDownBoole = 0;
 
 var fiveMinuteString = "";
@@ -312,7 +308,7 @@ function msToTime(s) {
 }
 
 function msToCueTime(s) {
-  //console.log("msToCueTime");
+  console.log("msToCueTime");
   var ms = s % 1000;
   s = (s - ms) / 1000;
   var secs = s % 60;
@@ -321,21 +317,13 @@ function msToCueTime(s) {
   var hrs = (s - mins) / 60;
   var mathias = 0;
 
-  var msg="";
-  msg += "nowInMs: "+new Date(nowInMs)+"\n";
-  msg += "cueStartTimeInMs: "+new Date(cueStartTimeInMs)+"\n";
-  msg += "displayCueTimeBool: "+ displayCueTimeBool+"\n";
-  msg += "positiveDiffCueTimeBoole: "+ positiveDiffCueTimeBoole+"\n";
-  msg += "cueStartTimeInMs - countDown: "+new Date(cueStartTimeInMs - countDown)
-  //console.log(msg);
-
-  if (displayCueTimeBool === true) {
-    if (positiveDiffCueTimeBoole === true) {
+  if (displayTimeBool === true) {
+    if (positiveDiffTimeBoole === true) {
       //cueTimeText.textContent = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-      //console.log(mathias);
+      console.log(mathias);
     } else {
       //cueTimeText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-      //console.log(mathias);
+      console.log(mathias);
     }
   }
   //fiveMinuteFromMsToTime = mins;
@@ -374,24 +362,57 @@ function cueStartTime() {
   var s = "";
 
 
+  // Use subtrack time depending on now(d) vs start(dd) time
+  //if (dd > d) {
   if (ddInMs > dInMs) {
+
+    //s = dd - d + 1000;
     s = ddInMs - dInMs + 1000;
-    positiveDiffCueTimeBoole = false;
-    //console.log(msToCueTime(s));
-    cueTimeText.textContent = "Start "+startTitleHolder+" cue in "+msToCueTime(s)
+    //s = s + (offsetTimeInit*60000)
+    //msToCueTime(s);
+    positiveDiffTimeBoole = false;
+    console.log(msToCueTime(s));
+    cueTimeText.textContent = msToCueTime(s)
   } else {
+    //s = d - dd;
     s = dInMs - ddInMs;
-    positiveDiffCueTimeBoole = true;
-    //console.log(msToCueTime(s));
+    //  s = s + (offsetTimeInit*60000)
+    //msToTime(s);
+    positiveDiffTimeBoole = true;
+    console.log(msToCueTime(s));
     cueTimeText.textContent = msToCueTime(s)
   }
 
-  // if (nowInMs > (cueStartTimeInMs - countDown) && nowInMs < (cueStartTimeInMs + countUp)) {
-  //   displayCueTimeBool = true;
-  //   document.getElementById("cueTime").style.display = "block";
+
+
+  var msg = "";
+
+msg += "startTimeInMs: "+startTimeInMs +"\n";
+msg += "startTimeInMs: "+startTimeInMs +"\n";
+msg += "cueLengthInMs: "+cueLengthInMs +"\n";
+msg += "cueStartTimeAt: "+cueStartTimeAt +"\n";
+msg += "s: "+s;
+  //console.log("startTimeInMs: "+startTimeInMs+" | "+ "cueLengthInMs: "+cueLengthInMs+" | "+ "cueStartTimeInMs: "+cueStartTimeInMs);
+  //console.log(msg);
+
+
+
+  // cueStartTimeOffset = timeStringToMs(cueLengthArray[startTimeIndex - 1]);
+  // var cueStartTimeWithOffset = cueStartTimeInMs - cueStartTimeOffset;
+  // var cueStartCountDown = cueStartTimeWithOffset - nowInMs;
+  //
+  // var ddd = new Date(cueStartTimeAt);
+  //
+  // var s = "";
+  // s += (10 > ddd.getHours() ? "0" : "") + ddd.getHours() + ":";
+  // s += (10 > ddd.getMinutes() ? "0" : "") + ddd.getMinutes() + ":";
+  // s += (10 > ddd.getSeconds() ? "0" : "") + ddd.getSeconds();
+  //
+  // if (nowInMs > (cueStartTimeAt - countDown) && nowInMs < (cueStartTimeAt + countUp)) {
+  //   console.log("okej det kanske funkar?");
+  //   // cueTimeText.textContent = s;
   // } else {
-  //   displayCueTimeBool = false;
-  //   document.getElementById("cueTime").style.display = "none";
+  //   // cueTimeText.textContent = "OutSide";
   // }
 
   setTimeout(cueStartTime, setTimeoutTime);
@@ -449,6 +470,7 @@ function addOffsetTime() {
   offsetTimeInit = offsetTimeInit +1;
   document.getElementById("offsetTime").textContent = offsetTimeInit;
 }
+
 function subOffsetTime() {
   offsetTimeInit = offsetTimeInit -1;
   document.getElementById("offsetTime").textContent = offsetTimeInit;
@@ -480,6 +502,20 @@ function toggleMainContentBox() {
     document.getElementById("adminContentBox").style.display = "block";
   }
 }
+
+
+//--------------------------------------------------
+// Auto Open Fullscreen
+//--------------------------------------------------
+var elem = document.documentElement;
+function openFullscreen() {
+
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+    elem.webkitRequestFullscreen();
+  }
+}
+//--------------------------------------------------
 
 
 function newTimeArraySorting(){
