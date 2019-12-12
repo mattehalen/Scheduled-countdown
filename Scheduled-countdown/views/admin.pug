@@ -2,12 +2,12 @@ extends layout
 
 block content
   p(hidden='')#myLocalip= myLocalip
-  .topRow
+  .topRow(style="position: fixed")
     #nowTopRow.topRowText
   #mainContentBox.mainContentBox
     .floatl.offsetTime
-      h2#offsetTime= offsetTime
-      p Adjust Time
+      p#offsetTime.offsetTime= offsetTime
+        p Adjust Time
         .buttondiv
           button#offsetMinus.commandButton -
           button#offsetPlus.commandButton +

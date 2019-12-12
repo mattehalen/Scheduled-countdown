@@ -2,8 +2,6 @@ body {
   background: #2b2b2b;
   height: 100vh;
   margin: 0;
-  font-size: calc(16px + 1vw);
-
   /*display: flex;
   */
   align-items: center;
@@ -20,28 +18,28 @@ background: rgba(0, 0, 0, 0.0);
 
 h1 {
   color: #bdbdbd;
-  font-size: calc(1.2em + 3vw);
   /* font-weight: 400; */
 }
 
 h2 {
-  font-size: calc(1.2em + 2vw);
-    margin-block-start: 0.2em;
-    margin-block-end: 0.2em;
-    margin-inline-start: 0px;
-    margin-inline-end: 0px;
-    font-weight: normal;
+  font-size: 30px;
+  font-size: 2.5vw;
 }
 
 p {
+  font-size: 30px;
+  font-size: 1.5vw;
   margin-block-start: 10px;
   margin-block-end: 10px;
   color:#FFF;
 }
 
 button {
-  font-size: 2vw;
+  font-size: 30px;
+  /*font-size: 1vw;*/
   float: inherit;
+  margin: 5px;
+
 }
 
 
@@ -81,9 +79,8 @@ button {
 	cursor:pointer;
 	color:#ffffff;
 	font-family:Arial;
-	font-size:1vw;
-	padding:0.5em;
-  margin: 0.5vw;
+	font-size:19px;
+	padding:12px 37px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #283966;
 }
@@ -140,7 +137,11 @@ button {
   float: left;
   width: 90%;
 }
-
+.offsetTime {
+  color: white;
+  font-size: 60px;
+  font-size: 5.5vw;
+}
 
 .buttondiv {
   font-size: 0.5em;
@@ -163,6 +164,7 @@ div {
 }
 
 #title {
+  font-size: 300px;
   font-size: 10vw;
   line-height: 1px;
 }
@@ -182,14 +184,24 @@ div {
 
 .fiveMinute {
   background-color: #3b3b3b;
-  height: 4.2vw;
-  font-size: 4vw;
+  margin: auto;
+  margin-top: 20vh;
+  height: 10vh;
+  font-size: 8vh;
+  position: fixed;
+  bottom: 0;
   width: 100%;
 }
 .cueTime {
+  position: fixed;
+  bottom: 10vh;
   width: 100%;
-  font-size: 4vw;
-  height: 4.2vw;
+  font-size: 300px;
+  font-size: 5vw;
+}
+
+.centerNowText {
+  height: 50%;
 }
 
 .topRow {
@@ -211,8 +223,9 @@ div {
 
 }
 .mainContentBox {
-  height: 75%;
+  height: 90%;
   width: 98%;
+  font-size: 10px;
   padding: 1vh;
   display: flex;
   justify-content: space-evenly;
@@ -221,11 +234,6 @@ div {
 
 .downSite {
   width: 100%;
-  height: 18%;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-  flex-direction: column;
 
 }
 
@@ -279,19 +287,19 @@ form.offsetButton{
 
 
 input[type=text] {
-  width: 10vw;
-  padding: 0.35vw;
-  margin: 0.2vw;
+  /* width: 20%; */
+  padding: 10px;
+  margin: 2px 3px;
   box-sizing: border-box;
   font-size: 1.5vh;
 }
-
 input[type=time] {
-  padding: 0.2vw;
-  margin: 0.2vw;
+  /* width: 20%; */
+  padding: 10px;
+  margin: 2px 3px;
   box-sizing: border-box;
-  font-size: 1.5vh;
   font-family: Verdana;
+
 
 }
 
