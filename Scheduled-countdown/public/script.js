@@ -319,16 +319,16 @@ function msToCueTime(s) {
 
   if (displayTimeBool === true) {
     if (positiveDiffTimeBoole === true) {
-      //cueTimeText.textContent = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
+      cueTimeText.textContent = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
       console.log(mathias);
     } else {
-      //cueTimeText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
+      cueTimeText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
       console.log(mathias);
     }
   }
   //fiveMinuteFromMsToTime = mins;
 
-  return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
+  return hrs + ':' + mins + ':' + secs + '.' + ms;
 }
 
 //--------------------------------------------------
@@ -372,7 +372,6 @@ function cueStartTime() {
     //msToCueTime(s);
     positiveDiffTimeBoole = false;
     console.log(msToCueTime(s));
-    cueTimeText.textContent = msToCueTime(s)
   } else {
     //s = d - dd;
     s = dInMs - ddInMs;
@@ -380,7 +379,6 @@ function cueStartTime() {
     //msToTime(s);
     positiveDiffTimeBoole = true;
     console.log(msToCueTime(s));
-    cueTimeText.textContent = msToCueTime(s)
   }
 
 
