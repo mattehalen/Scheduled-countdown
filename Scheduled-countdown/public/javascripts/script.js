@@ -506,6 +506,7 @@ function newTimeArraySorting(){
           //console.log("startTitleHolder: " + startTitleHolder + " | " + "startTimeTextHolder: " + startTimeTextHolder + " | " + "cueLengthTextHolder: " + cueLengthTextHolder);
         }
       };
+    }
     });
 //--------------------------------------------------
   setTimeout(newTimeArraySorting, setTimeoutTime);
