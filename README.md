@@ -14,7 +14,7 @@ npm start
 
 
 ## Basic Functions V2
-- [] Add a new page with cueTimes and display them
+- [x] Add a new page with cueTimes and display them
 
 ## Basic Functions V3
 - [] Add slideshow with 5min countdown
