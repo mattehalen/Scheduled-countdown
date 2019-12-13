@@ -324,6 +324,7 @@ function msToCueTime(s) {
 //- Convert Cue String to ms
 //--------------------------------------------------
 function timeStringToMs(t){
+  //console.log("cueLengthTextHolder: "+cueLengthTextHolder+" | "+ cueLengthTextHolder.length);
   var r = Number(t.split(':')[0])*(60*60000)+Number(t.split(':')[1])*(60000)+Number(t.split(':')[2])*(1000);
 return r;
 
@@ -335,6 +336,16 @@ return r;
 //- CueStartTime
 //--------------------------------------------------
 function cueStartTime() {
+
+
+  if (cueLengthTextHolder.length > 5) {
+    //console.log("cueLengthTextHolder: "+cueLengthTextHolder+" | "+ cueLengthTextHolder.length);
+
+  }else {
+    cueLengthTextHolder = cueLengthTextHolder+":00"
+    //console.log("cueLengthTextHolder: "+cueLengthTextHolder+" | "+ cueLengthTextHolder.length);
+  }
+
 
   cueLengthInMs = timeStringToMs(cueLengthTextHolder);
   cueStartTimeInMs = startTimeInMs - cueLengthInMs;
@@ -419,22 +430,22 @@ function startTime() {
   setTimeout(startTime, setTimeoutTime - d.getTime() % 1000 + 20);
 
 }
-
-function addOffsetTime() {
-  offsetTimeInit = offsetTimeInit +1;
-  document.getElementById("offsetTime").textContent = offsetTimeInit;
-}
-function subOffsetTime() {
-  offsetTimeInit = offsetTimeInit -1;
-  document.getElementById("offsetTime").textContent = offsetTimeInit;
-}
-
-function hideAdmin() {
-  document.getElementById("adminPage").style.display = "none";
-}
-function showAdmin() {
-  document.getElementById("adminPage").style.display = "block";
-}
+//
+// function addOffsetTime() {
+//   offsetTimeInit = offsetTimeInit +1;
+//   document.getElementById("offsetTime").textContent = offsetTimeInit;
+// }
+// function subOffsetTime() {
+//   offsetTimeInit = offsetTimeInit -1;
+//   document.getElementById("offsetTime").textContent = offsetTimeInit;
+// }
+//
+// function hideAdmin() {
+//   document.getElementById("adminPage").style.display = "none";
+// }
+// function showAdmin() {
+//   document.getElementById("adminPage").style.display = "block";
+// }
 
 function hideNowClock() {
   document.getElementById("centerNowText").style.display = "none";
@@ -445,17 +456,17 @@ function ShowNowClock() {
   document.getElementById("titleContentBox").style.display = "none";
 }
 
-function toggleMainContentBox() {
-
-  if (!$('#mainContentBox').is(':visible')) {
-    document.getElementById("mainContentBox").style.display = "block";
-    document.getElementById("adminContentBox").style.display = "none";
-  } else {
-    document.getElementById("mainContentBox").style.display = "none";
-    document.getElementById("adminContentBox").style.display = "block";
-  }
-}
-
+// function toggleMainContentBox() {
+//
+//   if (!$('#mainContentBox').is(':visible')) {
+//     document.getElementById("mainContentBox").style.display = "block";
+//     document.getElementById("adminContentBox").style.display = "none";
+//   } else {
+//     document.getElementById("mainContentBox").style.display = "none";
+//     document.getElementById("adminContentBox").style.display = "block";
+//   }
+// }
+//
 
 function newTimeArraySorting(){
 
