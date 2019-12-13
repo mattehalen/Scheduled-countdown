@@ -156,7 +156,7 @@ div {
 #now {
   text-align: center;
   margin: auto;
-  font-size: 23vh;
+  font-size: 12vw;
 }
 #start {
   word-wrap: break-word;
@@ -175,21 +175,18 @@ div {
 }
 
 #start {
-  font-size: 300px;
   font-size: 10vw;
 }
 
 
 .fiveMinute {
   background-color: #3b3b3b;
-  height: 4.2vw;
   font-size: 4vw;
   width: 100%;
 }
 .cueTime {
   width: 100%;
   font-size: 4vw;
-  height: 4.2vw;
 }
 
 .topRow {
@@ -197,7 +194,7 @@ div {
   height: 5%;
   width: 100%;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items:center;
 }
 .topRowText {
@@ -205,9 +202,7 @@ div {
   */
   padding-right: 1vh;
   text-align: right;
-
-  font-size: 300px;
-  font-size: 2.7vh
+  font-size: 2vw;
 
 }
 .mainContentBox {
