@@ -385,6 +385,8 @@ function startTime() {
   startTimeInMs = dd.getTime();
   startTimeInMs = startTimeInMs + (offsetTimeInit*60000);
 
+  //console.log("startTime: startTimeTextHolder: "+startTimeTextHolder);
+
   var dInMs = d.getTime();
   var ddInMs =dd.getTime();
   ddInMs = ddInMs+(offsetTimeInit*60000)
@@ -456,6 +458,7 @@ function toggleMainContentBox() {
 
 
 function newTimeArraySorting(){
+
 //--------------------------------------------------
 //---Get next title / StartTime / cueLength
 //--------------------------------------------------
@@ -468,6 +471,7 @@ function newTimeArraySorting(){
         var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
         //console.log(nowInMs > dd.getTime());
 
+        //console.log("newArrayIndex:"+newArrayIndex);
         if (nowInMs > (dd.getTime()+countUp)) {
           newArrayIndex++;
         } else {
@@ -520,15 +524,19 @@ socket.on("updateDB_From_Socket", function(data) {
   startTimeArray  = data.startTimeArray;
   cueLengthArray  = data.cueLengthArray;
 
-  startTimeInMs = 0;
-  startTimeAt = null;
-  startTimeIndex = 0;
+  console.log("startTimeTextHolder: "+startTimeTextHolder);
+
+  getscheduledTimes();
+  newArrayIndex = 0;
 
   startPlayback();
 
 });
 
-
+socket.on("loadDefault_From_Socket", function(data){
+  console.log("loadDefault_From_Socket was pushed");
+   getscheduledTimes();
+});
 socket.on("updateOffsetTime_From_Socket", function(data) {
   console.log("updateOffsetTime_From_Socket: "+data.offsetTime);
   offsetTimeInit = data.offsetTime

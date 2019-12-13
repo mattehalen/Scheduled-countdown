@@ -277,6 +277,7 @@ var users = [];
 
       sleep(10).then(() => {
         io.emit("pushGetscheduledTimes",{offsetTime: offsetTimeInit});
+        io.emit("loadDefault_From_Socket",{offsetTime: offsetTimeInit});
         });
 
     });
