@@ -23,21 +23,23 @@ block content
           //form(method='POST' action='/admin/writeToDefault')
             button(type='submit') writeToDefault
         .buttondiv
-          form(method='POST' action='/admin/addNewRowDefault')
-            button(type='submit' class='commandButton') Add Row
+          //form(method='POST' action='/admin/addNewRowDefault')
+          //form()
+            //button(type='submit' class='commandButton' id="addNewRow") Add Row
+          button(type='submit' class='commandButton' id="addNewRow") Add Row
         
 
 
     div.floatl()
       form(method='POST' action='/admin/submit')
         each person, index in scheduledTimes
-          div(id="listIndex" + index)
+          div(id=index)
             input(type='text', value=person.title, name="title" + index, id="title" + index)
             //input(type='text', value=person.startTime, name="startTime" + index, id="startTime" + index)
             input(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
             input(type='time', value=person.cueLength, name="cueLength" + index, id="cueLength" + index step=1)
 
-            button.delete(type="reset",name="deleteButton" + index, id="listIndex" + index, onClick="delete_button_click(this.id)") x
+            button.delete(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
             br
         //button(type='submit') update
 
