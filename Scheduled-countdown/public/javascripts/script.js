@@ -10,6 +10,7 @@ var nowText         = document.getElementById("now");
 var nowTopRow       = document.getElementById("nowTopRow");
 var titleText       = document.getElementById("title");
 var startText       = document.getElementById("start");
+
 var fiveMinuteText  = document.getElementById("5minute");
 var cueTimeText     = document.getElementById("cueTime");
 var offsetTime      = document.getElementById("offsetTime");
@@ -89,8 +90,8 @@ function getscheduledTimes(){
         c = scheduledTimesArray.profiles[i].cueLength;
         cueLengthArray.push(c);
       }
-      console.log("cueLengthArray: from getscheduledTimes");
-      console.log(cueLengthArray);
+      // console.log("cueLengthArray: from getscheduledTimes");
+      // console.log(cueLengthArray);
   }
 
   request();
@@ -123,10 +124,7 @@ function timeArray() {
   //--------------------------------------------------
   if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs + countUp)) {
     var countDownTimeInMS = startTimeInMs - nowInMs;
-    //console.log(countDownTimeInMS);
-    //console.log(5*1000*60);
-    //titleText.textContent = startTitleArray[startTimeIndex-1];
-    titleText.textContent = startTitleTextFromnewArrayIndex;
+    titleText.textContent = startTitleHolder;
 
 
     // Audio Alarms
@@ -312,33 +310,12 @@ function msToTime(s) {
 }
 
 function msToCueTime(s) {
-  //console.log("msToCueTime");
   var ms = s % 1000;
   s = (s - ms) / 1000;
   var secs = s % 60;
   s = (s - secs) / 60;
   var mins = s % 60;
   var hrs = (s - mins) / 60;
-  var mathias = 0;
-
-  var msg="";
-  msg += "nowInMs: "+new Date(nowInMs)+"\n";
-  msg += "cueStartTimeInMs: "+new Date(cueStartTimeInMs)+"\n";
-  msg += "displayCueTimeBool: "+ displayCueTimeBool+"\n";
-  msg += "positiveDiffCueTimeBoole: "+ positiveDiffCueTimeBoole+"\n";
-  msg += "cueStartTimeInMs - countDown: "+new Date(cueStartTimeInMs - countDown)
-  //console.log(msg);
-
-  if (displayCueTimeBool === true) {
-    if (positiveDiffCueTimeBoole === true) {
-      //cueTimeText.textContent = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-      //console.log(mathias);
-    } else {
-      //cueTimeText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-      //console.log(mathias);
-    }
-  }
-  //fiveMinuteFromMsToTime = mins;
 
   return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
 }
@@ -367,33 +344,29 @@ function cueStartTime() {
 
   var d = new Date();
   var dd = new Date(cueStartTimeInMs);
+  //console.log("Now: "+d+" | "+"cueStartTimeInMs: "+dd);
 
   var dInMs = d.getTime();
   var ddInMs =dd.getTime();
-  //ddInMs = ddInMs+(offsetTimeInit*60000)
   var s = "";
 
-
-  if (ddInMs > dInMs) {
-    s = ddInMs - dInMs + 1000;
-    positiveDiffCueTimeBoole = false;
-    //console.log(msToCueTime(s));
-    cueTimeText.textContent = "Start "+startTitleHolder+" cue in "+msToCueTime(s)
+  //--------------------------------------------------
+  // --
+  //--------------------------------------------------
+  if (dInMs > ddInMs) {
+    s = dInMs - ddInMs + 1000;
+    cueTimeText.textContent =  msToCueTime(s)
   } else {
-    s = dInMs - ddInMs;
-    positiveDiffCueTimeBoole = true;
-    //console.log(msToCueTime(s));
-    cueTimeText.textContent = msToCueTime(s)
+    s = ddInMs - dInMs;
+    cueTimeText.textContent = "Start "+startTitleHolder+" cue in "+msToCueTime(s)
   }
-
-  // if (nowInMs > (cueStartTimeInMs - countDown) && nowInMs < (cueStartTimeInMs + countUp)) {
-  //   displayCueTimeBool = true;
-  //   document.getElementById("cueTime").style.display = "block";
-  // } else {
-  //   displayCueTimeBool = false;
-  //   document.getElementById("cueTime").style.display = "none";
-  // }
-
+  //--------------------------------------------------
+  if (dInMs > (ddInMs-countDown) && dInMs < (ddInMs+(10*1000))) {
+    document.getElementById("cueTime").style.display = "block";
+  }else {
+    document.getElementById("cueTime").style.display = "none";
+  }
+  //--------------------------------------------------
   setTimeout(cueStartTime, setTimeoutTime);
   //return dd;
 
@@ -495,7 +468,6 @@ function newTimeArraySorting(){
         var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
         //console.log(nowInMs > dd.getTime());
 
-        if (nowInMs > dd.getTime()) {
         if (nowInMs > (dd.getTime()+countUp)) {
           newArrayIndex++;
         } else {
@@ -506,7 +478,6 @@ function newTimeArraySorting(){
           //console.log("startTitleHolder: " + startTitleHolder + " | " + "startTimeTextHolder: " + startTimeTextHolder + " | " + "cueLengthTextHolder: " + cueLengthTextHolder);
         }
       };
-    }
     });
 //--------------------------------------------------
   setTimeout(newTimeArraySorting, setTimeoutTime);
