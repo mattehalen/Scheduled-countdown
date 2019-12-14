@@ -64,6 +64,9 @@ var startTitleHolder = "";
 var startTimeTextHolder = "";
 var cueLengthTextHolder = "";
 
+var serverNewDate = "";
+var serverNowInMs = "";
+
 
 //--------------------------------------------------
 // - getScheduledTimes
@@ -73,6 +76,8 @@ function getscheduledTimes(){
       const response = await fetch('/scheduledTimes.json');
       const json = await response.json();
       scheduledTimesArray = json;
+      console.log("scheduledTimesArray:kjlfdskjfdslöjfölds");
+      console.log(scheduledTimesArray);
 
       var i;
       var a;
@@ -384,6 +389,9 @@ function cueStartTime() {
 }
 //--------------------------------------------------
 
+//--------------------------------------------------
+//- startTime
+//--------------------------------------------------
 function startTime() {
   //console.log("startTimeInMs from startTime: " + startTimeInMs);
   //console.log(startTimeAt + ":" + offsetTimeInit + ":" + (startTimeAt+offsetTimeInit));
@@ -430,6 +438,8 @@ function startTime() {
   setTimeout(startTime, setTimeoutTime - d.getTime() % 1000 + 20);
 
 }
+//--------------------------------------------------
+
 //
 // function addOffsetTime() {
 //   offsetTimeInit = offsetTimeInit +1;
@@ -504,7 +514,7 @@ newTimeArraySorting();
 
 
 
-nowClock();
+//nowClock();
 startTime();
 timeArray();
 //cueTimeArray();
@@ -552,6 +562,26 @@ socket.on("updateOffsetTime_From_Socket", function(data) {
   console.log("updateOffsetTime_From_Socket: "+data.offsetTime);
   offsetTimeInit = data.offsetTime
 });
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+socket.on("nowClock", function(data) {
+  //console.log("nowClock: "+data.serverNewDate);
+  var s = data.nowClock;
+  serverNewDate = data.serverNewDate;
+  serverNowInMs = data.serverNowInMs;
+
+
+  nowText.textContent = s;
+  nowTopRow.textContent = s;
+
+  console.log();
+});
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
 //--------------------------------------------------
 
      socket.on('user disconnected', function (data) {
