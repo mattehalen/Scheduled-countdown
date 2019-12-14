@@ -1,3 +1,14 @@
+//--------------------------------------------------
+//---------- Strings and times in ms ----------
+// What do i need to get to get everything to work?
+// -[X] nowClock in String and in ms
+// -[] startTime from String to ms
+// -[] cueStartTime in string and ms
+// -[] cueLength from string to ms
+//--------------------------------------------------
+
+
+
 var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 const fs = require('fs');
@@ -62,6 +73,11 @@ var cueLengthTextHolder = "";
 
 var serverNewDate = "";
 var serverNowInMs = "";
+
+
+
+// New text
+var centerTextContent = "";
 
 
 
@@ -569,5 +585,142 @@ var users = [];
    setTimeout(newTimeArraySorting, setTimeoutTime);
  };
  newTimeArraySorting();
+
+
+
+
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+//--------------------------------------------------
+function newCurrentTime(){
+  var d = new Date();
+  var dInMs= d.getTime()
+
+  var s = "";
+    s += (10 > d.getHours  () ? "0": "") + d.getHours  () + ":";
+    s += (10 > d.getMinutes() ? "0": "") + d.getMinutes() + ":";
+    s += (10 > d.getSeconds() ? "0": "") + d.getSeconds();
+
+  return s
+};
+function newCurrentTimeInMs(){
+  var d = new Date();
+  var dInMs= d.getTime()
+
+  return dInMs
+};
+
+function newStartTimeInMs(time){
+  var d = new Date();
+  var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
+  var ddInMs = dd.getTime()
+
+  return ddInMs
+};
+function newStartTime(time){
+  var d = new Date();
+  var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
+  var ddInMs = dd.getTime()
+
+  var s = "";
+    s += (10 > dd.getHours  () ? "0": "") + dd.getHours  () + ":";
+    s += (10 > dd.getMinutes() ? "0": "") + dd.getMinutes() + ":";
+    s += (10 > dd.getSeconds() ? "0": "") + dd.getSeconds();
+
+  return s
+
+  return ddInMs
+};
+
+function newCountDown(){
+  var time = "";
+  if (newCurrentTimeInMs() > newStartTimeInMs(startTimeTextHolder)) {
+    time = newCurrentTimeInMs()-newStartTimeInMs(startTimeTextHolder)
+    time = (msToTime(time))
+  }else {
+    time = newStartTimeInMs(startTimeTextHolder)-newCurrentTimeInMs()
+    time = "-"+(msToTime(time))
+  }
+
+  setTimeout(newCountDown, 250);
+  return time
+};
+newCountDown();
+
+function timeStringToMs(t){
+  if (t > 5 ){
+    var r = Number(t.split(':')[0])*(60*60000)+Number(t.split(':')[1])*(60000)+Number(t.split(':')[2])*(1000);
+  }else{
+    t = t+":00"
+    var r = Number(t.split(':')[0])*(60*60000)+Number(t.split(':')[1])*(60000)+Number(t.split(':')[2])*(1000);
+  }
+return r;
+
+  }
+function msToTime(s) {
+    var ms = s % 1000;
+    s = (s - ms) / 1000;
+    var secs = s % 60;
+    s = (s - secs) / 60;
+    var mins = s % 60;
+    var hrs = (s - mins) / 60;
+    return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
+  }
+function pad(n, z) {
+    z = z || 2;
+    return ('00' + n).slice(-z);
+  }
+
+function sendCenterText(){
+  var countDownString = newCountDown();
+
+  if (
+    newCurrentTimeInMs() > (newStartTimeInMs(startTimeTextHolder) - countDown) &&
+    newCurrentTimeInMs() < (newStartTimeInMs(startTimeTextHolder) + countUp)
+        ) {
+    var showNowClock = false;
+
+    //centerTextContent = newCountDown();
+  }else {
+    var showNowClock = true;
+    //centerTextContent = newCurrentTime()
+
+  }
+  //console.log(newStartTimeInMs(startTimeTextHolder)-newCurrentTimeInMs(),);
+  io.emit("centerTextContent",{
+    countDownString: countDownString,
+    countDownTimeInMS:newStartTimeInMs(startTimeTextHolder)-newCurrentTimeInMs(),
+    showNowClock:showNowClock,
+    newCurrentTime: newCurrentTime(),
+    startTitleHolder:startTitleHolder,
+  });
+  setTimeout(sendCenterText, 200);
+};
+sendCenterText();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = socketio;
