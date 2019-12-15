@@ -235,9 +235,8 @@ socket.on("sendDB_TO_Admin", function (data){
   cueLengthArray  = data.socketDBArray.cueLengthArray;
 });
 //--------------------------------------------------
-$("#updateScheduledTimesArray").on('click', function () {
+function updateScheduledTimesArray(){
   console.log("updateScheduledTimesArray");
-
   for(let i=0; i < startTitleArray.length; i++) {startTitleArray[i] = $("#title"+i).val()}
   for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
   for(let i=0; i < cueLengthArray.length; i++) {cueLengthArray[i] = $("#cueLength"+i).val()}
@@ -258,9 +257,13 @@ $("#updateScheduledTimesArray").on('click', function () {
    sleep(1000).then(() => {
      getscheduledTimes();
    });
-
-
+};
+$("#updateScheduledTimesArray").on('click', function () {
+socket.emit("updatebutton_To_Socket",{})
 });
+socket.on("updatebutton_From_Socket", function(data){
+  updateScheduledTimesArray();
+})
 //--------------------------------------------------
 socket.on("updateDB_From_Socket", function(data) {
   //console.log("updateDB_From_Socket: ");
@@ -285,9 +288,24 @@ socket.on("pushGetscheduledTimes", function(data) {
 
 
 $("#sorting").on('click', function() {
-  console.log("knapp funkar");
-sortscheduledTimes();
+  socket.emit("sortingButton_To_Socket",{})
+
 });
+socket.on("sortingButton_From_Socket", function(data){
+  console.log("knapp funkar");
+
+  updateScheduledTimesArray();
+  sleep(750).then(() => {
+    sortscheduledTimes();
+
+    sleep(1000).then(() => {
+      //document.location.reload();
+    });
+
+  });
+
+})
+
 //--------------------------------------------------
 // Button offsetPlus
 $("#offsetPlus").on('click', function() {

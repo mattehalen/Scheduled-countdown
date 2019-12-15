@@ -457,6 +457,14 @@ var users = [];
 
     });
 
+    socket.on("updatebutton_To_Socket", function(data){
+      io.emit("updatebutton_From_Socket",{})
+    })
+
+    socket.on("sortingButton_To_Socket",function(data){
+      io.emit("sortingButton_From_Socket",{})
+    })
+
 
 
     // socket.on('join', function (user){
