@@ -742,6 +742,7 @@ function sendCenterText(){
     showNowClock:showNowClock,
     newCurrentTime: newCurrentTime(),
     startTitleHolder:startTitleHolder,
+    offsetTimeInit:newOffsetTime()
   });
   setTimeout(sendCenterText, 200);
 };

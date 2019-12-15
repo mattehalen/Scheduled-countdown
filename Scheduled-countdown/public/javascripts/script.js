@@ -73,12 +73,14 @@ $("#play").on('click', function () {
 // ALl info from Socket server
 
 var countDownTimeInMS = "";
+
 socket.on("centerTextContent", function(data){
   nowText.textContent   = data.newCurrentTime,
   nowTopRow.textContent = data.newCurrentTime,
   titleText.textContent = data.startTitleHolder,
   startText.textContent = data.countDownString,
-  countDownTimeInMS     = data.countDownTimeInMS
+  countDownTimeInMS     = data.countDownTimeInMS,
+  offsetTimeInit        = data.offsetTimeInit
 
     if (data.showNowClock === true) {
       ShowNowClock();
@@ -94,6 +96,8 @@ socket.on("centerTextContent", function(data){
         var threeMinuteMs = (3*1000*60);
         var twoMinuteMs   = (2*1000*60);
         var oneMinuteMs   = (1*1000*60);
+        countDownTimeInMS += offsetTimeInit
+
 
         //  6larm
         if (countDownTimeInMS > sixMinuteMs && countDownTimeInMS < (sixMinuteMs + timeBuffer)) {
