@@ -15,7 +15,7 @@ const fs = require('fs');
 var startTitleArray = [];
 var startTimeArray = [];
 var cueLengthArray  = [];
-// var offsetTimeInit = [];
+var offsetTimeInit = [];
 var ip = require("ip");
 // const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
@@ -73,8 +73,6 @@ var cueLengthTextHolder = "";
 
 var serverNewDate = "";
 var serverNowInMs = "";
-
-
 
 // New text
 var centerTextContent = "";
@@ -163,7 +161,6 @@ function updateScheduledTimesjson(){
   })
 };
 //--------------------------------------------------
-
 //--------------------------------------------------
 //-----offsetPlus button press
 //--------------------------------------------------
@@ -189,8 +186,8 @@ function updateOffsetTimePlusjson(){
     }
 
     variables.offsetTime += 1;
-    console.log("updateOffsetTimejson: ");
-    console.log(variables);
+    // console.log("updateOffsetTimejson: ");
+    // console.log(variables);
 
   fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
@@ -199,7 +196,6 @@ function updateOffsetTimePlusjson(){
 
 };
 //--------------------------------------------------
-
 //--------------------------------------------------
 //-----offsetMinus button press
 //--------------------------------------------------
@@ -225,8 +221,8 @@ function updateOffsetTimeMinusjson(){
     }
 
     variables.offsetTime -= 1;
-    console.log("updateOffsetTimejson: ");
-    console.log(variables);
+    // console.log("updateOffsetTimejson: ");
+    // console.log(variables);
 
   fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
@@ -235,7 +231,6 @@ function updateOffsetTimeMinusjson(){
 
 };
 //--------------------------------------------------
-
 //--------------------------------------------------
 //-----offsetReset button press
 //--------------------------------------------------
@@ -261,8 +256,8 @@ function updateOffsetTimeResetjson(){
     }
 
     variables.offsetTime = 0;
-    console.log("updateOffsetTimejson: ");
-    console.log(variables);
+    // console.log("updateOffsetTimejson: ");
+    // console.log(variables);
 
   fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
@@ -318,7 +313,42 @@ function writeDefaultjson(){
 //--------------------------------------------------
 
 
+//--------------------------------------------------
+//-----getOffsetTimejson button press
+//--------------------------------------------------
+function getOffsetTimejson(){
+  var a
+  const fs = require('fs')
+  function jsonReader(filePath, cb) {
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              return cb && cb(err)
+          }
+          try {
+              const object = JSON.parse(fileData)
+              return cb && cb(null, object)
+          } catch(err) {
+              return cb && cb(err)
+          }
+      })
+  }
+  jsonReader('./public/variables.json', (err, variables) => {
+    if (err) {
+        console.log('Error reading file:',err)
+        return
+    }
+    //console.log("updateOffsetTimejson: fdsafdsafdsafas ");
+    offsetTimejson = variables.offsetTime;
+    console.log("offsetTimejson: "+offsetTimejson);
 
+  // fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+  //       if (err) console.log('Error writing file:', err)
+  //   })
+  })
+  return
+ };
+getOffsetTimejson();
+//--------------------------------------------------
 
 
 
@@ -555,9 +585,6 @@ var users = [];
  startTime();
  //--------------------------------------------------
 
-
-
-
  function newTimeArraySorting(){
  //--------------------------------------------------
  //---Get next title / StartTime / cueLength
@@ -599,6 +626,18 @@ var users = [];
 //--------------------------------------------------
 //--------------------------------------------------
 //--------------------------------------------------
+function newOffsetTime(){
+  var offsetTime = offsetTimejson;
+  if (typeof offsetTime === "number") {
+    offsetTime = offsetTimejson;
+  }else {
+    offsetTime = 0;
+  }
+  offsetTime *=1000*60
+  return offsetTime
+};
+newOffsetTime();
+
 function newCurrentTime(){
   var d = new Date();
   var dInMs= d.getTime()
@@ -618,6 +657,7 @@ function newCurrentTimeInMs(){
 };
 
 function newStartTimeInMs(time){
+  //console.log(newOffsetTime());
   var d = new Date();
   var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
   var ddInMs = dd.getTime()
@@ -639,13 +679,19 @@ function newStartTime(time){
   return ddInMs
 };
 
+
 function newCountDown(){
   var time = "";
-  if (newCurrentTimeInMs() > newStartTimeInMs(startTimeTextHolder)) {
-    time = newCurrentTimeInMs()-newStartTimeInMs(startTimeTextHolder)
+  var offsetTime = newOffsetTime();
+  var now = newCurrentTimeInMs();
+  var startTime = newStartTimeInMs(startTimeTextHolder);
+      startTime += offsetTime;
+
+  if ( now > startTime) {
+    time = now-startTime
     time = (msToTime(time))
   }else {
-    time = newStartTimeInMs(startTimeTextHolder)-newCurrentTimeInMs()
+    time = startTime-now
     time = "-"+(msToTime(time))
   }
 
@@ -686,12 +732,8 @@ function sendCenterText(){
     newCurrentTimeInMs() < (newStartTimeInMs(startTimeTextHolder) + countUp)
         ) {
     var showNowClock = false;
-
-    //centerTextContent = newCountDown();
   }else {
     var showNowClock = true;
-    //centerTextContent = newCurrentTime()
-
   }
   //console.log(newStartTimeInMs(startTimeTextHolder)-newCurrentTimeInMs(),);
   io.emit("centerTextContent",{
@@ -704,23 +746,6 @@ function sendCenterText(){
   setTimeout(sendCenterText, 200);
 };
 sendCenterText();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = socketio;
