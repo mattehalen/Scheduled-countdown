@@ -338,6 +338,11 @@ $("#loadDefaultArray").on('click', function() {
   socket.emit('loadDefaultToSocket', {
     message: "loadDefaultToSocket: Sent"
   });
+
+  sleep(250).then(() => {
+    window.location.reload(true)
+  });
+
 });
 //--------------------------------------------------
 //---------- writeDefaultArray
