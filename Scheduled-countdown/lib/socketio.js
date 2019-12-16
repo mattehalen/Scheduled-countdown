@@ -155,7 +155,7 @@ function updateScheduledTimesjson(){
       customer.profiles.splice(a, 1);
       console.log("startTitleArray.legnth: "+a);
       console.log(customer.profiles);
-      
+
       for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
       for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
       for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
@@ -478,6 +478,14 @@ var users = [];
 
     socket.on("sortingButton_To_Socket",function(data){
       io.emit("sortingButton_From_Socket",{})
+    })
+
+    socket.on("send_Delete_Button_To_Socket",function(data){
+      listIndex = data.listIndex
+      console.log("send_Delete_Button_To_Socket: listIndex= "+listIndex);
+      io.emit("send_Delete_Button_from_Socket",{
+        listIndex: listIndex
+      })
     })
 
 

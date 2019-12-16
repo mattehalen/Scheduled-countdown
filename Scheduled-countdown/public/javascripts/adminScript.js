@@ -369,10 +369,22 @@ socket.on("updateOffsetTime_From_Socket", function (data){
 //--------------------------------------------------
 
 function delete_button_click(listIndex){
-      //alert(listIndex);
-      document.getElementById(listIndex).remove();
-      deleteIndexInScheduledTimes(listIndex);
+    socket.emit("send_Delete_Button_To_Socket",{
+      listIndex:listIndex
+    });
   };
+
+  socket.on("send_Delete_Button_from_Socket", function(data){
+    console.log(data);
+    listIndex = data.listIndex
+    console.log("send_Delete_Button_from_Socket: listIndex= "+listIndex);
+
+    document.getElementById(listIndex).remove();
+    deleteIndexInScheduledTimes(listIndex);
+    sleep(1000).then(() => {
+      window.location.reload(true)
+    });
+  })
 function printArraysToElements(){
   console.log("printArraysToElements");
      for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
