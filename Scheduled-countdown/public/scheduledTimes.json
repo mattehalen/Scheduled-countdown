@@ -1,9 +1,14 @@
 {
     "profiles": [
         {
+            "title": "New row added",
+            "startTime": "09:10",
+            "cueLength": "00:05"
+        },
+        {
             "title": "Greatest Show",
             "startTime": "18:25",
-            "cueLength": "01:00:00"
+            "cueLength": "00:15"
         },
         {
             "title": "WWWY",
@@ -34,21 +39,6 @@
             "title": "Blue Xmas",
             "startTime": "21:30",
             "cueLength": "00:05:37"
-        },
-        {
-            "title": "Peggy Sued",
-            "startTime": "21:55",
-            "cueLength": "00:06:51"
-        },
-        {
-            "title": "Uptown Funk",
-            "startTime": "22:15",
-            "cueLength": "00:07:28"
-        },
-        {
-            "title": "Queen",
-            "startTime": "22:40",
-            "cueLength": "00:05:01"
         }
     ]
 }

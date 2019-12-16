@@ -364,6 +364,23 @@ $("#writeDefaultArray").on('click', function() {
 });
 //--------------------------------------------------
 //--------------------------------------------------
+//---------- writeDefaultArray
+$("#addNewRow").on('click', function() {
+  console.log("addNewRow");
+  socket.emit("send_addNewRow_To_Socket",{})
+
+  sleep(1000).then(() => {
+    sortscheduledTimes();
+
+    sleep(2000).then(() => {
+        //window.location.reload(true)
+    });
+  });
+  });
+//--------------------------------------------------
+//--------------------------------------------------
+
+
 //updateOffsetTime_From_Socket
 socket.on("updateOffsetTime_From_Socket", function (data){
   console.log("updateOffsetTime_From_Socket");

@@ -118,12 +118,6 @@ function getscheduledTimes(){
 };
 getscheduledTimes();
 //--------------------------------------------------
-
-
-
-
-
-
 //--------------------------------------------------
 //-----updateScheduledTimesjson
 //--------------------------------------------------
@@ -366,6 +360,30 @@ getOffsetTimejson();
 //--------------------------------------------------
 
 
+//--------------------------------------------------
+//-----addNewRowDefault button press
+//--------------------------------------------------
+function addNewRowDefault(){
+  console.log("addNewRowDefault knappen funkar");
+  var addString = "";
+
+  fs.readFile("./public/scheduledTimes.json", function (err, data) {
+    var json = JSON.parse(data);
+    var feed = {title: "New row added", startTime: "12:00", cueLength: "00:01:10"};
+
+    json.profiles.push(feed);
+    addString = JSON.stringify(json, null, 4);
+
+    });
+
+    sleep(1000).then(() => {
+      fs.writeFile('./public/scheduledTimes.json', addString , (err) => {
+          if (err) throw err;
+      });
+    });
+};
+//-------------------------------------------------------------------------
+
 
 
 
@@ -487,6 +505,14 @@ var users = [];
         listIndex: listIndex
       })
     })
+
+    socket.on("send_addNewRow_To_Socket",function(data){
+      console.log("send_addNewRow_To_Socket:");
+
+      addNewRowDefault();
+    })
+
+
 
 
 
