@@ -52,14 +52,14 @@ getscheduledTimes();
 //--------------------------------------------------
 // - deleteIndexInScheduledTimes
 //--------------------------------------------------
-function deleteIndexInScheduledTimes(){
+function deleteIndexInScheduledTimes(index){
   const request = async () => {
       const response = await fetch('/scheduledTimes.json');
       const json = await response.json();
       scheduledTimesArray = json;
       console.log("deleteIndexInScheduledTimes");
-      console.log(scheduledTimesArray.profiles[0]);
-      scheduledTimesArray.profiles.splice(0, 1);
+      console.log(scheduledTimesArray.profiles[index]);
+      scheduledTimesArray.profiles.splice(index, 1);
 
 //----------------------------------------
       var i;
@@ -369,9 +369,9 @@ socket.on("updateOffsetTime_From_Socket", function (data){
 //--------------------------------------------------
 
 function delete_button_click(listIndex){
-      alert(listIndex);
+      //alert(listIndex);
       document.getElementById(listIndex).remove();
-      deleteIndexInScheduledTimes();
+      deleteIndexInScheduledTimes(listIndex);
   };
 function printArraysToElements(){
   console.log("printArraysToElements");

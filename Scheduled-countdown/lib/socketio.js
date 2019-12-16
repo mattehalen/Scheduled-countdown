@@ -150,9 +150,24 @@ function updateScheduledTimesjson(){
         return
     }
 
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
+    if (customer.profiles.length != startTitleArray.legnth) {
+      var a = customer.profiles.length-1;
+      customer.profiles.splice(a, 1);
+      console.log("startTitleArray.legnth: "+a);
+      console.log(customer.profiles);
+      
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
+
+
+    }else {
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
+      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
+    }
+
+
 
 
   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
