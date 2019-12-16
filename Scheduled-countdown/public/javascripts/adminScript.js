@@ -104,53 +104,53 @@ function getOffsetTime() {
 getOffsetTime();
 //--------------------------------------------------
 
-//--------------------------------------------------
-// - sortscheduledTimes
-//--------------------------------------------------
-function sortscheduledTimes() {
-  const request = async () => {
-    const response = await fetch('/scheduledTimes.json');
-    const json = await response.json();
-    scheduledTimesArray = json;
-    console.log("Before Sorting");
-    console.log(scheduledTimesArray.profiles);
-
-    //--------------------------------------------------
-    sleep(100).then(() => {
-      console.log("Sleep");
-      scheduledTimesArray.profiles.sort(function(a, b) {
-        return a.startTime.localeCompare(b.startTime);
-      });
-      scheduledTimesArrayBuffer = scheduledTimesArray;
-      console.log(scheduledTimesArrayBuffer.profiles[0].title);
-
-      for (let i = 0; i < startTitleArray.length; i++) {
-        startTitleArray[i] = scheduledTimesArrayBuffer.profiles[i].title
-      };
-      for (let i = 0; i < startTimeArray.length; i++) {
-        startTimeArray[i] = scheduledTimesArrayBuffer.profiles[i].startTime
-      };
-      for (let i = 0; i < cueLengthArray.length; i++) {
-        cueLengthArray[i] = scheduledTimesArrayBuffer.profiles[i].cueLength
-      };
-      //cueLengthArray
-
-      sleep(100).then(() => {
-        console.log("sleep inside of SLEEP");
-        printArraysToElements();
-        socket.emit("writeToScheduledTimesjson", {
-          startTitleArray: startTitleArray,
-          startTimeArray: startTimeArray,
-          cueLengthArray: cueLengthArray
-        });
-      });
-    });
-    //--------------------------------------------------
-  }
-  request();
-};
-//sortscheduledTimes();
-//--------------------------------------------------
+// //--------------------------------------------------
+// // - sortscheduledTimes
+// //--------------------------------------------------
+// function sortscheduledTimes() {
+//   const request = async () => {
+//     const response = await fetch('/scheduledTimes.json');
+//     const json = await response.json();
+//     scheduledTimesArray = json;
+//     console.log("Before Sorting");
+//     console.log(scheduledTimesArray.profiles);
+//
+//     //--------------------------------------------------
+//     sleep(100).then(() => {
+//       console.log("Sleep");
+//       scheduledTimesArray.profiles.sort(function(a, b) {
+//         return a.startTime.localeCompare(b.startTime);
+//       });
+//       scheduledTimesArrayBuffer = scheduledTimesArray;
+//       console.log(scheduledTimesArrayBuffer.profiles[0].title);
+//
+//       for (let i = 0; i < startTitleArray.length; i++) {
+//         startTitleArray[i] = scheduledTimesArrayBuffer.profiles[i].title
+//       };
+//       for (let i = 0; i < startTimeArray.length; i++) {
+//         startTimeArray[i] = scheduledTimesArrayBuffer.profiles[i].startTime
+//       };
+//       for (let i = 0; i < cueLengthArray.length; i++) {
+//         cueLengthArray[i] = scheduledTimesArrayBuffer.profiles[i].cueLength
+//       };
+//       //cueLengthArray
+//
+//       sleep(100).then(() => {
+//         console.log("sleep inside of SLEEP");
+//         printArraysToElements();
+//         socket.emit("writeToScheduledTimesjson", {
+//           startTitleArray: startTitleArray,
+//           startTimeArray: startTimeArray,
+//           cueLengthArray: cueLengthArray
+//         });
+//       });
+//     });
+//     //--------------------------------------------------
+//   }
+//   request();
+// };
+// //sortscheduledTimes();
+// //--------------------------------------------------
 
 
 //--------------------------------------------------
@@ -249,7 +249,8 @@ socket.on("sortingButton_From_Socket", function(data) {
 
   updateScheduledTimesArray();
   sleep(750).then(() => {
-    sortscheduledTimes();
+    //sortscheduledTimes();
+    window.location.reload(true)
 
     sleep(1000).then(() => {
       //document.location.reload();
@@ -322,12 +323,9 @@ $("#addNewRow").on('click', function() {
   console.log("addNewRow");
   socket.emit("send_addNewRow_To_Socket", {})
 
-  sleep(1000).then(() => {
-    sortscheduledTimes();
-
-    sleep(2000).then(() => {
-      //window.location.reload(true)
-    });
+  sleep(1500).then(() => {
+    //sortscheduledTimes();
+    window.location.reload(true)
   });
 });
 //--------------------------------------------------
@@ -362,6 +360,7 @@ socket.on("send_Delete_Button_from_Socket", function(data) {
 
 function printArraysToElements() {
   console.log("printArraysToElements");
+  console.log(startTitleArray);
   for (let i = 0; i < startTitleArray.length; i++) {
     document.getElementById("title" + i).value = startTitleArray[i]
   };

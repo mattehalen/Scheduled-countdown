@@ -140,32 +140,46 @@ function updateScheduledTimesjson(){
 
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
-        console.log('Error reading file:',err)
-        return
+      console.log('Error reading file:', err)
+      return
     }
 
-    if (customer.profiles.length != startTitleArray.length) {
-      var a = customer.profiles.length-1;
+    if (customer.profiles.length > startTitleArray.length) {
+      console.log("-------------------------------------------------------------");
+      var a = customer.profiles.length - 1;
       customer.profiles.splice(a, 1);
-      console.log("startTitleArray.length: "+a);
+      console.log("startTitleArray.length: " + a);
       console.log(customer.profiles);
 
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].title = startTitleArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].startTime = startTimeArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].cueLength = cueLengthArray[i]
+      };
 
 
-    }else {
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
+    } else {
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].title = startTitleArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].startTime = startTimeArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].cueLength = cueLengthArray[i]
+      };
     }
 
+    customer.profiles.sort(function(a, b) {
+      return a.startTime.localeCompare(b.startTime);
+    });
 
-
-
-  fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
-        if (err) console.log('Error writing file:', err)
+    fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null, 4), (err) => {
+      if (err) console.log('Error writing file:', err)
     })
   })
 };
@@ -372,7 +386,12 @@ function addNewRowDefault(){
     var feed = {title: "New row added", startTime: "12:00", cueLength: "00:01:10"};
 
     json.profiles.push(feed);
+      console.log("addNewRowDefault: "+JSON.stringify(json, null, 4));
+    json.profiles.sort(function(a, b) {
+      return a.startTime.localeCompare(b.startTime);
+    });
     addString = JSON.stringify(json, null, 4);
+    console.log("addNewRowDefault: "+JSON.stringify(json, null, 4));
 
     });
 
@@ -508,7 +527,6 @@ var users = [];
 
     socket.on("send_addNewRow_To_Socket",function(data){
       console.log("send_addNewRow_To_Socket:");
-
       addNewRowDefault();
     })
 
