@@ -1,35 +1,31 @@
 "use strict";
 
 var myLocalip = document.getElementById("myLocalip").textContent;
-var myLocalipAndPort = myLocalip+":3000"
+var myLocalipAndPort = myLocalip + ":3000"
 console.log(myLocalipAndPort);
 //--------------------------------------------------
-var nowText         = document.getElementById("now");
-var nowTopRow       = document.getElementById("nowTopRow");
-var titleText       = document.getElementById("title");
-var startText       = document.getElementById("start");
+var nowText = document.getElementById("now");
+var nowTopRow = document.getElementById("nowTopRow");
+var titleText = document.getElementById("title");
+var startText = document.getElementById("start");
 //--------------------------------------------------
-var fiveMinuteText  = document.getElementById("5minute");
-var cueTimeText     = document.getElementById("cueTime");
-var offsetTime      = document.getElementById("offsetTime");
-var offsetTimeInit  = 0;
+var fiveMinuteText = document.getElementById("5minute");
+var cueTimeText = document.getElementById("cueTime");
+var offsetTime = document.getElementById("offsetTime");
+var offsetTimeInit = 0;
 //--------------------------------------------------
 // - Variables & Booleans
 //--------------------------------------------------
-var countDown             = 7; // how many minutes before
-    countDown             = countDown *60000; // convert to Ms
-var countUp               = 5; // how many minutes after
-    countUp               = countUp *60000; // convert to M
+var countDown = 7; // how many minutes before
+countDown = countDown * 60000; // convert to Ms
+var countUp = 5; // how many minutes after
+countUp = countUp * 60000; // convert to M
 
-var startTimeArray        = [""];
-var startTitleArray       = [""];
-
-var cueLengthArray        = [""];
-
+var startTimeArray = [""];
+var startTitleArray = [""];
+var cueLengthArray = [""];
 var nowInMs = 0;
-
 var sendMin_To_countDownBoole = 0;
-
 var setTimeoutTime = 150;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var newArrayIndex = 0;

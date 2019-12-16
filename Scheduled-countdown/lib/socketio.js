@@ -512,37 +512,15 @@ var users = [];
       addNewRowDefault();
     })
 
-
-
-
-
-    // socket.on('join', function (user){
-    //    socket.username = user.username;
-    //    users.push(socket.username);
-    //    io.emit('user joined', { 'username': user.username, users:users });
-    // });
-    //
-    // socket.on('typing', function (msg) {
-    //     io.emit('typing', { 'message': msg.message, 'username': msg.username });
-    // });
-    //
-    // socket.on('new_message', function (msg) {
-    //      io.emit('chat message', { 'message': msg.message, 'username': msg.username });
-    // });
-    //
-    // socket.on('disconnect', function(){
-    //     console.log('user disconnected');
-    //     users.splice(users.indexOf(socket.username), 1);
-    //   io.emit('user disconnected', { 'username': socket.username });
-    // });
  });
 
-
+//--------------------------------------------------
+//----Can i delete this?
+//--------------------------------------------------
  function pad(n, z) {
    z = z || 2;
    return ('00' + n).slice(-z);
  }
-
 //--------------------------------------------------
  function msToTime(s) {
    var ms = s % 1000;
@@ -568,7 +546,6 @@ var users = [];
    return hrs + ':' + mins + ':' + secs + '.' + ms;
  }
 //--------------------------------------------------
-
  //--------------------------------------------------
  //- CurrentTime
  //--------------------------------------------------
@@ -669,10 +646,6 @@ var users = [];
    setTimeout(newTimeArraySorting, setTimeoutTime);
  };
  newTimeArraySorting();
-
-
-
-
 //--------------------------------------------------
 //--------------------------------------------------
 //--------------------------------------------------
@@ -783,10 +756,13 @@ function pad(n, z) {
 
 function sendCenterText(){
   var countDownString = newCountDown();
+  var now = newCurrentTimeInMs();
+  var start = newStartTimeInMs(startTimeTextHolder);
+  var offset = newOffsetTime();
 
   if (
-    newCurrentTimeInMs() > (newStartTimeInMs(startTimeTextHolder) - countDown) &&
-    newCurrentTimeInMs() < (newStartTimeInMs(startTimeTextHolder) + countUp)
+    now > ((start+offset) - countDown) &&
+    now < ((start+offset) + countUp)
         ) {
     var showNowClock = false;
   }else {

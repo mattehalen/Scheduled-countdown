@@ -1,15 +1,15 @@
-var startTimeArray  = [];
+var startTimeArray = [];
 var startTitleArray = [];
-var cueLengthArray  = [];
-var offsetTimejson  = [];
-var offsetTimeInit  = [];
+var cueLengthArray = [];
+var offsetTimejson = [];
+var offsetTimeInit = [];
 var scheduledTimesArrayGlobal = [];
-var scheduledTimesArrayBuffer     = [];
+var scheduledTimesArrayBuffer = [];
 var nowTopRow = document.getElementById("nowTopRow");
 var setTimeoutTime = 150;
 
 var myLocalip = document.getElementById("myLocalip").textContent;
-var myLocalipAndPort = myLocalip+":3000"
+var myLocalipAndPort = myLocalip + ":3000"
 console.log(myLocalipAndPort);
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
@@ -19,29 +19,29 @@ var offsetTime = document.getElementById("offsetTime");
 //--------------------------------------------------
 // - getscheduledTimes
 //--------------------------------------------------
-function getscheduledTimes(){
+function getscheduledTimes() {
   const request = async () => {
-      const response = await fetch('/scheduledTimes.json');
-      const json = await response.json();
-      scheduledTimesArray = json;
-      //console.log(scheduledTimesArray.profiles[0].title);
-//----------------------------------------
-      var i;
-      var a;
-      var b;
-      var c;
-      startTimeArray = [];
-      startTitleArray = [];
-      cueLengthArray  = [];
-      for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
-        a = scheduledTimesArray.profiles[i].title;
-        startTitleArray.push(a);
-        b = scheduledTimesArray.profiles[i].startTime;
-        startTimeArray.push(b);
-        c = scheduledTimesArray.profiles[i].cueLength;
-        cueLengthArray.push(c);
-//----------------------------------------
-      }
+    const response = await fetch('/scheduledTimes.json');
+    const json = await response.json();
+    scheduledTimesArray = json;
+    //console.log(scheduledTimesArray.profiles[0].title);
+    //----------------------------------------
+    var i;
+    var a;
+    var b;
+    var c;
+    startTimeArray = [];
+    startTitleArray = [];
+    cueLengthArray = [];
+    for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
+      a = scheduledTimesArray.profiles[i].title;
+      startTitleArray.push(a);
+      b = scheduledTimesArray.profiles[i].startTime;
+      startTimeArray.push(b);
+      c = scheduledTimesArray.profiles[i].cueLength;
+      cueLengthArray.push(c);
+      //----------------------------------------
+    }
   }
 
   request();
@@ -52,34 +52,34 @@ getscheduledTimes();
 //--------------------------------------------------
 // - deleteIndexInScheduledTimes
 //--------------------------------------------------
-function deleteIndexInScheduledTimes(index){
+function deleteIndexInScheduledTimes(index) {
   const request = async () => {
-      const response = await fetch('/scheduledTimes.json');
-      const json = await response.json();
-      scheduledTimesArray = json;
-      console.log("deleteIndexInScheduledTimes");
-      console.log(scheduledTimesArray.profiles[index]);
-      scheduledTimesArray.profiles.splice(index, 1);
+    const response = await fetch('/scheduledTimes.json');
+    const json = await response.json();
+    scheduledTimesArray = json;
+    console.log("deleteIndexInScheduledTimes");
+    console.log(scheduledTimesArray.profiles[index]);
+    scheduledTimesArray.profiles.splice(index, 1);
 
-//----------------------------------------
-      var i;
-      var a;
-      var b;
-      var c;
-      startTimeArray = [];
-      startTitleArray = [];
-      cueLengthArray  = [];
-      for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
-        a = scheduledTimesArray.profiles[i].title;
-        startTitleArray.push(a);
-        b = scheduledTimesArray.profiles[i].startTime;
-        startTimeArray.push(b);
-        c = scheduledTimesArray.profiles[i].cueLength;
-        cueLengthArray.push(c);
-      }
-      //----------------------------------------
-      console.log("here i am");
-      sendDB_To_Socket_On_Delete();
+    //----------------------------------------
+    var i;
+    var a;
+    var b;
+    var c;
+    startTimeArray = [];
+    startTitleArray = [];
+    cueLengthArray = [];
+    for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
+      a = scheduledTimesArray.profiles[i].title;
+      startTitleArray.push(a);
+      b = scheduledTimesArray.profiles[i].startTime;
+      startTimeArray.push(b);
+      c = scheduledTimesArray.profiles[i].cueLength;
+      cueLengthArray.push(c);
+    }
+    //----------------------------------------
+    console.log("here i am");
+    sendDB_To_Socket_On_Delete();
   }
 
   request();
@@ -90,13 +90,13 @@ function deleteIndexInScheduledTimes(index){
 //--------------------------------------------------
 // - getOffsetTime
 //--------------------------------------------------
-function getOffsetTime(){
+function getOffsetTime() {
   const request = async () => {
-      const response = await fetch('/variables.json');
-      const json = await response.json();
-      offsetTimejson = json;
-      //console.log("Get offsetTime: "+offsetTimejson.offsetTime);
-      offsetTimeInit = offsetTimejson.offsetTime;
+    const response = await fetch('/variables.json');
+    const json = await response.json();
+    offsetTimejson = json;
+    //console.log("Get offsetTime: "+offsetTimejson.offsetTime);
+    offsetTimeInit = offsetTimejson.offsetTime;
   }
 
   request();
@@ -107,99 +107,50 @@ getOffsetTime();
 //--------------------------------------------------
 // - sortscheduledTimes
 //--------------------------------------------------
-function sortscheduledTimes(){
+function sortscheduledTimes() {
   const request = async () => {
-      const response = await fetch('/scheduledTimes.json');
-      const json = await response.json();
-      scheduledTimesArray = json;
-      console.log("Before Sorting");
-      console.log(scheduledTimesArray.profiles);
+    const response = await fetch('/scheduledTimes.json');
+    const json = await response.json();
+    scheduledTimesArray = json;
+    console.log("Before Sorting");
+    console.log(scheduledTimesArray.profiles);
 
-//--------------------------------------------------
+    //--------------------------------------------------
+    sleep(100).then(() => {
+      console.log("Sleep");
+      scheduledTimesArray.profiles.sort(function(a, b) {
+        return a.startTime.localeCompare(b.startTime);
+      });
+      scheduledTimesArrayBuffer = scheduledTimesArray;
+      console.log(scheduledTimesArrayBuffer.profiles[0].title);
+
+      for (let i = 0; i < startTitleArray.length; i++) {
+        startTitleArray[i] = scheduledTimesArrayBuffer.profiles[i].title
+      };
+      for (let i = 0; i < startTimeArray.length; i++) {
+        startTimeArray[i] = scheduledTimesArrayBuffer.profiles[i].startTime
+      };
+      for (let i = 0; i < cueLengthArray.length; i++) {
+        cueLengthArray[i] = scheduledTimesArrayBuffer.profiles[i].cueLength
+      };
+      //cueLengthArray
+
       sleep(100).then(() => {
-        console.log("Sleep");
-        scheduledTimesArray.profiles.sort(function (a, b)
-          {
-            return a.startTime.localeCompare(b.startTime);
-          });
-          scheduledTimesArrayBuffer = scheduledTimesArray;
-          console.log(scheduledTimesArrayBuffer.profiles[0].title);
-
-          for(let i=0; i < startTitleArray.length; i++)   {startTitleArray[i] = scheduledTimesArrayBuffer.profiles[i].title};
-          for(let i=0; i < startTimeArray.length; i++)   {startTimeArray[i] = scheduledTimesArrayBuffer.profiles[i].startTime};
-          for(let i=0; i < cueLengthArray.length; i++)   {cueLengthArray[i] = scheduledTimesArrayBuffer.profiles[i].cueLength};
-          //cueLengthArray
-
-          sleep(100).then(() => {
-            console.log("sleep inside of SLEEP");
-            printArraysToElements();
-            socket.emit("writeToScheduledTimesjson",{
-              startTitleArray: startTitleArray,
-              startTimeArray: startTimeArray,
-              cueLengthArray: cueLengthArray
-            });
-          });
+        console.log("sleep inside of SLEEP");
+        printArraysToElements();
+        socket.emit("writeToScheduledTimesjson", {
+          startTitleArray: startTitleArray,
+          startTimeArray: startTimeArray,
+          cueLengthArray: cueLengthArray
         });
-//--------------------------------------------------
+      });
+    });
+    //--------------------------------------------------
   }
   request();
 };
- //sortscheduledTimes();
+//sortscheduledTimes();
 //--------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//- CurrentTime
-//--------------------------------------------------
-function nowClock() {
-  //console.log("hello");
-  var d = new Date();
-  nowInMs = d.getTime();
-  var s = "";
-  s += (10 > d.getHours  () ? "0": "") + d.getHours  () + ":";
-  s += (10 > d.getMinutes() ? "0": "") + d.getMinutes() + ":";
-  s += (10 > d.getSeconds() ? "0": "") + d.getSeconds();
-
-  //nowText.textContent = s;
-  nowTopRow.textContent = s;
-  setTimeout(nowClock, setTimeoutTime - d.getTime() % 1000 + 20);
-  return d;
-
-}
-nowClock();
-//--------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //--------------------------------------------------
@@ -211,7 +162,7 @@ nowClock();
 var socket = io.connect(myLocalipAndPort);
 console.log("adminSocketScript Loaded");
 //---------- My sockets
-socket.emit("start", { });
+socket.emit("start", {});
 
 sleep(1000).then(() => {
   //console.log(startTitleArray);
@@ -221,55 +172,58 @@ sleep(1000).then(() => {
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray
   });
-  });
+});
 //--------------------------------------------------
-
-
-
 
 //---------- I think i can delete this
 //--------------------------------------------------
-socket.on("sendDB_TO_Admin", function (data){
-  startTimeArray  = data.socketDBArray.startTimeArray;
+socket.on("sendDB_TO_Admin", function(data) {
+  startTimeArray = data.socketDBArray.startTimeArray;
   startTitleArray = data.socketDBArray.startTitleArray;
-  cueLengthArray  = data.socketDBArray.cueLengthArray;
+  cueLengthArray = data.socketDBArray.cueLengthArray;
 });
 //--------------------------------------------------
-function updateScheduledTimesArray(){
+function updateScheduledTimesArray() {
   console.log("updateScheduledTimesArray");
-  for(let i=0; i < startTitleArray.length; i++) {startTitleArray[i] = $("#title"+i).val()}
-  for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
-  for(let i=0; i < cueLengthArray.length; i++) {cueLengthArray[i] = $("#cueLength"+i).val()}
+  for (let i = 0; i < startTitleArray.length; i++) {
+    startTitleArray[i] = $("#title" + i).val()
+  }
+  for (let i = 0; i < startTimeArray.length; i++) {
+    startTimeArray[i] = $("#startTime" + i).val()
+  }
+  for (let i = 0; i < cueLengthArray.length; i++) {
+    cueLengthArray[i] = $("#cueLength" + i).val()
+  }
 
   console.log(cueLengthArray);
   //console.log("startTitleArray after: "+startTitleArray + startTimeArray);
-   socket.emit("writeToScheduledTimesjson",{
-     startTitleArray: startTitleArray,
-     startTimeArray: startTimeArray,
-     cueLengthArray: cueLengthArray
-   });
-   socket.emit('updateScheduledTimesArray',{
-     startTitleArray: startTitleArray,
-     startTimeArray: startTimeArray,
-     cueLengthArray: cueLengthArray
-   });
+  socket.emit("writeToScheduledTimesjson", {
+    startTitleArray: startTitleArray,
+    startTimeArray: startTimeArray,
+    cueLengthArray: cueLengthArray
+  });
+  socket.emit('updateScheduledTimesArray', {
+    startTitleArray: startTitleArray,
+    startTimeArray: startTimeArray,
+    cueLengthArray: cueLengthArray
+  });
 
-   sleep(1000).then(() => {
-     getscheduledTimes();
-   });
+  sleep(1000).then(() => {
+    getscheduledTimes();
+  });
 };
-$("#updateScheduledTimesArray").on('click', function () {
-socket.emit("updatebutton_To_Socket",{})
+$("#updateScheduledTimesArray").on('click', function() {
+  socket.emit("updatebutton_To_Socket", {})
 });
-socket.on("updatebutton_From_Socket", function(data){
+socket.on("updatebutton_From_Socket", function(data) {
   updateScheduledTimesArray();
 })
 //--------------------------------------------------
 socket.on("updateDB_From_Socket", function(data) {
   //console.log("updateDB_From_Socket: ");
-  startTimeArray  = data.startTimeArray;
+  startTimeArray = data.startTimeArray;
   startTitleArray = data.startTitleArray;
-  cueLengthArray  = data.cueLengthArray;
+  cueLengthArray = data.cueLengthArray;
   sleep(100).then(() => {
     printArraysToElements();
   });
@@ -286,12 +240,11 @@ socket.on("pushGetscheduledTimes", function(data) {
 
 });
 
-
 $("#sorting").on('click', function() {
-  socket.emit("sortingButton_To_Socket",{})
+  socket.emit("sortingButton_To_Socket", {})
 
 });
-socket.on("sortingButton_From_Socket", function(data){
+socket.on("sortingButton_From_Socket", function(data) {
   console.log("knapp funkar");
 
   updateScheduledTimesArray();
@@ -367,22 +320,21 @@ $("#writeDefaultArray").on('click', function() {
 //---------- writeDefaultArray
 $("#addNewRow").on('click', function() {
   console.log("addNewRow");
-  socket.emit("send_addNewRow_To_Socket",{})
+  socket.emit("send_addNewRow_To_Socket", {})
 
   sleep(1000).then(() => {
     sortscheduledTimes();
 
     sleep(2000).then(() => {
-        //window.location.reload(true)
+      //window.location.reload(true)
     });
   });
-  });
+});
 //--------------------------------------------------
 //--------------------------------------------------
-
 
 //updateOffsetTime_From_Socket
-socket.on("updateOffsetTime_From_Socket", function (data){
+socket.on("updateOffsetTime_From_Socket", function(data) {
   console.log("updateOffsetTime_From_Socket");
   console.log(data);
   offsetTimeInit = data.offsetTime;
@@ -390,47 +342,62 @@ socket.on("updateOffsetTime_From_Socket", function (data){
 });
 //--------------------------------------------------
 
-function delete_button_click(listIndex){
-    socket.emit("send_Delete_Button_To_Socket",{
-      listIndex:listIndex
-    });
+function delete_button_click(listIndex) {
+  socket.emit("send_Delete_Button_To_Socket", {
+    listIndex: listIndex
+  });
+};
+
+socket.on("send_Delete_Button_from_Socket", function(data) {
+  console.log(data);
+  listIndex = data.listIndex
+  console.log("send_Delete_Button_from_Socket: listIndex= " + listIndex);
+
+  document.getElementById(listIndex).remove();
+  deleteIndexInScheduledTimes(listIndex);
+  sleep(1000).then(() => {
+    window.location.reload(true)
+  });
+})
+
+function printArraysToElements() {
+  console.log("printArraysToElements");
+  for (let i = 0; i < startTitleArray.length; i++) {
+    document.getElementById("title" + i).value = startTitleArray[i]
+  };
+  for (let i = 0; i < startTimeArray.length; i++) {
+    document.getElementById("startTime" + i).value = startTimeArray[i]
+  };
+  for (let i = 0; i < cueLengthArray.length; i++) {
+    document.getElementById("cueLength" + i).value = cueLengthArray[i]
   };
 
-  socket.on("send_Delete_Button_from_Socket", function(data){
-    console.log(data);
-    listIndex = data.listIndex
-    console.log("send_Delete_Button_from_Socket: listIndex= "+listIndex);
-
-    document.getElementById(listIndex).remove();
-    deleteIndexInScheduledTimes(listIndex);
-    sleep(1000).then(() => {
-      window.location.reload(true)
-    });
-  })
-function printArraysToElements(){
-  console.log("printArraysToElements");
-     for(let i=0; i < startTitleArray.length; i++)   {document.getElementById("title"+i).value = startTitleArray[i]};
-     for(let i=0; i < startTimeArray.length; i++)   {document.getElementById("startTime"+i).value = startTimeArray[i]};
-     for(let i=0; i < cueLengthArray.length; i++)   {document.getElementById("cueLength"+i).value = cueLengthArray[i]};
-
 
 };
-function getElementsToArrays(){
+
+function getElementsToArrays() {
   console.log("getElementsToArrays()");
-  for(let i=0; i < startTitleArray.length; i++) {startTitleArray[i] = $("#title"+i).val()}
-  for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
-  for(let i=0; i < cueLengthArray.length; i++) {cueLengthArray[i] = $("#cueLength"+i).val()}
+  for (let i = 0; i < startTitleArray.length; i++) {
+    startTitleArray[i] = $("#title" + i).val()
+  }
+  for (let i = 0; i < startTimeArray.length; i++) {
+    startTimeArray[i] = $("#startTime" + i).val()
+  }
+  for (let i = 0; i < cueLengthArray.length; i++) {
+    cueLengthArray[i] = $("#cueLength" + i).val()
+  }
   console.log(startTimeArray);
 };
-function sendDB_To_Socket_On_Delete(){
+
+function sendDB_To_Socket_On_Delete() {
   console.log("sendDB_To_Socket_On_Delete")
 
-  socket.emit("writeToScheduledTimesjson",{
+  socket.emit("writeToScheduledTimesjson", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray
   });
-  socket.emit('updateScheduledTimesArray',{
+  socket.emit('updateScheduledTimesArray', {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray
@@ -438,5 +405,6 @@ function sendDB_To_Socket_On_Delete(){
 
 };
 
-     socket.on('user disconnected', function (data) {
-     });
+socket.on("centerTextContent", function(data) {
+  nowTopRow.textContent = data.newCurrentTime
+});
