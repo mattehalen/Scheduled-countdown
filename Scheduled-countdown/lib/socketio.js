@@ -144,10 +144,10 @@ function updateScheduledTimesjson(){
         return
     }
 
-    if (customer.profiles.length != startTitleArray.legnth) {
+    if (customer.profiles.length != startTitleArray.length) {
       var a = customer.profiles.length-1;
       customer.profiles.splice(a, 1);
-      console.log("startTitleArray.legnth: "+a);
+      console.log("startTitleArray.length: "+a);
       console.log(customer.profiles);
 
       for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
