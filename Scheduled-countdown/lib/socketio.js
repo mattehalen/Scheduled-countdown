@@ -316,16 +316,11 @@ function writeDefaultjson(){
       })
   }
 
-  jsonReader('./public/scheduledTimes-backup.json', (err, customer) => {
+  jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
         console.log('Error reading file:',err)
         return
     }
-
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
-
 
     //console.log("startTitleArray: "+ startTitleArray);
   fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(customer, null,4), (err) => {
