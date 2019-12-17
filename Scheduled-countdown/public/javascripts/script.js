@@ -148,6 +148,15 @@ socket.on("centerTextContent", function(data){
 
           };
         }
+        // 0min Alarm
+        if (countDownTimeInMS > 0 && countDownTimeInMS < (0 + timeBuffer)) {;
+
+          if (sendMin_To_countDownBoole != 0){
+            sendMin_To_countDownBoole = 0;
+            socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+
+          };
+        }
         //--------------------------------------------------
 
 
