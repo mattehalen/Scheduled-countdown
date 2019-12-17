@@ -743,6 +743,45 @@ function newCountDown(){
 };
 newCountDown();
 
+function newCueCountDown() {
+  var cueLength = cueLengthTextHolder;
+  //--------------------------------------------------
+  if (cueLength.length > 5) {
+    cueLength = timeStringToMs(cueLength);
+  } else {
+    cueLength = cueLength + ":00"
+    cueLength = timeStringToMs(cueLength);
+  }
+  //--------------------------------------------------
+  var offsetTime = newOffsetTime();
+  var startTime = newStartTimeInMs(startTimeTextHolder);
+  var cueStarTime = (startTime - cueLength)
+  cueStarTime += offsetTime
+  var now = newCurrentTimeInMs();
+
+  if (now > cueStarTime) {
+    time = now - cueStarTime
+    time = (msToTime(time))
+  } else {
+    time = cueStarTime - now
+    time = "-" + (msToTime(time))
+  }
+  //--------------------------------------------------
+  var textString = "";
+  if (now > (cueStarTime - countDown) && now < cueStarTime) {
+    textString = "CUE - " + startTitleHolder + ": " + time
+  } else {
+    textString = "--------------------------"
+  }
+
+  io.emit("getCueTimeString_From_Socket", {
+    string: textString
+  });
+
+  setTimeout(newCueCountDown, 1000);
+};
+newCueCountDown();
+
 function timeStringToMs(t){
   if (t > 5 ){
     var r = Number(t.split(':')[0])*(60*60000)+Number(t.split(':')[1])*(60000)+Number(t.split(':')[2])*(1000);
@@ -793,6 +832,7 @@ function sendCenterText(){
   setTimeout(sendCenterText, 200);
 };
 sendCenterText();
+
 
 
 module.exports = socketio;

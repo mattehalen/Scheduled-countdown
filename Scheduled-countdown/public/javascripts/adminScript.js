@@ -6,6 +6,7 @@ var offsetTimeInit = [];
 var scheduledTimesArrayGlobal = [];
 var scheduledTimesArrayBuffer = [];
 var nowTopRow = document.getElementById("nowTopRow");
+var cueTimeText = document.getElementById("cueTime");
 var setTimeoutTime = 150;
 
 var myLocalip = document.getElementById("myLocalip").textContent;
@@ -337,6 +338,11 @@ socket.on("updateOffsetTime_From_Socket", function(data) {
   console.log(data);
   offsetTimeInit = data.offsetTime;
   $("#offsetTime").html(offsetTimeInit);
+});
+//--------------------------------------------------
+//getCueTimeString_From_Socket
+socket.on("getCueTimeString_From_Socket", function(data) {
+  cueTimeText.textContent = data.string;
 });
 //--------------------------------------------------
 
