@@ -14,7 +14,7 @@ block content
           button#offsetReset.commandButton Reset
         .buttondiv
           button#sorting.commandButton Sort and Update
-          button#updateScheduledTimesArray.commandButton Update Kanske kan tas bort?
+          //button#updateScheduledTimesArray.commandButton Update Kanske kan tas bort?
         .buttondiv
           button#loadDefaultArray.commandButton Load
           button#writeDefaultArray.commandButton Save
@@ -47,6 +47,8 @@ block content
     div.floatl#preview
       p Preview
       iframe.preview(src='http://' + myLocalip + ':3000')
+      p 5Min countdown
+      iframe.preview(src='http://' + myLocalip + ':3000/countdown')
   
   .downSite
     #cueTime.fiveMinute 
