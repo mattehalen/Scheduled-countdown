@@ -6,13 +6,12 @@ html
   body(class='transp')
     p(hidden='')#myLocalip= myLocalip
     block content
-     p#fiveMinString(style='font-size:10em') test
-     
-     p#fiveMin.color(style='font-size:10em' color="black" hidden='') 5 min to show
-     p#foureMin.color(style='font-size:10em' color="black" hidden='') 4 min to show
-     p#threeMin.color(style='font-size:10em' color="black" hidden='') 3 min to show
-     p#twoMin.color(style='font-size:10em' color="black" hidden='') 2 min to show
-     p#oneMin.color(style='font-size:10em' color="black" hidden='') 1 min to show
+     //p#fiveMinString(style='font-size:10em') test
+     p#fiveMin.color(hidden='') 5 min to show
+     p#foureMin.color(hidden='') 4 min to show
+     p#threeMin.color(hidden='') 3 min to show
+     p#twoMin.color(hidden='') 2 min to show
+     p#oneMin.color(hidden='') 1 min to show
      
      
      script(src='/socket.io/socket.io.js')

@@ -5,7 +5,6 @@ var myLocalipAndPort = myLocalip+":3000"
 console.log(myLocalipAndPort);
 var countDownTime = "";
 
-
 var socket = io.connect(myLocalipAndPort);
 socket.on("sendMin_To_countDown", function(data) {
   console.log("sendMin_To_countDown: "+data.countDownTime);
@@ -27,42 +26,42 @@ switch (countDownTime) {
   document.getElementById("threeMin").style.display = "none";
   document.getElementById("twoMin").style.display = "none";
   document.getElementById("oneMin").style.display = "none";
-  document.getElementById("fiveMinString").style.display = "block";
+  document.getElementById("fiveMinString").style.display = "flex";
     break;
   case 1:
   document.getElementById("fiveMin").style.display = "none";
   document.getElementById("foureMin").style.display = "none";
   document.getElementById("threeMin").style.display = "none";
   document.getElementById("twoMin").style.display = "none";
-  document.getElementById("oneMin").style.display = "block";
+  document.getElementById("oneMin").style.display = "flex";
   document.getElementById("fiveMinString").style.display = "none";
     break;
   case 2:
   document.getElementById("fiveMin").style.display = "none";
   document.getElementById("foureMin").style.display = "none";
   document.getElementById("threeMin").style.display = "none";
-  document.getElementById("twoMin").style.display = "block";
+  document.getElementById("twoMin").style.display = "flex";
   document.getElementById("oneMin").style.display = "none";
   document.getElementById("fiveMinString").style.display = "none";
     break;
   case 3:
   document.getElementById("fiveMin").style.display = "none";
   document.getElementById("foureMin").style.display = "none";
-  document.getElementById("threeMin").style.display = "block";
+  document.getElementById("threeMin").style.display = "flex";
   document.getElementById("twoMin").style.display = "none";
   document.getElementById("oneMin").style.display = "none";
   document.getElementById("fiveMinString").style.display = "none";
     break;
   case 4:
   document.getElementById("fiveMin").style.display = "none";
-  document.getElementById("foureMin").style.display = "block";
+  document.getElementById("foureMin").style.display = "flex";
   document.getElementById("threeMin").style.display = "none";
   document.getElementById("twoMin").style.display = "none";
   document.getElementById("oneMin").style.display = "none";
   document.getElementById("fiveMinString").style.display = "none";
     break;
   case 5:
-  document.getElementById("fiveMin").style.display = "block";
+  document.getElementById("fiveMin").style.display = "flex";
   document.getElementById("foureMin").style.display = "none";
   document.getElementById("threeMin").style.display = "none";
   document.getElementById("twoMin").style.display = "none";

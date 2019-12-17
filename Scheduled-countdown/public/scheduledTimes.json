@@ -1,9 +1,24 @@
 {
     "profiles": [
         {
+            "title": "Open Doors",
+            "startTime": "17:45",
+            "cueLength": "00:01"
+        },
+        {
+            "title": "Piano",
+            "startTime": "18:00",
+            "cueLength": "00:01"
+        },
+        {
+            "title": "Piano + Backing",
+            "startTime": "18:10",
+            "cueLength": "00:01"
+        },
+        {
             "title": "Greatest Show",
-            "startTime": "12:05",
-            "cueLength": "01:00:00"
+            "startTime": "18:25",
+            "cueLength": "00:15"
         },
         {
             "title": "WWWY",
