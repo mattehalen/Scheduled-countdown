@@ -291,3 +291,21 @@ input[type=time] {
   font-size: 4vw;
   width: 100%;
 }
+
+.slideshowCountDown{
+  height: 99.9%;
+  width: 99.9%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+}
+.slideshowPictures{
+  height: 99.9%;
+  width: 99.9%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  border:0;
+}

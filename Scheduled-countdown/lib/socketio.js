@@ -357,7 +357,7 @@ function getOffsetTimejson(){
     }
     //console.log("updateOffsetTimejson: fdsafdsafdsafas ");
     offsetTimejson = variables.offsetTime;
-    console.log("offsetTimejson: "+offsetTimejson);
+    //console.log("offsetTimejson: "+offsetTimejson);
 
   // fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
   //       if (err) console.log('Error writing file:', err)
