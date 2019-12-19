@@ -1,14 +1,3 @@
-//--------------------------------------------------
-//---------- Strings and times in ms ----------
-// What do i need to get to get everything to work?
-// -[X] nowClock in String and in ms
-// -[] startTime from String to ms
-// -[] cueStartTime in string and ms
-// -[] cueLength from string to ms
-//--------------------------------------------------
-
-
-
 var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 var myip = require('../public/myip.json');
@@ -18,7 +7,6 @@ var startTimeArray = [];
 var cueLengthArray  = [];
 var offsetTimeInit = [];
 var ip = require("ip");
-// const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 //--from Script.js
 var offsetTimeInit  = 0;

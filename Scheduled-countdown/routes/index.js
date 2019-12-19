@@ -16,9 +16,6 @@ var myIpArray= [];
 var ip = require("ip");
 var myLocalip = ip.address();
     myLocalip = myipjson.myIp;
-// console.log("index.js: "+ myLocalip+":3000");
-// console.log(myLocalip+":3000/admin");
-// console.log(myLocalip+":3000/countdown");
 //--------------------------------------------------
 
 //--------------------------------------------------

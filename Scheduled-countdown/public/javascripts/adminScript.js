@@ -11,7 +11,8 @@ var setTimeoutTime = 150;
 var myIpArrayBool = 0;
 
 var myLocalip = document.getElementById("myLocalip").textContent;
-var myLocalipAndPort = myLocalip + ":3000"
+//var myLocalipAndPort = myLocalip + ":3000"
+var myLocalipAndPort = myLocalip
 console.log(myLocalipAndPort);
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
@@ -106,61 +107,10 @@ function getOffsetTime() {
 getOffsetTime();
 //--------------------------------------------------
 
-// //--------------------------------------------------
-// // - sortscheduledTimes
-// //--------------------------------------------------
-// function sortscheduledTimes() {
-//   const request = async () => {
-//     const response = await fetch('/scheduledTimes.json');
-//     const json = await response.json();
-//     scheduledTimesArray = json;
-//     console.log("Before Sorting");
-//     console.log(scheduledTimesArray.profiles);
-//
-//     //--------------------------------------------------
-//     sleep(100).then(() => {
-//       console.log("Sleep");
-//       scheduledTimesArray.profiles.sort(function(a, b) {
-//         return a.startTime.localeCompare(b.startTime);
-//       });
-//       scheduledTimesArrayBuffer = scheduledTimesArray;
-//       console.log(scheduledTimesArrayBuffer.profiles[0].title);
-//
-//       for (let i = 0; i < startTitleArray.length; i++) {
-//         startTitleArray[i] = scheduledTimesArrayBuffer.profiles[i].title
-//       };
-//       for (let i = 0; i < startTimeArray.length; i++) {
-//         startTimeArray[i] = scheduledTimesArrayBuffer.profiles[i].startTime
-//       };
-//       for (let i = 0; i < cueLengthArray.length; i++) {
-//         cueLengthArray[i] = scheduledTimesArrayBuffer.profiles[i].cueLength
-//       };
-//       //cueLengthArray
-//
-//       sleep(100).then(() => {
-//         console.log("sleep inside of SLEEP");
-//         printArraysToElements();
-//         socket.emit("writeToScheduledTimesjson", {
-//           startTitleArray: startTitleArray,
-//           startTimeArray: startTimeArray,
-//           cueLengthArray: cueLengthArray
-//         });
-//       });
-//     });
-//     //--------------------------------------------------
-//   }
-//   request();
-// };
-// //sortscheduledTimes();
-// //--------------------------------------------------
+
 
 
 //--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-// iP 192.168.100.85
 var socket = io.connect(myLocalipAndPort);
 //---------- My sockets
 socket.emit("start", {});

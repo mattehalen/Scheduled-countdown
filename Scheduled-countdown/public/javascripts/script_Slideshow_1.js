@@ -1,7 +1,8 @@
 "use strict";
 
 var myLocalip = document.getElementById("myLocalip").textContent;
-var myLocalipAndPort = myLocalip+":3000"
+//var myLocalipAndPort = myLocalip + ":3000"
+var myLocalipAndPort = myLocalip
 console.log(myLocalipAndPort);
 
 
