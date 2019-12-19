@@ -517,6 +517,7 @@ function openFullscreen() {
 
 
 function newTimeArraySorting(){
+  console.log("HJFDSAHFLJKDSHFKJLSHAJKLD");
 //--------------------------------------------------
 //---Get next title / StartTime / cueLength
 //--------------------------------------------------
@@ -536,7 +537,7 @@ function newTimeArraySorting(){
           startTimeTextHolder = scheduledTimesArray.profiles[newArrayIndex].startTime;
           cueLengthTextHolder = scheduledTimesArray.profiles[newArrayIndex].cueLength;
 
-          //console.log("startTitleHolder: " + startTitleHolder + " | " + "startTimeTextHolder: " + startTimeTextHolder + " | " + "cueLengthTextHolder: " + cueLengthTextHolder);
+          console.log("startTitleHolder: " + startTitleHolder + " | " + "startTimeTextHolder: " + startTimeTextHolder + " | " + "cueLengthTextHolder: " + cueLengthTextHolder);
         }
       };
     });

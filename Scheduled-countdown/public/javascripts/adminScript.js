@@ -49,6 +49,43 @@ function getscheduledTimes(){
 getscheduledTimes();
 //--------------------------------------------------
 
+//--------------------------------------------------
+// - deleteIndexInScheduledTimes
+//--------------------------------------------------
+function deleteIndexInScheduledTimes(){
+  const request = async () => {
+      const response = await fetch('/scheduledTimes.json');
+      const json = await response.json();
+      scheduledTimesArray = json;
+      console.log("deleteIndexInScheduledTimes");
+      console.log(scheduledTimesArray.profiles[0]);
+      scheduledTimesArray.profiles.splice(0, 1);
+
+//----------------------------------------
+      var i;
+      var a;
+      var b;
+      var c;
+      startTimeArray = [];
+      startTitleArray = [];
+      cueLengthArray  = [];
+      for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
+        a = scheduledTimesArray.profiles[i].title;
+        startTitleArray.push(a);
+        b = scheduledTimesArray.profiles[i].startTime;
+        startTimeArray.push(b);
+        c = scheduledTimesArray.profiles[i].cueLength;
+        cueLengthArray.push(c);
+      }
+      //----------------------------------------
+      console.log("here i am");
+      sendDB_To_Socket_On_Delete();
+  }
+
+  request();
+};
+//deleteIndexInScheduledTimes();
+//--------------------------------------------------
 
 //--------------------------------------------------
 // - getOffsetTime
@@ -217,6 +254,12 @@ $("#updateScheduledTimesArray").on('click', function () {
      startTimeArray: startTimeArray,
      cueLengthArray: cueLengthArray
    });
+
+   sleep(1000).then(() => {
+     getscheduledTimes();
+   });
+
+
 });
 //--------------------------------------------------
 socket.on("updateDB_From_Socket", function(data) {
@@ -308,8 +351,9 @@ socket.on("updateOffsetTime_From_Socket", function (data){
 //--------------------------------------------------
 
 function delete_button_click(listIndex){
-      //alert(listIndex);
+      alert(listIndex);
       document.getElementById(listIndex).remove();
+      deleteIndexInScheduledTimes();
   };
 function printArraysToElements(){
   console.log("printArraysToElements");
@@ -325,6 +369,21 @@ function getElementsToArrays(){
   for(let i=0; i < startTimeArray.length; i++) {startTimeArray[i] = $("#startTime"+i).val()}
   for(let i=0; i < cueLengthArray.length; i++) {cueLengthArray[i] = $("#cueLength"+i).val()}
   console.log(startTimeArray);
+};
+function sendDB_To_Socket_On_Delete(){
+  console.log("sendDB_To_Socket_On_Delete")
+
+  socket.emit("writeToScheduledTimesjson",{
+    startTitleArray: startTitleArray,
+    startTimeArray: startTimeArray,
+    cueLengthArray: cueLengthArray
+  });
+  socket.emit('updateScheduledTimesArray',{
+    startTitleArray: startTitleArray,
+    startTimeArray: startTimeArray,
+    cueLengthArray: cueLengthArray
+  });
+
 };
 
      socket.on('user disconnected', function (data) {
