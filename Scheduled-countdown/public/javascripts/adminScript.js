@@ -8,6 +8,7 @@ var scheduledTimesArrayBuffer = [];
 var nowTopRow = document.getElementById("nowTopRow");
 var cueTimeText = document.getElementById("cueTime");
 var setTimeoutTime = 150;
+var myIpArrayBool = 0;
 
 var myLocalip = document.getElementById("myLocalip").textContent;
 var myLocalipAndPort = myLocalip + ":3000"
@@ -413,3 +414,31 @@ function sendDB_To_Socket_On_Delete() {
 socket.on("centerTextContent", function(data) {
   nowTopRow.textContent = data.newCurrentTime
 });
+
+socket.on("sendIpArrayToAdminPage", function(data){
+  console.log("sendIpArrayToAdminPage");
+  console.log(data.myIpArray);
+
+  var select = document.getElementById("selectNumber");
+  var options = data.myIpArray;
+
+  if (myIpArrayBool != 1) {
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+        myIpArrayBool =1;
+    }
+  }
+
+
+});
+function saveMyIpTo_myipjson(myChosenIp){
+  var e = document.getElementById("selectNumber");
+  var strUser = e.options[e.selectedIndex].value;
+  console.log("---------------------: "+strUser);
+
+  socket.emit("sendChosenIp_To_Socket",{myChosenIp:strUser})
+};
