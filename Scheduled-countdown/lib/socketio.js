@@ -589,9 +589,47 @@ var users = [];
     io.emit("sendIpArrayToAdminPage",{
       myIpArray: myIpArray
     })
+//--------------------------------------------------
     socket.on("sendChosenIp_To_Socket",function(data){
-      console.log("sendChosenIp_To_Socket: ",data);
+      console.log("sendChosenIp_To_Socket:-------------------------------- ",data.myChosenIp);
+
+        //----------
+        const fs = require('fs')
+        function jsonReader(filePath, cb) {
+            fs.readFile(filePath, (err, fileData) => {
+                if (err) {
+                    return cb && cb(err)
+                }
+                try {
+                    const object = JSON.parse(fileData)
+                    return cb && cb(null, object)
+                } catch(err) {
+                    return cb && cb(err)
+                }
+            })
+        }
+
+        jsonReader('./public/myip.json', (err, customer) => {
+          if (err) {
+            console.log('Error reading file:', err)
+            return
+          }
+          console.log("sendChosenIp_To_Socket: Customer");
+          console.log(customer.myIp);
+          customer.myIp = data.myChosenIp;
+
+
+          fs.writeFile('./public/myip.json', JSON.stringify(customer, null, 4), (err) => {
+            if (err) console.log('Error writing file:', err)
+          })
+        })
+
+
+
     })
+//--------------------------------------------------
+
+
 
  });
 

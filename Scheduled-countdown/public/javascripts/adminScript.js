@@ -162,7 +162,6 @@ getOffsetTime();
 //--------------------------------------------------
 // iP 192.168.100.85
 var socket = io.connect(myLocalipAndPort);
-console.log("adminSocketScript Loaded");
 //---------- My sockets
 socket.emit("start", {});
 
@@ -416,8 +415,8 @@ socket.on("centerTextContent", function(data) {
 });
 
 socket.on("sendIpArrayToAdminPage", function(data){
-  console.log("sendIpArrayToAdminPage");
-  console.log(data.myIpArray);
+  // console.log("sendIpArrayToAdminPage");
+  // console.log(data.myIpArray);
 
   var select = document.getElementById("selectNumber");
   var options = data.myIpArray;

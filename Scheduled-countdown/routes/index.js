@@ -10,31 +10,19 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 //console.log(variables.offsetTime);
 var myIpArray= [];
 
+
+//--------------------------------------------------
+//---------- OLD WAY OF GETTING IP
 var ip = require("ip");
 var myLocalip = ip.address();
-console.log("index.js: "+ myLocalip+":3000");
-console.log(myLocalip+":3000/admin");
-console.log(myLocalip+":3000/countdown");
-//--------------------------------------------------
-var os = require( 'os' );
-var networkInterfaces = os.networkInterfaces( );
-//--------------------------------------------------
-const object = networkInterfaces;
-var mathias = "";
-const result = [];
-//--------------------------------------------------
-for (const [key, value] of Object.entries(object)) {
-  //result += arr.map(x => x.address)
-  mathias += value
-}
-//--------------------------------------------------
-var arr = networkInterfaces["Ethernet"]
-var ip = arr[2].address;
-//console.log(ip);
+    myLocalip = myipjson.myIp;
+// console.log("index.js: "+ myLocalip+":3000");
+// console.log(myLocalip+":3000/admin");
+// console.log(myLocalip+":3000/countdown");
 //--------------------------------------------------
 
 //--------------------------------------------------
-//--get all ip addresses
+//--get all ip addresses ---- THIS ONE !!!!!!!!!!!!
 //--------------------------------------------------
 var getNetworkIPs = (function () {
     var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
@@ -86,7 +74,7 @@ var getNetworkIPs = (function () {
 })();
 getNetworkIPs(function (error, ip) {
 myIpArray = ip
-console.log(myIpArray);
+console.log("myIpArray: "+myIpArray);
 
 if (error) {
     console.log('error:', error);
@@ -94,6 +82,8 @@ if (error) {
 }, false);
 //--------------------------------------------------
 
+console.log("index.js -> myipjson--------------------");
+console.log(myipjson.myIp);
 
 
 
@@ -122,42 +112,6 @@ if (error) {
 
 
 
-//-----updateScheduledTimesjson
-//--------------------------------------------------
-function saveMyIpToJson(){
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
-
-  jsonReader('./public/myip.json', (err, customer) => {
-    if (err) {
-      console.log('Error reading file:', err)
-      return
-    }
-console.log(customer.myip);
-customer.myip = myLocalip;
-console.log(customer.myip);
-
-
-
-    fs.writeFile('./public/myip.json', JSON.stringify(customer, null, 4), (err) => {
-      if (err) console.log('Error writing file:', err)
-    })
-  })
-};
-//saveMyIpToJson();
-//--------------------------------------------------
 
 
 
