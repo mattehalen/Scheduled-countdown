@@ -9,7 +9,7 @@ var myipjson = require('../public/myip.json');
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 //console.log(variables.offsetTime);
 var myIpArray= [];
-var myLocalip = myipjson.myIp;
+var myLocalip = myipjson.myIp+":3000";
 //--------------------------------------------------
 
 //--------------------------------------------------
