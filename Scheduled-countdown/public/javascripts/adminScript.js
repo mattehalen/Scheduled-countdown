@@ -391,3 +391,10 @@ function saveMyIpTo_myipjson(myChosenIp){
 
   socket.emit("sendChosenIp_To_Socket",{myChosenIp:strUser})
 };
+//--------------------------------
+function setLoopbackip(){
+
+
+}
+
+//--------------------------------

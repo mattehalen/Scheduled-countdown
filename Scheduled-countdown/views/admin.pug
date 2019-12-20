@@ -34,6 +34,9 @@ block content
           option Choose a ip address
         br
         button.commandButton( onClick="saveMyIpTo_myipjson()") Save ip
+        br
+        form(method='POST' action='/admin/setLoopbackip')
+          button.commandButton(type='submit' onClick="setLoopbackip()") Set Ip 127.0.0.1
 
 
         

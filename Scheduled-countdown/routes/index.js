@@ -283,6 +283,43 @@ router.post('/admin/offsetMinus', function(req, res, next){
 });
 //-------------------------------------------------------------------------
 
+//--------------------------------------------------
+//-----offsetMinus button press
+//--------------------------------------------------
+router.post('/admin/setLoopbackip', function(req, res, next){
+  console.log("setLoopbackip:-----------------------------------------------------------");
+  const fs = require('fs')
+  function jsonReader(filePath, cb) {
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              return cb && cb(err)
+          }
+          try {
+              const object = JSON.parse(fileData)
+              return cb && cb(null, object)
+          } catch(err) {
+              return cb && cb(err)
+          }
+      })
+  }
+  jsonReader('./public/myip.json', (err, mycustomip) => {
+    if (err) {
+        console.log('Error reading file:',err)
+        return
+    }
+    console.log("mycustomip:"+mycustomip.myIp);
+
+    mycustomip.myIp = "127.0.0.1";
+
+  fs.writeFile('./public/myip.json', JSON.stringify(mycustomip, null,4), (err) => {
+        if (err) console.log('Error writing file:', err)
+    })
+  })
+
+  res.redirect("/admin");
+});
+//-------------------------------------------------------------------------
+
 
 
 
