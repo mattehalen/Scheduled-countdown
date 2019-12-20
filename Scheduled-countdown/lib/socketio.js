@@ -474,7 +474,7 @@ var users = [];
     });
 
     socket.on("sendDB_To_Socket", function (data) {
-      console.log("sendDB_To_Socket:"+ JSON.stringify(data) )
+      //console.log("sendDB_To_Socket:"+ JSON.stringify(data) )
       io.emit("sendDB_TO_Main", {socketDBArray:data});
       io.emit("sendDB_TO_Admin", {socketDBArray:data});
     });

@@ -21,3 +21,6 @@ npm start
 
 ## Basic Functions V4
 - [] Add input page for add and config slideshow pages
+
+# Websites i got code from
+- https://github.com/nexe/nexe / https://www.youtube.com/watch?v=ODlYsEITCBM&t=8s

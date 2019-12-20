@@ -9,13 +9,7 @@ var myipjson = require('../public/myip.json');
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 //console.log(variables.offsetTime);
 var myIpArray= [];
-
-
-//--------------------------------------------------
-//---------- OLD WAY OF GETTING IP
-var ip = require("ip");
-var myLocalip = ip.address();
-    myLocalip = myipjson.myIp;
+var myLocalip = myipjson.myIp;
 //--------------------------------------------------
 
 //--------------------------------------------------
@@ -71,15 +65,14 @@ var getNetworkIPs = (function () {
 })();
 getNetworkIPs(function (error, ip) {
 myIpArray = ip
-console.log("myIpArray: "+myIpArray);
+// console.log("myIpArray: "+myIpArray);
 
 if (error) {
     console.log('error:', error);
 }
 }, false);
 //--------------------------------------------------
-
-console.log("index.js -> myipjson--------------------");
+console.log("index.js -> myipjson");
 console.log(myipjson.myIp);
 
 
