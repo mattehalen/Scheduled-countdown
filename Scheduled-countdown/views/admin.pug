@@ -13,8 +13,8 @@ block content
           button#offsetPlus.commandButton +
           button#offsetReset.commandButton Reset
         .buttondiv
-          button#sorting.commandButton Sort
-          button#updateScheduledTimesArray.commandButton Update
+          button#sorting.commandButton Sort and Update
+          //button#updateScheduledTimesArray.commandButton Update Kanske kan tas bort?
         .buttondiv
           button#loadDefaultArray.commandButton Load
           button#writeDefaultArray.commandButton Save
@@ -27,6 +27,18 @@ block content
           //form()
             //button(type='submit' class='commandButton' id="addNewRow") Add Row
           button(type='submit' class='commandButton' id="addNewRow") Add Row
+          br
+          br
+        p Select Ip
+        select#selectNumber.commandButton
+          option Choose a ip address
+        br
+        button.commandButton( onClick="saveMyIpTo_myipjson()") Save ip
+        br
+        form(method='POST' action='/admin/setLoopbackip')
+          button.commandButton(type='submit' onClick="setLoopbackip()") Set Ip 127.0.0.1
+
+
         
 
 
@@ -46,7 +58,11 @@ block content
 
     div.floatl#preview
       p Preview
-      iframe.preview(src='http://' + myLocalip + ':3000')
+      //iframe.preview(src='http://' + myLocalip + ':3000')
+      iframe.preview(src='http://' + myLocalip)
+      p 5Min countdown
+      //iframe.preview(src='http://' + myLocalip + ':3000/countdown')
+      iframe.preview(src='http://' + myLocalip + '/countdown')
   
   .downSite
     #cueTime.fiveMinute 

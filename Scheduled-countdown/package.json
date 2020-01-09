@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "npx nodemon ./bin/www"
+    "start": "npx nodemon ./bin/www",
+    "build": "nexe ./bin/www -r public/**/* -r lib/**/* -r bin/**/* -r routes/**/* -r views/**/* -r app.js -r node_modules/**/*"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -13,7 +14,11 @@
     "http-errors": "~1.6.3",
     "ip": "^1.1.5",
     "morgan": "~1.9.1",
+    "nexe": "^3.3.2",
     "pug": "^2.0.4",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
   }
 }

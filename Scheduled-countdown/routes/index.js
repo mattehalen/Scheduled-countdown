@@ -5,12 +5,114 @@ const fs = require('fs');
 var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 var variables = require('../public/variables.json');
+var myipjson = require('../public/myip.json');
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 //console.log(variables.offsetTime);
+var myIpArray= [];
+var myLocalip = myipjson.myIp+":3000";
+//--------------------------------------------------
 
-var ip = require("ip");
-var myLocalip = ip.address();
-console.log("index.js: "+ myLocalip+":3000");
+//--------------------------------------------------
+//--get all ip addresses ---- THIS ONE !!!!!!!!!!!!
+//--------------------------------------------------
+var getNetworkIPs = (function () {
+    var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
+
+    var exec = require('child_process').exec;
+    var cached;
+    var command;
+    var filterRE;
+
+    switch (process.platform) {
+    case 'win32':
+    //case 'win64': // TODO: test
+        command = 'ipconfig';
+        filterRE = /\bIPv[46][^:\r\n]+:\s*([^\s]+)/g;
+        break;
+    case 'darwin':
+        command = 'ifconfig';
+        filterRE = /\binet\s+([^\s]+)/g;
+        // filterRE = /\binet6\s+([^\s]+)/g; // IPv6
+        break;
+    default:
+        command = 'ifconfig';
+        filterRE = /\binet\b[^:]+:\s*([^\s]+)/g;
+        // filterRE = /\binet6[^:]+:\s*([^\s]+)/g; // IPv6
+        break;
+    }
+
+    return function (callback, bypassCache) {
+        if (cached && !bypassCache) {
+            callback(null, cached);
+            return;
+        }
+        // system call
+        exec(command, function (error, stdout, sterr) {
+            cached = [];
+            var ip;
+            var matches = stdout.match(filterRE) || [];
+            //if (!error) {
+            for (var i = 0; i < matches.length; i++) {
+                ip = matches[i].replace(filterRE, '$1')
+                if (!ignoreRE.test(ip)) {
+                    cached.push(ip);
+                }
+            }
+            //}
+            callback(error, cached);
+        });
+    };
+})();
+getNetworkIPs(function (error, ip) {
+myIpArray = ip
+// console.log("myIpArray: "+myIpArray);
+
+if (error) {
+    console.log('error:', error);
+}
+}, false);
+//--------------------------------------------------
+console.log("index.js -> myipjson");
+console.log(myipjson.myIp);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   //--------------------------------------------------
   // - Knappar på adminPage ./public/scheduledTimes.json
@@ -50,10 +152,6 @@ console.log("index.js: "+ myLocalip+":3000");
     res.redirect("/admin");
   });
   //--------------------------------------------------
-
-
-
-
 
 
 //--------------------------------------------------
@@ -170,6 +268,43 @@ router.post('/admin/offsetMinus', function(req, res, next){
     variables.offsetTime -= 1;
 
   fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+        if (err) console.log('Error writing file:', err)
+    })
+  })
+
+  res.redirect("/admin");
+});
+//-------------------------------------------------------------------------
+
+//--------------------------------------------------
+//-----offsetMinus button press
+//--------------------------------------------------
+router.post('/admin/setLoopbackip', function(req, res, next){
+  console.log("setLoopbackip:-----------------------------------------------------------");
+  const fs = require('fs')
+  function jsonReader(filePath, cb) {
+      fs.readFile(filePath, (err, fileData) => {
+          if (err) {
+              return cb && cb(err)
+          }
+          try {
+              const object = JSON.parse(fileData)
+              return cb && cb(null, object)
+          } catch(err) {
+              return cb && cb(err)
+          }
+      })
+  }
+  jsonReader('./public/myip.json', (err, mycustomip) => {
+    if (err) {
+        console.log('Error reading file:',err)
+        return
+    }
+    console.log("mycustomip:"+mycustomip.myIp);
+
+    mycustomip.myIp = "127.0.0.1";
+
+  fs.writeFile('./public/myip.json', JSON.stringify(mycustomip, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
     })
   })

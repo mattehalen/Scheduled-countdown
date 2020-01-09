@@ -1,23 +1,12 @@
-//--------------------------------------------------
-//---------- Strings and times in ms ----------
-// What do i need to get to get everything to work?
-// -[X] nowClock in String and in ms
-// -[] startTime from String to ms
-// -[] cueStartTime in string and ms
-// -[] cueLength from string to ms
-//--------------------------------------------------
-
-
-
 var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
+var myip = require('../public/myip.json');
 const fs = require('fs');
 var startTitleArray = [];
 var startTimeArray = [];
 var cueLengthArray  = [];
 var offsetTimeInit = [];
 var ip = require("ip");
-// const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 //--from Script.js
 var offsetTimeInit  = 0;
@@ -76,9 +65,69 @@ var serverNowInMs = "";
 
 // New text
 var centerTextContent = "";
+var myIpArray = "";
 
 
+//--------------------------------------------------
+//--get all ip addresses
+//--------------------------------------------------
+var getNetworkIPs = (function () {
+    var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
 
+    var exec = require('child_process').exec;
+    var cached;
+    var command;
+    var filterRE;
+
+    switch (process.platform) {
+    case 'win32':
+    //case 'win64': // TODO: test
+        command = 'ipconfig';
+        filterRE = /\bIPv[46][^:\r\n]+:\s*([^\s]+)/g;
+        break;
+    case 'darwin':
+        command = 'ifconfig';
+        filterRE = /\binet\s+([^\s]+)/g;
+        // filterRE = /\binet6\s+([^\s]+)/g; // IPv6
+        break;
+    default:
+        command = 'ifconfig';
+        filterRE = /\binet\b[^:]+:\s*([^\s]+)/g;
+        // filterRE = /\binet6[^:]+:\s*([^\s]+)/g; // IPv6
+        break;
+    }
+
+    return function (callback, bypassCache) {
+        if (cached && !bypassCache) {
+            callback(null, cached);
+            return;
+        }
+        // system call
+        exec(command, function (error, stdout, sterr) {
+            cached = [];
+            var ip;
+            var matches = stdout.match(filterRE) || [];
+            //if (!error) {
+            for (var i = 0; i < matches.length; i++) {
+                ip = matches[i].replace(filterRE, '$1')
+                if (!ignoreRE.test(ip)) {
+                    cached.push(ip);
+                }
+            }
+            //}
+            callback(error, cached);
+        });
+    };
+})();
+getNetworkIPs(function (error, ip) {
+myIpArray = ip
+console.log("Log All ips from Socket",myIpArray);
+
+if (error) {
+    console.log('error:', error);
+}
+}, false);
+//--------------------------------------------------
 
 //--------------------------------------------------
 //-----getscheduledTimes
@@ -118,12 +167,6 @@ function getscheduledTimes(){
 };
 getscheduledTimes();
 //--------------------------------------------------
-
-
-
-
-
-
 //--------------------------------------------------
 //-----updateScheduledTimesjson
 //--------------------------------------------------
@@ -146,17 +189,46 @@ function updateScheduledTimesjson(){
 
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
-        console.log('Error reading file:',err)
-        return
+      console.log('Error reading file:', err)
+      return
     }
 
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
+    if (customer.profiles.length > startTitleArray.length) {
+      console.log("-------------------------------------------------------------");
+      var a = customer.profiles.length - 1;
+      customer.profiles.splice(a, 1);
+      console.log("startTitleArray.length: " + a);
+      console.log(customer.profiles);
+
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].title = startTitleArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].startTime = startTimeArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].cueLength = cueLengthArray[i]
+      };
 
 
-  fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
-        if (err) console.log('Error writing file:', err)
+    } else {
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].title = startTitleArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].startTime = startTimeArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].cueLength = cueLengthArray[i]
+      };
+    }
+
+    customer.profiles.sort(function(a, b) {
+      return a.startTime.localeCompare(b.startTime);
+    });
+
+    fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null, 4), (err) => {
+      if (err) console.log('Error writing file:', err)
     })
   })
 };
@@ -193,6 +265,7 @@ function updateOffsetTimePlusjson(){
         if (err) console.log('Error writing file:', err)
     })
   })
+
 
 };
 //--------------------------------------------------
@@ -293,16 +366,11 @@ function writeDefaultjson(){
       })
   }
 
-  jsonReader('./public/scheduledTimes-backup.json', (err, customer) => {
+  jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
         console.log('Error reading file:',err)
         return
     }
-
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title     = startTitleArray[i]}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = startTimeArray[i]}
-    for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = cueLengthArray[i]};
-
 
     //console.log("startTitleArray: "+ startTitleArray);
   fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(customer, null,4), (err) => {
@@ -339,7 +407,7 @@ function getOffsetTimejson(){
     }
     //console.log("updateOffsetTimejson: fdsafdsafdsafas ");
     offsetTimejson = variables.offsetTime;
-    console.log("offsetTimejson: "+offsetTimejson);
+    //console.log("offsetTimejson: "+offsetTimejson);
 
   // fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
   //       if (err) console.log('Error writing file:', err)
@@ -350,6 +418,35 @@ function getOffsetTimejson(){
 getOffsetTimejson();
 //--------------------------------------------------
 
+
+//--------------------------------------------------
+//-----addNewRowDefault button press
+//--------------------------------------------------
+function addNewRowDefault(){
+  console.log("addNewRowDefault knappen funkar");
+  var addString = "";
+
+  fs.readFile("./public/scheduledTimes.json", function (err, data) {
+    var json = JSON.parse(data);
+    var feed = {title: "New row added", startTime: "12:00", cueLength: "00:01:10"};
+
+    json.profiles.push(feed);
+      console.log("addNewRowDefault: "+JSON.stringify(json, null, 4));
+    json.profiles.sort(function(a, b) {
+      return a.startTime.localeCompare(b.startTime);
+    });
+    addString = JSON.stringify(json, null, 4);
+    console.log("addNewRowDefault: "+JSON.stringify(json, null, 4));
+
+    });
+
+    sleep(1000).then(() => {
+      fs.writeFile('./public/scheduledTimes.json', addString , (err) => {
+          if (err) throw err;
+      });
+    });
+};
+//-------------------------------------------------------------------------
 
 
 
@@ -378,7 +475,7 @@ var users = [];
     });
 
     socket.on("sendDB_To_Socket", function (data) {
-      console.log("sendDB_To_Socket:"+ JSON.stringify(data) )
+      //console.log("sendDB_To_Socket:"+ JSON.stringify(data) )
       io.emit("sendDB_TO_Main", {socketDBArray:data});
       io.emit("sendDB_TO_Admin", {socketDBArray:data});
     });
@@ -457,35 +554,81 @@ var users = [];
 
     });
 
+    socket.on("updatebutton_To_Socket", function(data){
+      io.emit("updatebutton_From_Socket",{})
+    })
+
+    socket.on("sortingButton_To_Socket",function(data){
+      io.emit("sortingButton_From_Socket",{})
+    })
+
+    socket.on("send_Delete_Button_To_Socket",function(data){
+      listIndex = data.listIndex
+      console.log("send_Delete_Button_To_Socket: listIndex= "+listIndex);
+      io.emit("send_Delete_Button_from_Socket",{
+        listIndex: listIndex
+      })
+    })
+
+    socket.on("send_addNewRow_To_Socket",function(data){
+      console.log("send_addNewRow_To_Socket:");
+      addNewRowDefault();
+    })
+
+    io.emit("sendIpArrayToAdminPage",{
+      myIpArray: myIpArray
+    })
+//--------------------------------------------------
+    socket.on("sendChosenIp_To_Socket",function(data){
+      console.log("sendChosenIp_To_Socket:-------------------------------- ",data.myChosenIp);
+
+        //----------
+        const fs = require('fs')
+        function jsonReader(filePath, cb) {
+            fs.readFile(filePath, (err, fileData) => {
+                if (err) {
+                    return cb && cb(err)
+                }
+                try {
+                    const object = JSON.parse(fileData)
+                    return cb && cb(null, object)
+                } catch(err) {
+                    return cb && cb(err)
+                }
+            })
+        }
+
+        jsonReader('./public/myip.json', (err, customer) => {
+          if (err) {
+            console.log('Error reading file:', err)
+            return
+          }
+          console.log("sendChosenIp_To_Socket: Customer");
+          console.log(customer.myIp);
+          customer.myIp = data.myChosenIp;
 
 
-    // socket.on('join', function (user){
-    //    socket.username = user.username;
-    //    users.push(socket.username);
-    //    io.emit('user joined', { 'username': user.username, users:users });
-    // });
-    //
-    // socket.on('typing', function (msg) {
-    //     io.emit('typing', { 'message': msg.message, 'username': msg.username });
-    // });
-    //
-    // socket.on('new_message', function (msg) {
-    //      io.emit('chat message', { 'message': msg.message, 'username': msg.username });
-    // });
-    //
-    // socket.on('disconnect', function(){
-    //     console.log('user disconnected');
-    //     users.splice(users.indexOf(socket.username), 1);
-    //   io.emit('user disconnected', { 'username': socket.username });
-    // });
+          fs.writeFile('./public/myip.json', JSON.stringify(customer, null, 4), (err) => {
+            if (err) console.log('Error writing file:', err)
+          })
+        })
+
+
+
+    })
+//--------------------------------------------------
+
+
+
  });
 
-
+//--------------------------------------------------
+//----Can i delete this?
+//--------------------------------------------------
  function pad(n, z) {
    z = z || 2;
    return ('00' + n).slice(-z);
  }
-
 //--------------------------------------------------
  function msToTime(s) {
    var ms = s % 1000;
@@ -511,7 +654,6 @@ var users = [];
    return hrs + ':' + mins + ':' + secs + '.' + ms;
  }
 //--------------------------------------------------
-
  //--------------------------------------------------
  //- CurrentTime
  //--------------------------------------------------
@@ -612,10 +754,6 @@ var users = [];
    setTimeout(newTimeArraySorting, setTimeoutTime);
  };
  newTimeArraySorting();
-
-
-
-
 //--------------------------------------------------
 //--------------------------------------------------
 //--------------------------------------------------
@@ -700,6 +838,45 @@ function newCountDown(){
 };
 newCountDown();
 
+function newCueCountDown() {
+  var cueLength = cueLengthTextHolder;
+  //--------------------------------------------------
+  if (cueLength.length > 5) {
+    cueLength = timeStringToMs(cueLength);
+  } else {
+    cueLength = cueLength + ":00"
+    cueLength = timeStringToMs(cueLength);
+  }
+  //--------------------------------------------------
+  var offsetTime = newOffsetTime();
+  var startTime = newStartTimeInMs(startTimeTextHolder);
+  var cueStarTime = (startTime - cueLength)
+  cueStarTime += offsetTime
+  var now = newCurrentTimeInMs();
+
+  if (now > cueStarTime) {
+    time = now - cueStarTime
+    time = (msToTime(time))
+  } else {
+    time = cueStarTime - now
+    time = "-" + (msToTime(time))
+  }
+  //--------------------------------------------------
+  var textString = "";
+  if (now > (cueStarTime - countDown) && now < cueStarTime) {
+    textString = "CUE - " + startTitleHolder + ": " + time
+  } else {
+    textString = "-"
+  }
+
+  io.emit("getCueTimeString_From_Socket", {
+    string: textString
+  });
+
+  setTimeout(newCueCountDown, 1000);
+};
+newCueCountDown();
+
 function timeStringToMs(t){
   if (t > 5 ){
     var r = Number(t.split(':')[0])*(60*60000)+Number(t.split(':')[1])*(60000)+Number(t.split(':')[2])*(1000);
@@ -726,10 +903,13 @@ function pad(n, z) {
 
 function sendCenterText(){
   var countDownString = newCountDown();
+  var now = newCurrentTimeInMs();
+  var start = newStartTimeInMs(startTimeTextHolder);
+  var offset = newOffsetTime();
 
   if (
-    newCurrentTimeInMs() > (newStartTimeInMs(startTimeTextHolder) - countDown) &&
-    newCurrentTimeInMs() < (newStartTimeInMs(startTimeTextHolder) + countUp)
+    now > ((start+offset) - countDown) &&
+    now < ((start+offset) + countUp)
         ) {
     var showNowClock = false;
   }else {
@@ -747,6 +927,11 @@ function sendCenterText(){
   setTimeout(sendCenterText, 200);
 };
 sendCenterText();
+
+
+
+
+
 
 
 module.exports = socketio;
