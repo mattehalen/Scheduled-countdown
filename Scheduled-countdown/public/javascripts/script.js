@@ -19,7 +19,7 @@ var offsetTimeInit = 0;
 //--------------------------------------------------
 var countDown = 7; // how many minutes before
 countDown = countDown * 60000; // convert to Ms
-var countUp = 5; // how many minutes after
+var countUp = 2; // how many minutes after
 countUp = countUp * 60000; // convert to M
 
 var startTimeArray = [""];

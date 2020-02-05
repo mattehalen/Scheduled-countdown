@@ -1,18 +1,23 @@
 {
     "profiles": [
         {
-            "title": "Greatest Show",
-            "startTime": "18:25",
-            "cueLength": "01:00:00"
+            "title": "Open Doors",
+            "startTime": "17:20",
+            "cueLength": "00:01"
         },
         {
-            "title": "WWWY",
-            "startTime": "19:10",
-            "cueLength": "00:06:35"
+            "title": "CEO Jesper",
+            "startTime": "18:40",
+            "cueLength": "00:01"
+        },
+        {
+            "title": "Greatest Show",
+            "startTime": "18:50",
+            "cueLength": "00:15"
         },
         {
             "title": "Magic",
-            "startTime": "19:45",
+            "startTime": "19:15",
             "cueLength": "00:07:47"
         },
         {
@@ -21,33 +26,23 @@
             "cueLength": "00:08:52"
         },
         {
-            "title": "Celebration",
+            "title": "ASIB",
             "startTime": "20:40",
-            "cueLength": "00:07:02"
+            "cueLength": "00:07:54"
         },
         {
-            "title": "Star Catchers",
-            "startTime": "21:05",
-            "cueLength": "00:07:40"
-        },
-        {
-            "title": "Blue Xmas",
-            "startTime": "21:30",
-            "cueLength": "00:05:37"
-        },
-        {
-            "title": "Peggy Sued",
-            "startTime": "21:55",
-            "cueLength": "00:06:51"
+            "title": "Star Catcher",
+            "startTime": "21:00",
+            "cueLength": "00:07:35"
         },
         {
             "title": "Uptown Funk",
-            "startTime": "22:15",
+            "startTime": "21:30",
             "cueLength": "00:07:28"
         },
         {
             "title": "Queen",
-            "startTime": "22:40",
+            "startTime": "21:55",
             "cueLength": "00:05:01"
         }
     ]
