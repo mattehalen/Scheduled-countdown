@@ -739,7 +739,7 @@ var users = [];
          var d = new Date();
          var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
 
-         if (nowInMs > (dd.getTime()+countUp)) {
+         if (nowInMs > ((dd.getTime()+newOffsetTime())+countUp)) {
            newArrayIndex++;
          } else {
            startTitleHolder = scheduledTimesArray.profiles[newArrayIndex].title;
@@ -904,12 +904,14 @@ function pad(n, z) {
 function sendCenterText(){
   var countDownString = newCountDown();
   var now = newCurrentTimeInMs();
-  var start = newStartTimeInMs(startTimeTextHolder);
   var offset = newOffsetTime();
+  var start = newStartTimeInMs(startTimeTextHolder)+offset;
 
   if (
-    now > ((start+offset) - countDown) &&
-    now < ((start+offset) + countUp)
+    // now > ((start+offset) - countDown) &&
+    // now < ((start+offset) + countUp)
+    now > ((start) - countDown) &&
+    now < ((start) + countUp)
         ) {
     var showNowClock = false;
   }else {
@@ -930,8 +932,18 @@ sendCenterText();
 
 
 
+// fs.watch(scheduledTimes, function (event, filename) {
+//     console.log('event is: ' + event);
+//     if (filename) {
+//         console.log('filename provided: ' + filename);
+//     } else {
+//         console.log('filename not provided');
+//     }
+// });
 
-
-
+// fs.watchFile('./public/scheduledTimes.json', (curr, prev) => {
+//   console.log(`the current mtime is: ${curr.mtime}`);
+//   console.log(`the previous mtime was: ${prev.mtime}`);
+// });
 
 module.exports = socketio;

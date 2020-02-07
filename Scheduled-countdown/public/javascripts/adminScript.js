@@ -201,7 +201,7 @@ socket.on("sortingButton_From_Socket", function(data) {
   updateScheduledTimesArray();
   sleep(750).then(() => {
     //sortscheduledTimes();
-    window.location.reload(true)
+    // window.location.reload(true)
 
     sleep(1000).then(() => {
       //document.location.reload();
@@ -245,7 +245,7 @@ $("#loadDefaultArray").on('click', function() {
   });
 
   sleep(250).then(() => {
-    window.location.reload(true)
+    // window.location.reload(true)
   });
 
 });
@@ -276,7 +276,7 @@ $("#addNewRow").on('click', function() {
 
   sleep(1500).then(() => {
     //sortscheduledTimes();
-    window.location.reload(true)
+    // window.location.reload(true)
   });
 });
 //--------------------------------------------------
@@ -310,7 +310,7 @@ socket.on("send_Delete_Button_from_Socket", function(data) {
   document.getElementById(listIndex).remove();
   deleteIndexInScheduledTimes(listIndex);
   sleep(1000).then(() => {
-    window.location.reload(true)
+    // window.location.reload(true)
   });
 })
 
