@@ -12,6 +12,9 @@ npm start
 - [] - ReWrite addNewRowDefault so it adds a new row and pushes it to socket and adds it al all pages.
 - [] Make so ENTER on admin page triggers update
 
+## Bugs
+- [] xxx
+
 ## Bug Fixes
 - [x] Addjust Time (offsetTime)
 

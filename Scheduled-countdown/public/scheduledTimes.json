@@ -1,29 +1,29 @@
 {
     "profiles": [
         {
-            "title": "Ankomst",
-            "startTime": "17:30",
-            "cueLength": "00:00"
-        },
-        {
             "title": "Jan Magnussen",
-            "startTime": "19:00",
+            "startTime": "10:00",
             "cueLength": "00:02"
         },
         {
             "title": "A Star is Born",
-            "startTime": "20:20",
+            "startTime": "21:00",
             "cueLength": "00:07:02"
         },
         {
             "title": "Kevin Magnussen",
-            "startTime": "20:30",
+            "startTime": "22:30",
             "cueLength": "00:05:01"
         },
         {
             "title": "Super Bowl 2020",
-            "startTime": "23:59",
+            "startTime": "23:00",
             "cueLength": "00:01:10"
+        },
+        {
+            "title": "Ankomst",
+            "startTime": "23:50",
+            "cueLength": "00:00"
         }
     ]
 }

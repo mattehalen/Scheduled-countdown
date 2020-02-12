@@ -1,4 +1,4 @@
-var scheduledTimes = require('../public/scheduledTimes.json');
+// var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 var myip = require('../public/myip.json');
 const fs = require('fs');
@@ -11,7 +11,7 @@ var ip = require("ip");
 //--from Script.js
 var offsetTimeInit  = 0;
 var myArray         = "";
-var scheduledTimesArrayGlobal = [];
+// var scheduledTimesArrayGlobal = [];
 var scheduledTimesArray       = [];
 var scheduledTimesArraylength = 0;
 var offsetTimejson            = [];
@@ -24,18 +24,18 @@ var countUp               = 2; // how many minutes after
 countUp                   = countUp *60000; // convert to M
 var offsetTime            = 0;
 
-var startTimeAt           = "";
+// var startTimeAt           = "";
 var startTimeArray        = [""];
 var startTitleArray       = [""];
-var startTimeIndex        = 0;
+// var startTimeIndex        = 0;
 
-var cueStartTimeAt        = "";
-var cueStartTimeInMs      = "";
-var cueStartTimeOffset    = "";
-var cueTimeInMs           = 0;
+// var cueStartTimeAt        = "";
+// var cueStartTimeInMs      = "";
+// var cueStartTimeOffset    = "";
+// var cueTimeInMs           = 0;
 var cueLengthArray        = [""];
-var cueLengthArrayIndex   = 0;
-var cueLengthInMs         = 0;
+// var cueLengthArrayIndex   = 0;
+// var cueLengthInMs         = 0;
 
 var nowInMs = 0;
 var startTimeInMs = 0;
@@ -43,19 +43,19 @@ var startTimeInMs = 0;
 var displayTimeBool = false;
 var positiveDiffTimeBoole = false;
 
-var displayCueTimeBool = false;
-var positiveDiffCueTimeBoole = false;
+// var displayCueTimeBool = false;
+// var positiveDiffCueTimeBoole = false;
 
-var sendMin_To_countDownBoole = 0;
+// var sendMin_To_countDownBoole = 0;
 
-var fiveMinuteString = "";
-var fiveMinuteInMs = 5 *60000;
-var fiveMinuteFromMsToTime = 0;
+// var fiveMinuteString = "";
+// var fiveMinuteInMs = 5 *60000;
+// var fiveMinuteFromMsToTime = 0;
 
 var setTimeoutTime = 150;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var newArrayIndex = 0;
-var startTitleTextFromnewArrayIndex = "";
+// var startTitleTextFromnewArrayIndex = "";
 var startTitleHolder = "";
 var startTimeTextHolder = "";
 var cueLengthTextHolder = "";
@@ -63,14 +63,8 @@ var cueLengthTextHolder = "";
 var serverNewDate = "";
 var serverNowInMs = "";
 
-// New text
 var centerTextContent = "";
 var myIpArray = "";
-
-
-//--------------------------------------------------
-//--get all ip addresses
-//--------------------------------------------------
 var getNetworkIPs = (function () {
     var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
 
@@ -127,26 +121,23 @@ if (error) {
     console.log('error:', error);
 }
 }, false);
-//--------------------------------------------------
-
-//--------------------------------------------------
-//-----getscheduledTimes
-//--------------------------------------------------
+//-------------------------------------------------------------------------
+function jsonReader(filePath, cb) {
+    fs.readFile(filePath, (err, fileData) => {
+        if (err) {
+            return cb && cb(err)
+        }
+        try {
+            const object = JSON.parse(fileData)
+            return cb && cb(null, object)
+        } catch(err) {
+            return cb && cb(err)
+        }
+    })
+}
 function getscheduledTimes(){
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
+
+
 
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
@@ -160,32 +151,13 @@ function getscheduledTimes(){
     for(let i=0; i < customer.profiles.length; i++) {startTimeArray[i] = customer.profiles[i].startTime}
     for(let i=0; i < customer.profiles.length; i++) {cueLengthArray[i] = customer.profiles[i].cueLength};
 
-  // fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
-  //       if (err) console.log('Error writing file:', err)
-  //   })
   })
 };
 getscheduledTimes();
-//--------------------------------------------------
-//--------------------------------------------------
-//-----updateScheduledTimesjson
-//--------------------------------------------------
 function updateScheduledTimesjson(){
   console.log("startTitleArray: "+startTitleArray);
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
+
+
 
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
@@ -232,25 +204,9 @@ function updateScheduledTimesjson(){
     })
   })
 };
-//--------------------------------------------------
-//--------------------------------------------------
-//-----offsetPlus button press
-//--------------------------------------------------
 function updateOffsetTimePlusjson(){
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
+
+
   jsonReader('./public/variables.json', (err, variables) => {
     if (err) {
         console.log('Error reading file:',err)
@@ -268,25 +224,9 @@ function updateOffsetTimePlusjson(){
 
 
 };
-//--------------------------------------------------
-//--------------------------------------------------
-//-----offsetMinus button press
-//--------------------------------------------------
 function updateOffsetTimeMinusjson(){
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
+
+
   jsonReader('./public/variables.json', (err, variables) => {
     if (err) {
         console.log('Error reading file:',err)
@@ -303,25 +243,9 @@ function updateOffsetTimeMinusjson(){
   })
 
 };
-//--------------------------------------------------
-//--------------------------------------------------
-//-----offsetReset button press
-//--------------------------------------------------
 function updateOffsetTimeResetjson(){
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
+
+
   jsonReader('./public/variables.json', (err, variables) => {
     if (err) {
         console.log('Error reading file:',err)
@@ -338,33 +262,17 @@ function updateOffsetTimeResetjson(){
   })
 
 };
-//--------------------------------------------------
-//loadDefaultjson();
 function loadDefaultjson(){
   getscheduledTimes();
-  const fs = require('fs')
+
   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
       if (err) throw err;
   });
 };
-//--------------------------------------------------
-//loadDefaultjson();
 function writeDefaultjson(){
   //console.log("startTitleArray: "+startTitleArray);
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
+
+
 
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
@@ -378,50 +286,17 @@ function writeDefaultjson(){
     })
   })
   };
-//--------------------------------------------------
-
-
-//--------------------------------------------------
-//-----getOffsetTimejson button press
-//--------------------------------------------------
 function getOffsetTimejson(){
-  var a
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
-  }
   jsonReader('./public/variables.json', (err, variables) => {
     if (err) {
         console.log('Error reading file:',err)
         return
     }
-    //console.log("updateOffsetTimejson: fdsafdsafdsafas ");
     offsetTimejson = variables.offsetTime;
-    //console.log("offsetTimejson: "+offsetTimejson);
-
-  // fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
-  //       if (err) console.log('Error writing file:', err)
-  //   })
   })
   return
  };
 getOffsetTimejson();
-//--------------------------------------------------
-
-
-//--------------------------------------------------
-//-----addNewRowDefault button press
-//--------------------------------------------------
 function addNewRowDefault(){
   console.log("addNewRowDefault knappen funkar");
   var addString = "";
@@ -448,17 +323,6 @@ function addNewRowDefault(){
 };
 //-------------------------------------------------------------------------
 
-
-
-
-/* @description: This file contains server side socket.io code.
- * Using socketio with nodejs
-
- * Emit and receive events.
-
-* @author: http://programmerblog.net
-
-*/
 var socket_io = require('socket.io');
 var io       = socket_io();
 var socketio = {};
@@ -583,20 +447,8 @@ var users = [];
       console.log("sendChosenIp_To_Socket:-------------------------------- ",data.myChosenIp);
 
         //----------
-        const fs = require('fs')
-        function jsonReader(filePath, cb) {
-            fs.readFile(filePath, (err, fileData) => {
-                if (err) {
-                    return cb && cb(err)
-                }
-                try {
-                    const object = JSON.parse(fileData)
-                    return cb && cb(null, object)
-                } catch(err) {
-                    return cb && cb(err)
-                }
-            })
-        }
+
+
 
         jsonReader('./public/myip.json', (err, customer) => {
           if (err) {
@@ -622,38 +474,6 @@ var users = [];
 
  });
 
-//--------------------------------------------------
-//----Can i delete this?
-//--------------------------------------------------
- function pad(n, z) {
-   z = z || 2;
-   return ('00' + n).slice(-z);
- }
-//--------------------------------------------------
- function msToTime(s) {
-   var ms = s % 1000;
-   s = (s - ms) / 1000;
-   var secs = s % 60;
-   s = (s - secs) / 60;
-   var mins = s % 60;
-   var hrs = (s - mins) / 60;
-
-   if (displayTimeBool === true) {
-     if (positiveDiffTimeBoole === true) {
-       var text = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-       console.log("msToTime:"+ text);
-       //startText.textContent = ('' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-     } else {
-       var text = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-       console.log(text);
-       //startText.textContent = ('-' + pad(hrs) + ':' + pad(mins) + ':' + pad(secs));
-     }
-   }
-   fiveMinuteFromMsToTime = mins;
-
-   return hrs + ':' + mins + ':' + secs + '.' + ms;
- }
-//--------------------------------------------------
  //--------------------------------------------------
  //- CurrentTime
  //--------------------------------------------------
@@ -680,10 +500,6 @@ var users = [];
    return s;
  }
  nowClock();
- //--------------------------------------------------
- //--------------------------------------------------
- //- startTime
- //--------------------------------------------------
  function startTime() {
    //OLD--------------------------------------------------
    var d = new Date();
@@ -725,7 +541,6 @@ var users = [];
 
  }
  startTime();
- //--------------------------------------------------
 
  function newTimeArraySorting(){
  //--------------------------------------------------
@@ -930,20 +745,17 @@ function sendCenterText(){
 };
 sendCenterText();
 
+var count = Object.keys('./public/scheduledTimes.json').length;
+  console.log(count);
 
-
-// fs.watch(scheduledTimes, function (event, filename) {
+// fs.watch('./public/scheduledTimes.json', function (event, filename) {
 //     console.log('event is: ' + event);
+//     // io.emit("changesOnScheduledTimes",{});
 //     if (filename) {
 //         console.log('filename provided: ' + filename);
 //     } else {
 //         console.log('filename not provided');
 //     }
-// });
-
-// fs.watchFile('./public/scheduledTimes.json', (curr, prev) => {
-//   console.log(`the current mtime is: ${curr.mtime}`);
-//   console.log(`the previous mtime was: ${prev.mtime}`);
 // });
 
 module.exports = socketio;
