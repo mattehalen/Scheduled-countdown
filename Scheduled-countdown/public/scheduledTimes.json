@@ -1,23 +1,23 @@
 {
     "profiles": [
         {
-            "title": "Jan Magnussen",
-            "startTime": "10:00",
-            "cueLength": "00:02"
-        },
-        {
             "title": "A Star is Born",
             "startTime": "21:00",
             "cueLength": "00:07:02"
         },
         {
+            "title": "Jan Magnussen",
+            "startTime": "22:09",
+            "cueLength": "00:02"
+        },
+        {
             "title": "Kevin Magnussen",
-            "startTime": "22:30",
+            "startTime": "22:40",
             "cueLength": "00:05:01"
         },
         {
             "title": "Super Bowl 2020",
-            "startTime": "23:00",
+            "startTime": "23:07",
             "cueLength": "00:01:10"
         },
         {
