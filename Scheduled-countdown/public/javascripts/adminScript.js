@@ -9,6 +9,7 @@ var nowTopRow = document.getElementById("nowTopRow");
 var cueTimeText = document.getElementById("cueTime");
 var setTimeoutTime = 150;
 var myIpArrayBool = 0;
+var toggleMainPreview = false;
 
 var myLocalip = document.getElementById("myLocalip").textContent;
 //var myLocalipAndPort = myLocalip + ":3000"
@@ -354,4 +355,38 @@ function setLoopbackip(){
 
 
 }
+
+function iframePreviewFullscreen(){
+  console.log(toggleMainPreview);
+
+  if (toggleMainPreview === false) {
+  document.getElementById("mainPreview").style.position = "absolute";
+  document.getElementById("mainPreview").style.width = "99.9%";
+  document.getElementById("mainPreview").style.height = "91.5%";
+  document.getElementById("mainPreview").style.left = "0";
+  document.getElementById("mainPreview").style.top = "0";
+  document.getElementById("mainPreview").style.zIndex = "1";
+
+  document.getElementById("mainPreviewTitle").style.position = "absolute";
+  document.getElementById("mainPreviewTitle").style.top = "0";
+  document.getElementById("mainPreviewTitle").style.left = "0";
+  document.getElementById("mainPreviewTitle").style.zIndex = "2";
+
+  toggleMainPreview = true;
+  return
+}
+if (toggleMainPreview === true) {
+  document.getElementById("mainPreview").style.position = null;
+  document.getElementById("mainPreview").style.width = null;
+  document.getElementById("mainPreview").style.height = null;
+  document.getElementById("mainPreview").style.left = null;
+  document.getElementById("mainPreview").style.top = null;
+
+  document.getElementById("mainPreviewTitle").style.position = null;
+  document.getElementById("mainPreviewTitle").style.top = null;
+  toggleMainPreview = false;
+  return
+}
+
+};
 //--------------------------------
