@@ -1,29 +1,69 @@
 {
     "profiles": [
         {
-            "title": "A Star is Born",
-            "startTime": "21:00",
+            "title": "Open Doors",
+            "startTime": "12:48",
+            "cueLength": "00:01"
+        },
+        {
+            "title": "Piano",
+            "startTime": "18:00",
+            "cueLength": "00:01"
+        },
+        {
+            "title": "Piano + Backing",
+            "startTime": "18:10",
+            "cueLength": "00:01"
+        },
+        {
+            "title": "Greatest Show",
+            "startTime": "18:25",
+            "cueLength": "00:15"
+        },
+        {
+            "title": "WWWY",
+            "startTime": "19:10",
+            "cueLength": "00:06:35"
+        },
+        {
+            "title": "Magic",
+            "startTime": "19:45",
+            "cueLength": "00:07:47"
+        },
+        {
+            "title": "Eurythmics",
+            "startTime": "20:10",
+            "cueLength": "00:08:52"
+        },
+        {
+            "title": "ASIB",
+            "startTime": "20:40",
+            "cueLength": "00:07:54"
+        },
+        {
+            "title": "Celebration",
+            "startTime": "20:55",
             "cueLength": "00:07:02"
         },
         {
-            "title": "Jan Magnussen",
-            "startTime": "22:09",
-            "cueLength": "00:02"
+            "title": "Star Catcher",
+            "startTime": "21:25",
+            "cueLength": "00:07:35"
         },
         {
-            "title": "Kevin Magnussen",
+            "title": "Peggy Sued",
+            "startTime": "21:55",
+            "cueLength": "00:06:51"
+        },
+        {
+            "title": "Uptown Funk",
+            "startTime": "22:15",
+            "cueLength": "00:07:28"
+        },
+        {
+            "title": "Queen",
             "startTime": "22:40",
             "cueLength": "00:05:01"
-        },
-        {
-            "title": "Super Bowl 2020",
-            "startTime": "23:07",
-            "cueLength": "00:01:10"
-        },
-        {
-            "title": "Ankomst",
-            "startTime": "23:50",
-            "cueLength": "00:00"
         }
     ]
 }

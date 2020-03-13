@@ -11,7 +11,7 @@ npm start
 - [] ReWrite writeToDefault so it adds to the scheduledTimes-backup and then delets all front end and then adds it back again.
 - [] - ReWrite addNewRowDefault so it adds a new row and pushes it to socket and adds it al all pages.
 - [] Make so ENTER on admin page triggers update
-- [] Reset AdjustTime after countUp triggers.
+- [x] Reset AdjustTime after countUp triggers.
 
 ## Bugs
 - [] xxx
