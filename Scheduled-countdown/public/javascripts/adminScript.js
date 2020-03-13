@@ -266,6 +266,12 @@ $("#addNewRow").on('click', function() {
     // window.location.reload(true)
   });
 });
+$(":input").keypress(function (e) {
+    if (e.which == 13) {
+      socket.emit("sortingButton_To_Socket", {})
+        alert('enter key is pressed and list is updated');
+    }
+});
 //--------------------------------------------------
 function updateScheduledTimesArray() {
   console.log("updateScheduledTimesArray");
