@@ -14,18 +14,10 @@ block content
           button#offsetReset.commandButton Reset
         .buttondiv
           button#sorting.commandButton Sort and Update
-          //button#updateScheduledTimesArray.commandButton Update Kanske kan tas bort?
         .buttondiv
           button#loadDefaultArray.commandButton Load
           button#writeDefaultArray.commandButton Save
-          //form(method='POST' action='/admin/loadDefault')
-            button(type='submit') loadDefault
-          //form(method='POST' action='/admin/writeToDefault')
-            button(type='submit') writeToDefault
         .buttondiv
-          //form(method='POST' action='/admin/addNewRowDefault')
-          //form()
-            //button(type='submit' class='commandButton' id="addNewRow") Add Row
           button(type='submit' class='commandButton' id="addNewRow") Add Row
           br
           br
@@ -47,21 +39,17 @@ block content
         each person, index in scheduledTimes
           div(id=index)
             input(type='text', value=person.title, name="title" + index, id="title" + index)
-            //input(type='text', value=person.startTime, name="startTime" + index, id="startTime" + index)
             input(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
             input(type='time', value=person.cueLength, name="cueLength" + index, id="cueLength" + index step=1)
 
             button.delete(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
             br
-        //button(type='submit') update
 
 
     div.floatl#preview
-      p Preview
-      //iframe.preview(src='http://' + myLocalip + ':3000')
-      iframe.preview(src='http://' + myLocalip)
+      p#mainPreviewTitle(style="cursor: pointer;" onclick="iframePreviewFullscreen()") Preview
+      iframe.preview#mainPreview(src='http://' + myLocalip)
       p 5Min countdown
-      //iframe.preview(src='http://' + myLocalip + ':3000/countdown')
       iframe.preview(src='http://' + myLocalip + '/countdown')
   
   .downSite

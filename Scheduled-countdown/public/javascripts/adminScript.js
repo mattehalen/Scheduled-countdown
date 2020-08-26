@@ -9,6 +9,7 @@ var nowTopRow = document.getElementById("nowTopRow");
 var cueTimeText = document.getElementById("cueTime");
 var setTimeoutTime = 150;
 var myIpArrayBool = 0;
+var toggleMainPreview = false;
 
 var myLocalip = document.getElementById("myLocalip").textContent;
 //var myLocalipAndPort = myLocalip + ":3000"
@@ -19,8 +20,6 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 var offsetTime = document.getElementById("offsetTime");
 
 
-//--------------------------------------------------
-// - getscheduledTimes
 //--------------------------------------------------
 function getscheduledTimes() {
   const request = async () => {
@@ -50,11 +49,6 @@ function getscheduledTimes() {
   request();
 };
 getscheduledTimes();
-//--------------------------------------------------
-
-//--------------------------------------------------
-// - deleteIndexInScheduledTimes
-//--------------------------------------------------
 function deleteIndexInScheduledTimes(index) {
   const request = async () => {
     const response = await fetch('/scheduledTimes.json');
@@ -87,12 +81,6 @@ function deleteIndexInScheduledTimes(index) {
 
   request();
 };
-//deleteIndexInScheduledTimes();
-//--------------------------------------------------
-
-//--------------------------------------------------
-// - getOffsetTime
-//--------------------------------------------------
 function getOffsetTime() {
   const request = async () => {
     const response = await fetch('/variables.json');
@@ -125,13 +113,164 @@ sleep(1000).then(() => {
   });
 });
 //--------------------------------------------------
-
-//---------- I think i can delete this
 //--------------------------------------------------
 socket.on("sendDB_TO_Admin", function(data) {
   startTimeArray = data.socketDBArray.startTimeArray;
   startTitleArray = data.socketDBArray.startTitleArray;
   cueLengthArray = data.socketDBArray.cueLengthArray;
+});
+socket.on("updatebutton_From_Socket", function(data) {
+  updateScheduledTimesArray();
+})
+socket.on("updateDB_From_Socket", function(data) {
+  //console.log("updateDB_From_Socket: ");
+  startTimeArray = data.startTimeArray;
+  startTitleArray = data.startTitleArray;
+  cueLengthArray = data.cueLengthArray;
+  sleep(100).then(() => {
+    printArraysToElements();
+  });
+});
+socket.on("pushGetscheduledTimes", function(data) {
+  console.log("pushGetscheduledTimes: ");
+  getscheduledTimes();
+
+  sleep(100).then(() => {
+    printArraysToElements();
+  });
+
+});
+socket.on("sortingButton_From_Socket", function(data) {
+  console.log("knapp funkar");
+
+  updateScheduledTimesArray();
+  sleep(750).then(() => {
+    //sortscheduledTimes();
+    // window.location.reload(true)
+
+    sleep(1000).then(() => {
+      //document.location.reload();
+    });
+
+  });
+
+})
+socket.on("updateOffsetTime_From_Socket", function(data) {
+  console.log("updateOffsetTime_From_Socket");
+  console.log(data);
+  offsetTimeInit = data.offsetTime;
+  $("#offsetTime").html(offsetTimeInit);
+});
+socket.on("getCueTimeString_From_Socket", function(data) {
+  cueTimeText.textContent = data.string;
+});
+socket.on("changesOnScheduledTimes", function(data) {
+  console.log("changesOnScheduledTimes");
+  alert("Changes to ScheduledTimes.json has been made. Please update browser to se them");
+});
+socket.on("centerTextContent", function(data) {
+  nowTopRow.textContent = data.newCurrentTime
+});
+socket.on("sendIpArrayToAdminPage", function(data){
+  // console.log("sendIpArrayToAdminPage");
+  // console.log(data.myIpArray);
+
+  var select = document.getElementById("selectNumber");
+  var options = data.myIpArray;
+
+  if (myIpArrayBool != 1) {
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+        myIpArrayBool =1;
+    }
+  }
+
+
+});
+socket.on("send_Delete_Button_from_Socket", function(data) {
+  console.log(data);
+  listIndex = data.listIndex
+  console.log("send_Delete_Button_from_Socket: listIndex= " + listIndex);
+
+  document.getElementById(listIndex).remove();
+  deleteIndexInScheduledTimes(listIndex);
+  sleep(1000).then(() => {
+    // window.location.reload(true)
+  });
+})
+//--------------------------------------------------
+$("#updateScheduledTimesArray").on('click', function() {
+  socket.emit("updatebutton_To_Socket", {})
+});
+$("#sorting").on('click', function() {
+  socket.emit("sortingButton_To_Socket", {})
+
+});
+$("#offsetPlus").on('click', function() {
+  offsetTimeInit += 1;
+  socket.emit('updateOffsetTimePlus', {
+    offsetTime: offsetTimeInit
+  });
+});
+$("#offsetMinus").on('click', function() {
+  offsetTimeInit -= 1;
+  //$("#offsetTime").html(offsetTimeInit);
+  socket.emit('updateOffsetTimeMinus', {
+    offsetTime: offsetTimeInit
+  });
+});
+$("#offsetReset").on('click', function() {
+  offsetTimeInit = 0;
+  //$("#offsetTime").html(offsetTimeInit);
+  socket.emit('updateOffsetTimeReset', {
+    offsetTime: offsetTimeInit
+  });
+});
+$("#loadDefaultArray").on('click', function() {
+  console.log("loadDefaultArray");
+  socket.emit('loadDefaultToSocket', {
+    message: "loadDefaultToSocket: Sent"
+  });
+
+  sleep(250).then(() => {
+    // window.location.reload(true)
+  });
+
+});
+$("#writeDefaultArray").on('click', function() {
+  console.log("writeDefaultArray");
+
+  getElementsToArrays();
+
+  sleep(100).then(() => {
+    console.log("AFTER SLEEP: " + startTitleArray);
+    socket.emit('writeDefaultToSocket', {
+      startTitleArray: startTitleArray,
+      startTimeArray: startTimeArray,
+      cueLengthArray: cueLengthArray
+    });
+
+  });
+
+});
+$("#addNewRow").on('click', function() {
+  console.log("addNewRow");
+  socket.emit("send_addNewRow_To_Socket", {})
+
+  sleep(1500).then(() => {
+    //sortscheduledTimes();
+    // window.location.reload(true)
+  });
+});
+$(":input").keypress(function (e) {
+    if (e.which == 13) {
+      socket.emit("sortingButton_To_Socket", {})
+        alert('enter key is pressed and list is updated');
+    }
 });
 //--------------------------------------------------
 function updateScheduledTimesArray() {
@@ -163,157 +302,11 @@ function updateScheduledTimesArray() {
     getscheduledTimes();
   });
 };
-$("#updateScheduledTimesArray").on('click', function() {
-  socket.emit("updatebutton_To_Socket", {})
-});
-socket.on("updatebutton_From_Socket", function(data) {
-  updateScheduledTimesArray();
-})
-//--------------------------------------------------
-socket.on("updateDB_From_Socket", function(data) {
-  //console.log("updateDB_From_Socket: ");
-  startTimeArray = data.startTimeArray;
-  startTitleArray = data.startTitleArray;
-  cueLengthArray = data.cueLengthArray;
-  sleep(100).then(() => {
-    printArraysToElements();
-  });
-});
-//--------------------------------------------------
-//pushGetscheduledTimes
-socket.on("pushGetscheduledTimes", function(data) {
-  console.log("pushGetscheduledTimes: ");
-  getscheduledTimes();
-
-  sleep(100).then(() => {
-    printArraysToElements();
-  });
-
-});
-
-$("#sorting").on('click', function() {
-  socket.emit("sortingButton_To_Socket", {})
-
-});
-socket.on("sortingButton_From_Socket", function(data) {
-  console.log("knapp funkar");
-
-  updateScheduledTimesArray();
-  sleep(750).then(() => {
-    //sortscheduledTimes();
-    window.location.reload(true)
-
-    sleep(1000).then(() => {
-      //document.location.reload();
-    });
-
-  });
-
-})
-
-//--------------------------------------------------
-// Button offsetPlus
-$("#offsetPlus").on('click', function() {
-  offsetTimeInit += 1;
-  socket.emit('updateOffsetTimePlus', {
-    offsetTime: offsetTimeInit
-  });
-});
-//--------------------------------------------------
-// Button offsetMinus
-$("#offsetMinus").on('click', function() {
-  offsetTimeInit -= 1;
-  //$("#offsetTime").html(offsetTimeInit);
-  socket.emit('updateOffsetTimeMinus', {
-    offsetTime: offsetTimeInit
-  });
-});
-//offsetReset
-$("#offsetReset").on('click', function() {
-  offsetTimeInit = 0;
-  //$("#offsetTime").html(offsetTimeInit);
-  socket.emit('updateOffsetTimeReset', {
-    offsetTime: offsetTimeInit
-  });
-});
-//--------------------------------------------------
-//---------- loadDefault
-$("#loadDefaultArray").on('click', function() {
-  console.log("loadDefaultArray");
-  socket.emit('loadDefaultToSocket', {
-    message: "loadDefaultToSocket: Sent"
-  });
-
-  sleep(250).then(() => {
-    window.location.reload(true)
-  });
-
-});
-//--------------------------------------------------
-//---------- writeDefaultArray
-$("#writeDefaultArray").on('click', function() {
-  console.log("writeDefaultArray");
-
-  getElementsToArrays();
-
-  sleep(100).then(() => {
-    console.log("AFTER SLEEP: " + startTitleArray);
-    socket.emit('writeDefaultToSocket', {
-      startTitleArray: startTitleArray,
-      startTimeArray: startTimeArray,
-      cueLengthArray: cueLengthArray
-    });
-
-  });
-
-});
-//--------------------------------------------------
-//--------------------------------------------------
-//---------- writeDefaultArray
-$("#addNewRow").on('click', function() {
-  console.log("addNewRow");
-  socket.emit("send_addNewRow_To_Socket", {})
-
-  sleep(1500).then(() => {
-    //sortscheduledTimes();
-    window.location.reload(true)
-  });
-});
-//--------------------------------------------------
-//--------------------------------------------------
-
-//updateOffsetTime_From_Socket
-socket.on("updateOffsetTime_From_Socket", function(data) {
-  console.log("updateOffsetTime_From_Socket");
-  console.log(data);
-  offsetTimeInit = data.offsetTime;
-  $("#offsetTime").html(offsetTimeInit);
-});
-//--------------------------------------------------
-//getCueTimeString_From_Socket
-socket.on("getCueTimeString_From_Socket", function(data) {
-  cueTimeText.textContent = data.string;
-});
-//--------------------------------------------------
-
 function delete_button_click(listIndex) {
   socket.emit("send_Delete_Button_To_Socket", {
     listIndex: listIndex
   });
 };
-
-socket.on("send_Delete_Button_from_Socket", function(data) {
-  console.log(data);
-  listIndex = data.listIndex
-  console.log("send_Delete_Button_from_Socket: listIndex= " + listIndex);
-
-  document.getElementById(listIndex).remove();
-  deleteIndexInScheduledTimes(listIndex);
-  sleep(1000).then(() => {
-    window.location.reload(true)
-  });
-})
-
 function printArraysToElements() {
   console.log("printArraysToElements");
   console.log(startTitleArray);
@@ -329,7 +322,6 @@ function printArraysToElements() {
 
 
 };
-
 function getElementsToArrays() {
   console.log("getElementsToArrays()");
   for (let i = 0; i < startTitleArray.length; i++) {
@@ -343,7 +335,6 @@ function getElementsToArrays() {
   }
   console.log(startTimeArray);
 };
-
 function sendDB_To_Socket_On_Delete() {
   console.log("sendDB_To_Socket_On_Delete")
 
@@ -359,31 +350,6 @@ function sendDB_To_Socket_On_Delete() {
   });
 
 };
-
-socket.on("centerTextContent", function(data) {
-  nowTopRow.textContent = data.newCurrentTime
-});
-
-socket.on("sendIpArrayToAdminPage", function(data){
-  // console.log("sendIpArrayToAdminPage");
-  // console.log(data.myIpArray);
-
-  var select = document.getElementById("selectNumber");
-  var options = data.myIpArray;
-
-  if (myIpArrayBool != 1) {
-    for(var i = 0; i < options.length; i++) {
-        var opt = options[i];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
-        select.appendChild(el);
-        myIpArrayBool =1;
-    }
-  }
-
-
-});
 function saveMyIpTo_myipjson(myChosenIp){
   var e = document.getElementById("selectNumber");
   var strUser = e.options[e.selectedIndex].value;
@@ -391,10 +357,42 @@ function saveMyIpTo_myipjson(myChosenIp){
 
   socket.emit("sendChosenIp_To_Socket",{myChosenIp:strUser})
 };
-//--------------------------------
 function setLoopbackip(){
 
 
 }
 
+function iframePreviewFullscreen(){
+  console.log(toggleMainPreview);
+
+  if (toggleMainPreview === false) {
+  document.getElementById("mainPreview").style.position = "absolute";
+  document.getElementById("mainPreview").style.width = "99.9%";
+  document.getElementById("mainPreview").style.height = "91.5%";
+  document.getElementById("mainPreview").style.left = "0";
+  document.getElementById("mainPreview").style.top = "0";
+  document.getElementById("mainPreview").style.zIndex = "1";
+
+  document.getElementById("mainPreviewTitle").style.position = "absolute";
+  document.getElementById("mainPreviewTitle").style.top = "0";
+  document.getElementById("mainPreviewTitle").style.left = "0";
+  document.getElementById("mainPreviewTitle").style.zIndex = "2";
+
+  toggleMainPreview = true;
+  return
+}
+if (toggleMainPreview === true) {
+  document.getElementById("mainPreview").style.position = null;
+  document.getElementById("mainPreview").style.width = null;
+  document.getElementById("mainPreview").style.height = null;
+  document.getElementById("mainPreview").style.left = null;
+  document.getElementById("mainPreview").style.top = null;
+
+  document.getElementById("mainPreviewTitle").style.position = null;
+  document.getElementById("mainPreviewTitle").style.top = null;
+  toggleMainPreview = false;
+  return
+}
+
+};
 //--------------------------------
