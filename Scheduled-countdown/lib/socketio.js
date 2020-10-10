@@ -138,11 +138,8 @@ function updateScheduledTimesjson() {
     }
 
     if (customer.profiles.length > startTitleArray.length) {
-      console.log("------------------------------------------------------------- customer.profiles.length > startTitleArray.length");
       var a = customer.profiles.length - 1;
       customer.profiles.splice(a, 1);
-      console.log("startTitleArray.length: " + a);
-      console.log(customer.profiles);
 
       for (let i = 0; i < customer.profiles.length; i++) {
         customer.profiles[i].title = startTitleArray[i]
@@ -158,12 +155,9 @@ function updateScheduledTimesjson() {
       }
       for (let i = 0; i < customer.profiles.length; i++) {
         customer.profiles[i].fiveBool = fiveBoolArray[i]
-        console.log("fiveBoolArray = " + fiveBoolArray);
-
       }
 
     } else {
-      console.log("------------------------------------------------------------- customer.profiles.length !> startTitleArray.length");
 
       for (let i = 0; i < customer.profiles.length; i++) {
         customer.profiles[i].title = startTitleArray[i]
@@ -179,7 +173,6 @@ function updateScheduledTimesjson() {
       }
       for (let i = 0; i < customer.profiles.length; i++) {
         customer.profiles[i].fiveBool = fiveBoolArray[i]
-        console.log(fiveBoolArray[i]);
       };
 
     };
@@ -383,7 +376,7 @@ io.on('connection', function(socket) {
   });
   //--------------------------------------------------
   socket.on("writeToScheduledTimesjson", function(data) {
-    console.log("------------------------------> writeToScheduledTimesjson <------------------------------");
+    console.log("--------------------> writeToScheduledTimesjson <--------------------");
     startTitleArray = data.startTitleArray;
     startTimeArray = data.startTimeArray;
     cueLengthArray = data.cueLengthArray;
@@ -397,7 +390,7 @@ io.on('connection', function(socket) {
   });
   //--------------------------------------------------
   socket.on("updateScheduledTimesArray", function(data) {
-    console.log("-----------------------------> updateScheduledTimesArray <-----------------------------");
+    console.log("--------------------> updateScheduledTimesArray <--------------------");
     io.emit("updateDB_From_Socket", {
       startTitleArray: startTitleArray,
       startTimeArray: startTimeArray,
