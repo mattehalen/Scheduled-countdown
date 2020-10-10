@@ -1,0 +1,87 @@
+<mxfile host="www.draw.io" modified="2019-12-29T23:15:51.178Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.88 Safari/537.36" etag="--KrCA0tEGRMoWBsnwqN" version="12.4.7" type="github">
+  <diagram id="i-tSD9oWPT3ERHb1kvOe" name="Page-1">
+    <mxGraphModel dx="1422" dy="762" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="crog911Fq6NyPLmG136T-7" value="" style="group;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="520" y="80" width="520" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-1" value="Add elements from scheduledTimes.json" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;gradientColor=none;align=center;verticalAlign=top;fontSize=16;" parent="crog911Fq6NyPLmG136T-7" vertex="1">
+          <mxGeometry width="520" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="_vnFwrZZQ34nLDeKAmVC-1" value="addElementToDOM" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="crog911Fq6NyPLmG136T-7" vertex="1">
+          <mxGeometry x="360" y="40" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="_vnFwrZZQ34nLDeKAmVC-3" value="getElementFromSocket" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="crog911Fq6NyPLmG136T-7" vertex="1">
+          <mxGeometry x="40" y="40" width="140" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;" parent="crog911Fq6NyPLmG136T-7" source="_vnFwrZZQ34nLDeKAmVC-5" target="_vnFwrZZQ34nLDeKAmVC-1" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="_vnFwrZZQ34nLDeKAmVC-5" value="delElementFromDOM" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="crog911Fq6NyPLmG136T-7" vertex="1">
+          <mxGeometry x="210" y="40" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;" parent="crog911Fq6NyPLmG136T-7" source="_vnFwrZZQ34nLDeKAmVC-3" target="_vnFwrZZQ34nLDeKAmVC-5" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;" parent="1" source="crog911Fq6NyPLmG136T-8" target="_vnFwrZZQ34nLDeKAmVC-3" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-8" value="socket.on (&quot;addElement&quot;)" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
+          <mxGeometry x="400" y="120" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;" parent="1" source="crog911Fq6NyPLmG136T-10" target="crog911Fq6NyPLmG136T-8" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-10" value="socket.emit (&quot;addElement&quot;)" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="240.00000000000003" y="120" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;" parent="1" source="crog911Fq6NyPLmG136T-19" target="crog911Fq6NyPLmG136T-10" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-19" value="getElementFromFile" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="80" y="120" width="120" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;comic=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;shadow=0;startArrow=none;startFill=0;endSize=6;targetPerimeterSpacing=0;fontSize=16;" parent="1" source="crog911Fq6NyPLmG136T-21" target="crog911Fq6NyPLmG136T-10" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="60" y="260"/>
+              <mxPoint x="60" y="200"/>
+              <mxPoint x="300" y="200"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-21" value="uppdateElementFromDOM" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="1" vertex="1">
+          <mxGeometry x="80" y="240" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-22" value="" style="group;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1" connectable="0">
+          <mxGeometry x="520" y="240" width="520" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-23" value="Uppdate elements and sent to socket&lt;br&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;gradientColor=none;align=center;verticalAlign=top;fontSize=16;" parent="crog911Fq6NyPLmG136T-22" vertex="1">
+          <mxGeometry width="520" height="120" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-25" value="getElementFromDOM" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="crog911Fq6NyPLmG136T-22" vertex="1">
+          <mxGeometry x="40" y="40" width="190" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-27" value="socket.emit(&quot;uppdateElement&quot;)" style="rounded=1;whiteSpace=wrap;html=1;treeFolding=0;treeMoving=0;resizeWidth=0;fillColor=#d5e8d4;strokeColor=#82b366;" parent="crog911Fq6NyPLmG136T-22" vertex="1">
+          <mxGeometry x="270" y="40" width="220" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;" parent="crog911Fq6NyPLmG136T-22" source="crog911Fq6NyPLmG136T-25" target="crog911Fq6NyPLmG136T-27" edge="1">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="crog911Fq6NyPLmG136T-30" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;entryX=1;entryY=0.5;entryDx=0;entryDy=0;shadow=0;comic=0;startArrow=none;startFill=0;targetPerimeterSpacing=0;endSize=6;" parent="1" source="crog911Fq6NyPLmG136T-27" target="crog911Fq6NyPLmG136T-21" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="990" y="460" as="targetPoint"/>
+            <Array as="points">
+              <mxPoint x="1020" y="300"/>
+              <mxPoint x="1020" y="420"/>
+              <mxPoint x="485" y="420"/>
+              <mxPoint x="485" y="260"/>
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

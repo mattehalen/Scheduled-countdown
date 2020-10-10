@@ -3,6 +3,7 @@ extends layout
 block content
   p(hidden='')#myLocalip= myLocalip
   .topRow
+    #timeCode.timeCodeText
     #nowTopRow.topRowText
   #mainContentBox.mainContentBox
     .floatl.offsetTime
@@ -41,6 +42,10 @@ block content
             input(type='text', value=person.title, name="title" + index, id="title" + index)
             input(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
             input(type='time', value=person.cueLength, name="cueLength" + index, id="cueLength" + index step=1)
+            label Q
+            input.slider(type="range",value=person.cueBool, name="cueBool" + index, id="cueBool" + index, min="0" max="1")
+            label 5
+            input.slider(type="range",value=person.fiveBool, name="fiveBool" + index, id="fiveBool" + index,, min="0" max="1")
 
             button.delete(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
             br
@@ -51,6 +56,7 @@ block content
       iframe.preview#mainPreview(src='http://' + myLocalip)
       p 5Min countdown
       iframe.preview(src='http://' + myLocalip + '/countdown')
+      button#reloadFiveMinCountDown.commandButton Reload 5min
   
   .downSite
     #cueTime.fiveMinute 

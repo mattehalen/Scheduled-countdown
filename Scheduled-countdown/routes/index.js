@@ -336,7 +336,20 @@ router.get('/', function(req, res, next) {
   });
 });
 //-------------------------------------------------------------------------
-
+router.get('/stage', function(req, res, next) {
+  res.render('stage', {
+    title: 'Scheduled-CountDown',
+    now: "s",
+    myLocalip: myLocalip
+  });
+});
+router.get('/foh', function(req, res, next) {
+  res.render('foh', {
+    title: 'Scheduled-CountDown',
+    now: "s",
+    myLocalip: myLocalip
+  });
+});
 router.get('/admin', function(req, res, next) {
   res.render('admin', {
     title: 'Scheduled-CountDown',

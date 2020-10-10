@@ -25,3 +25,6 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
+Scheduled-countdown/public/myip.json
+Scheduled-countdown/public/scheduledTimes.json
+Scheduled-countdown/public/scheduledTimes-backup.json

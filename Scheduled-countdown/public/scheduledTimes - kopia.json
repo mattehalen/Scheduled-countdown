@@ -1,0 +1,64 @@
+{
+    "profiles": [
+        {
+            "title": "Open Doors",
+            "startTime": "17:15",
+            "cueLength": "00:00"
+        },
+        {
+            "title": "Saxophon guy",
+            "startTime": "17:39",
+            "cueLength": "00:00"
+        },
+        {
+            "title": "David Warm Up",
+            "startTime": "17:55",
+            "cueLength": "00:00"
+        },
+        {
+            "title": "Greatest Show",
+            "startTime": "18:00",
+            "cueLength": "00:00"
+        },
+        {
+            "title": "WWWY",
+            "startTime": "18:35",
+            "cueLength": "00:06:35"
+        },
+        {
+            "title": "David",
+            "startTime": "19:05",
+            "cueLength": "00:07:47"
+        },
+        {
+            "title": "Eurythmics",
+            "startTime": "19:25",
+            "cueLength": "00:08:52"
+        },
+        {
+            "title": "ASIB",
+            "startTime": "19:55",
+            "cueLength": "00:07:54"
+        },
+        {
+            "title": "Celebration",
+            "startTime": "20:10",
+            "cueLength": "00:07:02"
+        },
+        {
+            "title": "Star Catcher",
+            "startTime": "20:40",
+            "cueLength": "00:07:33"
+        },
+        {
+            "title": "David Act 2",
+            "startTime": "21:05",
+            "cueLength": "00:06:51"
+        },
+        {
+            "title": "Queen",
+            "startTime": "21:25",
+            "cueLength": "00:05:00"
+        }
+    ]
+}

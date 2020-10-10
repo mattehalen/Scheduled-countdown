@@ -7,6 +7,7 @@ var socket = io.connect(myLocalipAndPort);
 //--------------------------------------------------
 var nowText = document.getElementById("now");
 var nowTopRow = document.getElementById("nowTopRow");
+var timeCode = document.getElementById("timeCode");
 var titleText = document.getElementById("title");
 var startText = document.getElementById("start");
 //--------------------------------------------------
@@ -151,3 +152,15 @@ socket.on("centerTextContent", function(data){
 
 
 });
+
+socket.emit("getTimeCode",{});
+socket.on("sendTimeCode",function(data){
+  timeCode.textContent = data.smpteString
+  //console.log(data.smpteString);
+
+});
+function getTimeCodeLoop(){
+  socket.emit("getTimeCode",{});
+  setTimeout(getTimeCodeLoop,100);
+};
+getTimeCodeLoop()

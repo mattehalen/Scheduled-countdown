@@ -1,22 +1,29 @@
 // var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 var myip = require('../public/myip.json');
+//var ip = require("ip");
 const fs = require('fs');
-var startTitleArray = [];
-var startTimeArray = [];
-var cueLengthArray = [];
+var startTimeArray = [""];
+var startTitleHolder = "";
+var startTitleArray = [""];
+var startTimeTextHolder = "";
+var cueLengthArray = [""];
+var cueLengthTextHolder = "";
 var offsetTimeInit = [];
-var ip = require("ip");
+//--- newly added BOOLS
+var cueBoolArray = [""];
+var cueBoolHolder = "";
 
+var fiveBoolArray = [""];
+var fiveBoolHolder = [""];
+var sendMin_To_countDownBoole = 100;
+
+//--------------------------------------------------
 //--from Script.js
 var offsetTimeInit = 0;
-var myArray = "";
-// var scheduledTimesArrayGlobal = [];
 var scheduledTimesArray = [];
 var scheduledTimesArraylength = 0;
 var offsetTimejson = [];
-//--------------------------------------------------
-// - Variables & Booleans
 //--------------------------------------------------
 var countDown = 7; // how many minutes before
 countDown = countDown * 60000; // convert to Ms
@@ -24,41 +31,10 @@ var countUp = 2; // how many minutes after
 countUp = countUp * 60000; // convert to M
 var offsetTime = 0;
 
-// var startTimeAt           = "";
-var startTimeArray = [""];
-var startTitleArray = [""];
-// var startTimeIndex        = 0;
-
-// var cueStartTimeAt        = "";
-// var cueStartTimeInMs      = "";
-// var cueStartTimeOffset    = "";
-// var cueTimeInMs           = 0;
-var cueLengthArray = [""];
-// var cueLengthArrayIndex   = 0;
-// var cueLengthInMs         = 0;
-
 var nowInMs = 0;
-var startTimeInMs = 0;
-
-var displayTimeBool = false;
-var positiveDiffTimeBoole = false;
-
-// var displayCueTimeBool = false;
-// var positiveDiffCueTimeBoole = false;
-
-// var sendMin_To_countDownBoole = 0;
-
-// var fiveMinuteString = "";
-// var fiveMinuteInMs = 5 *60000;
-// var fiveMinuteFromMsToTime = 0;
-
-var setTimeoutTime = 150;
+var setTimeoutTime = 50;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var newArrayIndex = 0;
-// var startTitleTextFromnewArrayIndex = "";
-var startTitleHolder = "";
-var startTimeTextHolder = "";
-var cueLengthTextHolder = "";
 
 var serverNewDate = "";
 var serverNowInMs = "";
@@ -121,6 +97,22 @@ getNetworkIPs(function(error, ip) {
     console.log('error:', error);
   }
 }, false);
+
+// MIDI
+
+var smpteString;
+
+function mtcTOString() {
+  var JZZ = require('jzz');
+  var port = JZZ().openMidiIn(0);
+  var smpte = JZZ.SMPTE();
+  port
+    .connect(function(msg) {
+      smpte.read(msg);
+      smpteString = smpte.toString();
+    });
+};
+mtcTOString();
 //-------------------------------------------------------------------------
 function jsonReader(filePath, cb) {
   fs.readFile(filePath, (err, fileData) => {
@@ -136,37 +128,9 @@ function jsonReader(filePath, cb) {
   })
 }
 
-function getscheduledTimes() {
 
-
-
-  jsonReader('./public/scheduledTimes.json', (err, customer) => {
-    if (err) {
-      console.log('Error reading file:', err)
-      return
-    }
-    scheduledTimesArray = customer;
-    scheduledTimesArraylength = customer.profiles.length;
-
-    for (let i = 0; i < customer.profiles.length; i++) {
-      startTitleArray[i] = customer.profiles[i].title
-    }
-    for (let i = 0; i < customer.profiles.length; i++) {
-      startTimeArray[i] = customer.profiles[i].startTime
-    }
-    for (let i = 0; i < customer.profiles.length; i++) {
-      cueLengthArray[i] = customer.profiles[i].cueLength
-    };
-
-  })
-};
-getscheduledTimes();
 
 function updateScheduledTimesjson() {
-  console.log("startTitleArray: " + startTitleArray);
-
-
-
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
       console.log('Error reading file:', err)
@@ -174,7 +138,7 @@ function updateScheduledTimesjson() {
     }
 
     if (customer.profiles.length > startTitleArray.length) {
-      console.log("-------------------------------------------------------------");
+      console.log("------------------------------------------------------------- customer.profiles.length > startTitleArray.length");
       var a = customer.profiles.length - 1;
       customer.profiles.splice(a, 1);
       console.log("startTitleArray.length: " + a);
@@ -188,10 +152,19 @@ function updateScheduledTimesjson() {
       }
       for (let i = 0; i < customer.profiles.length; i++) {
         customer.profiles[i].cueLength = cueLengthArray[i]
-      };
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].cueBool = cueBoolArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].fiveBool = fiveBoolArray[i]
+        console.log("fiveBoolArray = " + fiveBoolArray);
 
+      }
 
     } else {
+      console.log("------------------------------------------------------------- customer.profiles.length !> startTitleArray.length");
+
       for (let i = 0; i < customer.profiles.length; i++) {
         customer.profiles[i].title = startTitleArray[i]
       }
@@ -200,8 +173,16 @@ function updateScheduledTimesjson() {
       }
       for (let i = 0; i < customer.profiles.length; i++) {
         customer.profiles[i].cueLength = cueLengthArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].cueBool = cueBoolArray[i]
+      }
+      for (let i = 0; i < customer.profiles.length; i++) {
+        customer.profiles[i].fiveBool = fiveBoolArray[i]
+        console.log(fiveBoolArray[i]);
       };
-    }
+
+    };
 
     customer.profiles.sort(function(a, b) {
       return a.startTime.localeCompare(b.startTime);
@@ -283,17 +264,11 @@ function loadDefaultjson() {
 };
 
 function writeDefaultjson() {
-  //console.log("startTitleArray: "+startTitleArray);
-
-
-
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
-
-    //console.log("startTitleArray: "+ startTitleArray);
     fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(customer, null, 4), (err) => {
       if (err) console.log('Error writing file:', err)
     })
@@ -310,7 +285,6 @@ function getOffsetTimejson() {
   })
   return
 };
-getOffsetTimejson();
 
 function addNewRowDefault() {
   console.log("addNewRowDefault knappen funkar");
@@ -340,6 +314,40 @@ function addNewRowDefault() {
     });
   });
 };
+getOffsetTimejson();
+
+function getscheduledTimes() {
+
+
+  console.log("--------------------> Socket getscheduledTimes <--------------------"+newCurrentTime());
+  jsonReader('./public/scheduledTimes.json', (err, customer) => {
+    if (err) {
+      console.log('Error reading file:', err)
+      return
+    }
+    scheduledTimesArray = customer;
+    scheduledTimesArraylength = customer.profiles.length;
+
+    for (let i = 0; i < customer.profiles.length; i++) {
+      startTitleArray[i] = customer.profiles[i].title
+    }
+    for (let i = 0; i < customer.profiles.length; i++) {
+      startTimeArray[i] = customer.profiles[i].startTime
+    }
+    for (let i = 0; i < customer.profiles.length; i++) {
+      cueLengthArray[i] = customer.profiles[i].cueLength
+    }
+    for (let i = 0; i < customer.profiles.length; i++) {
+      cueBoolArray[i] = customer.profiles[i].cueBool
+    }
+    for (let i = 0; i < customer.profiles.length; i++) {
+      fiveBoolArray[i] = customer.profiles[i].fiveBool
+    }
+
+  })
+};
+getscheduledTimes();
+
 //-------------------------------------------------------------------------
 
 var socket_io = require('socket.io');
@@ -357,6 +365,13 @@ io.on('connection', function(socket) {
     io.emit("updatingDB");
   });
 
+  socket.on("getTimeCode", function(data) {
+    io.emit("sendTimeCode", {
+      smpteString: smpteString
+    });
+    //mtcTOString();
+  });
+
   socket.on("sendDB_To_Socket", function(data) {
     //console.log("sendDB_To_Socket:"+ JSON.stringify(data) )
     io.emit("sendDB_TO_Main", {
@@ -368,20 +383,27 @@ io.on('connection', function(socket) {
   });
   //--------------------------------------------------
   socket.on("writeToScheduledTimesjson", function(data) {
-    console.log("writeToScheduledTimesjson");
+    console.log("------------------------------> writeToScheduledTimesjson <------------------------------");
     startTitleArray = data.startTitleArray;
     startTimeArray = data.startTimeArray;
     cueLengthArray = data.cueLengthArray;
+    cueBoolArray = data.cueBoolArray;
+    fiveBoolArray = data.fiveBoolArray;
+
+    // console.log(fiveBoolArray);
+
     updateScheduledTimesjson();
 
   });
   //--------------------------------------------------
   socket.on("updateScheduledTimesArray", function(data) {
-    console.log("updateScheduledTimesArray: " + data.startTimeArray);
+    console.log("-----------------------------> updateScheduledTimesArray <-----------------------------");
     io.emit("updateDB_From_Socket", {
       startTitleArray: startTitleArray,
       startTimeArray: startTimeArray,
-      cueLengthArray: cueLengthArray
+      cueLengthArray: cueLengthArray,
+      cueBoolArray: cueBoolArray,
+      fiveBoolArray: fiveBoolArray
     });
   });
   //--------------------------------------------------
@@ -436,13 +458,15 @@ io.on('connection', function(socket) {
     startTimeArray = data.startTimeArray;
     startTitleArray = data.startTitleArray;
     cueLengthArray = data.cueLengthArray;
+    cueBoolArray = data.cueBoolArray;
+    fiveBoolArray = data.fiveBoolArray;
 
     writeDefaultjson();
   });
   //--------------------------------------------------
   socket.on("fiveMinPageLoad_To_Socket", function(data) {
     console.log("fiveMinPageLoad_To_Socket: " + data);
-    console.log(data.countDownTime);
+    // console.log(data.countDownTime);
     io.emit("sendMin_To_countDown", {
       countDownTime: data
     });
@@ -502,7 +526,13 @@ io.on('connection', function(socket) {
 
   })
   //--------------------------------------------------
-
+  socket.on("reloadFiveMinCountDown", function(data) {
+    console.log("reloadFiveMinCountDown");
+    newCountDown();
+    // io.emit("sendMin_To_countDown", {
+    //   countDownTime: 0
+    // });
+  })
 
 
 });
@@ -510,72 +540,6 @@ io.on('connection', function(socket) {
 //--------------------------------------------------
 //- CurrentTime
 //--------------------------------------------------
-var setTimeoutTime = 150;
-
-function nowClock() {
-  //console.log("hello");
-  var d = new Date();
-  nowInMs = d.getTime();
-  var s = "";
-  s += (10 > d.getHours() ? "0" : "") + d.getHours() + ":";
-  s += (10 > d.getMinutes() ? "0" : "") + d.getMinutes() + ":";
-  s += (10 > d.getSeconds() ? "0" : "") + d.getSeconds();
-
-  // nowText.textContent = s;
-  // nowTopRow.textContent = s;
-  //console.log("nowClock: "+s);
-  io.emit("nowClock", {
-    nowClock: s,
-    serverNewDate: d,
-    serverNowInMs: nowInMs
-  });
-  //setTimeout(nowClock, setTimeoutTime - d.getTime() % 1000 + 20);
-  setTimeout(nowClock, setTimeoutTime);
-  return s;
-}
-nowClock();
-
-// function startTime() {
-//   //OLD--------------------------------------------------
-//   var d = new Date();
-//   //var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${startTimeTextHolder}`);
-//
-//   var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${startTimeArray}`);
-//   var startTimeInMs = dd.getTime();
-//   startTimeInMs = startTimeInMs + (offsetTimeInit * 60000);
-//
-//   var dInMs = d.getTime();
-//   var ddInMs = dd.getTime();
-//   ddInMs = ddInMs + (offsetTimeInit * 60000)
-//   var s = "";
-//
-//   if (ddInMs > dInMs) {
-//     s = ddInMs - dInMs + 1000;
-//     msToTime(s);
-//     positiveDiffTimeBoole = false;
-//   } else {
-//     s = dInMs - ddInMs;
-//     msToTime(s);
-//     positiveDiffTimeBoole = true;
-//   }
-//
-//   if (nowInMs > (startTimeInMs - countDown) && nowInMs < (startTimeInMs + countUp)) {
-//     displayTimeBool = true;
-//   } else {
-//     displayTimeBool = false;
-//   }
-//
-//
-//   io.emit("startTime", {
-//     startTimeInMs: startTimeInMs,
-//     serverNewDate: d,
-//     serverNowInMs: nowInMs,
-//   });
-//
-//   setTimeout(startTime, setTimeoutTime - d.getTime() % 1000 + 20);
-//
-// }
-// startTime();
 
 function newTimeArraySorting() {
   //--------------------------------------------------
@@ -596,7 +560,9 @@ function newTimeArraySorting() {
         startTimeTextHolder = scheduledTimesArray.profiles[newArrayIndex].startTime;
         cueLengthTextHolder = scheduledTimesArray.profiles[newArrayIndex].cueLength;
 
-        //console.log("startTitleHolder: " + startTitleHolder + " | " + "startTimeTextHolder: " + startTimeTextHolder + " | " + "cueLengthTextHolder: " + cueLengthTextHolder);
+        cueBoolHolder = scheduledTimesArray.profiles[newArrayIndex].cueBool;
+        fiveBoolHolder = scheduledTimesArray.profiles[newArrayIndex].fiveBool;
+
       }
     };
   });
@@ -604,16 +570,7 @@ function newTimeArraySorting() {
   setTimeout(newTimeArraySorting, setTimeoutTime);
 };
 newTimeArraySorting();
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
-//--------------------------------------------------
+
 function newOffsetTime() {
   var offsetTime = offsetTimejson;
   if (typeof offsetTime === "number") {
@@ -629,7 +586,7 @@ newOffsetTime();
 function newCurrentTime() {
   var d = new Date();
   var dInMs = d.getTime()
-
+  nowInMs = d.getTime();
   var s = "";
   s += (10 > d.getHours() ? "0" : "") + d.getHours() + ":";
   s += (10 > d.getMinutes() ? "0" : "") + d.getMinutes() + ":";
@@ -669,7 +626,6 @@ function newStartTime(time) {
   return ddInMs
 };
 
-
 function newCountDown() {
   var time = "";
   var offsetTime = newOffsetTime();
@@ -685,13 +641,112 @@ function newCountDown() {
     time = "-" + (msToTime(time))
   }
 
-  setTimeout(newCountDown, 250);
+  //--------------------------------------------------
+  var timeBuffer = 1 * 1000
+  var sixMinuteMs = (6 * 1000 * 60);
+  var fiveMinuteMs = (5 * 1000 * 60);
+  var fourMinuteMs = (4 * 1000 * 60);
+  var threeMinuteMs = (3 * 1000 * 60);
+  var twoMinuteMs = (2 * 1000 * 60);
+  var oneMinuteMs = (1 * 1000 * 60);
+  var countDownTimeInMS = startTime - now;
+  //console.log((msToTime(startTime - now)));
+
+  //console.log(countDownTimeInMS);
+  if (fiveBoolHolder==1) {
+    //  6larm
+    if (countDownTimeInMS > sixMinuteMs && countDownTimeInMS < (sixMinuteMs + timeBuffer)) {
+      //if (countDownTimeInMS < sixMinuteMs && countDownTimeInMS > fiveMinuteMs) {
+    }
+    // 5min Alarm
+    //if (countDownTimeInMS > fiveMinuteMs && countDownTimeInMS < (fiveMinuteMs + timeBuffer)) {
+    if (countDownTimeInMS < fiveMinuteMs && countDownTimeInMS > fourMinuteMs) {
+      if (sendMin_To_countDownBoole != 5) {
+        sendMin_To_countDownBoole = 5;
+        io.emit("sendMin_To_countDown", {
+          countDownTime: 5
+        });
+      };
+    }
+    // 4min Alarm
+    //if (countDownTimeInMS > fourMinuteMs && countDownTimeInMS < (fourMinuteMs + timeBuffer)) {
+    if (countDownTimeInMS < fourMinuteMs && countDownTimeInMS > threeMinuteMs) {
+      if (sendMin_To_countDownBoole != 4) {
+        sendMin_To_countDownBoole = 4;
+      io.emit("sendMin_To_countDown", {
+        countDownTime: 4
+      });
+      };
+    }
+    // 3min Alarm
+    //if (countDownTimeInMS > threeMinuteMs && countDownTimeInMS < (threeMinuteMs + timeBuffer)) {
+    if (countDownTimeInMS < threeMinuteMs && countDownTimeInMS > twoMinuteMs) {
+      if (sendMin_To_countDownBoole != 3) {
+        sendMin_To_countDownBoole = 3;
+      io.emit("sendMin_To_countDown", {
+        countDownTime: 3
+      });
+    };
+    }
+    // 2min Alarm
+    //if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs + timeBuffer)) {
+    if (countDownTimeInMS < twoMinuteMs && countDownTimeInMS > oneMinuteMs) {
+      if (sendMin_To_countDownBoole != 2) {
+        sendMin_To_countDownBoole = 2;
+      io.emit("sendMin_To_countDown", {
+        countDownTime: 2
+      });
+    };
+    }
+    // 1min Alarm
+    //if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs + timeBuffer)) {
+    if (countDownTimeInMS < oneMinuteMs && countDownTimeInMS > 0) {
+      if (sendMin_To_countDownBoole != 1) {
+        sendMin_To_countDownBoole = 1;
+      io.emit("sendMin_To_countDown", {
+        countDownTime: 1
+      });
+    };
+    }
+    // 0min Alarm
+    //if (countDownTimeInMS > 0 && countDownTimeInMS < (0 + timeBuffer)) {
+    if (countDownTimeInMS < 0 || countDownTimeInMS > fiveMinuteMs) {
+      if (sendMin_To_countDownBoole != 0) {
+        sendMin_To_countDownBoole = 0;
+      io.emit("sendMin_To_countDown", {
+        countDownTime: 0
+      });
+    };
+    }
+  }
+
+
+  if (fiveBoolHolder==0) {
+    if (sendMin_To_countDownBoole != 0) {
+      sendMin_To_countDownBoole = 0;
+    io.emit("sendMin_To_countDown", {
+      countDownTime: 0
+    });
+  };
+  };
+  //--------------------------------------------------
+
+
+
+
+  // io.emit("sendMin_To_countDown", {
+  //   countDownTime: now - startTime
+  // });
+
+
+  setTimeout(newCountDown, setTimeoutTime);
   return time
 };
 newCountDown();
 
 function newCueCountDown() {
   var cueLength = cueLengthTextHolder;
+  var cueBool = cueBoolHolder;
   //--------------------------------------------------
   if (cueLength.length > 5) {
     cueLength = timeStringToMs(cueLength);
@@ -705,27 +760,34 @@ function newCueCountDown() {
   var cueStarTime = (startTime - cueLength)
   cueStarTime += offsetTime
   var now = newCurrentTimeInMs();
+  var cueCountDownInMs;
 
   if (now > cueStarTime) {
+    cueCountDownInMs = now - cueStarTime
     time = now - cueStarTime
     time = (msToTime(time))
   } else {
+    cueCountDownInMs = cueStarTime - now
     time = cueStarTime - now
     time = "-" + (msToTime(time))
   }
   //--------------------------------------------------
   var textString = "";
-  if (now > (cueStarTime - countDown) && now < cueStarTime) {
+  if (now > (cueStarTime - countDown) && now < (cueStarTime + (1000 * 60 * 2)) && cueBoolHolder == 1) {
     textString = "CUE - " + startTitleHolder + ": " + time
   } else {
-    textString = "-"
+    textString = ""
   }
 
   io.emit("getCueTimeString_From_Socket", {
-    string: textString
+    string: textString,
+    newCurrentTimeInMs: cueStarTime - now,
+    cueBoolHolder: cueBoolHolder
   });
 
-  setTimeout(newCueCountDown, 1000);
+
+
+  setTimeout(newCueCountDown, setTimeoutTime);
 };
 newCueCountDown();
 
@@ -764,7 +826,7 @@ function sendCenterText() {
   // autoResetOffsetTime
   //--------------------------------------------------
   if (now > (start + countUp) && now < (start + countUp + 500)) {
-    console.log("autoResetOffsetTime: jkfdsalöjkfldsjklalkjfdsa");
+    console.log("autoResetOffsetTime");
     autoResetOffsetTime();
   };
   //--------------------------------------------------
@@ -788,34 +850,52 @@ function sendCenterText() {
     startTitleHolder: startTitleHolder,
     offsetTimeInit: newOffsetTime()
   });
-  setTimeout(sendCenterText, 200);
+  setTimeout(sendCenterText, setTimeoutTime);
 };
 sendCenterText();
-
-// var count = Object.keys('./public/scheduledTimes.json').length;
-// console.log(count);
-
-// fs.watch('./public/scheduledTimes.json', function (event, filename) {
-//     console.log('event is: ' + event);
-//     // io.emit("changesOnScheduledTimes",{});
-//     if (filename) {
-//         console.log('filename provided: ' + filename);
-//     } else {
-//         console.log('filename not provided');
-//     }
-// });
 
 function autoResetOffsetTime() {
   sleep(1 * 6000).then(() => {
     console.log("autoResetOffsetTime");
     offsetTimeInit = 0;
     updateOffsetTimeResetjson();
-    io.emit("updateOffsetTime_From_Socket", {
-      offsetTime: offsetTimeInit
-    });
+    if (offsetTimeInit !== undefined){
+      io.emit("updateOffsetTime_From_Socket", {
+        offsetTime: offsetTimeInit
+      });
+    }else{console.log("offsetTimeInit = undefined - autoResetOffsetTime -"+ newCurrentTime());}
+
   });
 
 
 
 };
+
+function resetsetTimeout(){
+
+  //---------
+  sleep(1000*60*60).then(() => {
+    console.log("----------> resetsetTimeout() <----------   "+newCurrentTime());
+    fs.writeFile('./autoRestartServer.json', JSON.stringify("customer", null, 4), (err) => {
+      if (err) console.log('Error writing file:', err)
+    })
+
+
+    // clearTimeout(newTimeArraySorting);
+    // clearTimeout(newCountDown);
+    // clearTimeout(newCueCountDown);
+    // clearTimeout(sendCenterText);
+  });
+    //---------
+    // newTimeArraySorting();
+    // newCountDown();
+    // newCueCountDown();
+    // sendCenterText();
+    //---------
+
+
+  //setTimeout(resetsetTimeout,(1000*60*5))
+};
+resetsetTimeout();
+
 module.exports = socketio;
