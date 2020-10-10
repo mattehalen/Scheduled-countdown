@@ -533,6 +533,14 @@ io.on('connection', function(socket) {
     //   countDownTime: 0
     // });
   })
+  socket.on("force5MinCountDownCase", function(data) {
+    console.log("force5MinCountDownCase");
+    //newCountDown();
+    console.log(data.case);
+    io.emit("sendMin_To_countDown", {
+      countDownTime: data.case
+    });
+  })
 
 
 });

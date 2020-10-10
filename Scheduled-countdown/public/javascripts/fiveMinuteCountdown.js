@@ -8,7 +8,6 @@ var countDownTime = "";
 
 var socket = io.connect(myLocalipAndPort);
 socket.on("sendMin_To_countDown", function(data) {
-  console.log("AAAAAAAAAAAAAA");
   //console.log("sendMin_To_countDown: "+data.countDownTime);
   //console.log(data.countDownTime.countDownTime);
   //countDownTime = data.countDownTime.countDownTime

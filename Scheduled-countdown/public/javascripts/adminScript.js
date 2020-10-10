@@ -301,8 +301,41 @@ $(":input").keypress(function (e) {
         alert('enter key is pressed and list is updated');
     }
 });
+
+//-- New Buttons for Reseting 5min CountDown
 $("#reloadFiveMinCountDown").on("click",function (e) {
-    socket.emit("reloadFiveMinCountDown", {});
+    socket.emit("reloadFiveMinCountDown", {
+    });
+});
+$("#one").on("click",function (e) {
+    socket.emit("force5MinCountDownCase", {
+      case:1
+    });
+});
+$("#two").on("click",function (e) {
+    socket.emit("force5MinCountDownCase", {
+      case:2
+    });
+});
+$("#three").on("click",function (e) {
+    socket.emit("force5MinCountDownCase", {
+      case:3
+    });
+});
+$("#four").on("click",function (e) {
+    socket.emit("force5MinCountDownCase", {
+      case:4
+    });
+});
+$("#five").on("click",function (e) {
+    socket.emit("force5MinCountDownCase", {
+      case:5
+    });
+});
+$("#alpha").on("click",function (e) {
+    socket.emit("force5MinCountDownCase", {
+      case:0
+    });
 });
 //--------------------------------------------------
 function updateScheduledTimesArray() {

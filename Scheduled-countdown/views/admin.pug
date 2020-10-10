@@ -56,7 +56,14 @@ block content
       iframe.preview#mainPreview(src='http://' + myLocalip)
       p 5Min countdown
       iframe.preview(src='http://' + myLocalip + '/countdown')
-      button#reloadFiveMinCountDown.commandButton Reload 5min
+      button#reloadFiveMinCountDown.commandButton(style='width: 100%') Reload 5min
+      .buttondiv
+        button#one.commandButton(style='width: 15%') 1min
+        button#two.commandButton(style='width: 15%') 2min
+        button#three.commandButton(style='width: 15%') 3min
+        button#four.commandButton(style='width: 15%') 4min
+        button#five.commandButton(style='width: 15%') 5min
+      button#alpha.commandButton(style='width: 100%') Alpha
   
   .downSite
     #cueTime.fiveMinute 
