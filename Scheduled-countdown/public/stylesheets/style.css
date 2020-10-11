@@ -155,14 +155,17 @@ form.offsetButton{
 } */
 
 #now {
+  font-weight: 900;
   text-align: center;
   margin: auto;
   font-size: 16vw;
 }
 #start {
+  font-weight: 900;
   word-wrap: break-word;
 }
 #title {
+  font-weight: 900;
   font-size: 10vw;
   line-height: 1px;
 }
@@ -177,7 +180,7 @@ form.offsetButton{
   font-size: 10vw;
 }
 
-input[type=text] {
+/* input[type=text] {
   width: 10vw;
   padding: 0.35vw;
   margin: 0.2vw;
@@ -191,14 +194,14 @@ input[type=time] {
   font-size: 1.5vh;
   font-family: Verdana;
 
-}
+} */
 
 /* --------------------------------------------------*/
 /* Index */
 /* --------------------------------------------------*/
-.row {
+/* .row {
   flex-direction: column;
-}
+} */
 .titleContentBox {
 }
 .audiobutton {

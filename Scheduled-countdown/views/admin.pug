@@ -5,65 +5,108 @@ block content
   .topRow
     #timeCode.timeCodeText
     #nowTopRow.topRowText
-  #mainContentBox.mainContentBox
-    .floatl.offsetTime
-      h2#offsetTime= offsetTime
-      p Adjust Time
-        .buttondiv
-          button#offsetMinus.commandButton -
-          button#offsetPlus.commandButton +
-          button#offsetReset.commandButton Reset
-        .buttondiv
-          button#sorting.commandButton Sort and Update
-        .buttondiv
-          button#loadDefaultArray.commandButton Load
-          button#writeDefaultArray.commandButton Save
-        .buttondiv
-          button(type='submit' class='commandButton' id="addNewRow") Add Row
+  
+  ul#myTab.nav.nav-tabs(role='tablist')
+    li.nav-item
+      a#Schedule-tab.nav-link.active(data-toggle='tab' href='#Schedule' role='tab' aria-controls='Schedule' aria-selected='true') Schedule
+    li.nav-item
+      a#Settings-tab.nav-link(data-toggle='tab' href='#Settings' role='tab' aria-controls='Settings' aria-selected='false') Settings
+    li.nav-item
+      a#overview-tab.nav-link(data-toggle='tab' href='#overview' role='tab' aria-controls='overview' aria-selected='false') Overview
+  #myTabContent.tab-content
+    #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab')
+        button#sorting.btn.btn-dark Sort and Update
+        button#loadDefaultArray.btn.btn-dark Load
+        button#writeDefaultArray.btn.btn-dark Save
+      
+        .form-row
+          .col-1.text-right
+            | #
+          .col-4.text-left
+            | Title
+          .col-2.text-left
+            | Start Time
+          .col-2.text-left
+            | Cue Length
+          .col-1.text-left
+            | Cue
+          .col-1.text-left
+            | 5Min
+          .col-1.text-left
+            | DEL
+        form.overflow-auto(method='POST' action='/admin/submit' style="height: 60vh")
+          each person, index in scheduledTimes
+            div.form-row
+              .col-1.text-right= index+1
+              .col-4
+                input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
+              .col-2
+                input.form-control(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
+              .col-2
+                input.form-control(type='time', value=person.cueLength, name="cueLength" + index, id="cueLength" + index step=1)
+              .col-1
+                //- label Q
+                input.slider(type="range",value=person.cueBool, name="cueBool" + index, id="cueBool" + index, min="0" max="1")
+              .col-1  
+                //- label 5
+                input.slider(type="range",value=person.fiveBool, name="fiveBool" + index, id="fiveBool" + index,, min="0" max="1")
+              .col-1
+                button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+          button.btn.btn-dark(type='submit' id="addNewRow" style='width: 100%') Add Row
+    #Settings.tab-pane.fade(role='tabpanel' aria-labelledby='Settings-tab') 
+      .row
+        .col
+          h2#offsetTime= offsetTime
+          p Adjust Time  
+          button#offsetMinus.btn.btn-dark  -
+          button#offsetPlus.btn.btn-dark  +
+          button#offsetReset.btn.btn-dark  Reset
+        .col
+          .buttondiv
+            
+          
+          p Select Ip
+          select#selectNumber.btn.btn-dark 
+            option Choose a ip address
           br
+          button.btn.btn-dark( onClick="saveMyIpTo_myipjson()") Save ip
           br
-        p Select Ip
-        select#selectNumber.commandButton
-          option Choose a ip address
-        br
-        button.commandButton( onClick="saveMyIpTo_myipjson()") Save ip
-        br
-        form(method='POST' action='/admin/setLoopbackip')
-          button.commandButton(type='submit' onClick="setLoopbackip()") Set Ip 127.0.0.1
+          form(method='POST' action='/admin/setLoopbackip')
+            button.btn.btn-dark(type='submit' onClick="setLoopbackip()") Set Ip 127.0.0.1  
+    #overview.tab-pane.fade(role='tabpanel' aria-labelledby='overview-tab')
+      .row.row-cols-3
+        .col
+          p#mainPreviewTitle(style="cursor: pointer;" onclick="iframePreviewFullscreen()") Preview
+          iframe.preview(src='http://' + myLocalip)
+        .col
+          p 5Min countdown
+          iframe.preview(src='http://' + myLocalip + '/countdown')
+        .col
+          .row(style="height: 50%")
+          .row
+            button#reloadFiveMinCountDown.btn.btn-dark(style='width: 100%') Reload 5min
+          .row
+            button#one.btn.btn-dark(style='width: 20%') 1min
+            button#two.btn.btn-dark(style='width: 20%') 2min
+            button#three.btn.btn-dark(style='width: 20%') 3min
+            button#four.btn.btn-dark(style='width: 20%') 4min
+            button#five.btn.btn-dark(style='width: 20%') 5min
+          .row
+            button#alpha.btn.btn-dark(style='width: 100%') Alpha
+      
+  
+  
+  //- #mainContentBox.mainContentBox
+    
 
 
         
 
 
-    div.floatl()
-      form(method='POST' action='/admin/submit')
-        each person, index in scheduledTimes
-          div(id=index)
-            input(type='text', value=person.title, name="title" + index, id="title" + index)
-            input(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
-            input(type='time', value=person.cueLength, name="cueLength" + index, id="cueLength" + index step=1)
-            label Q
-            input.slider(type="range",value=person.cueBool, name="cueBool" + index, id="cueBool" + index, min="0" max="1")
-            label 5
-            input.slider(type="range",value=person.fiveBool, name="fiveBool" + index, id="fiveBool" + index,, min="0" max="1")
-
-            button.delete(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
-            br
+    
 
 
-    div.floatl#preview
-      p#mainPreviewTitle(style="cursor: pointer;" onclick="iframePreviewFullscreen()") Preview
-      iframe.preview#mainPreview(src='http://' + myLocalip)
-      p 5Min countdown
-      iframe.preview(src='http://' + myLocalip + '/countdown')
-      button#reloadFiveMinCountDown.commandButton(style='width: 100%') Reload 5min
-      .buttondiv
-        button#one.commandButton(style='width: 15%') 1min
-        button#two.commandButton(style='width: 15%') 2min
-        button#three.commandButton(style='width: 15%') 3min
-        button#four.commandButton(style='width: 15%') 4min
-        button#five.commandButton(style='width: 15%') 5min
-      button#alpha.commandButton(style='width: 100%') Alpha
+    
   
   .downSite
     #cueTime.fiveMinute 
