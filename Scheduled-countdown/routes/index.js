@@ -309,7 +309,7 @@ router.post('/admin/setLoopbackip', function(req, res, next){
     })
   })
 
-  res.redirect("/admin");
+  res.redirect("/ipSettings");
 });
 //-------------------------------------------------------------------------
 
@@ -332,6 +332,15 @@ router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Scheduled-CountDown',
     now: "s",
+    myLocalip: myLocalip
+  });
+});
+router.get('/ipsettings', function(req, res, next) {
+  res.render('ipsettings', {
+    title: 'Scheduled-CountDown - IP Settings',
+    now: "now",
+    scheduledTimes : scheduledTimes.profiles,
+    offsetTime: variables.offsetTime,
     myLocalip: myLocalip
   });
 });

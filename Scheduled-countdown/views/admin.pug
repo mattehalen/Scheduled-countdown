@@ -2,12 +2,12 @@ extends layout
 
 block content
   p(hidden='')#myLocalip= myLocalip
-  .topRow.shadow.p-3.mb-5.rounded
+  .topRow.shadow.p-3.mb-5.rounded.sticky-top
     #timeCode.timeCodeText
     #start(style="font-size: 5vh; font-weight: 100;")
     #nowTopRow.topRowText
   .container-fluid
-    .row.justify-content-center
+    .row.justify-content-center.overflow-hidden
       .col-xl-9.col-sm-12.col-xs-12
         ul#myTab.nav.nav-tabs(role='tablist')
           li.nav-item
@@ -17,7 +17,7 @@ block content
           li.nav-item
             a#overview-tab.nav-link(data-toggle='tab' href='#overview' role='tab' aria-controls='overview' aria-selected='false') Overview
         #myTabContent.tab-content.shadow.p-3.mb-5.rounded
-          #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab')
+          #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
               .form-row
                 button#sorting.btn.btn-primary.btn-lg.btn-block Sort and Update
                 .col-1.text-right
@@ -57,24 +57,25 @@ block content
               button#writeDefaultArray.btn.btn-dark(style='width: 50%') Save to Backup
           #Settings.tab-pane.fade(role='tabpanel' aria-labelledby='Settings-tab') 
             .row
-              .col
+              .col-3
                 h2#offsetTime= offsetTime
                 p Adjust Time  
                 button#offsetMinus.btn.btn-dark  -
                 button#offsetPlus.btn.btn-dark  +
                 button#offsetReset.btn.btn-dark  Reset
-              .col
-                .buttondiv
+              .col-9
+                .container
+                    form(method='POST' action='/admin/submit')
+                      .row.row-cols-2
+                        each person, index in scheduledTimes
+                          .col
+                            .input-group.mb-3
+                              .input-group-prepend
+                                span#basic-addon1.input-group-text= value=person.title
+                                input.form-control(type='text' placeholder='Username' aria-label='Username' aria-describedby='basic-addon1', value=person.title, name="title" + index, id="title" + index)
+
                   
-                
-                p Select Ip
-                select#selectNumber.btn.btn-dark 
-                  option Choose a ip address
-                br
-                button.btn.btn-dark( onClick="saveMyIpTo_myipjson()") Save ip
-                br
-                form(method='POST' action='/admin/setLoopbackip')
-                  button.btn.btn-dark(type='submit' onClick="setLoopbackip()") Set Ip 127.0.0.1  
+
           #overview.tab-pane.fade(role='tabpanel' aria-labelledby='overview-tab')
             .row.row-cols-3
               .col
@@ -86,6 +87,7 @@ block content
               .col
                 p FOH
                 iframe.preview(src='http://' + myLocalip + '/foh')
+              .col
               .col
                 .row(style="height: 50%")
                 .row
@@ -99,20 +101,6 @@ block content
                 .row
                   button#alpha.btn.btn-dark(style='width: 100%') Alpha
       
-  
-  
-  //- #mainContentBox.mainContentBox
-    
-
-
-        
-
-
-    
-
-
-    
-  
   .downSite
     #cueTime.fiveMinute 
     

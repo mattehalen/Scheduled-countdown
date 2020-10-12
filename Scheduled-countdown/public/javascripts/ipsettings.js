@@ -185,9 +185,9 @@ socket.on("updateOffsetTime_From_Socket", function(data) {
   offsetTimeInit = data.offsetTime;
   $("#offsetTime").html(offsetTimeInit);
 });
-socket.on("getCueTimeString_From_Socket", function(data) {
-  cueTimeText.textContent = data.string;
-});
+// socket.on("getCueTimeString_From_Socket", function(data) {
+//   cueTimeText.textContent = data.string;
+// });
 socket.on("changesOnScheduledTimes", function(data) {
   console.log("changesOnScheduledTimes");
   alert("Changes to ScheduledTimes.json has been made. Please update browser to se them");
@@ -203,16 +203,16 @@ socket.on("sendIpArrayToAdminPage", function(data){
   var select = document.getElementById("selectNumber");
   var options = data.myIpArray;
 
-  // if (myIpArrayBool != 1) {
-  //   for(var i = 0; i < options.length; i++) {
-  //       var opt = options[i];
-  //       var el = document.createElement("option");
-  //       el.textContent = opt;
-  //       el.value = opt;
-  //       select.appendChild(el);
-  //       myIpArrayBool =1;
-  //   }
-  // }
+  if (myIpArrayBool != 1) {
+    for(var i = 0; i < options.length; i++) {
+        var opt = options[i];
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = opt;
+        select.appendChild(el);
+        myIpArrayBool =1;
+    }
+  }
 
 
 });
@@ -406,28 +406,28 @@ function printArraysToElements() {
 
 
 };
-function getElementsToArrays() {
-  console.log("getElementsToArrays()");
-  for (let i = 0; i < startTitleArray.length; i++) {
-    startTitleArray[i] = $("#title" + i).val()
-  }
-  for (let i = 0; i < startTimeArray.length; i++) {
-    startTimeArray[i] = $("#startTime" + i).val()
-  }
-  for (let i = 0; i < cueLengthArray.length; i++) {
-    cueLengthArray[i] = $("#cueLength" + i).val()
-  }
-
-  for (let i = 0; i < cueBoolArray.length; i++) {
-    cueBoolArray[i] = $("#cueBool" + i).val()
-  }
-  for (let i = 0; i < fiveBoolArray.length; i++) {
-    fiveBoolArray[i] = $("#fiveBool" + i).val()
-  }
-
-
-  console.log(startTimeArray);
-};
+// function getElementsToArrays() {
+//   console.log("getElementsToArrays()");
+//   for (let i = 0; i < startTitleArray.length; i++) {
+//     startTitleArray[i] = $("#title" + i).val()
+//   }
+//   for (let i = 0; i < startTimeArray.length; i++) {
+//     startTimeArray[i] = $("#startTime" + i).val()
+//   }
+//   for (let i = 0; i < cueLengthArray.length; i++) {
+//     cueLengthArray[i] = $("#cueLength" + i).val()
+//   }
+//
+//   for (let i = 0; i < cueBoolArray.length; i++) {
+//     cueBoolArray[i] = $("#cueBool" + i).val()
+//   }
+//   for (let i = 0; i < fiveBoolArray.length; i++) {
+//     fiveBoolArray[i] = $("#fiveBool" + i).val()
+//   }
+//
+//
+//   console.log(startTimeArray);
+// };
 function sendDB_To_Socket_On_Delete() {
   console.log("sendDB_To_Socket_On_Delete")
 
