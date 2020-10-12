@@ -521,6 +521,8 @@ io.on('connection', function(socket) {
   //--------------------------------------------------
   socket.on("reloadFiveMinCountDown", function(data) {
     console.log("reloadFiveMinCountDown");
+    fiveBoolHolder=1;
+    sendMin_To_countDownBoole=100;
     newCountDown();
     // io.emit("sendMin_To_countDown", {
     //   countDownTime: 0
