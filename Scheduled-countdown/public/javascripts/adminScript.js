@@ -8,6 +8,7 @@ var offsetTimeInit = [];
 var nowTopRow = document.getElementById("nowTopRow");
 var cueTimeText = document.getElementById("cueTime");
 var timeCode = document.getElementById("timeCode");
+var startText = document.getElementById("start");
 var myIpArrayBool = 0;
 var toggleMainPreview = false;
 
@@ -192,7 +193,8 @@ socket.on("changesOnScheduledTimes", function(data) {
   alert("Changes to ScheduledTimes.json has been made. Please update browser to se them");
 });
 socket.on("centerTextContent", function(data) {
-  nowTopRow.textContent = data.newCurrentTime
+  nowTopRow.textContent = data.newCurrentTime,
+  startText.textContent = data.countDownString
 });
 socket.on("sendIpArrayToAdminPage", function(data){
   // console.log("sendIpArrayToAdminPage");
