@@ -30,7 +30,7 @@ countDown = countDown * 60000; // convert to Ms
 var countUp = 2; // how many minutes after
 countUp = countUp * 60000; // convert to M
 var offsetTime = 0;
-
+ 
 var nowInMs = 0;
 var setTimeoutTime = 50;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
@@ -106,6 +106,7 @@ function mtcTOString() {
   var JZZ = require('jzz');
   var port = JZZ().openMidiIn(0);
   var smpte = JZZ.SMPTE();
+  console.log(JZZ.info());
   port
     .connect(function(msg) {
       smpte.read(msg);
@@ -127,8 +128,6 @@ function jsonReader(filePath, cb) {
     }
   })
 }
-
-
 
 function updateScheduledTimesjson() {
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
@@ -207,7 +206,6 @@ function updateOffsetTimePlusjson() {
 
 
 };
-
 function updateOffsetTimeMinusjson() {
 
 
@@ -227,7 +225,6 @@ function updateOffsetTimeMinusjson() {
   })
 
 };
-
 function updateOffsetTimeResetjson() {
 
 
@@ -240,10 +237,12 @@ function updateOffsetTimeResetjson() {
     variables.offsetTime = 0;
     // console.log("updateOffsetTimejson: ");
     // console.log(variables);
+    sleep(1000).then(() => {
+      fs.writeFile('./public/variables.json', JSON.stringify(variables, null, 4), (err) => {
+        if (err) console.log('Error writing file:', err)
+      })
+    });
 
-    fs.writeFile('./public/variables.json', JSON.stringify(variables, null, 4), (err) => {
-      if (err) console.log('Error writing file:', err)
-    })
   })
 
 };
@@ -255,7 +254,6 @@ function loadDefaultjson() {
     if (err) throw err;
   });
 };
-
 function writeDefaultjson() {
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
