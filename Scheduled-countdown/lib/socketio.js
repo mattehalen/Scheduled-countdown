@@ -239,11 +239,20 @@ function updateOffsetTimeResetjson() {
 
     variables.offsetTime = 0;
     // console.log("updateOffsetTimejson: ");
-    // console.log(variables);
+    console.log("-----> I Think it's here it messes everything up. <----- "+ newCurrentTime());
+    console.log("variables = "+variables);
+    console.log("variables.offsetTime = "+variables.offsetTime);
 
-    fs.writeFile('./public/variables.json', JSON.stringify(variables, null, 4), (err) => {
-      if (err) console.log('Error writing file:', err)
-    })
+    if (variables == undefined){
+      console.log("----------> variables == undefined <----------");
+    }
+
+    sleep(1000).then(() => {
+      fs.writeFile('./public/variables.json', JSON.stringify(variables, null, 4), (err) => {
+        if (err) console.log('Error writing file:', err)
+      })
+    });
+
   })
 
 };
@@ -312,7 +321,7 @@ getOffsetTimejson();
 function getscheduledTimes() {
 
 
-  console.log("--------------------> Socket getscheduledTimes <--------------------"+newCurrentTime());
+  console.log("--------------------> Socket getscheduledTimes <--------------------  "+newCurrentTime());
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
       console.log('Error reading file:', err)
@@ -458,7 +467,6 @@ io.on('connection', function(socket) {
   });
   //--------------------------------------------------
   socket.on("fiveMinPageLoad_To_Socket", function(data) {
-    console.log("fiveMinPageLoad_To_Socket: " + data);
     // console.log(data.countDownTime);
     io.emit("sendMin_To_countDown", {
       countDownTime: data
@@ -859,8 +867,9 @@ function autoResetOffsetTime() {
   sleep(1 * 6000).then(() => {
     console.log("autoResetOffsetTime");
     offsetTimeInit = 0;
-    updateOffsetTimeResetjson();
+
     if (offsetTimeInit !== undefined){
+      updateOffsetTimeResetjson();
       io.emit("updateOffsetTime_From_Socket", {
         offsetTime: offsetTimeInit
       });
