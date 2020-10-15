@@ -30,9 +30,9 @@ countDown = countDown * 60000; // convert to Ms
 var countUp = 2; // how many minutes after
 countUp = countUp * 60000; // convert to M
 var offsetTime = 0;
- 
+
 var nowInMs = 0;
-var setTimeoutTime = 50;
+var setTimeoutTime = 150;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var newArrayIndex = 0;
 

@@ -309,7 +309,7 @@ router.post('/admin/setLoopbackip', function(req, res, next){
     })
   })
 
-  res.redirect("/ipSettings");
+  res.redirect("/admin");
 });
 //-------------------------------------------------------------------------
 

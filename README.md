@@ -6,18 +6,14 @@ npm start
 
 
 # Task lists
-## Basic Function V1
-- [] ReWrite loadDefaultArray so that if deletes the the front end list and then re-add it with all thats in the scheduledTimes-backup. This is to fix if the current list is smaller / Bigger then scheduledTimes-backup.
-- [] ReWrite writeToDefault so it adds to the scheduledTimes-backup and then delets all front end and then adds it back again.
-- [] - ReWrite addNewRowDefault so it adds a new row and pushes it to socket and adds it al all pages.
-- [X] Make so ENTER on admin page triggers update
-- [x] Reset AdjustTime after countUp triggers.
+- [] Finde other solution for loading and writeing to .json files. Is it better to reload page on all logged in as admin insted of jumping with Socket?
+- [] Move over to the use of admin-settings insted of variables & myip & scheduleTimes
 
 ## Bugs
-- [] xxx
+- [] OffsetTime .json retes emptyfiles sometimes. - tried using sleep didn't work. - now trying increase setTimeoutTime = 150 insted of 50.
 
 ## Bug Fixes
-- [x] Addjust Time (offsetTime)
+- []
 
 # Websites i got code from
 - https://github.com/nexe/nexe / https://www.youtube.com/watch?v=ODlYsEITCBM&t=8s
