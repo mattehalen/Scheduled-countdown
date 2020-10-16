@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  p(hidden='')#myLocalip= myLocalip
+  .topRow.shadow.p-3.mb-5.rounded.sticky-top
+    #timeCode.timeCodeText
+    #start(style="font-size: 5vh; font-weight: 100;")
+    #nowTopRow.topRowText
+  .container-fluid
+    .row.justify-content-center.overflow-hidden
+      .col-xl-5.col-sm-8.col-xs-12
+        #myTabContent.tab-content.shadow.p-3.mb-5.rounded
+          h1 IP Settings
+          .input-group.mb-3
+            .input-group-prepend
+              span#basic-addon1.input-group-text Select
+            select#selectNumber.form-control(type='text' placeholder='Username' aria-label='Username' aria-describedby='basic-addon1')
+              option IP Adress
+            button.btn.btn-dark( onClick="saveMyIpTo_myipjson()") Save ip
+                form(method='POST' action='/admin/setLoopbackip')
+                  button.btn.btn-dark(type='submit' onClick="setLoopbackip()" style="width: 100%") Set Ip 127.0.0.1  
+      
+    
+    
+    
+    
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  script(src='/socket.io/socket.io.js')
+  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+  script(src="static/javascripts/ipsettings.js")

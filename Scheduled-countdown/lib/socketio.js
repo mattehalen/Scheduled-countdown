@@ -32,7 +32,7 @@ countUp = countUp * 60000; // convert to M
 var offsetTime = 0;
 
 var nowInMs = 0;
-var setTimeoutTime = 50;
+var setTimeoutTime = 150;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var newArrayIndex = 0;
 
@@ -106,6 +106,7 @@ function mtcTOString() {
   var JZZ = require('jzz');
   var port = JZZ().openMidiIn(0);
   var smpte = JZZ.SMPTE();
+  console.log(JZZ.info());
   port
     .connect(function(msg) {
       smpte.read(msg);
@@ -127,8 +128,6 @@ function jsonReader(filePath, cb) {
     }
   })
 }
-
-
 
 function updateScheduledTimesjson() {
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
@@ -207,7 +206,6 @@ function updateOffsetTimePlusjson() {
 
 
 };
-
 function updateOffsetTimeMinusjson() {
 
 
@@ -227,7 +225,6 @@ function updateOffsetTimeMinusjson() {
   })
 
 };
-
 function updateOffsetTimeResetjson() {
 
 
@@ -239,14 +236,7 @@ function updateOffsetTimeResetjson() {
 
     variables.offsetTime = 0;
     // console.log("updateOffsetTimejson: ");
-    console.log("-----> I Think it's here it messes everything up. <----- "+ newCurrentTime());
-    console.log("variables = "+variables);
-    console.log("variables.offsetTime = "+variables.offsetTime);
-
-    if (variables == undefined){
-      console.log("----------> variables == undefined <----------");
-    }
-
+    // console.log(variables);
     sleep(1000).then(() => {
       fs.writeFile('./public/variables.json', JSON.stringify(variables, null, 4), (err) => {
         if (err) console.log('Error writing file:', err)
@@ -264,7 +254,6 @@ function loadDefaultjson() {
     if (err) throw err;
   });
 };
-
 function writeDefaultjson() {
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
@@ -529,6 +518,8 @@ io.on('connection', function(socket) {
   //--------------------------------------------------
   socket.on("reloadFiveMinCountDown", function(data) {
     console.log("reloadFiveMinCountDown");
+    fiveBoolHolder=1;
+    sendMin_To_countDownBoole=100;
     newCountDown();
     // io.emit("sendMin_To_countDown", {
     //   countDownTime: 0

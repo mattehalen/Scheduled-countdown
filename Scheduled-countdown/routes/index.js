@@ -335,6 +335,15 @@ router.get('/', function(req, res, next) {
     myLocalip: myLocalip
   });
 });
+router.get('/ipsettings', function(req, res, next) {
+  res.render('ipsettings', {
+    title: 'Scheduled-CountDown - IP Settings',
+    now: "now",
+    scheduledTimes : scheduledTimes.profiles,
+    offsetTime: variables.offsetTime,
+    myLocalip: myLocalip
+  });
+});
 //-------------------------------------------------------------------------
 router.get('/stage', function(req, res, next) {
   res.render('stage', {
