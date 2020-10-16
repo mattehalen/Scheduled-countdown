@@ -348,7 +348,8 @@ socketio.io = io;
 var users = [];
 
 io.on('connection', function(socket) {
-  console.log('A user connected');
+
+  console.log('A user connected = '+socket.handshake.address);
 
   // My sockets
   //--------------------------------------------------
