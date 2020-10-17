@@ -1,19 +1,17 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
-//var scheduledTimes = require('../scheduledTimes.json');
 var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
+var adminSettings = require('../public/admin-settings.json');
 var variables = require('../public/variables.json');
 var myipjson = require('../public/myip.json');
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
-//console.log(variables.offsetTime);
 var myIpArray= [];
 var myLocalip = myipjson.myIp+":3000";
 //--------------------------------------------------
 
-//--------------------------------------------------
-//--get all ip addresses ---- THIS ONE !!!!!!!!!!!!
+
 //--------------------------------------------------
 var getNetworkIPs = (function () {
     var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
@@ -74,50 +72,8 @@ if (error) {
 //--------------------------------------------------
 console.log("index.js -> myipjson");
 console.log(myipjson.myIp);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  //--------------------------------------------------
-  // - Knappar på adminPage ./public/scheduledTimes.json
-  //--------------------------------------------------
-  router.post('/admin/submit', function(req, res, next){
+//-------------------------------------------------------------------------
+router.post('/admin/submit', function(req, res, next){
   //---------- Denna funkar att skriva över med men fattas array from admin
     const fs = require('fs')
     function jsonReader(filePath, cb) {
@@ -151,12 +107,6 @@ console.log(myipjson.myIp);
    })
     res.redirect("/admin");
   });
-  //--------------------------------------------------
-
-
-//--------------------------------------------------
-//-----loadDefault button press
-//--------------------------------------------------
 router.post('/admin/loadDefault', function(req, res, next){
   console.log("loadDefault knappen funkar");
   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
@@ -164,11 +114,6 @@ router.post('/admin/loadDefault', function(req, res, next){
   });
   res.redirect("/admin");
 });
-//-------------------------------------------------------------------------
-
-//--------------------------------------------------
-//-----writeToDefault button press
-//--------------------------------------------------
 router.post('/admin/writeToDefault', function(req, res, next){
   console.log("writeToDefault knappen funkar");
   fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(scheduledTimes, null, 4), (err) => {
@@ -176,11 +121,6 @@ router.post('/admin/writeToDefault', function(req, res, next){
   });
   res.redirect("/admin");
 });
-//-------------------------------------------------------------------------
-
-//--------------------------------------------------
-//-----addNewRowDefault button press
-//--------------------------------------------------
 router.post('/admin/addNewRowDefault', function(req, res, next){
   console.log("addNewRowDefault knappen funkar");
   var addString = "";
@@ -202,13 +142,6 @@ router.post('/admin/addNewRowDefault', function(req, res, next){
 
   res.redirect("/admin");
 });
-//-------------------------------------------------------------------------
-
-
-
-//--------------------------------------------------
-//-----offsetPlus button press
-//--------------------------------------------------
 router.post('/admin/offsetPlus', function(req, res, next){
   const fs = require('fs')
   function jsonReader(filePath, cb) {
@@ -239,11 +172,6 @@ router.post('/admin/offsetPlus', function(req, res, next){
 
   res.redirect("/admin");
 });
-//-------------------------------------------------------------------------
-
-//--------------------------------------------------
-//-----offsetMinus button press
-//--------------------------------------------------
 router.post('/admin/offsetMinus', function(req, res, next){
   const fs = require('fs')
   function jsonReader(filePath, cb) {
@@ -274,11 +202,6 @@ router.post('/admin/offsetMinus', function(req, res, next){
 
   res.redirect("/admin");
 });
-//-------------------------------------------------------------------------
-
-//--------------------------------------------------
-//-----offsetMinus button press
-//--------------------------------------------------
 router.post('/admin/setLoopbackip', function(req, res, next){
   console.log("setLoopbackip:-----------------------------------------------------------");
   const fs = require('fs')
@@ -313,21 +236,7 @@ router.post('/admin/setLoopbackip', function(req, res, next){
 });
 //-------------------------------------------------------------------------
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 //-------------------------------------------------------------------------
-/* GET home page. */
 router.get('/', function(req, res, next) {
   res.render('index', {
     title: 'Scheduled-CountDown',
@@ -371,11 +280,22 @@ router.get('/admin', function(req, res, next) {
     title: 'Scheduled-CountDown',
     now: "now",
     scheduledTimes : scheduledTimes.profiles,
+    schedule: adminSettings.schedule,
+    timeSettings: adminSettings.timeSettings,
     offsetTime: variables.offsetTime,
     myLocalip: myLocalip
   });
 });
-
+router.get('/new-admin', function(req, res, next) {
+  res.render('new-admin', {
+    title: 'Admin @ Scheduled-CountDown',
+    now: "now",
+    schedule: adminSettings.schedule,
+    timeSettings: adminSettings.timeSettings,
+    offsetTime: variables.offsetTime,
+    myLocalip: myLocalip
+  });
+});
 router.get('/Countdown', function(req, res, next) {
   res.render('Countdown', {
     title: 'Countdown',
@@ -385,7 +305,6 @@ router.get('/Countdown', function(req, res, next) {
     myLocalip: myLocalip
   });
 });
-
 router.get('/slideshow_1', function(req, res, next) {
   res.render('slideshow_1', {
     title: 'Scheduled-CountDown',

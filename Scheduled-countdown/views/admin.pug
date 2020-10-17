@@ -65,15 +65,23 @@ block content
                 button#offsetReset.btn.btn-dark  Reset
               .col-9
                 .container
-                    form(method='POST' action='/admin/submit')
-                      .row.row-cols-2
-                        each person, index in scheduledTimes
-                          .col
-                            .input-group.mb-3
-                              .input-group-prepend
-                                span#basic-addon1.input-group-text= value=person.title
-                                input.form-control(type='text' placeholder='Username' aria-label='Username' aria-describedby='basic-addon1', value=person.title, name="title" + index, id="title" + index)
-
+                  form(method='POST' action='/admin/submitSettings')
+                    
+                    button.btn.btn-primary.btn-block() SAVE 
+                    .row.row-cols-12
+                      each val, index in timeSettings
+                        .col(id=index)
+                          .row.row-cols-2
+                            each value, title in timeSettings[index]
+                              .col-9
+                                .input-group
+                                  span.input-group-text(name="timeSettingstitle" + index, id="timeSettingstitle" + index, style="width:100%")= title
+                                //- .col(name="timeSettingstitle" + index, id="timeSettingstitle" + index,)= title
+                              .col-3
+                                if typeof value === "string"
+                                    input.form-control(type='color', value=value, name="value" + index, id="value" + index)
+                                else if typeof value === "number"
+                                    input.form-control(type='number', value=value, name="value" + index, id="value" + index)
                   
 
           #overview.tab-pane.fade(role='tabpanel' aria-labelledby='overview-tab')

@@ -26,4 +26,4 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [X] OffsetTime .json writes empty files sometimes. - tried using sleep didn't work. - now trying increase setTimeoutTime = 150 instead of 50.
 
 # Websites I got code from
-- https://github.com/nexe/nexe / https://www.youtube.com/watch?v=ODlYsEITCBM&t=8s
+- https://github.com/nexe/nexe / https://www.youtube.com/watch?v=ODlYsEITCBM&t=8s / https://guides.github.com/features/mastering-markdown/
