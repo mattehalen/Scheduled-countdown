@@ -1,7 +1,20 @@
 {
-    "profiles": [
+    "timeSettings": [
         {
-            "title": "Open Doors 9",
+            "offsetTime": 0,
+            "countDown": 7,
+            "countUp": 2,
+            "cueCountDown": 7,
+            "cueCountUp": 2,
+            "changeBgColorTimeCountDown": 3,
+            "countDownColor": "darkred",
+            "changeBgColorTimeCountUp": 0,
+            "countUpColor": "darkgreen"
+        }
+    ],
+    "schedule": [
+        {
+            "title": "Open Doors",
             "startTime": "17:15",
             "cueLength": "00:00",
             "cueBool": "0",

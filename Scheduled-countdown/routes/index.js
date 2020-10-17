@@ -73,8 +73,20 @@ if (error) {
 console.log("index.js -> myipjson");
 console.log(myipjson.myIp);
 //-------------------------------------------------------------------------
+function jsonReader(filePath, cb) {
+    fs.readFile(filePath, (err, fileData) => {
+        if (err) {
+            return cb && cb(err)
+        }
+        try {
+            const object = JSON.parse(fileData)
+            return cb && cb(null, object)
+        } catch(err) {
+            return cb && cb(err)
+        }
+    })
+}
 router.post('/admin/submit', function(req, res, next){
-  //---------- Denna funkar att skriva över med men fattas array from admin
     const fs = require('fs')
     function jsonReader(filePath, cb) {
         fs.readFile(filePath, (err, fileData) => {
@@ -89,22 +101,119 @@ router.post('/admin/submit', function(req, res, next){
             }
         })
     }
-    jsonReader('./public/scheduledTimes.json', (err, customer) => {
+  //   jsonReader('./public/scheduledTimes.json', (err, customer) => {
+  //     if (err) {
+  //         console.log('Error reading file:',err)
+  //         return
+  //     }
+  //
+  //     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))}
+  //     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))}
+  //     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))}
+  //
+  //
+  //
+  // fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
+  //         if (err) console.log('Error writing file:', err)
+  //     })
+  //  })
+    jsonReader('./public/admin-settings.json', (err, settings) => {
+     if (err) {
+       console.log('Error reading file:', err)
+       return
+     }
+
+     console.log(settings.schedule);
+     console.log(settings.schedule.length);
+     console.log(settings.schedule[0].title);
+     console.log(JSON.parse(JSON.stringify(req.body)));
+
+     for (let i = 0; i < settings.schedule.length; i++) {
+       settings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+     }
+     for (let i = 0; i < settings.schedule.length; i++) {
+       settings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
+     }
+     for (let i = 0; i < settings.schedule.length; i++) {
+       settings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
+     }
+
+     for (let i = 0; i < settings.schedule.length; i++) {
+       settings.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
+     }
+     for (let i = 0; i < settings.schedule.length; i++) {
+       settings.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
+     }
+
+     sleep(1000).then(() => {
+       fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
+         if (err) console.log('Error writing file:', err)
+       })
+     });
+   })
+    res.redirect("/admin");
+  });
+router.post('/admin/submitSettings', function(req, res, next) {
+    jsonReader('./public/admin-settings.json', (err, settings) => {
       if (err) {
-          console.log('Error reading file:',err)
-          return
+        console.log('Error reading file:', err)
+        return
       }
 
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))}
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))}
-      for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))}
+      console.log(settings.timeSettings[0]);
+      //console.log(JSON.parse(JSON.stringify(req.body[`value${i}`])));
+      var array = [];
+      var object = {};
+      console.log("settings.timeSettings.length = "+settings.timeSettings.length);
+      for (let i = 0; i < settings.timeSettings.length; i++) {
+        var key = Object.keys(settings.timeSettings[i]);
+        var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
+        var isNumber = parseInt(first_string, 10);
 
+        if (isNumber >= 0) {
+          settings.timeSettings[i][`${key}`] = isNumber;
+        } else {
+          settings.timeSettings[i][`${key}`] = first_string;
+        }
+      }
+      console.log(settings.timeSettings);
 
+      sleep(1000).then(() => {
+        // fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
+        //   if (err) console.log('Error writing file:', err)
+        // })
+      });
+    })
+    res.redirect("/admin");
+  });
+router.post('/admin/submitSchedule', function(req, res, next) {
+    jsonReader('./public/admin-settings.json', (err, settings) => {
+      if (err) {
+        console.log('Error reading file:', err)
+        return
+      }
 
-  fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
+      console.log(settings.schedule);
+      console.log(settings.schedule.length);
+      console.log(settings.schedule[0].title);
+      console.log(JSON.parse(JSON.stringify(req.body)));
+
+      for (let i = 0; i < settings.schedule.length; i++) {
+        settings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+      }
+      for (let i = 0; i < settings.schedule.length; i++) {
+        settings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
+      }
+      for (let i = 0; i < settings.schedule.length; i++) {
+        settings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
+      }
+
+      sleep(1000).then(() => {
+        fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
           if (err) console.log('Error writing file:', err)
-      })
-   })
+        })
+      });
+    })
     res.redirect("/admin");
   });
 router.post('/admin/loadDefault', function(req, res, next){

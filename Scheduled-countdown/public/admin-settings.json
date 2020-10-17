@@ -1,101 +1,114 @@
 {
-  "timeSettings": [
-    {
-    "offsetTime": 0,
-    "countDown": 7,
-    "countUp": 2,
-    "cueCountDown": 7,
-    "cueCountUp": 2,
-    "changeBgColorTimeCountDown": 3,
-    "countDownColor": "darkred",
-    "changeBgColorTimeCountUp": 0,
-    "countUpColor": "darkgreen"
-  }
-],
-  "schedule": [
-    {
-        "title": "Open Doors",
-        "startTime": "17:15",
-        "cueLength": "00:00",
-        "cueBool": "0",
-        "fiveBool": "0"
-    },
-    {
-        "title": "Saxophon guy",
-        "startTime": "17:39",
-        "cueLength": "00:00",
-        "cueBool": "0",
-        "fiveBool": "0"
-    },
-    {
-        "title": "David Warm Up",
-        "startTime": "17:55",
-        "cueLength": "00:00",
-        "cueBool": "0",
-        "fiveBool": "1"
-    },
-    {
-        "title": "Greatest Show",
-        "startTime": "18:00",
-        "cueLength": "00:00",
-        "cueBool": "0",
-        "fiveBool": "0"
-    },
-    {
-        "title": "WWWY",
-        "startTime": "18:35",
-        "cueLength": "00:06:35",
-        "cueBool": "1",
-        "fiveBool": "1"
-    },
-    {
-        "title": "David",
-        "startTime": "19:05",
-        "cueLength": "00:07:47",
-        "cueBool": "1",
-        "fiveBool": "1"
-    },
-    {
-        "title": "Eurythmics",
-        "startTime": "19:25",
-        "cueLength": "00:08:52",
-        "cueBool": "1",
-        "fiveBool": "1"
-    },
-    {
-        "title": "ASIB",
-        "startTime": "19:55",
-        "cueLength": "00:07:54",
-        "cueBool": "1",
-        "fiveBool": "1"
-    },
-    {
-        "title": "Celebration",
-        "startTime": "20:10",
-        "cueLength": "00:07:02",
-        "cueBool": "1",
-        "fiveBool": "1"
-    },
-    {
-        "title": "Star Catcher",
-        "startTime": "20:40",
-        "cueLength": "00:07:33",
-        "cueBool": "1",
-        "fiveBool": "1"
-    },
-    {
-        "title": "David Act 2",
-        "startTime": "21:05",
-        "cueLength": "00:06:51",
-        "cueBool": "1",
-        "fiveBool": "1"
-    },
-    {
-        "title": "Queen",
-        "startTime": "21:25",
-        "cueLength": "00:05:00",
-        "cueBool": "1",
-        "fiveBool": "1"
-    }
-  ]
+    "ipsettings": [
+        {
+            "ipadress": "192.168.70.137",
+            "port": "3000",
+            "countUp": 2,
+            "cueCountDown": 7,
+            "cueCountUp": 2,
+            "changeBgColorTimeCountDown": 3,
+            "countDownColor": "darkred",
+            "changeBgColorTimeCountUp": 0,
+            "countUpColor": "darkgreen"
+        }
+    ],
+    "timeSettings": [
+        {
+            "offsetTime": 0,
+            "countDown": 7,
+            "countUp": 2,
+            "cueCountDown": 7,
+            "cueCountUp": 2,
+            "changeBgColorTimeCountDown": 3,
+            "countDownColor": "darkred",
+            "changeBgColorTimeCountUp": 0,
+            "countUpColor": "darkgreen"
+        }
+    ],
+    "schedule": [
+        {
+            "title": "Open Doors",
+            "startTime": "17:15",
+            "cueLength": "00:00",
+            "cueBool": "0",
+            "fiveBool": "0"
+        },
+        {
+            "title": "Saxophon guy",
+            "startTime": "17:39",
+            "cueLength": "00:00",
+            "cueBool": "0",
+            "fiveBool": "0"
+        },
+        {
+            "title": "David Warm Up",
+            "startTime": "17:55",
+            "cueLength": "00:00",
+            "cueBool": "0",
+            "fiveBool": "1"
+        },
+        {
+            "title": "Greatest Show",
+            "startTime": "18:00",
+            "cueLength": "00:00",
+            "cueBool": "0",
+            "fiveBool": "0"
+        },
+        {
+            "title": "WWWY",
+            "startTime": "18:35",
+            "cueLength": "00:06:35",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "David",
+            "startTime": "19:05",
+            "cueLength": "00:07:47",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "Eurythmics",
+            "startTime": "19:25",
+            "cueLength": "00:08:52",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "ASIB",
+            "startTime": "19:55",
+            "cueLength": "00:07:54",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "Celebration",
+            "startTime": "20:10",
+            "cueLength": "00:07:02",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "Star Catcher",
+            "startTime": "20:40",
+            "cueLength": "00:07:33",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "David Act 2",
+            "startTime": "21:05",
+            "cueLength": "00:06:51",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "Queen",
+            "startTime": "21:25",
+            "cueLength": "00:05:00",
+            "cueBool": "1",
+            "fiveBool": "1"
+        }
+    ]
 }

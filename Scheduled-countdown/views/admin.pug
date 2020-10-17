@@ -19,23 +19,26 @@ block content
         #myTabContent.tab-content.shadow.p-3.mb-5.rounded
           #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
               .form-row
-                button#sorting.btn.btn-primary.btn-lg.btn-block Sort and Update
-                .col-1.text-right
-                  | #
-                .col-4.text-left
-                  | Title
-                .col-2.text-left
-                  | Start Time
-                .col-2.text-left
-                  | Cue Length
-                .col-1.text-left
-                  | Cue
-                .col-1.text-left
-                  | 5Min
-                .col-1.text-left
-                  | DEL
+                //- button#sorting.btn.btn-primary.btn-lg.btn-block Sort and Update
+                
               form.overflow-auto(method='POST' action='/admin/submit' style="height: 45vh")
-                each person, index in scheduledTimes
+                button.btn.btn-dark(type='submit' style='width: 100%') Save
+                .form-row
+                  .col-1.text-right
+                    | #
+                  .col-4.text-left
+                    | Title
+                  .col-2.text-left
+                    | Start Time
+                  .col-2.text-left
+                    | Cue Length
+                  .col-1.text-left
+                    | Cue
+                  .col-1.text-left
+                    | 5Min
+                  .col-1.text-left
+                    | DEL
+                each person, index in schedule
                   div.form-row
                     .col-1.text-right= index+1
                     .col-4
@@ -90,12 +93,14 @@ block content
                 p#mainPreviewTitle(style="cursor: pointer;" onclick="iframePreviewFullscreen()") Preview
                 iframe.preview(src='http://' + myLocalip)
               .col
-                p 5Min countdown
-                iframe.preview(src='http://' + myLocalip + '/countdown')
+                p Stage
+                iframe.preview(src='http://' + myLocalip + '/stage')
               .col
                 p FOH
                 iframe.preview(src='http://' + myLocalip + '/foh')
               .col
+                p 5Min countdown
+                iframe.preview(src='http://' + myLocalip + '/countdown')
               .col
                 .row(style="height: 50%")
                 .row
