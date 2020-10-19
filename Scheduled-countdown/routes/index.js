@@ -423,5 +423,16 @@ router.get('/slideshow_1', function(req, res, next) {
     myLocalip: myLocalip
   });
 });
+//-------------------------------------------------------------------------
+router.get('/mathias', function(req, res, next) {
+
+  var name = req.originalUrl.split('/')[1];
+  console.log(name);
+  res.render('users', {
+    title: 'Scheduled-CountDown',
+    now: "s",
+    name: name
+  });
+});
 
 module.exports = router;
