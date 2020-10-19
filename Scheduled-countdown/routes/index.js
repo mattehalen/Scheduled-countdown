@@ -425,6 +425,8 @@ router.get('/slideshow_1', function(req, res, next) {
 });
 //-------------------------------------------------------------------------
 router.get('/mathias', function(req, res, next) {
+  var path = '../public/CueLists/mathias.json'
+  var myCueList = require(path);
 
   var name = req.originalUrl.split('/')[1];
   console.log("index.js = "+ name);
@@ -432,6 +434,7 @@ router.get('/mathias', function(req, res, next) {
     title: 'Scheduled-CountDown',
     now: "s",
     myLocalip: myLocalip,
+    myCueList: myCueList.cues,
     name: name
   });
 });

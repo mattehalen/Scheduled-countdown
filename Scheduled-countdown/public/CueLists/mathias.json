@@ -1,1 +1,16 @@
-"customer"
+{
+    "cues": [
+        {
+            "title": "Open Doors",
+            "timecode": "00:00:15"
+        },
+        {
+            "title": "Saxophon guy",
+            "timecode": "00:00:39"
+        },
+        {
+            "title": "David Warm Up",
+            "timecode": "00:10:00"
+        }
+    ]
+}

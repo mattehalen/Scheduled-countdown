@@ -101,16 +101,18 @@ getNetworkIPs(function(error, ip) {
 // MIDI
 
 var smpteString;
+var smpteMs;
 
 function mtcTOString() {
   var JZZ = require('jzz');
-  var port = JZZ().openMidiIn(0);
+  var port = JZZ().openMidiIn(1);
   var smpte = JZZ.SMPTE();
   console.log(JZZ.info());
   port
     .connect(function(msg) {
       smpte.read(msg);
       smpteString = smpte.toString();
+      smpteMs     = timeStringToMs(smpteString);
     });
 };
 mtcTOString();
@@ -384,7 +386,8 @@ io.on('connection', function(socket) {
 
   socket.on("getTimeCode", function(data) {
     io.emit("sendTimeCode", {
-      smpteString: smpteString
+      smpteString: smpteString,
+      smpteMs: smpteMs
     });
     //mtcTOString();
   });
