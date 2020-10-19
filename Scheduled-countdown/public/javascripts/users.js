@@ -56,7 +56,29 @@ socket.on("sendTimeCode",function(data){
 
 });
 function getTimeCodeLoop(){
+  $("#timecodeMs").text(timeCodeMs);
   socket.emit("getTimeCode",{});
   setTimeout(getTimeCodeLoop,100);
 };
 getTimeCodeLoop()
+
+
+function timeStringToMs(t) {
+  if (t > 5) {
+    var r = Number(t.split(':')[0]) * (60 * 60000) + Number(t.split(':')[1]) * (60000) + Number(t.split(':')[2]) * (1000);
+  } else {
+    t = t + ":00"
+    var r = Number(t.split(':')[0]) * (60 * 60000) + Number(t.split(':')[1]) * (60000) + Number(t.split(':')[2]) * (1000);
+  }
+  return r;
+
+}
+function msToTime(s) {
+  var ms = s % 1000;
+  s = (s - ms) / 1000;
+  var secs = s % 60;
+  s = (s - secs) / 60;
+  var mins = s % 60;
+  var hrs = (s - mins) / 60;
+  return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
+}
