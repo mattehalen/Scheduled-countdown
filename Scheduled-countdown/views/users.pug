@@ -3,9 +3,8 @@ extends layout
 block content
   p(hidden='')#myLocalip= myLocalip
   .topRow()
-    h1= name
+    h1#user= name
     div.audiobutton
-      button#play.commandButton(hidden='') Activate Audio
     #nowTopRow.topRowText
   #mainContentBox.row.mainContentBox
   
@@ -17,43 +16,7 @@ block content
       h1#title
       h1#start
     
-  .downSite
-    #cueTime.cueTime
-    #5minute.fiveMinute
-    audio.countDownSound#music0(src='static/audio/Dummy.mp3')
-    audio.countDownSound#music1(src='static/audio/1min.mp3')
-    audio.countDownSound#music2(src='static/audio/2min.mp3')
-    audio.countDownSound#music3(src='static/audio/3min.mp3')
-    audio.countDownSound#music4(src='static/audio/4min.mp3')
-    audio.countDownSound#music5(src='static/audio/5min.mp3')
-    
-    audio.countDownSound#musiclong1(src='static/audio/its-now-1minute.mp3')
-    audio.countDownSound#musiclong2(src='static/audio/its-now-2minutes.mp3')
-    audio.countDownSound#musiclong3(src='static/audio/its-now-3minutes.mp3')
-    audio.countDownSound#musiclong4(src='static/audio/its-now-4minutes.mp3')
-    audio.countDownSound#musiclong5(src='static/audio/its-now-5minutes.mp3')
-    audio.countDownSound#musiclong6(src='static/audio/its-now-6minutes.mp3')
-    
-    
-
-
-    audio.countDownSound#music0(src='static/audio/Dummy.mp3')
-    audio.countDownSound#music1(src='static/audio/1min.mp3')
-    audio.countDownSound#music2(src='static/audio/2min.mp3')
-    audio.countDownSound#music3(src='static/audio/3min.mp3')
-    audio.countDownSound#music4(src='static/audio/4min.mp3')
-    audio.countDownSound#music5(src='static/audio/5min.mp3')
-    
-    audio.countDownSound#musiclong1(src='static/audio/its-now-1minute.mp3')
-    audio.countDownSound#musiclong2(src='static/audio/its-now-2minutes.mp3')
-    audio.countDownSound#musiclong3(src='static/audio/its-now-3minutes.mp3')
-    audio.countDownSound#musiclong4(src='static/audio/its-now-4minutes.mp3')
-    audio.countDownSound#musiclong5(src='static/audio/its-now-5minutes.mp3')
-    audio.countDownSound#musiclong6(src='static/audio/its-now-6minutes.mp3')
-    
-    
-
 
     script(src='/socket.io/socket.io.js')
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-    script(src='static/javascripts/script.js')
+    script(src='static/javascripts/users.js')

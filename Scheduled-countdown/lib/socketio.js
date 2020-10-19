@@ -339,6 +339,27 @@ function getscheduledTimes() {
 };
 getscheduledTimes();
 
+
+
+
+
+function checkIfUserExist(user){
+  console.log("checkIfUserExist + user  = " + user);
+  const path = './public/CueLists/'+user+'.json'
+
+  fs.access(path, fs.F_OK, (err) => {
+    if (err) {
+      fs.writeFile(path, JSON.stringify("customer", null, 4), (err) => {
+        if (err) console.log('Error writing file:', err)
+      })
+      //console.error(err)
+      return
+    }
+    console.log("FILE DO EXIST !!!!!");
+  })
+};
+
+
 //-------------------------------------------------------------------------
 
 var socket_io = require('socket.io');
@@ -355,6 +376,10 @@ io.on('connection', function(socket) {
   //--------------------------------------------------
   socket.on("start", function(data) {
     io.emit("updatingDB");
+  });
+  socket.on("user", function(data) {
+    checkIfUserExist(data.user);
+
   });
 
   socket.on("getTimeCode", function(data) {
@@ -899,5 +924,6 @@ function resetsetTimeout(){
   //setTimeout(resetsetTimeout,(1000*60*5))
 };
 resetsetTimeout();
+
 
 module.exports = socketio;

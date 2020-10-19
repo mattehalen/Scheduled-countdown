@@ -427,10 +427,11 @@ router.get('/slideshow_1', function(req, res, next) {
 router.get('/mathias', function(req, res, next) {
 
   var name = req.originalUrl.split('/')[1];
-  console.log(name);
+  console.log("index.js = "+ name);
   res.render('users', {
     title: 'Scheduled-CountDown',
     now: "s",
+    myLocalip: myLocalip,
     name: name
   });
 });
