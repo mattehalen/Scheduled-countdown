@@ -12,6 +12,7 @@ var titleText = document.getElementById("title");
 var startText = document.getElementById("start");
 var timeCode = document.getElementById("timeCode");
 var timeCodeMs;
+var timeCodeArray;
 //--------------------------------------------------
 var offsetTimeInit = 0;
 //--------------------------------------------------
@@ -46,6 +47,11 @@ socket.on("centerTextContent", function(data){
 
 
 });
+socket.on("cueListFromSocket", function(data){
+  timeCodeArray = data.cueList,
+  console.log(timeCodeArray);
+});
+
 socket.emit("user", {user: user});
 socket.emit("getTimeCode",{});
 

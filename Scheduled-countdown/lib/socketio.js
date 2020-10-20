@@ -341,27 +341,6 @@ function getscheduledTimes() {
 };
 getscheduledTimes();
 
-
-
-
-
-function checkIfUserExist(user){
-  console.log("checkIfUserExist + user  = " + user);
-  const path = './public/CueLists/'+user+'.json'
-
-  fs.access(path, fs.F_OK, (err) => {
-    if (err) {
-      fs.writeFile(path, JSON.stringify("customer", null, 4), (err) => {
-        if (err) console.log('Error writing file:', err)
-      })
-      //console.error(err)
-      return
-    }
-    console.log("FILE DO EXIST !!!!!");
-  })
-};
-
-
 //-------------------------------------------------------------------------
 
 var socket_io = require('socket.io');
@@ -927,6 +906,37 @@ function resetsetTimeout(){
   //setTimeout(resetsetTimeout,(1000*60*5))
 };
 resetsetTimeout();
+
+function checkIfUserExist(user){
+  console.log("checkIfUserExist + user  = " + user);
+  const path = './public/CueLists/'+user+'.json'
+
+  fs.access(path, fs.F_OK, (err) => {
+    if (err) {
+      fs.writeFile(path, JSON.stringify("customer", null, 4), (err) => {
+        if (err) console.log('Error writing file:', err)
+      })
+      //console.error(err)
+      return
+    }
+    console.log("FILE DO EXIST !!!!!");
+    jsonReader(path, (err, cueList) => {
+      if (err) {
+        console.log('Error reading file:', err)
+        return
+      }
+      console.log(cueList);
+      io.emit("cueListFromSocket", {
+        cueList: cueList
+      });
+    })
+
+
+
+
+
+  })
+};
 
 
 module.exports = socketio;
