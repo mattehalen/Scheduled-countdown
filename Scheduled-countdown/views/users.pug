@@ -25,7 +25,7 @@ block content
           .col-1.text-left
             | DEL
         each person, index in myCueList
-          div.form-row
+          div.form-row(id="cueListRow" + index)
             .col-1.text-right= index+1
             .col-4
               input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)

@@ -99,8 +99,9 @@ function cueTimeCountDown(){
   for (let i = 0; i < timeCodeArray.length; i++) {
     var time = "";
     var idString = "#timecodeMs" + i;
+    var rowString = "#cueListRow" + i;
     var timeCodeArrayMs = timeStringToMs(timeCodeArray[i].timecode);
-
+    //----------
     if (timeCodeMs > timeCodeArrayMs) {
       time = timeCodeMs - timeCodeArrayMs
       time = (msToTime(time))
@@ -109,6 +110,13 @@ function cueTimeCountDown(){
       time = "-" + (msToTime(time))
     }
     $(idString).text(time)
+    //----------
+    if (timeCodeMs > (timeCodeArrayMs+5000)){
+      $(rowString).hide(2500);
+    }else {
+      $(rowString).show(2500);
+    }
+
   }
 
   setTimeout(cueTimeCountDown, setTimeoutTime);
