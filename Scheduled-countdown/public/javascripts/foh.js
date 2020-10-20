@@ -18,8 +18,8 @@ var sendMin_To_countDownBoole = 0;
 var startTitleHolder = "";
 var countDownTimeInMS = "";
 //--------------------------------------------------
-var playButton = document.querySelector('#play');
-playButton.hidden = false;
+// var playButton = document.querySelector('#play');
+// playButton.hidden = false;
 //--------------------------------------------------
 function hideNowClock() {
   document.getElementById("centerNowText").style.display = "none";
@@ -33,19 +33,19 @@ function ShowNowClock() {
 function startPlayback() {
   return document.querySelector('.countDownSound').play();
 }
-startPlayback().then(function() {
-  //console.log('The play() Promise fulfilled! Rock on!');
-}).catch(function(error) {
-  //console.log('The play() Promise rejected!');
-  //console.log('Use the Play button instead.');
-  console.log(error);
-  // The user interaction requirement is met if
-  // playback is triggered via a click event.
-  playButton.addEventListener('click', startPlayback);
-});
-$("#play").on('click', function () {
-  playButton.hidden = true;
-});
+// startPlayback().then(function() {
+//   //console.log('The play() Promise fulfilled! Rock on!');
+// }).catch(function(error) {
+//   //console.log('The play() Promise rejected!');
+//   //console.log('Use the Play button instead.');
+//   console.log(error);
+//   // The user interaction requirement is met if
+//   // playback is triggered via a click event.
+//   playButton.addEventListener('click', startPlayback);
+// });
+// $("#play").on('click', function () {
+//   playButton.hidden = true;
+// });
 
 //--------------------------------------------------
 socket.on("centerTextContent", function(data) {
