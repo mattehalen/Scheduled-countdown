@@ -100,6 +100,7 @@ function cueTimeCountDown(){
     var time = "";
     var idString = "#timecodeMs" + i;
     var rowString = "#cueListRow" + i;
+    var centeredOverlay = "#centeredOverlay" + i;
     var timeCodeArrayMs = timeStringToMs(timeCodeArray[i].timecode);
     //----------
     if (timeCodeMs > timeCodeArrayMs) {
@@ -116,6 +117,19 @@ function cueTimeCountDown(){
     }else {
       $(rowString).show(2500);
     }
+
+    if (timeCodeMs > (timeCodeArrayMs-5000)){
+      $(centeredOverlay).fadeIn(500);
+      $(centeredOverlay).animate({
+        width: "0%"
+      }, 5000);
+    }else {
+      $(centeredOverlay).fadeOut(10);
+      $(centeredOverlay).animate({
+        width: "100%"
+      }, 0);
+    }
+
 
   }
 

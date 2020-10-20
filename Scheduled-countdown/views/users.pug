@@ -6,7 +6,7 @@ block content
     #timeCode.timeCodeText
     h4#user= name
     #nowTopRow.topRowText
-  #myTabContent.tab-content.shadow.p-3.mb-5.rounded
+  #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
     #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
       .form-row
         //- button#sorting.btn.btn-primary.btn-lg.btn-block Sort and Update
@@ -25,7 +25,10 @@ block content
           .col-1.text-left
             | DEL
         each person, index in myCueList
-          div.form-row(id="cueListRow" + index)
+          div.form-row.mywrapper(id="cueListRow" + index)
+            .centeredOverlay(id="centeredOverlay" + index)
+              //- span Loading...
+
             .col-1.text-right= index+1
             .col-4
               input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
@@ -35,6 +38,9 @@ block content
               p(id="timecodeMs" + index) hi
             .col-1
               button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+            
+            
+            
 
     
 
