@@ -12,7 +12,8 @@ var titleText = document.getElementById("title");
 var startText = document.getElementById("start");
 var timeCode = document.getElementById("timeCode");
 var timeCodeMs;
-var timeCodeArray;
+var timeCodeArray = [""];
+var setTimeoutTime = 150;
 //--------------------------------------------------
 var offsetTimeInit = 0;
 //--------------------------------------------------
@@ -88,3 +89,28 @@ function msToTime(s) {
   var hrs = (s - mins) / 60;
   return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
 }
+function pad(n, z) {
+  z = z || 2;
+  return ('00' + n).slice(-z);
+}
+
+function cueTimeCountDown(){
+
+  for (let i = 0; i < timeCodeArray.length; i++) {
+    var time = "";
+    var idString = "#timecodeMs" + i;
+    var timeCodeArrayMs = timeStringToMs(timeCodeArray[i].timecode);
+
+    if (timeCodeMs > timeCodeArrayMs) {
+      time = timeCodeMs - timeCodeArrayMs
+      time = (msToTime(time))
+    } else {
+      time = timeCodeArrayMs - timeCodeMs
+      time = "-" + (msToTime(time))
+    }
+    $(idString).text(time)
+  }
+
+  setTimeout(cueTimeCountDown, setTimeoutTime);
+};
+cueTimeCountDown();

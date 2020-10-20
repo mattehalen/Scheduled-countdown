@@ -32,7 +32,7 @@ block content
             .col-4
               input.form-control(type='text', value=person.timecode, name="timeCode" + index, id="timeCode" + index)
             .col-2
-              p#timecodeMs hi
+              p(id="timecodeMs" + index) hi
             .col-1
               button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
 

@@ -927,7 +927,7 @@ function checkIfUserExist(user){
       }
       console.log(cueList);
       io.emit("cueListFromSocket", {
-        cueList: cueList
+        cueList: cueList.cues
       });
     })
 
