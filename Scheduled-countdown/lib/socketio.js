@@ -919,13 +919,22 @@ function checkIfUserExist(user){
       //console.error(err)
       return
     }
-    console.log("FILE DO EXIST !!!!!");
+    console.log("--------------------> .json file exist from user = "+user);
     jsonReader(path, (err, cueList) => {
       if (err) {
         console.log('Error reading file:', err)
         return
       }
       console.log(cueList);
+
+      cueList.cues.sort(function(a, b) {
+        return a.timecode.localeCompare(b.timecode);
+      });
+      console.log(cueList);
+
+
+
+
       io.emit("cueListFromSocket", {
         cueList: cueList.cues
       });

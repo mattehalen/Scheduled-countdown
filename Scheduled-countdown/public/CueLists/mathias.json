@@ -1,40 +1,40 @@
 {
     "cues": [
         {
-            "title": "Open Doors",
-            "timecode": "00:00:15"
+            "title": "Cue nr 1",
+            "timecode": "00:00:01"
+        },
+        {
+            "title": "Cue nr 2",
+            "timecode": "00:00:02"
+        },
+        {
+            "title": "Cue nr 3",
+            "timecode": "00:00:03"
+        },
+        {
+            "title": "Cue nr 4",
+            "timecode": "00:00:04"
+        },
+        {
+            "title": "Cue nr 5",
+            "timecode": "00:00:05"
+        },
+        {
+            "title": "Cue nr 6",
+            "timecode": "00:00:06"
+        },
+        {
+            "title": "Cue nr 7",
+            "timecode": "00:00:07"
+        },
+        {
+            "title": "Cue nr 8",
+            "timecode": "00:00:08"
         },
         {
             "title": "Saxophon guy",
             "timecode": "00:00:20"
-        },
-        {
-            "title": "Open Doors",
-            "timecode": "00:00:30"
-        },
-        {
-            "title": "Saxophon guy",
-            "timecode": "00:00:40"
-        },
-        {
-            "title": "Open Doors",
-            "timecode": "00:01:00"
-        },
-        {
-            "title": "Saxophon guy",
-            "timecode": "00:01:30"
-        },
-        {
-            "title": "Open Doors",
-            "timecode": "00:01:45"
-        },
-        {
-            "title": "Saxophon guy",
-            "timecode": "00:00:39"
-        },
-        {
-            "title": "Open Doors",
-            "timecode": "00:00:15"
         },
         {
             "title": "Saxophon guy",

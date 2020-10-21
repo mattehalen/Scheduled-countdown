@@ -153,6 +153,7 @@ router.post('/admin/submit', function(req, res, next){
    })
     res.redirect("/admin");
   });
+
 router.post('/admin/submitSettings', function(req, res, next) {
     jsonReader('./public/admin-settings.json', (err, settings) => {
       if (err) {
@@ -428,6 +429,10 @@ router.get('/mathias', function(req, res, next) {
   var path = '../public/CueLists/mathias.json'
   var myCueList = require(path);
 
+  myCueList.cues.sort(function(a, b) {
+    return a.timecode.localeCompare(b.timecode);
+  });
+
   var name = req.originalUrl.split('/')[1];
   console.log("index.js = "+ name);
   res.render('users', {
@@ -438,5 +443,40 @@ router.get('/mathias', function(req, res, next) {
     name: name
   });
 });
+router.post('/submitmathias', function(req, res, next){
+  var path = './public/CueLists/mathias.json'
+    jsonReader(path, (err, settings) => {
+     if (err) {
+       console.log('Error reading file:', err)
+       return
+     }
+     console.log(settings);
+     console.log(settings.cues.length);
+     console.log(settings.cues[0].title);
+     console.log(JSON.parse(JSON.stringify(req.body)));
+
+     for (let i = 0; i < settings.cues.length; i++) {
+       settings.cues[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+       console.log(settings.cues[i].title);
+     }
+     for (let i = 0; i < settings.cues.length; i++) {
+       settings.cues[i].timecode = JSON.parse(JSON.stringify(req.body[`timeCode${i}`]))
+       console.log(settings.cues[i].timecode);
+     }
+
+     settings.cues.sort(function(a, b) {
+       return a.timecode.localeCompare(b.timecode);
+     });
+
+     sleep(1000)
+     .then(() => {fs.writeFile(path, JSON.stringify(settings, null, 4), (err) => {
+         if (err) console.log('Error writing file:', err)
+       })})
+     .then();
+   })
+   sleep(1200)
+   .then(() => {res.redirect("/mathias")})
+
+  });
 
 module.exports = router;
