@@ -94,6 +94,9 @@ function pad(n, z) {
   return ('00' + n).slice(-z);
 }
 
+
+var newArrayIndex = 0;
+var currentArrayIndex;
 function cueTimeCountDown(){
 
   for (let i = 0; i < timeCodeArray.length; i++) {
@@ -112,26 +115,55 @@ function cueTimeCountDown(){
     }
     $(idString).text(time)
     //----------
-    if (timeCodeMs > (timeCodeArrayMs+5000)){
-      $(rowString).hide(2500);
+    if (timeCodeMs > (timeCodeArrayMs+4000)){
+      $(rowString).hide(1500);
     }else {
-      $(rowString).show(2500);
+      $(rowString).show(1500);
     }
 
     if (timeCodeMs > (timeCodeArrayMs-5000)){
       $(centeredOverlay).fadeIn(500);
       $(centeredOverlay).animate({
         width: "0%"
-      }, 5000);
+      }, 4000);
     }else {
       $(centeredOverlay).fadeOut(10);
       $(centeredOverlay).animate({
         width: "100%"
       }, 0);
     }
+    //----------
+  }
 
+
+  if (newArrayIndex < timeCodeArray.length){
+    console.log("timeCodeMs = "+timeCodeMs +" - " +"timeCodeArray = "+timeStringToMs(timeCodeArray[newArrayIndex].timecode));
+
+    if (timeCodeMs > timeStringToMs(timeCodeArray[newArrayIndex].timecode)){
+    newArrayIndex++;
+    currentArrayIndex = newArrayIndex - 1;
+  }else{
+    time = timeStringToMs(timeCodeArray[newArrayIndex].timecode) - timeCodeMs
+    time = "-" + (msToTime(time))
+
+    $("#nextCountdown").text(time)
+    $("#nextTitle").text(timeCodeArray[newArrayIndex].title)
+    //---
+    if (newArrayIndex < 1){
+      $("#currentCountdown").text("")
+      $("#currentTitle").text("")
+    }else{
+      time = timeCodeMs - timeStringToMs(timeCodeArray[currentArrayIndex].timecode)
+      time = (msToTime(time))
+
+      $("#currentCountdown").text(time)
+      $("#currentTitle").text(timeCodeArray[currentArrayIndex].title)
+
+    }
 
   }
+  }
+  //console.log("#newArrayIndex = "+newArrayIndex);
 
   setTimeout(cueTimeCountDown, setTimeoutTime);
 };

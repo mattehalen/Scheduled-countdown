@@ -2,43 +2,43 @@
     "cues": [
         {
             "title": "Cue nr 1",
-            "timecode": "00:00:01"
+            "timecode": "00:00:10"
         },
         {
             "title": "Cue nr 2",
-            "timecode": "00:00:02"
+            "timecode": "00:00:15"
         },
         {
             "title": "Cue nr 3",
-            "timecode": "00:00:03"
-        },
-        {
-            "title": "Cue nr 4",
-            "timecode": "00:00:04"
-        },
-        {
-            "title": "Cue nr 5",
-            "timecode": "00:00:05"
-        },
-        {
-            "title": "Cue nr 6",
-            "timecode": "00:00:06"
-        },
-        {
-            "title": "Cue nr 7",
-            "timecode": "00:00:07"
-        },
-        {
-            "title": "Cue nr 8",
-            "timecode": "00:00:08"
-        },
-        {
-            "title": "Saxophon guy",
             "timecode": "00:00:20"
         },
         {
-            "title": "Saxophon guy",
-            "timecode": "00:00:39"
+            "title": "Cue nr 4",
+            "timecode": "00:00:25"
+        },
+        {
+            "title": "Cue nr 5",
+            "timecode": "00:00:30"
+        },
+        {
+            "title": "Cue nr 6",
+            "timecode": "00:00:35"
+        },
+        {
+            "title": "Cue nr 7",
+            "timecode": "00:00:40"
+        },
+        {
+            "title": "Cue nr 8",
+            "timecode": "00:00:45"
+        },
+        {
+            "title": "Cue nr 7",
+            "timecode": "00:01:10"
+        },
+        {
+            "title": "Cue nr 8",
+            "timecode": "00:01:20"
         },
         {
             "title": "David Warm Up",

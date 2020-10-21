@@ -38,6 +38,23 @@ block content
               p(id="timecodeMs" + index) hi
             .col-1
               button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+    
+  #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
+    .form-row
+      .col-1.text-left
+        | Current:
+      .col-8.text-left#currentTitle
+        | Title
+      .col-3.text-left#currentCountdown
+        | Countdown
+    .form-row
+      .col-1.text-left
+        | Next:
+      .col-8.text-left#nextTitle
+        | Title
+      .col-3.text-left#nextCountdown
+        | Countdown
+        
             
             
             
