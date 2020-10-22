@@ -14,6 +14,7 @@ var timeCode = document.getElementById("timeCode");
 var timeCodeMs;
 var timeCodeArray = [""];
 var timeCodeBool = true;
+var cuelistHideBool = true;
 var setTimeoutTime = 150;
 //--------------------------------------------------
 var offsetTimeInit = 0;
@@ -30,27 +31,32 @@ var countDownTimeInMS = "";
 //--------------------------------------------------
 
 $("#AddNewCueRow").on('click', function() {
-  // socket.emit("sortingButton_To_Socket", {})
-  console.log("AddNewCueRow Button Was Pushed");
   socket.emit("AddNewCueRow",{user: user});
-
 });
 $("#ToggleTC").on('click', function() {
-  console.log("ToggleTC Button Was Pushed");
   if (timeCodeBool==true){
-    console.log("timeCodeBool = true");
     timeCodeBool=false;
-    $("#ToggleTC").html("TimeCode is OFF")
     return;
   };
   if (timeCodeBool==false){
-    console.log("timeCodeBool = false");
     timeCodeBool=true;
     $("#ToggleTC").html("TimeCode is ON")
     return;
   };
 
 });
+$("#ResetTC").on('click', function() {
+  timeCodeMs = 1000;
+  if (cuelistHideBool==true) {
+    cuelistHideBool=false;
+    return
+  }
+  if (cuelistHideBool==false) {
+    cuelistHideBool=true;
+    return
+  }
+});
+
 function captureTCButton(listIndex) {
   console.log("captureTCButton with listIndex = "+listIndex);
   var string = "#timeCode"+listIndex
@@ -88,13 +94,12 @@ socket.emit("user", {
 
 });
 socket.emit("getTimeCode",{});
-
 socket.on("sendTimeCode",function(data){
-  timeCode.textContent = data.smpteString,
-  timeCodeMs = data.smpteMs
-  //console.log(timeCodeMs);
+    timeCode.textContent = data.smpteString,
+    timeCodeMs = data.smpteMs
+  });
 
-});
+
 function getTimeCodeLoop(){
   $("#timecodeMs").text(timeCodeMs);
   socket.emit("getTimeCode",{});
@@ -131,7 +136,6 @@ function pad(n, z) {
 var newArrayIndex = 0;
 var currentArrayIndex;
 function cueTimeCountDown(){
-
   for (let i = 0; i < timeCodeArray.length; i++) {
     var time = "";
     var idString = "#timecodeMs" + i;
@@ -149,9 +153,12 @@ function cueTimeCountDown(){
     $(idString).text(time)
     //----------
     if (timeCodeBool==true){
-      if (timeCodeMs > (timeCodeArrayMs+4000)){
+      if (timeCodeMs > (timeCodeArrayMs+4000) && cuelistHideBool == true){
         $(rowString).hide(1500);
       }else {
+        $(rowString).show(1500);
+      }
+      if (cuelistHideBool==false) {
         $(rowString).show(1500);
       }
 
@@ -171,8 +178,6 @@ function cueTimeCountDown(){
 
 
   if (newArrayIndex < timeCodeArray.length){
-    // console.log("timeCodeMs = "+timeCodeMs +" - " +"timeCodeArray = "+timeStringToMs(timeCodeArray[newArrayIndex].timecode));
-
     if (timeCodeMs > timeStringToMs(timeCodeArray[newArrayIndex].timecode)){
     newArrayIndex++;
     currentArrayIndex = newArrayIndex - 1;
@@ -197,8 +202,6 @@ function cueTimeCountDown(){
 
   }
   }
-  //console.log("#newArrayIndex = "+newArrayIndex);
-
   setTimeout(cueTimeCountDown, setTimeoutTime);
 };
 cueTimeCountDown();
