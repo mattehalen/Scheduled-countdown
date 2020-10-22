@@ -105,7 +105,7 @@ var smpteMs;
 
 function mtcTOString() {
   var JZZ = require('jzz');
-  var port = JZZ().openMidiIn(1);
+  var port = JZZ().openMidiIn(0);
   var smpte = JZZ.SMPTE();
   console.log(JZZ.info());
   port

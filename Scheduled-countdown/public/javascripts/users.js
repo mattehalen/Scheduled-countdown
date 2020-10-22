@@ -13,6 +13,7 @@ var startText = document.getElementById("start");
 var timeCode = document.getElementById("timeCode");
 var timeCodeMs;
 var timeCodeArray = [""];
+var timeCodeBool = true;
 var setTimeoutTime = 150;
 //--------------------------------------------------
 var offsetTimeInit = 0;
@@ -34,6 +35,29 @@ $("#AddNewCueRow").on('click', function() {
   socket.emit("AddNewCueRow",{user: user});
 
 });
+$("#ToggleTC").on('click', function() {
+  console.log("ToggleTC Button Was Pushed");
+  if (timeCodeBool==true){
+    console.log("timeCodeBool = true");
+    timeCodeBool=false;
+    $("#ToggleTC").html("TimeCode is OFF")
+    return;
+  };
+  if (timeCodeBool==false){
+    console.log("timeCodeBool = false");
+    timeCodeBool=true;
+    $("#ToggleTC").html("TimeCode is ON")
+    return;
+  };
+
+});
+function captureTCButton(listIndex) {
+  console.log("captureTCButton with listIndex = "+listIndex);
+  // socket.emit("send_Capture_Button_To_Socket", {
+  //   listIndex: listIndex
+  // });
+};
+
 socket.on("centerTextContent", function(data){
   nowTopRow.textContent = data.newCurrentTime,
   countDownTimeInMS     = data.countDownTimeInMS,
@@ -125,24 +149,25 @@ function cueTimeCountDown(){
     }
     $(idString).text(time)
     //----------
-    if (timeCodeMs > (timeCodeArrayMs+4000)){
-      $(rowString).hide(1500);
-    }else {
-      $(rowString).show(1500);
-    }
+    if (timeCodeBool==true){
+      if (timeCodeMs > (timeCodeArrayMs+4000)){
+        $(rowString).hide(1500);
+      }else {
+        $(rowString).show(1500);
+      }
 
-    if (timeCodeMs > (timeCodeArrayMs-5000)){
-      $(centeredOverlay).fadeIn(500);
-      $(centeredOverlay).animate({
-        width: "0%"
-      }, 4000);
-    }else {
-      $(centeredOverlay).fadeOut(10);
-      $(centeredOverlay).animate({
-        width: "100%"
-      }, 0);
+      if (timeCodeMs > (timeCodeArrayMs-5000)){
+        $(centeredOverlay).fadeIn(500);
+        $(centeredOverlay).animate({
+          width: "0%"
+        }, 4000);
+      }else {
+        $(centeredOverlay).fadeOut(10);
+        $(centeredOverlay).animate({
+          width: "100%"
+        }, 0);
+      }
     }
-    //----------
   }
 
 

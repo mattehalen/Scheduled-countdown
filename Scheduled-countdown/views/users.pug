@@ -6,42 +6,73 @@ block content
     #timeCode.timeCodeText
     h4#user= name
     #nowTopRow.topRowText
-  
-  #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
-    button.btn.btn-dark(style='width: 100%' id="AddNewCueRow") Add new Row
-    #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
-      .form-row
-        //- button#sorting.btn.btn-primary.btn-lg.btn-block Sort and Update
-        
-      form.overflow-auto-x(method='POST' action='/submit'+name style="height: 45vh")
-        button.btn.btn-dark(type='submit' style='width: 100%') Save
-        
-        .form-row
-          .col-1.text-right
-            | #
-          .col-4.text-left
-            | Title
-          .col-4.text-left
-            | TimeCode
-          .col-2.text-left
-            | Countdown
-          .col-1.text-left
-            | DEL
-        each person, index in myCueList
-          div.form-row.mywrapper(id="cueListRow" + index)
-            .centeredOverlay(id="centeredOverlay" + index)
-              //- span Loading...
-
-            .col-1.text-right= index+1
-            .col-4
-              input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
-            .col-4
-              input.form-control(type='text', value=person.timecode, name="timeCode" + index, id="timeCode" + index)
-            .col-2
-              p(id="timecodeMs" + index) hi
-            .col-1
-              button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
-  
+  .container-fluid
+    .row.justify-content-center.overflow-hidden
+      .col-xl-9.col-sm-12.col-xs-12
+        ul#myTab.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a#Tab1-tab.nav-link.active(data-toggle='tab' href='#Tab1' role='tab' aria-controls='Opening' aria-selected='true') Opening
+          li.nav-item
+            a#Tab2-tab.nav-link(data-toggle='tab' href='#Tab2' role='tab' aria-controls='WWWY' aria-selected='false') WWWY
+          li.nav-item
+            a#Tab3-tab.nav-link(data-toggle='tab' href='#Tab3' role='tab' aria-controls='David1' aria-selected='false') David1
+          li.nav-item
+            a#Tab4-tab.nav-link(data-toggle='tab' href='#Tab4' role='tab' aria-controls='Eurythmics' aria-selected='true') Eurythmics
+          li.nav-item
+            a#Tab5-tab.nav-link(data-toggle='tab' href='#Tab5' role='tab' aria-controls='AStarIsBorn' aria-selected='false') A Star Is Born
+          li.nav-item
+            a#Tab6-tab.nav-link(data-toggle='tab' href='#Tab6' role='tab' aria-controls='Celebration' aria-selected='false') Celebration
+          li.nav-item
+            a#Tab7-tab.nav-link(data-toggle='tab' href='#Tab7' role='tab' aria-controls='StarCatcher' aria-selected='false') StarCatcher
+          li.nav-item
+            a#Tab8-tab.nav-link(data-toggle='tab' href='#Tab8' role='tab' aria-controls='GagaBoys' aria-selected='false') GagaBoys
+          li.nav-item
+            a#Tab9-tab.nav-link(data-toggle='tab' href='#Tab9' role='tab' aria-controls='David2' aria-selected='true') David2
+          li.nav-item
+            a#Tab10-tab.nav-link(data-toggle='tab' href='#Tab10' role='tab' aria-controls='Queen' aria-selected='false') Queen
+          li.nav-item
+            a#Tab11-tab.nav-link(data-toggle='tab' href='#Tab11' role='tab' aria-controls='Christmas' aria-selected='false') Christmas
+        #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
+          #Tab1.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Tab1-tab' style="font-size: calc(5px + 1vw)")
+            .form-row
+            
+            form.overflow-auto-x(method='POST' action='/submit'+name style="height: 45vh")
+              button.btn.btn-dark(type='submit' style='width: 100%') Save
+              button.btn.btn-dark(type="button",style='width: 50%' id="AddNewCueRow") Add new Row
+              button.btn.btn-dark(type="button",style='width: 50%' id="ToggleTC") TimeCode is ON
+              
+              .form-row
+                .col-1.text-right
+                  | #
+                .col-4.text-left
+                  | Title
+                .col-3.text-left
+                  | TimeCode
+                .col-2.text-left
+                  | Countdown
+                .col-1.text-left
+                  | Capture
+                .col-1.text-left
+                  | DEL
+              each person, index in myCueList
+                div.form-row.mywrapper(id="cueListRow" + index)
+                  .centeredOverlay(id="centeredOverlay" + index)
+                    //- span Loading...
+      
+                  .col-1.text-right= index+1
+                  .col-4
+                    input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
+                  .col-3
+                    input.form-control(type='text', value=person.timecode, name="timeCode" + index, id="timeCode" + index)
+                  .col-2
+                    p(id="timecodeMs" + index) hi
+                  .col-1
+                    button.btn.btn-success(type="button",name="captureTCButton" + index, id=index, onClick="captureTCButton(this.id)") TC
+                  .col-1
+                    button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+          #Tab2.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Tab2-tab' style="font-size: calc(5px + 1vw)")
+    
+    
     
   #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
     .form-row
