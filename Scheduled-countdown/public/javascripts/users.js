@@ -53,9 +53,8 @@ $("#ToggleTC").on('click', function() {
 });
 function captureTCButton(listIndex) {
   console.log("captureTCButton with listIndex = "+listIndex);
-  // socket.emit("send_Capture_Button_To_Socket", {
-  //   listIndex: listIndex
-  // });
+  var string = "#timeCode"+listIndex
+  $(string).val(msToTime(timeCodeMs))
 };
 
 socket.on("centerTextContent", function(data){
