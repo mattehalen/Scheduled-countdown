@@ -6,13 +6,16 @@ block content
     #timeCode.timeCodeText
     h4#user= name
     #nowTopRow.topRowText
+  
   #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
+    button.btn.btn-dark(style='width: 100%' id="AddNewCueRow") Add new Row
     #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
       .form-row
         //- button#sorting.btn.btn-primary.btn-lg.btn-block Sort and Update
         
       form.overflow-auto-x(method='POST' action='/submit'+name style="height: 45vh")
         button.btn.btn-dark(type='submit' style='width: 100%') Save
+        
         .form-row
           .col-1.text-right
             | #
@@ -38,6 +41,7 @@ block content
               p(id="timecodeMs" + index) hi
             .col-1
               button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+  
     
   #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
     .form-row

@@ -27,6 +27,13 @@ var countDownTimeInMS = "";
 //--------------------------------------------------
 
 //--------------------------------------------------
+
+$("#AddNewCueRow").on('click', function() {
+  // socket.emit("sortingButton_To_Socket", {})
+  console.log("AddNewCueRow Button Was Pushed");
+  socket.emit("AddNewCueRow",{user: user});
+
+});
 socket.on("centerTextContent", function(data){
   nowTopRow.textContent = data.newCurrentTime,
   countDownTimeInMS     = data.countDownTimeInMS,
@@ -53,7 +60,10 @@ socket.on("cueListFromSocket", function(data){
   console.log(timeCodeArray);
 });
 
-socket.emit("user", {user: user});
+socket.emit("user", {
+  user: user
+
+});
 socket.emit("getTimeCode",{});
 
 socket.on("sendTimeCode",function(data){
@@ -137,7 +147,7 @@ function cueTimeCountDown(){
 
 
   if (newArrayIndex < timeCodeArray.length){
-    console.log("timeCodeMs = "+timeCodeMs +" - " +"timeCodeArray = "+timeStringToMs(timeCodeArray[newArrayIndex].timecode));
+    // console.log("timeCodeMs = "+timeCodeMs +" - " +"timeCodeArray = "+timeStringToMs(timeCodeArray[newArrayIndex].timecode));
 
     if (timeCodeMs > timeStringToMs(timeCodeArray[newArrayIndex].timecode)){
     newArrayIndex++;

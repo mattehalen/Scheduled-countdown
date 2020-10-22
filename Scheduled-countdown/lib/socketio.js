@@ -541,6 +541,11 @@ io.on('connection', function(socket) {
       countDownTime: data.case
     });
   })
+  //--------------------------------------------------
+  socket.on("AddNewCueRow", function(data) {
+    console.log("AddNewCueRow");
+    addNewCueRowToUser(data.user);
+  })
 
 
 });
@@ -925,16 +930,11 @@ function checkIfUserExist(user){
         console.log('Error reading file:', err)
         return
       }
-      console.log(cueList);
-
+      //-- sort
       cueList.cues.sort(function(a, b) {
         return a.timecode.localeCompare(b.timecode);
       });
-      console.log(cueList);
-
-
-
-
+      //-- sort
       io.emit("cueListFromSocket", {
         cueList: cueList.cues
       });
@@ -944,6 +944,30 @@ function checkIfUserExist(user){
 
 
 
+  })
+};
+function addNewCueRowToUser(user){
+  console.log("addNewCueRowToUser + user  = " + user);
+  const path = './public/CueLists/'+user+'.json'
+  var copyPath = './public/CueLists/AddNewCueRow'
+  console.log("copyPath = "+copyPath);
+
+  jsonReader(path, (err, cueList) => {
+    if (err) {
+      console.log('Error reading file:', err)
+      return
+    }
+
+    path.cues.push(copyPath);
+
+    //-- sort
+    cueList.cues.sort(function(a, b) {
+      return a.timecode.localeCompare(b.timecode);
+    });
+    //-- sort
+    // io.emit("cueListFromSocket", {
+    //   cueList: cueList.cues
+    // });
   })
 };
 
