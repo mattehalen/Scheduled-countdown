@@ -112,7 +112,7 @@ function mtcTOString() {
     .connect(function(msg) {
       smpte.read(msg);
       smpteString = smpte.toString();
-      smpteMs     = timeStringToMs(smpteString);
+      smpteMs = timeStringToMs(smpteString);
     });
 };
 mtcTOString();
@@ -208,6 +208,7 @@ function updateOffsetTimePlusjson() {
 
 
 };
+
 function updateOffsetTimeMinusjson() {
 
 
@@ -227,6 +228,7 @@ function updateOffsetTimeMinusjson() {
   })
 
 };
+
 function updateOffsetTimeResetjson() {
 
 
@@ -256,6 +258,7 @@ function loadDefaultjson() {
     if (err) throw err;
   });
 };
+
 function writeDefaultjson() {
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
@@ -312,7 +315,7 @@ getOffsetTimejson();
 function getscheduledTimes() {
 
 
-  console.log("--------------------> Socket getscheduledTimes <--------------------  "+newCurrentTime());
+  console.log("--------------------> Socket getscheduledTimes <--------------------  " + newCurrentTime());
   jsonReader('./public/scheduledTimes.json', (err, customer) => {
     if (err) {
       console.log('Error reading file:', err)
@@ -351,7 +354,7 @@ var users = [];
 
 io.on('connection', function(socket) {
 
-  console.log('A user connected = '+socket.handshake.address);
+  console.log('A user connected = ' + socket.handshake.address);
 
   // My sockets
   //--------------------------------------------------
@@ -380,7 +383,6 @@ io.on('connection', function(socket) {
       socketDBArray: data
     });
   });
-  //--------------------------------------------------
   socket.on("writeToScheduledTimesjson", function(data) {
     console.log("--------------------> writeToScheduledTimesjson <--------------------");
     startTitleArray = data.startTitleArray;
@@ -394,7 +396,6 @@ io.on('connection', function(socket) {
     updateScheduledTimesjson();
 
   });
-  //--------------------------------------------------
   socket.on("updateScheduledTimesArray", function(data) {
     console.log("--------------------> updateScheduledTimesArray <--------------------");
     io.emit("updateDB_From_Socket", {
@@ -405,7 +406,6 @@ io.on('connection', function(socket) {
       fiveBoolArray: fiveBoolArray
     });
   });
-  //--------------------------------------------------
   socket.on("updateOffsetTimePlus", function(data) {
     console.log("updateOffsetTime: " + data.offsetTime);
     offsetTimeInit = data.offsetTime;
@@ -415,7 +415,6 @@ io.on('connection', function(socket) {
       offsetTime: offsetTimeInit
     });
   });
-  //--------------------------------------------------
   socket.on("updateOffsetTimeMinus", function(data) {
     console.log("updateOffsetTimeMinus: " + data.offsetTime);
     offsetTimeInit = data.offsetTime;
@@ -425,7 +424,6 @@ io.on('connection', function(socket) {
       offsetTime: offsetTimeInit
     });
   });
-  //--------------------------------------------------
   socket.on("updateOffsetTimeReset", function(data) {
     console.log("updateOffsetTimeReset: " + data.offsetTime);
     offsetTimeInit = data.offsetTime;
@@ -435,7 +433,6 @@ io.on('connection', function(socket) {
       offsetTime: offsetTimeInit
     });
   });
-  //--------------------------------------------------
   socket.on("loadDefaultToSocket", function(data) {
     console.log("loadDefaultToSocket: " + data.message);
     loadDefaultjson();
@@ -450,7 +447,6 @@ io.on('connection', function(socket) {
     });
 
   });
-  //--------------------------------------------------
   socket.on("writeDefaultToSocket", function(data) {
     console.log("writeDefaultToSocket: " + data.startTimeArray);
 
@@ -462,7 +458,6 @@ io.on('connection', function(socket) {
 
     writeDefaultjson();
   });
-  //--------------------------------------------------
   socket.on("fiveMinPageLoad_To_Socket", function(data) {
     // console.log(data.countDownTime);
     io.emit("sendMin_To_countDown", {
@@ -472,15 +467,12 @@ io.on('connection', function(socket) {
   socket.on("fiveMinPageStart", function(data) {
 
   });
-
   socket.on("updatebutton_To_Socket", function(data) {
     io.emit("updatebutton_From_Socket", {})
   })
-
   socket.on("sortingButton_To_Socket", function(data) {
     io.emit("sortingButton_From_Socket", {})
   })
-
   socket.on("send_Delete_Button_To_Socket", function(data) {
     listIndex = data.listIndex
     console.log("send_Delete_Button_To_Socket: listIndex= " + listIndex);
@@ -488,16 +480,18 @@ io.on('connection', function(socket) {
       listIndex: listIndex
     })
   })
+  socket.on("send_Delete_CueButton_To_Socket", function(data) {
+    console.log("send_Delete_CueButton_To_Socket: listIndex= " + data.listIndex);
+    deleteCueRowFromUser(data.user,data.listIndex);
+  })
 
   socket.on("send_addNewRow_To_Socket", function(data) {
     console.log("send_addNewRow_To_Socket:");
     addNewRowDefault();
   })
-
   io.emit("sendIpArrayToAdminPage", {
     myIpArray: myIpArray
   })
-  //--------------------------------------------------
   socket.on("sendChosenIp_To_Socket", function(data) {
     console.log("sendChosenIp_To_Socket:-------------------------------- ", data.myChosenIp);
 
@@ -523,11 +517,10 @@ io.on('connection', function(socket) {
 
 
   })
-  //--------------------------------------------------
   socket.on("reloadFiveMinCountDown", function(data) {
     console.log("reloadFiveMinCountDown");
-    fiveBoolHolder=1;
-    sendMin_To_countDownBoole=100;
+    fiveBoolHolder = 1;
+    sendMin_To_countDownBoole = 100;
     newCountDown();
     // io.emit("sendMin_To_countDown", {
     //   countDownTime: 0
@@ -541,7 +534,6 @@ io.on('connection', function(socket) {
       countDownTime: data.case
     });
   })
-  //--------------------------------------------------
   socket.on("AddNewCueRow", function(data) {
     console.log("AddNewCueRow");
     addNewCueRowToUser(data.user);
@@ -666,7 +658,7 @@ function newCountDown() {
   //console.log((msToTime(startTime - now)));
 
   //console.log(countDownTimeInMS);
-  if (fiveBoolHolder==1) {
+  if (fiveBoolHolder == 1) {
     //  6larm
     if (countDownTimeInMS > sixMinuteMs && countDownTimeInMS < (sixMinuteMs + timeBuffer)) {
       //if (countDownTimeInMS < sixMinuteMs && countDownTimeInMS > fiveMinuteMs) {
@@ -686,9 +678,9 @@ function newCountDown() {
     if (countDownTimeInMS < fourMinuteMs && countDownTimeInMS > threeMinuteMs) {
       if (sendMin_To_countDownBoole != 4) {
         sendMin_To_countDownBoole = 4;
-      io.emit("sendMin_To_countDown", {
-        countDownTime: 4
-      });
+        io.emit("sendMin_To_countDown", {
+          countDownTime: 4
+        });
       };
     }
     // 3min Alarm
@@ -696,51 +688,51 @@ function newCountDown() {
     if (countDownTimeInMS < threeMinuteMs && countDownTimeInMS > twoMinuteMs) {
       if (sendMin_To_countDownBoole != 3) {
         sendMin_To_countDownBoole = 3;
-      io.emit("sendMin_To_countDown", {
-        countDownTime: 3
-      });
-    };
+        io.emit("sendMin_To_countDown", {
+          countDownTime: 3
+        });
+      };
     }
     // 2min Alarm
     //if (countDownTimeInMS > twoMinuteMs && countDownTimeInMS < (twoMinuteMs + timeBuffer)) {
     if (countDownTimeInMS < twoMinuteMs && countDownTimeInMS > oneMinuteMs) {
       if (sendMin_To_countDownBoole != 2) {
         sendMin_To_countDownBoole = 2;
-      io.emit("sendMin_To_countDown", {
-        countDownTime: 2
-      });
-    };
+        io.emit("sendMin_To_countDown", {
+          countDownTime: 2
+        });
+      };
     }
     // 1min Alarm
     //if (countDownTimeInMS > oneMinuteMs && countDownTimeInMS < (oneMinuteMs + timeBuffer)) {
     if (countDownTimeInMS < oneMinuteMs && countDownTimeInMS > 0) {
       if (sendMin_To_countDownBoole != 1) {
         sendMin_To_countDownBoole = 1;
-      io.emit("sendMin_To_countDown", {
-        countDownTime: 1
-      });
-    };
+        io.emit("sendMin_To_countDown", {
+          countDownTime: 1
+        });
+      };
     }
     // 0min Alarm
     //if (countDownTimeInMS > 0 && countDownTimeInMS < (0 + timeBuffer)) {
     if (countDownTimeInMS < 0 || countDownTimeInMS > fiveMinuteMs) {
       if (sendMin_To_countDownBoole != 0) {
         sendMin_To_countDownBoole = 0;
-      io.emit("sendMin_To_countDown", {
-        countDownTime: 0
-      });
-    };
+        io.emit("sendMin_To_countDown", {
+          countDownTime: 0
+        });
+      };
     }
   }
 
 
-  if (fiveBoolHolder==0) {
+  if (fiveBoolHolder == 0) {
     if (sendMin_To_countDownBoole != 0) {
       sendMin_To_countDownBoole = 0;
-    io.emit("sendMin_To_countDown", {
-      countDownTime: 0
-    });
-  };
+      io.emit("sendMin_To_countDown", {
+        countDownTime: 0
+      });
+    };
   };
   //--------------------------------------------------
 
@@ -872,12 +864,14 @@ function autoResetOffsetTime() {
     console.log("autoResetOffsetTime");
     offsetTimeInit = 0;
 
-    if (offsetTimeInit !== undefined){
+    if (offsetTimeInit !== undefined) {
       updateOffsetTimeResetjson();
       io.emit("updateOffsetTime_From_Socket", {
         offsetTime: offsetTimeInit
       });
-    }else{console.log("offsetTimeInit = undefined - autoResetOffsetTime -"+ newCurrentTime());}
+    } else {
+      console.log("offsetTimeInit = undefined - autoResetOffsetTime -" + newCurrentTime());
+    }
 
   });
 
@@ -885,11 +879,11 @@ function autoResetOffsetTime() {
 
 };
 
-function resetsetTimeout(){
+function resetsetTimeout() {
 
   //---------
-  sleep(1000*60*60).then(() => {
-    console.log("----------> resetsetTimeout() <----------   "+newCurrentTime());
+  sleep(1000 * 60 * 60).then(() => {
+    console.log("----------> resetsetTimeout() <----------   " + newCurrentTime());
     fs.writeFile('./autoRestartServer.json', JSON.stringify("customer", null, 4), (err) => {
       if (err) console.log('Error writing file:', err)
     })
@@ -900,21 +894,21 @@ function resetsetTimeout(){
     // clearTimeout(newCueCountDown);
     // clearTimeout(sendCenterText);
   });
-    //---------
-    // newTimeArraySorting();
-    // newCountDown();
-    // newCueCountDown();
-    // sendCenterText();
-    //---------
+  //---------
+  // newTimeArraySorting();
+  // newCountDown();
+  // newCueCountDown();
+  // sendCenterText();
+  //---------
 
 
   //setTimeout(resetsetTimeout,(1000*60*5))
 };
 resetsetTimeout();
 
-function checkIfUserExist(user){
+function checkIfUserExist(user) {
   console.log("checkIfUserExist + user  = " + user);
-  const path = './public/CueLists/'+user+'.json'
+  const path = './public/CueLists/' + user + '.json'
 
   fs.access(path, fs.F_OK, (err) => {
     if (err) {
@@ -924,7 +918,7 @@ function checkIfUserExist(user){
       //console.error(err)
       return
     }
-    console.log("--------------------> .json file exist from user = "+user);
+    console.log("--------------------> .json file exist from user = " + user);
     jsonReader(path, (err, cueList) => {
       if (err) {
         console.log('Error reading file:', err)
@@ -946,30 +940,121 @@ function checkIfUserExist(user){
 
   })
 };
-function addNewCueRowToUser(user){
+
+function addNewCueRowToUser(user) {
   console.log("addNewCueRowToUser + user  = " + user);
-  const path = './public/CueLists/'+user+'.json'
-  var copyPath = './public/CueLists/AddNewCueRow'
-  console.log("copyPath = "+copyPath);
+  const path = './public/CueLists/' + user + '.json'
+  var copyPath = './public/CueLists/AddNewCueRow.json'
+  var copyjson = {};
+  console.log("copyPath = " + copyPath);
+
+  //----- AddNewCueRow
+  jsonReader(copyPath, (err, cueList) => {
+    if (err) {
+      console.log('Error reading file:', err)
+      return
+    }
+    copyjson = cueList;
+  })
+  //----- UserCueList
+
+  sleep(250).then(() => {
+    jsonReader(path, (err, cueList) => {
+      if (err) {
+        console.log('Error reading file:', err)
+        return
+      }
+
+      cueList.cues.push(copyjson);
+      console.log(cueList.cues);
+
+      //-- sort
+      cueList.cues.sort(function(a, b) {
+        return a.timecode.localeCompare(b.timecode);
+      });
+      console.log(cueList.cues);
+
+      sleep(250).then(() => {
+        fs.writeFile(path, JSON.stringify(cueList, null, 4), (err) => {
+          if (err) console.log('Error writing file:', err)
+        })
+
+      })
+
+
+    })
+  });
+};
+function deleteCueRowFromUser(user,listIndex) {
+  console.log("deleteCueRowFromUser + user  = " + user);
+  console.log("deleteCueRowFromUser + user  = " + listIndex);
+  const path = './public/CueLists/' + user + '.json'
 
   jsonReader(path, (err, cueList) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
+    console.log(cueList.cues);
+    cueList.cues.splice(listIndex, 1);
+    console.log(cueList.cues);
 
-    path.cues.push(copyPath);
+    sleep(250).then(() => {
+      fs.writeFile(path, JSON.stringify(cueList, null, 4), (err) => {
+        if (err) console.log('Error writing file:', err)
+      })
 
-    //-- sort
-    cueList.cues.sort(function(a, b) {
-      return a.timecode.localeCompare(b.timecode);
-    });
-    //-- sort
-    // io.emit("cueListFromSocket", {
-    //   cueList: cueList.cues
-    // });
+    })
   })
+
 };
+
+
+
+function addNewCueRowToUser_FIXME(user) {
+  console.log("addNewCueRowToUser + user  = " + user);
+  const path = './public/CueLists/' + user + '.json'
+  var copyPath = './public/CueLists/AddNewCueRow.json'
+  var copyjson = {};
+  console.log("copyPath = " + copyPath);
+
+  const a = () => new Promise(resolve => {
+    setTimeout(() => resolve('result of a()'), 1000); // 1s delay
+  });
+  const b = () => new Promise(resolve => {
+    setTimeout(() => resolve('result of b()'), 500); // 0.5s delay
+  });
+
+  const c = () => new Promise(resolve => {
+    setTimeout(() => resolve('result of c()'), 1100); // 1.1s delay
+  });
+  a()
+    .then((result) => {
+      console.log('a() success:', result);
+
+      b()
+        .then((result) => {
+          console.log('b() success:', result);
+
+          c()
+            .then((result) => {
+              console.log('c() success:', result);
+            })
+            .catch((error) => {
+              console.log('c() error:', error);
+            });
+
+        })
+        .catch((error) => {
+          console.log('b() error:', error);
+        });
+    })
+    .catch((error) => {
+      console.log('a() error:', error);
+    });
+
+};
+//----- Promise
 
 
 module.exports = socketio;

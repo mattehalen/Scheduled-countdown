@@ -16,6 +16,8 @@ var timeCodeArray = [""];
 var timeCodeBool = true;
 var cuelistHideBool = true;
 var setTimeoutTime = 150;
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+
 //--------------------------------------------------
 var offsetTimeInit = 0;
 //--------------------------------------------------
@@ -32,6 +34,11 @@ var countDownTimeInMS = "";
 
 $("#AddNewCueRow").on('click', function() {
   socket.emit("AddNewCueRow",{user: user});
+
+  sleep(1000).then(() => {
+      document.location.reload(true)
+  });
+
 });
 $("#ToggleTC").on('click', function() {
   if (timeCodeBool==true){
@@ -56,11 +63,17 @@ $("#ResetTC").on('click', function() {
     return
   }
 });
-
 function captureTCButton(listIndex) {
   console.log("captureTCButton with listIndex = "+listIndex);
   var string = "#timeCode"+listIndex
   $(string).val(msToTime(timeCodeMs))
+};
+function delete_button_click(listIndex) {
+  console.log("delete_button_click");
+  socket.emit("send_Delete_CueButton_To_Socket", {
+    listIndex: listIndex,
+    user: user
+  });
 };
 
 socket.on("centerTextContent", function(data){

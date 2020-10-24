@@ -2,23 +2,23 @@
     "cues": [
         {
             "title": "Cue nr 1",
-            "timecode": "00:00:10"
+            "timecode": "00:00:11"
         },
         {
             "title": "Cue nr 2",
-            "timecode": "00:00:15"
+            "timecode": "00:00:14"
         },
         {
             "title": "Cue nr 3",
-            "timecode": "00:00:20"
+            "timecode": "00:00:15"
         },
         {
             "title": "Cue nr 4",
-            "timecode": "00:00:25"
+            "timecode": "00:00:17"
         },
         {
             "title": "Cue nr 5",
-            "timecode": "00:00:30"
+            "timecode": "00:00:18"
         },
         {
             "title": "Cue nr 6",
@@ -39,10 +39,6 @@
         {
             "title": "Cue nr 8",
             "timecode": "00:01:20"
-        },
-        {
-            "title": "David Warm Up",
-            "timecode": "00:10:00"
         }
     ]
 }
