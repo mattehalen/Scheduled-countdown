@@ -20,7 +20,7 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [] USE MIDI Messages as alternative trigger for countDown
 
 ## Bugs
-- []
+- [] offsetTime dosn't effect 5min countdown
 
 ## Bug Fixes
 - [X] OffsetTime .json writes empty files sometimes. - tried using sleep didn't work. - now trying increase setTimeoutTime = 150 instead of 50.

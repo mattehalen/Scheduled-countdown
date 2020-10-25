@@ -149,9 +149,10 @@ router.post('/admin/submit', function(req, res, next){
        fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
          if (err) console.log('Error writing file:', err)
        })
+           res.redirect("/admin");
      });
    })
-    res.redirect("/admin");
+
   });
 
 router.post('/admin/submitSettings', function(req, res, next) {

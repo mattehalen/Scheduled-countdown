@@ -1,5 +1,5 @@
 // var scheduledTimes = require('../public/scheduledTimes.json');
-var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
+var scheduledTimesBackup = require('../public/admin-settings-backup.json');
 var myip = require('../public/myip.json');
 //var ip = require("ip");
 const fs = require('fs');
@@ -131,58 +131,60 @@ function jsonReader(filePath, cb) {
   })
 }
 
+//Uppdaterad
 function updateScheduledTimesjson() {
-  jsonReader('./public/scheduledTimes.json', (err, customer) => {
+  var path = './public/admin-settings.json';
+  jsonReader(path, (err, adminSettings) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
 
-    if (customer.profiles.length > startTitleArray.length) {
-      var a = customer.profiles.length - 1;
-      customer.profiles.splice(a, 1);
+    if (adminSettings.schedule.length > startTitleArray.length) {
+      var a = adminSettings.schedule.length - 1;
+      adminSettings.schedule.splice(a, 1);
 
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].title = startTitleArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].title = startTitleArray[i]
       }
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].startTime = startTimeArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].startTime = startTimeArray[i]
       }
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].cueLength = cueLengthArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].cueLength = cueLengthArray[i]
       }
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].cueBool = cueBoolArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].cueBool = cueBoolArray[i]
       }
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].fiveBool = fiveBoolArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].fiveBool = fiveBoolArray[i]
       }
 
     } else {
 
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].title = startTitleArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].title = startTitleArray[i]
       }
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].startTime = startTimeArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].startTime = startTimeArray[i]
       }
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].cueLength = cueLengthArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].cueLength = cueLengthArray[i]
       }
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].cueBool = cueBoolArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].cueBool = cueBoolArray[i]
       }
-      for (let i = 0; i < customer.profiles.length; i++) {
-        customer.profiles[i].fiveBool = fiveBoolArray[i]
+      for (let i = 0; i < adminSettings.schedule.length; i++) {
+        adminSettings.schedule[i].fiveBool = fiveBoolArray[i]
       };
 
     };
 
-    customer.profiles.sort(function(a, b) {
+    adminSettings.schedule.sort(function(a, b) {
       return a.startTime.localeCompare(b.startTime);
     });
 
-    fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null, 4), (err) => {
+    fs.writeFile(path, JSON.stringify(adminSettings, null, 4), (err) => {
       if (err) console.log('Error writing file:', err)
     })
   })
@@ -208,7 +210,6 @@ function updateOffsetTimePlusjson() {
 
 
 };
-
 function updateOffsetTimeMinusjson() {
 
 
@@ -228,7 +229,6 @@ function updateOffsetTimeMinusjson() {
   })
 
 };
-
 function updateOffsetTimeResetjson() {
 
 
@@ -250,27 +250,29 @@ function updateOffsetTimeResetjson() {
   })
 
 };
-
+//Uppdaterad
 function loadDefaultjson() {
+  var path = './public/admin-settings.json';
   getscheduledTimes();
 
-  fs.writeFile('./public/scheduledTimes.json', JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
+  fs.writeFile(path, JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
     if (err) throw err;
   });
 };
-
+//Uppdaterad
 function writeDefaultjson() {
-  jsonReader('./public/scheduledTimes.json', (err, customer) => {
+  var path = './public/admin-settings.json';
+  var pathBackup = './public/admin-settings-backup.json';
+  jsonReader(path, (err, adminSettings) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
-    fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(customer, null, 4), (err) => {
+    fs.writeFile(pathBackup, JSON.stringify(adminSettings, null, 4), (err) => {
       if (err) console.log('Error writing file:', err)
     })
   })
 };
-
 function getOffsetTimejson() {
   jsonReader('./public/variables.json', (err, variables) => {
     if (err) {
@@ -281,12 +283,13 @@ function getOffsetTimejson() {
   })
   return
 };
-
+//Uppdaterad
 function addNewRowDefault() {
+    var path = './public/admin-settings.json';
   console.log("addNewRowDefault knappen funkar");
   var addString = "";
 
-  fs.readFile("./public/scheduledTimes.json", function(err, data) {
+  fs.readFile(path, function(err, data) {
     var json = JSON.parse(data);
     var feed = {
       title: "New row added",
@@ -294,9 +297,9 @@ function addNewRowDefault() {
       cueLength: "00:01:10"
     };
 
-    json.profiles.push(feed);
+    json.schedule.push(feed);
     console.log("addNewRowDefault: " + JSON.stringify(json, null, 4));
-    json.profiles.sort(function(a, b) {
+    json.schedule.sort(function(a, b) {
       return a.startTime.localeCompare(b.startTime);
     });
     addString = JSON.stringify(json, null, 4);
@@ -305,39 +308,39 @@ function addNewRowDefault() {
   });
 
   sleep(1000).then(() => {
-    fs.writeFile('./public/scheduledTimes.json', addString, (err) => {
+    fs.writeFile(path, addString, (err) => {
       if (err) throw err;
     });
   });
 };
 getOffsetTimejson();
-
+//Uppdaterad
 function getscheduledTimes() {
-
+    var path = './public/admin-settings.json';
 
   console.log("--------------------> Socket getscheduledTimes <--------------------  " + newCurrentTime());
-  jsonReader('./public/scheduledTimes.json', (err, customer) => {
+  jsonReader(path, (err, adminSettings) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
-    scheduledTimesArray = customer;
-    scheduledTimesArraylength = customer.profiles.length;
+    scheduledTimesArray = adminSettings;
+    scheduledTimesArraylength = adminSettings.schedule.length;
 
-    for (let i = 0; i < customer.profiles.length; i++) {
-      startTitleArray[i] = customer.profiles[i].title
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      startTitleArray[i] = adminSettings.schedule[i].title
     }
-    for (let i = 0; i < customer.profiles.length; i++) {
-      startTimeArray[i] = customer.profiles[i].startTime
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      startTimeArray[i] = adminSettings.schedule[i].startTime
     }
-    for (let i = 0; i < customer.profiles.length; i++) {
-      cueLengthArray[i] = customer.profiles[i].cueLength
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      cueLengthArray[i] = adminSettings.schedule[i].cueLength
     }
-    for (let i = 0; i < customer.profiles.length; i++) {
-      cueBoolArray[i] = customer.profiles[i].cueBool
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      cueBoolArray[i] = adminSettings.schedule[i].cueBool
     }
-    for (let i = 0; i < customer.profiles.length; i++) {
-      fiveBoolArray[i] = customer.profiles[i].fiveBool
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      fiveBoolArray[i] = adminSettings.schedule[i].fiveBool
     }
 
   })
@@ -499,17 +502,17 @@ io.on('connection', function(socket) {
 
 
 
-    jsonReader('./public/myip.json', (err, customer) => {
+    jsonReader('./public/myip.json', (err, adminSettings) => {
       if (err) {
         console.log('Error reading file:', err)
         return
       }
-      console.log("sendChosenIp_To_Socket: Customer");
-      console.log(customer.myIp);
-      customer.myIp = data.myChosenIp;
+      console.log("sendChosenIp_To_Socket: adminSettings");
+      console.log(adminSettings.myIp);
+      adminSettings.myIp = data.myChosenIp;
 
 
-      fs.writeFile('./public/myip.json', JSON.stringify(customer, null, 4), (err) => {
+      fs.writeFile('./public/myip.json', JSON.stringify(adminSettings, null, 4), (err) => {
         if (err) console.log('Error writing file:', err)
       })
     })
@@ -545,14 +548,14 @@ io.on('connection', function(socket) {
 //--------------------------------------------------
 //- CurrentTime
 //--------------------------------------------------
-
+//Uppdaterad
 function newTimeArraySorting() {
   //--------------------------------------------------
   //---Get next title / StartTime / cueLength
   //--------------------------------------------------
   sleep(500).then(() => {
     if (newArrayIndex < scheduledTimesArraylength) {
-      var time = scheduledTimesArray.profiles[newArrayIndex].startTime
+      var time = scheduledTimesArray.schedule[newArrayIndex].startTime
       var timInMs = 0;
 
       var d = new Date();
@@ -561,12 +564,12 @@ function newTimeArraySorting() {
       if (nowInMs > ((dd.getTime() + newOffsetTime()) + countUp)) {
         newArrayIndex++;
       } else {
-        startTitleHolder = scheduledTimesArray.profiles[newArrayIndex].title;
-        startTimeTextHolder = scheduledTimesArray.profiles[newArrayIndex].startTime;
-        cueLengthTextHolder = scheduledTimesArray.profiles[newArrayIndex].cueLength;
+        startTitleHolder = scheduledTimesArray.schedule[newArrayIndex].title;
+        startTimeTextHolder = scheduledTimesArray.schedule[newArrayIndex].startTime;
+        cueLengthTextHolder = scheduledTimesArray.schedule[newArrayIndex].cueLength;
 
-        cueBoolHolder = scheduledTimesArray.profiles[newArrayIndex].cueBool;
-        fiveBoolHolder = scheduledTimesArray.profiles[newArrayIndex].fiveBool;
+        cueBoolHolder = scheduledTimesArray.schedule[newArrayIndex].cueBool;
+        fiveBoolHolder = scheduledTimesArray.schedule[newArrayIndex].fiveBool;
 
       }
     };
@@ -599,14 +602,12 @@ function newCurrentTime() {
 
   return s
 };
-
 function newCurrentTimeInMs() {
   var d = new Date();
   var dInMs = d.getTime()
 
   return dInMs
 };
-
 function newStartTimeInMs(time) {
   //console.log(newOffsetTime());
   var d = new Date();
@@ -615,7 +616,6 @@ function newStartTimeInMs(time) {
 
   return ddInMs
 };
-
 function newStartTime(time) {
   var d = new Date();
   var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
@@ -806,7 +806,6 @@ function timeStringToMs(t) {
   return r;
 
 }
-
 function msToTime(s) {
   var ms = s % 1000;
   s = (s - ms) / 1000;
@@ -816,7 +815,6 @@ function msToTime(s) {
   var hrs = (s - mins) / 60;
   return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
 }
-
 function pad(n, z) {
   z = z || 2;
   return ('00' + n).slice(-z);
@@ -884,7 +882,7 @@ function resetsetTimeout() {
   //---------
   sleep(1000 * 60 * 60).then(() => {
     console.log("----------> resetsetTimeout() <----------   " + newCurrentTime());
-    fs.writeFile('./autoRestartServer.json', JSON.stringify("customer", null, 4), (err) => {
+    fs.writeFile('./autoRestartServer.json', JSON.stringify("adminSettings", null, 4), (err) => {
       if (err) console.log('Error writing file:', err)
     })
 
@@ -912,7 +910,7 @@ function checkIfUserExist(user) {
 
   fs.access(path, fs.F_OK, (err) => {
     if (err) {
-      fs.writeFile(path, JSON.stringify("customer", null, 4), (err) => {
+      fs.writeFile(path, JSON.stringify("adminSettings", null, 4), (err) => {
         if (err) console.log('Error writing file:', err)
       })
       //console.error(err)
@@ -940,7 +938,6 @@ function checkIfUserExist(user) {
 
   })
 };
-
 function addNewCueRowToUser(user) {
   console.log("addNewCueRowToUser + user  = " + user);
   const path = './public/CueLists/' + user + '.json'

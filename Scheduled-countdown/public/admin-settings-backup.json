@@ -1,4 +1,17 @@
 {
+    "ipsettings": [
+        {
+            "ipadress": "192.168.70.137",
+            "port": "3000",
+            "countUp": 2,
+            "cueCountDown": 7,
+            "cueCountUp": 2,
+            "changeBgColorTimeCountDown": 3,
+            "countDownColor": "darkred",
+            "changeBgColorTimeCountUp": 0,
+            "countUpColor": "darkgreen"
+        }
+    ],
     "timeSettings": [
         {
             "offsetTime": 0,
