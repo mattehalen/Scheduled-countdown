@@ -477,11 +477,12 @@ io.on('connection', function(socket) {
     io.emit("sortingButton_From_Socket", {})
   })
   socket.on("send_Delete_Button_To_Socket", function(data) {
-    listIndex = data.listIndex
-    console.log("send_Delete_Button_To_Socket: listIndex= " + listIndex);
-    io.emit("send_Delete_Button_from_Socket", {
-      listIndex: listIndex
-    })
+    deleteRowFromSchedule(data.listIndex);
+    // listIndex = data.listIndex
+    // console.log("send_Delete_Button_To_Socket: listIndex= " + listIndex);
+    // io.emit("send_Delete_Button_from_Socket", {
+    //   listIndex: listIndex
+    // })
   })
   socket.on("send_Delete_CueButton_To_Socket", function(data) {
     console.log("send_Delete_CueButton_To_Socket: listIndex= " + data.listIndex);
@@ -998,6 +999,28 @@ function deleteCueRowFromUser(user,listIndex) {
 
     sleep(250).then(() => {
       fs.writeFile(path, JSON.stringify(cueList, null, 4), (err) => {
+        if (err) console.log('Error writing file:', err)
+      })
+
+    })
+  })
+
+};
+function deleteRowFromSchedule(listIndex) {
+  console.log("deleteRowFromSchedule + user  = " + listIndex);
+  const path = './public/admin-settings.json'
+
+  jsonReader(path, (err, adminSettings) => {
+    if (err) {
+      console.log('Error reading file:', err)
+      return
+    }
+    console.log(adminSettings.schedule);
+    adminSettings.schedule.splice(listIndex, 1);
+    console.log(adminSettings.schedule);
+
+    sleep(250).then(() => {
+      fs.writeFile(path, JSON.stringify(adminSettings, null, 4), (err) => {
         if (err) console.log('Error writing file:', err)
       })
 

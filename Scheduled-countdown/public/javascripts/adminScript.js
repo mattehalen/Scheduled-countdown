@@ -216,17 +216,15 @@ socket.on("sendIpArrayToAdminPage", function(data){
 
 
 });
-socket.on("send_Delete_Button_from_Socket", function(data) {
-  console.log(data);
-  listIndex = data.listIndex
-  console.log("send_Delete_Button_from_Socket: listIndex= " + listIndex);
-
-  document.getElementById(listIndex).remove();
-  deleteIndexInScheduledTimes(listIndex);
-  sleep(1000).then(() => {
-    // window.location.reload(true)
-  });
-});
+// socket.on("send_Delete_Button_from_Socket", function(data) {
+//   console.log(data);
+//   listIndex = data.listIndex
+//   console.log("send_Delete_Button_from_Socket: listIndex= " + listIndex);
+//
+//   document.getElementById(listIndex).remove();
+//   deleteIndexInScheduledTimes(listIndex);
+//
+// });
 socket.on("sendTimeCode",function(data){
   timeCode.textContent = data.smpteString
   //console.log(data.smpteString);
@@ -382,6 +380,10 @@ function updateScheduledTimesArray() {
 function delete_button_click(listIndex) {
   socket.emit("send_Delete_Button_To_Socket", {
     listIndex: listIndex
+  });
+
+  sleep(500).then(() => {
+    document.location.reload();
   });
 };
 function printArraysToElements() {
