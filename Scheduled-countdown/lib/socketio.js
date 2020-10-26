@@ -3,7 +3,7 @@ var scheduledTimesBackup = require('../public/admin-settings-backup.json');
 var adminSettingsJson = require('../public/admin-settings.json');
 console.log("adminSettingsJson");
 console.log(adminSettingsJson.timeSettings.useMIDI_ProgramChange);
-var myip = require('../public/myip.json');
+var myip = adminSettingsJson.ipsettings.ipadress;
 //var ip = require("ip");
 const fs = require('fs');
 var startTimeArray = [""];
@@ -145,15 +145,13 @@ function midiTriggerCountDown(){
   s += (10 > d.getMinutes() ? "0" : "") + d.getMinutes() + ":";
   s += (10 > d.getSeconds() ? "0" : "") + d.getSeconds();
 
-  if (midiTriggerCountDownCounter===0) {
+  if (midiTriggerCountDownCounter===0 && useMIDI_ProgramChange!=0) {
       midiTriggerCountDownCounter++;
       startTimeTextHolder = s;
       startTitleHolder = scheduledTimesArray.schedule[midi_ProgramChange].title;
     };
-    if (midi_ProgramChange===127) {
+    if (midi_ProgramChange===127 && useMIDI_ProgramChange!=0) {
       var a = new Date(newCurrentTimeInMs() - countUp);
-      console.log("d = "+d);
-      console.log("d = "+a);
       d = a;
 
       var s = "";
@@ -241,21 +239,18 @@ function updateScheduledTimesjson() {
     })
   })
 };
-
+//Uppdaterad
 function updateOffsetTimePlusjson() {
 
-
-  jsonReader('./public/variables.json', (err, variables) => {
+  jsonReader('./public/admin-settings.json', (err, settings) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
 
-    variables.offsetTime += 1;
-    // console.log("updateOffsetTimejson: ");
-    // console.log(variables);
+    settings.timeSettings.offsetTime += 1;
 
-    fs.writeFile('./public/variables.json', JSON.stringify(variables, null, 4), (err) => {
+    fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
       if (err) console.log('Error writing file:', err)
     })
   })
@@ -265,17 +260,14 @@ function updateOffsetTimePlusjson() {
 function updateOffsetTimeMinusjson() {
 
 
-  jsonReader('./public/variables.json', (err, variables) => {
+  jsonReader('./public/admin-settings.json', (err, settings) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
 
-    variables.offsetTime -= 1;
-    // console.log("updateOffsetTimejson: ");
-    // console.log(variables);
-
-    fs.writeFile('./public/variables.json', JSON.stringify(variables, null, 4), (err) => {
+    settings.timeSettings.offsetTime -= 1;
+    fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
       if (err) console.log('Error writing file:', err)
     })
   })
@@ -284,17 +276,15 @@ function updateOffsetTimeMinusjson() {
 function updateOffsetTimeResetjson() {
 
 
-  jsonReader('./public/variables.json', (err, variables) => {
+  jsonReader('./public/admin-settings.json', (err, settings) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
 
-    variables.offsetTime = 0;
-    // console.log("updateOffsetTimejson: ");
-    // console.log(variables);
+  settings.timeSettings.offsetTime = 0;
     sleep(1000).then(() => {
-      fs.writeFile('./public/variables.json', JSON.stringify(variables, null, 4), (err) => {
+      fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
         if (err) console.log('Error writing file:', err)
       })
     });
@@ -326,12 +316,12 @@ function writeDefaultjson() {
   })
 };
 function getOffsetTimejson() {
-  jsonReader('./public/variables.json', (err, variables) => {
+  jsonReader('./public/admin-settings.json', (err, settings) => {
     if (err) {
       console.log('Error reading file:', err)
       return
     }
-    offsetTimejson = variables.offsetTime;
+    offsetTimejson = settings.timeSettings.offsetTime;
   })
   return
 };
@@ -558,17 +548,17 @@ io.on('connection', function(socket) {
 
 
 
-    jsonReader('./public/myip.json', (err, adminSettings) => {
+    jsonReader('./public/admin-settings.json', (err, adminSettings) => {
       if (err) {
         console.log('Error reading file:', err)
         return
       }
       console.log("sendChosenIp_To_Socket: adminSettings");
-      console.log(adminSettings.myIp);
-      adminSettings.myIp = data.myChosenIp;
+      console.log(adminSettings.ipsettings.ipadress);
+      adminSettings.ipsettings.ipadress = data.myChosenIp;
 
 
-      fs.writeFile('./public/myip.json', JSON.stringify(adminSettings, null, 4), (err) => {
+      fs.writeFile('./public/admin-settings.json', JSON.stringify(adminSettings, null, 4), (err) => {
         if (err) console.log('Error writing file:', err)
       })
     })

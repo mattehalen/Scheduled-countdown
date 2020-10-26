@@ -15,9 +15,9 @@ Download Nodejs -> https://nodejs.org/en/download/
 
 # Task lists
 - [] Find other solution for loading and writing to .json files. Is it better to reload page on all logged in as admin instead of jumping with Socket?
-- [] Move over to the use of admin-settings instead of variables & myip & scheduleTimes
+- [X] Move over to the use of admin-settings instead of variables & myip & scheduleTimes
 - [] SEND Warning Message on FULL SCREEN
-- [] USE MIDI Messages as alternative trigger for countDown
+- [X] USE MIDI Messages as alternative trigger for countDown
 - [] fix timeSettings - nothing is working now
 
 ## Bugs

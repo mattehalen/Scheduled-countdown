@@ -82,11 +82,11 @@ getscheduledTimes();
 //--------------------------------------------------
 function getOffsetTime(){
   const request = async () => {
-      const response = await fetch('/variables.json');
+      const response = await fetch('/admin-settings.json');
       const json = await response.json();
       offsetTimejson = json;
       //console.log("Get offsetTime: "+offsetTimejson.offsetTime);
-      offsetTimeInit = offsetTimejson.offsetTime;
+      offsetTimeInit = offsetTimejson.timeSettings.offsetTime;
 
   }
 

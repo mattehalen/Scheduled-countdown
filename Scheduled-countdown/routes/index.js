@@ -4,11 +4,12 @@ const fs = require('fs');
 var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 var adminSettings = require('../public/admin-settings.json');
-var variables = require('../public/variables.json');
-var myipjson = require('../public/myip.json');
+console.log("----------> adminSettings");
+console.log(adminSettings.ipsettings.ipadress);
+var myipjson = adminSettings.ipsettings.ipadress;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var myIpArray= [];
-var myLocalip = myipjson.myIp+":3000";
+var myLocalip = myipjson+":3000";
 //--------------------------------------------------
 
 
@@ -71,7 +72,7 @@ if (error) {
 }, false);
 //--------------------------------------------------
 console.log("index.js -> myipjson");
-console.log(myipjson.myIp);
+console.log(myipjson);
 //-------------------------------------------------------------------------
 function jsonReader(filePath, cb) {
     fs.readFile(filePath, (err, fileData) => {
@@ -275,15 +276,15 @@ router.post('/admin/offsetPlus', function(req, res, next){
           }
       })
   }
-  jsonReader('./public/variables.json', (err, variables2) => {
+  jsonReader('./public/admin-settings.json', (err, settings) => {
     if (err) {
         console.log('Error reading file:',err)
         return
     }
 
-    variables.offsetTime += 1;
+    settings.timeSettings.offsetTime += 1;
 
-  fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+  fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
     })
   })
@@ -305,15 +306,15 @@ router.post('/admin/offsetMinus', function(req, res, next){
           }
       })
   }
-  jsonReader('./public/variables.json', (err, variables2) => {
+  jsonReader('./public/admin-settings.json', (err, settings) => {
     if (err) {
         console.log('Error reading file:',err)
         return
     }
 
-    variables.offsetTime -= 1;
+    settings.timeSettings.offsetTime -= 1;
 
-  fs.writeFile('./public/variables.json', JSON.stringify(variables, null,4), (err) => {
+  fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
     })
   })
@@ -336,16 +337,16 @@ router.post('/admin/setLoopbackip', function(req, res, next){
           }
       })
   }
-  jsonReader('./public/myip.json', (err, mycustomip) => {
+  jsonReader('./public/admin-settings.json', (err, mycustomip) => {
     if (err) {
         console.log('Error reading file:',err)
         return
     }
-    console.log("mycustomip:"+mycustomip.myIp);
+    console.log("mycustomip:"+mycustomip.ipsettings.ipadress);
 
-    mycustomip.myIp = "127.0.0.1";
+    mycustomip.ipsettings.ipadress = "127.0.0.1";
 
-  fs.writeFile('./public/myip.json', JSON.stringify(mycustomip, null,4), (err) => {
+  fs.writeFile('./public/admin-settings.json', JSON.stringify(mycustomip, null,4), (err) => {
         if (err) console.log('Error writing file:', err)
     })
   })
@@ -374,7 +375,7 @@ router.get('/ipsettings', function(req, res, next) {
     title: 'Scheduled-CountDown - IP Settings',
     now: "now",
     scheduledTimes : scheduledTimes.profiles,
-    offsetTime: variables.offsetTime,
+      offsetTime: adminSettings.timeSettings.offsetTime,
     myLocalip: myLocalip
   });
 });
@@ -400,7 +401,7 @@ router.get('/admin', function(req, res, next) {
     scheduledTimes : scheduledTimes.profiles,
     schedule: adminSettings.schedule,
     timeSettings: adminSettings.timeSettings,
-    offsetTime: variables.offsetTime,
+    offsetTime: adminSettings.timeSettings.offsetTime,
     myLocalip: myLocalip
   });
 });
@@ -410,7 +411,7 @@ router.get('/new-admin', function(req, res, next) {
     now: "now",
     schedule: adminSettings.schedule,
     timeSettings: adminSettings.timeSettings,
-    offsetTime: variables.offsetTime,
+    offsetTime: adminSettings.timeSettings.offsetTime,
     myLocalip: myLocalip
   });
 });
@@ -419,7 +420,7 @@ router.get('/Countdown', function(req, res, next) {
     title: 'Countdown',
     now: "now",
     scheduledTimes : scheduledTimes.profiles,
-    offsetTime: variables.offsetTime,
+      offsetTime: adminSettings.timeSettings.offsetTime,
     myLocalip: myLocalip
   });
 });
@@ -428,7 +429,7 @@ router.get('/slideshow_1', function(req, res, next) {
     title: 'Scheduled-CountDown',
     now: "now",
     scheduledTimes : scheduledTimes.profiles,
-    offsetTime: variables.offsetTime,
+    offsetTime: adminSettings.timeSettings.offsetTime,
     myLocalip: myLocalip
   });
 });
