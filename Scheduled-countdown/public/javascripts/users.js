@@ -152,6 +152,9 @@ function pad(n, z) {
 
 var newArrayIndex = 0;
 var currentArrayIndex;
+var hideTime = 500;
+var overlayTime = 5000;
+var fadeTime = 750;
 function cueTimeCountDown(){
   for (let i = 0; i < timeCodeArray.length; i++) {
     var time = "";
@@ -170,22 +173,22 @@ function cueTimeCountDown(){
     $(idString).text(time)
     //----------
     if (timeCodeBool==true){
-      if (timeCodeMs > (timeCodeArrayMs+4000) && cuelistHideBool == true){
-        $(rowString).hide(1500);
+      if (timeCodeMs > (timeCodeArrayMs+hideTime) && cuelistHideBool == true){
+        $(rowString).hide(fadeTime);
       }else {
         $(rowString).show(1500);
       }
       if (cuelistHideBool==false) {
-        $(rowString).show(1500);
+        $(rowString).show(fadeTime);
       }
 
-      if (timeCodeMs > (timeCodeArrayMs-5000)){
-        $(centeredOverlay).fadeIn(500);
+      if (timeCodeMs > (timeCodeArrayMs-overlayTime)){
+        $(centeredOverlay).fadeIn(fadeTime);
         $(centeredOverlay).animate({
           width: "0%"
-        }, 4000);
+        }, overlayTime-1000);
       }else {
-        $(centeredOverlay).fadeOut(10);
+        $(centeredOverlay).fadeOut(fadeTime);
         $(centeredOverlay).animate({
           width: "100%"
         }, 0);

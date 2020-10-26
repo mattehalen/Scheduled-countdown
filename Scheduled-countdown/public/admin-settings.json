@@ -16,7 +16,7 @@
         "countUp": 2,
         "cueCountDown": 7,
         "cueCountUp": 2,
-        "useMIDI_ProgramChange": 0,
+        "useMIDI_ProgramChange": 1,
         "changeBgColorTimeCountDown": 3,
         "countDownColor": "#ff0000",
         "changeBgColorTimeCountUp": 0,
