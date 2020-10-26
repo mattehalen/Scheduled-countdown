@@ -1,5 +1,8 @@
 // var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/admin-settings-backup.json');
+var adminSettingsJson = require('../public/admin-settings.json');
+console.log("adminSettingsJson");
+console.log(adminSettingsJson.timeSettings.useMIDI_ProgramChange);
 var myip = require('../public/myip.json');
 //var ip = require("ip");
 const fs = require('fs');
@@ -17,6 +20,7 @@ var cueBoolHolder = "";
 var fiveBoolArray = [""];
 var fiveBoolHolder = [""];
 var sendMin_To_countDownBoole = 100;
+
 
 //--------------------------------------------------
 //--from Script.js
@@ -98,12 +102,15 @@ getNetworkIPs(function(error, ip) {
   }
 }, false);
 
-// MIDI
 
+
+//-------------------------------------------------------------------------
+// MIDI
 var smpteString;
 var smpteMs;
 var midi_ProgramChange;
 var midi_Channel;
+var useMIDI_ProgramChange = adminSettingsJson.timeSettings.useMIDI_ProgramChange;
 
 function mtcTOString() {
   var JZZ = require('jzz');
@@ -119,13 +126,48 @@ function mtcTOString() {
       if (msg.toString().includes("Program Change")) {
         midi_Channel = msg[0]-191;
         midi_ProgramChange = msg[1];
-        console.log("midi_Channel = "+midi_Channel);
-        //console.log("midi_ProgramChange = "+midi_ProgramChange);
+        midiTriggerCountDown();
       }
 
     });
 };
 mtcTOString();
+var midiTriggerCountDownCounter=0;
+function midiTriggerCountDown(){
+
+  var offsetTime = newOffsetTime();
+  var startTime = newCurrentTimeInMs() + countDown;
+  startTime += offsetTime;
+
+  var d = new Date(newCurrentTimeInMs() + countDown);
+  var s = "";
+  s += (10 > d.getHours() ? "0" : "") + d.getHours() + ":";
+  s += (10 > d.getMinutes() ? "0" : "") + d.getMinutes() + ":";
+  s += (10 > d.getSeconds() ? "0" : "") + d.getSeconds();
+
+  if (midiTriggerCountDownCounter===0) {
+      midiTriggerCountDownCounter++;
+      startTimeTextHolder = s;
+      startTitleHolder = scheduledTimesArray.schedule[midi_ProgramChange].title;
+    };
+    if (midi_ProgramChange===127) {
+      var a = new Date(newCurrentTimeInMs() - countUp);
+      console.log("d = "+d);
+      console.log("d = "+a);
+      d = a;
+
+      var s = "";
+      s += (10 > d.getHours() ? "0" : "") + d.getHours() + ":";
+      s += (10 > d.getMinutes() ? "0" : "") + d.getMinutes() + ":";
+      s += (10 > d.getSeconds() ? "0" : "") + d.getSeconds();
+
+      startTimeTextHolder = s;
+      midiTriggerCountDownCounter = 0;
+      console.log("d efter  = "+d);
+
+    };
+
+  }
 //-------------------------------------------------------------------------
 function jsonReader(filePath, cb) {
   fs.readFile(filePath, (err, fileData) => {
@@ -334,6 +376,7 @@ function getscheduledTimes() {
       console.log('Error reading file:', err)
       return
     }
+
     scheduledTimesArray = adminSettings;
     scheduledTimesArraylength = adminSettings.schedule.length;
 
@@ -567,7 +610,7 @@ function newTimeArraySorting() {
   //---Get next title / StartTime / cueLength
   //--------------------------------------------------
   sleep(500).then(() => {
-    if (newArrayIndex < scheduledTimesArraylength) {
+    if (newArrayIndex < scheduledTimesArraylength && useMIDI_ProgramChange===0) {
       var time = scheduledTimesArray.schedule[newArrayIndex].startTime
       var timInMs = 0;
 
@@ -848,8 +891,6 @@ function sendCenterText() {
   //--------------------------------------------------
 
   if (
-    // now > ((start+offset) - countDown) &&
-    // now < ((start+offset) + countUp)
     now > ((start) - countDown) &&
     now < ((start) + countUp)
   ) {
