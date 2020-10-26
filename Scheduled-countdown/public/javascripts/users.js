@@ -12,6 +12,8 @@ var titleText = document.getElementById("title");
 var startText = document.getElementById("start");
 var timeCode = document.getElementById("timeCode");
 var timeCodeMs;
+var midi_ProgramChange = document.getElementById("midi_ProgramChange");
+var midi_Channel;
 var timeCodeArray = [""];
 var timeCodeBool = true;
 var cuelistHideBool = true;
@@ -109,7 +111,9 @@ socket.emit("user", {
 socket.emit("getTimeCode",{});
 socket.on("sendTimeCode",function(data){
     timeCode.textContent = data.smpteString,
-    timeCodeMs = data.smpteMs
+    timeCodeMs = data.smpteMs,
+    midi_ProgramChange.textContent = data.midi_ProgramChange,
+    midi_Channel = midi_Channel
   });
 
 

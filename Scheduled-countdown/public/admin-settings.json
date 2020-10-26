@@ -12,8 +12,7 @@
             "countUpColor": "darkgreen"
         }
     ],
-    "timeSettings": [
-        {
+    "timeSettings": {
             "offsetTime": 0,
             "countDown": 7,
             "countUp": 2,
@@ -23,8 +22,7 @@
             "countDownColor": "darkred",
             "changeBgColorTimeCountUp": 0,
             "countUpColor": "darkgreen"
-        }
-    ],
+        },
     "schedule": [
         {
             "title": "Open Doors",

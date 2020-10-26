@@ -18,6 +18,7 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [] Move over to the use of admin-settings instead of variables & myip & scheduleTimes
 - [] SEND Warning Message on FULL SCREEN
 - [] USE MIDI Messages as alternative trigger for countDown
+- [] fix timeSettings - nothing is working now
 
 ## Bugs
 - [] offsetTime dosn't effect 5min countdown

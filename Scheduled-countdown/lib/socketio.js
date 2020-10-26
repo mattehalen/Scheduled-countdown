@@ -102,17 +102,27 @@ getNetworkIPs(function(error, ip) {
 
 var smpteString;
 var smpteMs;
+var midi_ProgramChange;
+var midi_Channel;
 
 function mtcTOString() {
   var JZZ = require('jzz');
-  var port = JZZ().openMidiIn(0);
+  var port = JZZ().openMidiIn(1);
   var smpte = JZZ.SMPTE();
+  var midi = JZZ.MIDI();
   console.log(JZZ.info());
   port
     .connect(function(msg) {
       smpte.read(msg);
       smpteString = smpte.toString();
       smpteMs = timeStringToMs(smpteString);
+      if (msg.toString().includes("Program Change")) {
+        midi_Channel = msg[0]-191;
+        midi_ProgramChange = msg[1];
+        console.log("midi_Channel = "+midi_Channel);
+        //console.log("midi_ProgramChange = "+midi_ProgramChange);
+      }
+
     });
 };
 mtcTOString();
@@ -372,7 +382,9 @@ io.on('connection', function(socket) {
   socket.on("getTimeCode", function(data) {
     io.emit("sendTimeCode", {
       smpteString: smpteString,
-      smpteMs: smpteMs
+      smpteMs: smpteMs,
+      midi_ProgramChange: midi_ProgramChange,
+      midi_Channel:midi_Channel
     });
     //mtcTOString();
   });

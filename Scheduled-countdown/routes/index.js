@@ -117,39 +117,46 @@ router.post('/admin/submit', function(req, res, next){
   //         if (err) console.log('Error writing file:', err)
   //     })
   //  })
-    jsonReader('./public/admin-settings.json', (err, settings) => {
+    jsonReader('./public/admin-settings.json', (err, adminSettings) => {
      if (err) {
        console.log('Error reading file:', err)
        return
      }
 
-     console.log(settings.schedule);
-     console.log(settings.schedule.length);
-     console.log(settings.schedule[0].title);
-     console.log(JSON.parse(JSON.stringify(req.body)));
+     // console.log(adminSettings.schedule);
+     // console.log(adminSettings.schedule.length);
+     // console.log(adminSettings.schedule[0].title);
+     // console.log(JSON.parse(JSON.stringify(req.body)));
 
-     for (let i = 0; i < settings.schedule.length; i++) {
-       settings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+     for (let i = 0; i < adminSettings.schedule.length; i++) {
+       adminSettings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
      }
-     for (let i = 0; i < settings.schedule.length; i++) {
-       settings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
+     for (let i = 0; i < adminSettings.schedule.length; i++) {
+       adminSettings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
      }
-     for (let i = 0; i < settings.schedule.length; i++) {
-       settings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
-     }
-
-     for (let i = 0; i < settings.schedule.length; i++) {
-       settings.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
-     }
-     for (let i = 0; i < settings.schedule.length; i++) {
-       settings.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
+     for (let i = 0; i < adminSettings.schedule.length; i++) {
+       adminSettings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
      }
 
-     sleep(1000).then(() => {
-       fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
+     for (let i = 0; i < adminSettings.schedule.length; i++) {
+       adminSettings.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
+     }
+     for (let i = 0; i < adminSettings.schedule.length; i++) {
+       adminSettings.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
+     }
+
+     adminSettings.schedule.sort(function(a, b) {
+       return a.startTime.localeCompare(b.startTime);
+     });
+
+
+     sleep(100).then(() => {
+       fs.writeFile('./public/admin-settings.json', JSON.stringify(adminSettings, null, 4), (err) => {
          if (err) console.log('Error writing file:', err)
        })
-           res.redirect("/admin");
+        sleep(100).then(() => {
+             res.redirect("/admin");
+       });
      });
    })
 
@@ -162,20 +169,20 @@ router.post('/admin/submitSettings', function(req, res, next) {
         return
       }
 
-      console.log(settings.timeSettings[0]);
-      //console.log(JSON.parse(JSON.stringify(req.body[`value${i}`])));
+      console.log(settings.timeSettings);
+      console.log(Object.keys(settings.timeSettings).length);
+      console.log(Object.keys(settings.timeSettings)[0]);
+      console.log(JSON.parse(JSON.stringify(req.body)));
       var array = [];
       var object = {};
-      console.log("settings.timeSettings.length = "+settings.timeSettings.length);
-      for (let i = 0; i < settings.timeSettings.length; i++) {
-        var key = Object.keys(settings.timeSettings[i]);
+      for (let i = 0; i < Object.keys(settings.timeSettings).length; i++) {
+        var key = Object.keys(settings.timeSettings);
         var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
         var isNumber = parseInt(first_string, 10);
-
         if (isNumber >= 0) {
-          settings.timeSettings[i][`${key}`] = isNumber;
+          settings.timeSettings[`${key}`] = isNumber;
         } else {
-          settings.timeSettings[i][`${key}`] = first_string;
+          settings.timeSettings[`${key}`] = first_string;
         }
       }
       console.log(settings.timeSettings);

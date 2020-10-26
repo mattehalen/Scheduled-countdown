@@ -263,8 +263,8 @@ $("#loadDefaultArray").on('click', function() {
     message: "loadDefaultToSocket: Sent"
   });
 
-  sleep(250).then(() => {
-    // window.location.reload(true)
+  sleep(500).then(() => {
+    window.location.reload(true)
   });
 
 });
@@ -292,7 +292,7 @@ $("#addNewRow").on('click', function() {
 
   sleep(1500).then(() => {
     //sortscheduledTimes();
-    // window.location.reload(true)
+    window.location.reload(true)
   });
 });
 $(":input").keypress(function (e) {
