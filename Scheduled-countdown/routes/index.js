@@ -170,28 +170,56 @@ router.post('/admin/submitSettings', function(req, res, next) {
         return
       }
 
-      console.log(settings.timeSettings);
-      console.log(Object.keys(settings.timeSettings).length);
-      console.log(Object.keys(settings.timeSettings)[0]);
-      console.log(JSON.parse(JSON.stringify(req.body)));
+      // console.log(settings.timeSettings);
+      // console.log(Object.keys(settings.timeSettings).length);
+      // console.log(Object.keys(settings.timeSettings)[0]);
+      // console.log(JSON.parse(JSON.stringify(req.body)));
       var array = [];
       var object = {};
       for (let i = 0; i < Object.keys(settings.timeSettings).length; i++) {
         var key = Object.keys(settings.timeSettings);
         var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
         var isNumber = parseInt(first_string, 10);
+        //
+        // console.log(first_string);
+        // console.log(settings.timeSettings[0]);
+
+
+        // if (isNumber >= 0) {
+        //   settings.timeSettings[`${key}`] = isNumber;
+        // } else {
+        //   settings.timeSettings[`${key}`] = first_string;
+        // }
+
+
+      }
+      //console.log(settings.timeSettings);
+
+      const entries = Object.entries(settings.timeSettings)
+      var i=0;
+      for (const [title, value] of entries) {
+        console.log(`${title} ${value}`)
+        var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
+        var isNumber = parseInt(first_string, 10);
+
         if (isNumber >= 0) {
-          settings.timeSettings[`${key}`] = isNumber;
+          settings.timeSettings[`${title}`] = isNumber;
         } else {
-          settings.timeSettings[`${key}`] = first_string;
+          settings.timeSettings[`${title}`] = first_string;
         }
+        i++;
       }
       console.log(settings.timeSettings);
 
+
+
+
+
+
       sleep(1000).then(() => {
-        // fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
-        //   if (err) console.log('Error writing file:', err)
-        // })
+        fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
+          if (err) console.log('Error writing file:', err)
+        })
       });
     })
     res.redirect("/admin");

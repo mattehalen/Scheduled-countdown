@@ -16,11 +16,11 @@
         "countUp": 2,
         "cueCountDown": 7,
         "cueCountUp": 2,
-        "useMIDI_ProgramChange": 1,
+        "useMIDI_ProgramChange": 0,
         "changeBgColorTimeCountDown": 3,
-        "countDownColor": "darkred",
+        "countDownColor": "#ff0000",
         "changeBgColorTimeCountUp": 0,
-        "countUpColor": "darkgreen"
+        "countUpColor": "#00ff00"
     },
     "schedule": [
         {
