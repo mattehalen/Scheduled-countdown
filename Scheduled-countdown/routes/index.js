@@ -1,11 +1,12 @@
 var express = require('express');
 var router = express.Router();
-const fs = require('fs');
+const fs = require('fs').promises;
 var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
 var adminSettings = require('../public/admin-settings.json');
-console.log("----------> adminSettings");
-console.log(adminSettings.ipsettings.ipadress);
+var adminSettingsBackup = require('../public/admin-settings-backup.json');
+// console.log("----------> adminSettings");
+// console.log(adminSettings.ipsettings.ipadress);
 var myipjson = adminSettings.ipsettings.ipadress;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var myIpArray= [];
@@ -13,7 +14,7 @@ var myLocalip = myipjson+":3000";
 //--------------------------------------------------
 
 
-//--------------------------------------------------
+//--------------------------------------------------f
 var getNetworkIPs = (function () {
     var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
 
@@ -74,6 +75,7 @@ if (error) {
 console.log("index.js -> myipjson");
 console.log(myipjson);
 //-------------------------------------------------------------------------
+//OLD jsonReader
 function jsonReader(filePath, cb) {
     fs.readFile(filePath, (err, fileData) => {
         if (err) {
@@ -87,187 +89,224 @@ function jsonReader(filePath, cb) {
         }
     })
 }
-router.post('/admin/submit', function(req, res, next){
-    const fs = require('fs')
-    function jsonReader(filePath, cb) {
-        fs.readFile(filePath, (err, fileData) => {
-            if (err) {
-                return cb && cb(err)
-            }
-            try {
-                const object = JSON.parse(fileData)
-                return cb && cb(null, object)
-            } catch(err) {
-                return cb && cb(err)
-            }
-        })
+//-------------------------------------------------------------------------
+//New async jsonReader
+async function readJsonFile(filename){
+  const data = await fs.readFile(filename)
+  return JSON.parse(data);
+}
+async function writeJsonFIle(filename,data){
+  await fs.writeFile(filename, JSON.stringify(data, null, 4));
+  console.log("----------> data from writeJsonFIle =");
+  console.log(data);
+}
+// With async
+router.post('/admin/submit', async function(req, res){
+  const filePath = './public/admin-settings.json';
+  try{
+    const adminSettings = await readJsonFile(filePath);
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
     }
-  //   jsonReader('./public/scheduledTimes.json', (err, customer) => {
-  //     if (err) {
-  //         console.log('Error reading file:',err)
-  //         return
-  //     }
-  //
-  //     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))}
-  //     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))}
-  //     for(let i=0; i < customer.profiles.length; i++) {customer.profiles[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))}
-  //
-  //
-  //
-  // fs.writeFile('./public/scheduledTimes.json', JSON.stringify(customer, null,4), (err) => {
-  //         if (err) console.log('Error writing file:', err)
-  //     })
-  //  })
-    jsonReader('./public/admin-settings.json', (err, adminSettings) => {
-     if (err) {
-       console.log('Error reading file:', err)
-       return
-     }
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
+    }
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
+    }
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettings.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
+    }
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettings.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
+    }
 
-     // console.log(adminSettings.schedule);
-     // console.log(adminSettings.schedule.length);
-     // console.log(adminSettings.schedule[0].title);
-     // console.log(JSON.parse(JSON.stringify(req.body)));
+    adminSettings.schedule.sort(function(a, b) {
+      return a.startTime.localeCompare(b.startTime);
+    });
 
-     for (let i = 0; i < adminSettings.schedule.length; i++) {
-       adminSettings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
-     }
-     for (let i = 0; i < adminSettings.schedule.length; i++) {
-       adminSettings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
-     }
-     for (let i = 0; i < adminSettings.schedule.length; i++) {
-       adminSettings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
-     }
-
-     for (let i = 0; i < adminSettings.schedule.length; i++) {
-       adminSettings.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
-     }
-     for (let i = 0; i < adminSettings.schedule.length; i++) {
-       adminSettings.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
-     }
-
-     adminSettings.schedule.sort(function(a, b) {
-       return a.startTime.localeCompare(b.startTime);
-     });
+    await writeJsonFIle(filePath,adminSettings);
 
 
-     sleep(100).then(() => {
-       fs.writeFile('./public/admin-settings.json', JSON.stringify(adminSettings, null, 4), (err) => {
-         if (err) console.log('Error writing file:', err)
-       })
-        sleep(100).then(() => {
-             res.redirect("/admin");
-       });
-     });
-   })
+  }
+  catch(error){
+    console.log(error);
+  }
 
-  });
-
-router.post('/admin/submitSettings', function(req, res, next) {
-    jsonReader('./public/admin-settings.json', (err, settings) => {
-      if (err) {
-        console.log('Error reading file:', err)
-        return
-      }
-
-      // console.log(settings.timeSettings);
-      // console.log(Object.keys(settings.timeSettings).length);
-      // console.log(Object.keys(settings.timeSettings)[0]);
-      // console.log(JSON.parse(JSON.stringify(req.body)));
-      var array = [];
-      var object = {};
-      for (let i = 0; i < Object.keys(settings.timeSettings).length; i++) {
-        var key = Object.keys(settings.timeSettings);
-        var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
-        var isNumber = parseInt(first_string, 10);
-        //
-        // console.log(first_string);
-        // console.log(settings.timeSettings[0]);
-
-
-        // if (isNumber >= 0) {
-        //   settings.timeSettings[`${key}`] = isNumber;
-        // } else {
-        //   settings.timeSettings[`${key}`] = first_string;
-        // }
-
-
-      }
-      //console.log(settings.timeSettings);
-
-      const entries = Object.entries(settings.timeSettings)
-      var i=0;
-      for (const [title, value] of entries) {
-        console.log(`${title} ${value}`)
-        var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
-        var isNumber = parseInt(first_string, 10);
-
-        if (isNumber >= 0) {
-          settings.timeSettings[`${title}`] = isNumber;
-        } else {
-          settings.timeSettings[`${title}`] = first_string;
-        }
-        i++;
-      }
-      console.log(settings.timeSettings);
-
-
-
-
-
-
-      sleep(1000).then(() => {
-        fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
-          if (err) console.log('Error writing file:', err)
-        })
-      });
-    })
-    res.redirect("/admin");
-  });
-router.post('/admin/submitSchedule', function(req, res, next) {
-    jsonReader('./public/admin-settings.json', (err, settings) => {
-      if (err) {
-        console.log('Error reading file:', err)
-        return
-      }
-
-      console.log(settings.schedule);
-      console.log(settings.schedule.length);
-      console.log(settings.schedule[0].title);
-      console.log(JSON.parse(JSON.stringify(req.body)));
-
-      for (let i = 0; i < settings.schedule.length; i++) {
-        settings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
-      }
-      for (let i = 0; i < settings.schedule.length; i++) {
-        settings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
-      }
-      for (let i = 0; i < settings.schedule.length; i++) {
-        settings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
-      }
-
-      sleep(1000).then(() => {
-        fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
-          if (err) console.log('Error writing file:', err)
-        })
-      });
-    })
-    res.redirect("/admin");
-  });
-router.post('/admin/loadDefault', function(req, res, next){
-  console.log("loadDefault knappen funkar");
-  fs.writeFile('./public/scheduledTimes.json', JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
-      if (err) throw err;
-  });
   res.redirect("/admin");
-});
-router.post('/admin/writeToDefault', function(req, res, next){
-  console.log("writeToDefault knappen funkar");
-  fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(scheduledTimes, null, 4), (err) => {
-      if (err) throw err;
-  });
-  res.redirect("/admin");
-});
+  sleep(100).then(() => {
+
+  })
+
+})
+router.post('/admin/submitSettings', async function(req, res){
+  const filePath = './public/admin-settings.json';
+  try{
+    const adminSettings = await readJsonFile(filePath);
+    const entries = Object.entries(adminSettings.timeSettings)
+    var i=0;
+    for (const [title, value] of entries) {
+      console.log(`${title} ${value}`)
+      var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
+      var isNumber = parseInt(first_string, 10);
+
+      if (isNumber >= 0) {
+        adminSettings.timeSettings[`${title}`] = isNumber;
+      } else {
+        adminSettings.timeSettings[`${title}`] = first_string;
+      }
+      i++;
+    }
+    console.log(adminSettings.timeSettings);
+
+    await writeJsonFIle(filePath,adminSettings);
+
+
+
+  }
+  catch(error){
+    console.log(error);
+  }
+  sleep(50).then(() => {
+    res.redirect("/admin");
+  })
+
+})
+router.post('/admin/loadDefault', async function(req, res){
+  const filePath = './public/admin-settings.json';
+  try{
+    await writeJsonFIle(filePath,adminSettingsBackup);
+
+
+
+  }
+  catch(error){
+    console.log(error);
+  }
+  sleep(50).then(() => {
+    res.redirect("/admin");
+  })
+
+})
+router.post('/admin/writeToDefault', async function(req, res){
+  const filePath = './public/admin-settings-backup.json';
+  try{
+    await writeJsonFIle(filePath,adminSettings);
+  }
+  catch(error){
+    console.log(error);
+  }
+  sleep(50).then(() => {
+    res.redirect("/admin");
+  })
+
+})
+// DONT HAVE YET async
+// router.post('/admin/submitSettings', function(req, res, next) {
+//     jsonReader('./public/admin-settings.json', (err, settings) => {
+//       if (err) {
+//         console.log('Error reading file:', err)
+//         return
+//       }
+//
+//       // console.log(settings.timeSettings);
+//       // console.log(Object.keys(settings.timeSettings).length);
+//       // console.log(Object.keys(settings.timeSettings)[0]);
+//       // console.log(JSON.parse(JSON.stringify(req.body)));
+//       var array = [];
+//       var object = {};
+//       for (let i = 0; i < Object.keys(settings.timeSettings).length; i++) {
+//         var key = Object.keys(settings.timeSettings);
+//         var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
+//         var isNumber = parseInt(first_string, 10);
+//         //
+//         // console.log(first_string);
+//         // console.log(settings.timeSettings[0]);
+//
+//
+//         // if (isNumber >= 0) {
+//         //   settings.timeSettings[`${key}`] = isNumber;
+//         // } else {
+//         //   settings.timeSettings[`${key}`] = first_string;
+//         // }
+//
+//
+//       }
+//       //console.log(settings.timeSettings);
+//
+//       const entries = Object.entries(settings.timeSettings)
+//       var i=0;
+//       for (const [title, value] of entries) {
+//         console.log(`${title} ${value}`)
+//         var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
+//         var isNumber = parseInt(first_string, 10);
+//
+//         if (isNumber >= 0) {
+//           settings.timeSettings[`${title}`] = isNumber;
+//         } else {
+//           settings.timeSettings[`${title}`] = first_string;
+//         }
+//         i++;
+//       }
+//       console.log(settings.timeSettings);
+//
+//
+//
+//
+//
+//
+//       sleep(1000).then(() => {
+//         fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
+//           if (err) console.log('Error writing file:', err)
+//         })
+//       });
+//     })
+//     res.redirect("/admin");
+//   });
+// router.post('/admin/submitSchedule', function(req, res, next) {
+//     jsonReader('./public/admin-settings.json', (err, settings) => {
+//       if (err) {
+//         console.log('Error reading file:', err)
+//         return
+//       }
+//
+//       console.log(settings.schedule);
+//       console.log(settings.schedule.length);
+//       console.log(settings.schedule[0].title);
+//       console.log(JSON.parse(JSON.stringify(req.body)));
+//
+//       for (let i = 0; i < settings.schedule.length; i++) {
+//         settings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+//       }
+//       for (let i = 0; i < settings.schedule.length; i++) {
+//         settings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
+//       }
+//       for (let i = 0; i < settings.schedule.length; i++) {
+//         settings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
+//       }
+//
+//       sleep(1000).then(() => {
+//         fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
+//           if (err) console.log('Error writing file:', err)
+//         })
+//       });
+//     })
+//     res.redirect("/admin");
+//   });
+// router.post('/admin/loadDefault', function(req, res, next){
+//   console.log("loadDefault knappen funkar");
+//   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
+//       if (err) throw err;
+//   });
+//   res.redirect("/admin");
+// });
+// router.post('/admin/writeToDefault', function(req, res, next){
+//   console.log("writeToDefault knappen funkar");
+//   fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(scheduledTimes, null, 4), (err) => {
+//       if (err) throw err;
+//   });
+//   res.redirect("/admin");
+// });
 router.post('/admin/addNewRowDefault', function(req, res, next){
   console.log("addNewRowDefault knappen funkar");
   var addString = "";
@@ -422,16 +461,22 @@ router.get('/foh', function(req, res, next) {
     myLocalip: myLocalip
   });
 });
-router.get('/admin', function(req, res, next) {
-  res.render('admin', {
-    title: 'Scheduled-CountDown',
-    now: "now",
-    scheduledTimes : scheduledTimes.profiles,
-    schedule: adminSettings.schedule,
-    timeSettings: adminSettings.timeSettings,
-    offsetTime: adminSettings.timeSettings.offsetTime,
-    myLocalip: myLocalip
-  });
+router.get('/admin', async function(req, res) {
+  try{
+    res.render('admin', {
+      title: 'Scheduled-CountDown',
+      now: "now",
+      scheduledTimes : scheduledTimes.profiles,
+      schedule: adminSettings.schedule,
+      timeSettings: adminSettings.timeSettings,
+      offsetTime: adminSettings.timeSettings.offsetTime,
+      myLocalip: myLocalip
+    });
+  }
+  catch(error){
+    console.log(error);
+  }
+
 });
 router.get('/new-admin', function(req, res, next) {
   res.render('new-admin', {
