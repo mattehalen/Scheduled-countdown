@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 const fs = require('fs').promises;
-var scheduledTimes = require('../public/scheduledTimes.json');
-var scheduledTimesBackup = require('../public/scheduledTimes-backup.json');
+var scheduledTimesJson = require('../public/scheduledTimes.json');
+var scheduledTimesJsonBackup = require('../public/scheduledTimes-backup.json');
 var adminSettings = require('../public/admin-settings.json');
 var adminSettingsBackup = require('../public/admin-settings-backup.json');
 // console.log("----------> adminSettings");
@@ -12,6 +12,9 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 var myIpArray= [];
 var myLocalip = myipjson+":3000";
 //--------------------------------------------------
+
+const scheduledTimes = require('../lib/adminSettings');
+
 
 
 //--------------------------------------------------f
@@ -102,9 +105,8 @@ async function writeJsonFIle(filename,data){
 }
 // With async
 router.post('/admin/submit', async function(req, res){
-  const filePath = './public/admin-settings.json';
   try{
-    const adminSettings = await readJsonFile(filePath);
+    const adminSettings = await scheduledTimes.get();
     for (let i = 0; i < adminSettings.schedule.length; i++) {
       adminSettings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
     }
@@ -125,9 +127,7 @@ router.post('/admin/submit', async function(req, res){
       return a.startTime.localeCompare(b.startTime);
     });
 
-    await writeJsonFIle(filePath,adminSettings);
-
-
+    await scheduledTimes.write(adminSettings);
   }
   catch(error){
     console.log(error);
@@ -295,14 +295,14 @@ router.post('/admin/writeToDefault', async function(req, res){
 //   });
 // router.post('/admin/loadDefault', function(req, res, next){
 //   console.log("loadDefault knappen funkar");
-//   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
+//   fs.writeFile('./public/scheduledTimes.json', JSON.stringify(scheduledTimesJsonBackup, null, 4), (err) => {
 //       if (err) throw err;
 //   });
 //   res.redirect("/admin");
 // });
 // router.post('/admin/writeToDefault', function(req, res, next){
 //   console.log("writeToDefault knappen funkar");
-//   fs.writeFile('./public/scheduledTimes-backup.json', JSON.stringify(scheduledTimes, null, 4), (err) => {
+//   fs.writeFile('./public/scheduledTimesJson-backup.json', JSON.stringify(scheduledTimesJson, null, 4), (err) => {
 //       if (err) throw err;
 //   });
 //   res.redirect("/admin");
@@ -441,7 +441,7 @@ router.get('/ipsettings', function(req, res, next) {
   res.render('ipsettings', {
     title: 'Scheduled-CountDown - IP Settings',
     now: "now",
-    scheduledTimes : scheduledTimes.profiles,
+    scheduledTimesJson : scheduledTimesJson.profiles,
       offsetTime: adminSettings.timeSettings.offsetTime,
     myLocalip: myLocalip
   });
@@ -462,11 +462,12 @@ router.get('/foh', function(req, res, next) {
   });
 });
 router.get('/admin', async function(req, res) {
+  const adminSettings = await scheduledTimes.get();
   try{
     res.render('admin', {
       title: 'Scheduled-CountDown',
       now: "now",
-      scheduledTimes : scheduledTimes.profiles,
+      scheduledTimesJson : scheduledTimesJson.profiles,
       schedule: adminSettings.schedule,
       timeSettings: adminSettings.timeSettings,
       offsetTime: adminSettings.timeSettings.offsetTime,
@@ -492,7 +493,7 @@ router.get('/Countdown', function(req, res, next) {
   res.render('Countdown', {
     title: 'Countdown',
     now: "now",
-    scheduledTimes : scheduledTimes.profiles,
+    scheduledTimesJson : scheduledTimesJson.profiles,
       offsetTime: adminSettings.timeSettings.offsetTime,
     myLocalip: myLocalip
   });
@@ -501,7 +502,7 @@ router.get('/slideshow_1', function(req, res, next) {
   res.render('slideshow_1', {
     title: 'Scheduled-CountDown',
     now: "now",
-    scheduledTimes : scheduledTimes.profiles,
+    scheduledTimesJson : scheduledTimesJson.profiles,
     offsetTime: adminSettings.timeSettings.offsetTime,
     myLocalip: myLocalip
   });
