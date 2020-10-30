@@ -14,8 +14,7 @@ var myLocalip = myipjson+":3000";
 //--------------------------------------------------
 
 const scheduledTimes = require('../lib/adminSettings');
-
-
+const scheduledTimesBackup = require('../lib/adminSettingsBackup');
 
 //--------------------------------------------------f
 var getNetworkIPs = (function () {
@@ -106,6 +105,7 @@ async function writeJsonFIle(filename,data){
 // With async
 router.post('/admin/submit', async function(req, res){
   try{
+
     const adminSettings = await scheduledTimes.get();
     for (let i = 0; i < adminSettings.schedule.length; i++) {
       adminSettings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
@@ -173,33 +173,24 @@ router.post('/admin/submitSettings', async function(req, res){
 
 })
 router.post('/admin/loadDefault', async function(req, res){
-  const filePath = './public/admin-settings.json';
   try{
-    await writeJsonFIle(filePath,adminSettingsBackup);
-
-
-
+    const adminSettings = await scheduledTimes.get();
+    await scheduledTimesBackup.write(adminSettings);
   }
   catch(error){
     console.log(error);
   }
-  sleep(50).then(() => {
-    res.redirect("/admin");
-  })
-
+  res.redirect("/admin");
 })
 router.post('/admin/writeToDefault', async function(req, res){
-  const filePath = './public/admin-settings-backup.json';
   try{
-    await writeJsonFIle(filePath,adminSettings);
+    const adminSettingsBackup = await scheduledTimesBackup.get();
+    await scheduledTimes.write(adminSettingsBackup);
   }
   catch(error){
     console.log(error);
   }
-  sleep(50).then(() => {
-    res.redirect("/admin");
-  })
-
+  res.redirect("/admin");
 })
 // DONT HAVE YET async
 // router.post('/admin/submitSettings', function(req, res, next) {
