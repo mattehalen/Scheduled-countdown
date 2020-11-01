@@ -288,13 +288,15 @@ $("#writeDefaultArray").on('click', function() {
 });
 $("#addNewRow").on('click', function() {
   console.log("addNewRow");
-  socket.emit("send_addNewRow_To_Socket", {})
-
-  sleep(1500).then(() => {
-    //sortscheduledTimes();
-    window.location.reload(true)
+  var path = "http://"+myLocalip+"/admin/addNewRowDefault";
+  console.log(path);
+  var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', path);
+    form.style.display = 'hidden';
+    document.body.appendChild(form)
+    form.submit();
   });
-});
 $(":input").keypress(function (e) {
     if (e.which == 13) {
       socket.emit("sortingButton_To_Socket", {})
