@@ -238,24 +238,43 @@ $("#sorting").on('click', function() {
   socket.emit("sortingButton_To_Socket", {})
 });
 $("#offsetPlus").on('click', function() {
-  offsetTimeInit += 1;
-  socket.emit('updateOffsetTimePlus', {
-    offsetTime: offsetTimeInit
-  });
+  var path = "http://"+myLocalip+"/admin/offsetPlus";
+    console.log(path);
+    var form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', path);
+      form.style.display = 'hidden';
+      document.body.appendChild(form)
+      form.submit();
+
+
+
+
+
+  // offsetTimeInit += 1;
+  // socket.emit('updateOffsetTimePlus', {
+  //   offsetTime: offsetTimeInit
+  // });
 });
 $("#offsetMinus").on('click', function() {
-  offsetTimeInit -= 1;
-  //$("#offsetTime").html(offsetTimeInit);
-  socket.emit('updateOffsetTimeMinus', {
-    offsetTime: offsetTimeInit
-  });
+  var path = "http://"+myLocalip+"/admin/offsetMinus";
+    console.log(path);
+    var form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', path);
+      form.style.display = 'hidden';
+      document.body.appendChild(form)
+      form.submit();
 });
 $("#offsetReset").on('click', function() {
-  offsetTimeInit = 0;
-  //$("#offsetTime").html(offsetTimeInit);
-  socket.emit('updateOffsetTimeReset', {
-    offsetTime: offsetTimeInit
-  });
+  var path = "http://"+myLocalip+"/admin/offsetReset";
+    console.log(path);
+    var form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', path);
+      form.style.display = 'hidden';
+      document.body.appendChild(form)
+      form.submit();
 });
 $("#loadDefaultArray").on('click', function() {
   console.log("loadDefaultArray");

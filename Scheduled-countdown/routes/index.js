@@ -210,84 +210,44 @@ router.post('/admin/addNewRowDefault', async function(req, res){
 
   res.redirect("/admin");
 });
-// router.post('/admin/addNewRowDefault', function(req, res, next){
-//   console.log("addNewRowDefault knappen funkar");
-//   var addString = "";
-//
-//   fs.readFile("./public/scheduledTimes.json", function (err, data) {
-//     var json = JSON.parse(data);
-//     var feed = {title: "New row added", startTime: "12:00", cueLength: "00:01:10"};
-//
-//     json.profiles.push(feed);
-//     addString = JSON.stringify(json, null, 4);
-//
-//     });
-//
-//     sleep(1000).then(() => {
-//       fs.writeFile('./public/scheduledTimes.json', addString , (err) => {
-//           if (err) throw err;
-//       });
-//     });
-//
-//   res.redirect("/admin");
-// });
-router.post('/admin/offsetPlus', function(req, res, next){
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
+
+router.post('/admin/offsetPlus', async function(req, res){
+  try{
+    const adminSettings = await scheduledTimes.get();
+    adminSettings.timeSettings.offsetTime += 1;
+    await scheduledTimes.write(adminSettings);
+
   }
-  jsonReader('./public/admin-settings.json', (err, settings) => {
-    if (err) {
-        console.log('Error reading file:',err)
-        return
-    }
-
-    settings.timeSettings.offsetTime += 1;
-
-  fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null,4), (err) => {
-        if (err) console.log('Error writing file:', err)
-    })
-  })
+  catch(error){
+    console.log(error);
+  }
 
   res.redirect("/admin");
 });
-router.post('/admin/offsetMinus', function(req, res, next){
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
+
+router.post('/admin/offsetMinus', async function(req, res){
+  try{
+    const adminSettings = await scheduledTimes.get();
+    adminSettings.timeSettings.offsetTime -= 1;
+    await scheduledTimes.write(adminSettings);
+
   }
-  jsonReader('./public/admin-settings.json', (err, settings) => {
-    if (err) {
-        console.log('Error reading file:',err)
-        return
-    }
+  catch(error){
+    console.log(error);
+  }
 
-    settings.timeSettings.offsetTime -= 1;
+  res.redirect("/admin");
+});
+router.post('/admin/offsetReset', async function(req, res){
+  try{
+    const adminSettings = await scheduledTimes.get();
+    adminSettings.timeSettings.offsetTime = 0;
+    await scheduledTimes.write(adminSettings);
 
-  fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null,4), (err) => {
-        if (err) console.log('Error writing file:', err)
-    })
-  })
+  }
+  catch(error){
+    console.log(error);
+  }
 
   res.redirect("/admin");
 });
