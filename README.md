@@ -14,11 +14,11 @@ Download Nodejs -> https://nodejs.org/en/download/
 
 
 # Task lists
-- [] Find other solution for loading and writing to .json files. Is it better to reload page on all logged in as admin instead of jumping with Socket?
-- [X] Move over to the use of admin-settings instead of variables & myip & scheduleTimes
 - [] SEND Warning Message on FULL SCREEN
-- [X] USE MIDI Messages as alternative trigger for countDown
-- [X] fix timeSettings - nothing is working now
+- [] Implament varibles from "timeSettings" countDown, countUp, cueCountDown, cueCountUp, useMIDI_ProgramChange
+- [] Install React Native & Socket.io & react-native-watch-connectivity  https://blog.bam.tech/developer-news/how-to-add-an-apple-watch-extension-to-your-react-native-application
+- [] JZZ-gui-Select for midi interface
+
 
 ## Bugs
 - [] offsetTime dosn't effect 5min countdown
