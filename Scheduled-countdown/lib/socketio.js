@@ -1,8 +1,6 @@
 // var scheduledTimes = require('../public/scheduledTimes.json');
 var scheduledTimesBackup = require('../public/admin-settings-backup.json');
 var adminSettingsJson = require('../public/admin-settings.json');
-console.log("adminSettingsJson");
-console.log(adminSettingsJson.timeSettings.useMIDI_ProgramChange);
 var myip = adminSettingsJson.ipsettings.ipadress;
 //var ip = require("ip");
 const fs = require('fs');
@@ -20,9 +18,17 @@ var cueBoolHolder = "";
 var fiveBoolArray = [""];
 var fiveBoolHolder = [""];
 var sendMin_To_countDownBoole = 100;
-
-
 //--------------------------------------------------
+const dayOfWeek = require('../lib/dayOfWeek');
+var scheduleBool;
+async function useScheduleBool(){
+  const data = await dayOfWeek.get();
+  if (data===0) {
+    scheduleBool=false;
+  }else(scheduleBool=true)
+}
+//--------------------------------------------------
+
 //--from Script.js
 var offsetTimeInit = 0;
 var scheduledTimesArray = [];
@@ -596,11 +602,12 @@ io.on('connection', function(socket) {
 //--------------------------------------------------
 //Uppdaterad
 function newTimeArraySorting() {
+  useScheduleBool();
   //--------------------------------------------------
   //---Get next title / StartTime / cueLength
   //--------------------------------------------------
   sleep(500).then(() => {
-    if (newArrayIndex < scheduledTimesArraylength && useMIDI_ProgramChange===0) {
+    if (newArrayIndex < scheduledTimesArraylength && useMIDI_ProgramChange===0 && scheduleBool) {
       var time = scheduledTimesArray.schedule[newArrayIndex].startTime
       var timInMs = 0;
 
