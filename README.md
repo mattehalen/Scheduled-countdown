@@ -12,6 +12,8 @@ Download Nodejs -> https://nodejs.org/en/download/
  2. Run "Scheduled-countdown MAC V2.scpt"
 
 
+# New features
+- [X] Select which days the Schedule runs. Function dayOfWeek. Added to adminpage
 
 # Task lists
 - [] SEND Warning Message on FULL SCREEN
