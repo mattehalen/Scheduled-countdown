@@ -20,6 +20,13 @@ block content
           #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
               .form-row
                 //- button#sorting.btn.btn-primary.btn-lg.btn-block Sort and Update
+              form.overflow-auto(method='POST' action='/admin/dayOfWeek' style='width: 100%')
+                div.form-row
+                  each value, day in dayOfWeek
+                    .col
+                    p=day
+                    input.slider(type="range",value=value, name=day, id=day, min="0" max="1")                    
+                button.btn.btn-dark(type='submit') Save
                 
               form.overflow-auto(method='POST' action='/admin/submit' style="height: 45vh")
                 button.btn.btn-dark(type='submit' style='width: 100%') Save

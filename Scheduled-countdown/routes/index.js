@@ -105,6 +105,8 @@ async function writeJsonFIle(filename,data){
 // With async
 router.post('/admin/submit', async function(req, res){
   try{
+    console.log("---------------------------------------------- - - - - - -------------------------------------");
+    console.log(req.body);
 
     const adminSettings = await scheduledTimes.get();
     for (let i = 0; i < adminSettings.schedule.length; i++) {
@@ -283,6 +285,30 @@ router.post('/admin/setLoopbackip', function(req, res, next){
 
   res.redirect("/admin");
 });
+router.post('/admin/dayOfWeek', async function(req, res){
+  try{
+    const adminSettings = await scheduledTimes.get();
+    const data = JSON.parse(JSON.stringify(req.body));
+    const entries = Object.entries(data)
+    console.log(entries);
+
+    for (const [title, value] of entries) {
+      console.log(`${title} ${value}`)
+      adminSettings.dayOfWeek[`${title}`] = parseInt(value, 10);
+
+    }
+    console.log(adminSettings.dayOfWeek);
+
+    await scheduledTimes.write(adminSettings);
+  }
+  catch(error){
+    console.log(error);
+  }
+
+  res.redirect("/admin");
+
+})
+
 //-------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
@@ -332,6 +358,7 @@ router.get('/admin', async function(req, res) {
       now: "now",
       // scheduledTimesJson : scheduledTimesJson.profiles,
       schedule: adminSettings.schedule,
+      dayOfWeek: adminSettings.dayOfWeek,
       timeSettings: adminSettings.timeSettings,
       offsetTime: adminSettings.timeSettings.offsetTime,
       myLocalip: myLocalip
