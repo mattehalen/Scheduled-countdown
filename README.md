@@ -24,6 +24,7 @@ Download Nodejs -> https://nodejs.org/en/download/
 
 ## Bugs
 - [] offsetTime dosn't effect 5min countdown
+- [] Save on /Mathias dosen't save to correct file
 
 ## Bug Fixes
 - [X] OffsetTime .json writes empty files sometimes. - tried using sleep didn't work. - now trying increase setTimeoutTime = 150 instead of 50.
