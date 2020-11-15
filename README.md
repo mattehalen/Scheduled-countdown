@@ -24,14 +24,19 @@ Download Nodejs -> https://nodejs.org/en/download/
 
 ## Bugs
 - [] offsetTime dosn't effect 5min countdown
-- [] Save on /Mathias dosen't save to correct  
+
 
 ## Bug Fixes
+# 2020-11-15
+- [X] Save on /Mathias dosen't save to correct
+# Earlier fixes
 - [X] OffsetTime .json writes empty files sometimes. - tried using sleep didn't work. - now trying increase setTimeoutTime = 150 instead of 50.
-- [x] deleteButton on Scheduled don't work more then once. after deleting one it loops thrue and ads old cues again. Move Delete part to socket and dont jump back to adminScript.js?
+- [x] deleteButton on Scheduled don't work more then once. after deleting one it loops thrue and ads old cues again. Move Delete part to socket and don't jump back to adminScript.js?
 
 # Websites I got code from
-- https://github.com/nexe/nexe / https://www.youtube.com/watch?v=ODlYsEITCBM&t=8s / https://guides.github.com/features/mastering-markdown/
+- https://github.com/nexe/nexe
+- https://www.youtube.com/watch?v=ODlYsEITCBM&t=8s
+- https://guides.github.com/features/mastering-markdown/
 
 
 
@@ -40,6 +45,5 @@ Download Nodejs -> https://nodejs.org/en/download/
 
 
 
-## Support this project 
+## Support this project
 https://www.paypal.com/donate?hosted_button_id=N7GK2QCY8QAWQ
-

@@ -15,6 +15,8 @@ var myLocalip = myipjson+":3000";
 
 const scheduledTimes = require('../lib/adminSettings');
 const scheduledTimesBackup = require('../lib/adminSettingsBackup');
+const submitUserData = require('../lib/submitUserData');
+
 
 //--------------------------------------------------f
 var getNetworkIPs = (function () {
@@ -416,39 +418,39 @@ router.get('/mathias', function(req, res, next) {
     name: name
   });
 });
-router.post('/submitmathias', function(req, res, next){
-  var path = './public/CueLists/mathias.json'
-    jsonReader(path, (err, settings) => {
-     if (err) {
-       console.log('Error reading file:', err)
-       return
-     }
-     console.log(settings);
-     console.log(settings.cues.length);
-     console.log(settings.cues[0].title);
-     console.log(JSON.parse(JSON.stringify(req.body)));
+router.post('/submitmathias', async function(req, res){
+  var backURL=req.header('Referer') || '/';
+  var user = "mathias";
+  const userCueList = await submitUserData.get(user);
+  try{
+    // console.log("----------------------------------------> submitmathias <----------");
+    // console.log(userCueList);
+    // console.log(userCueList.cues.length);
+    // console.log(userCueList.cues[0].title);
+    // console.log(JSON.parse(JSON.stringify(req.body)));
 
-     for (let i = 0; i < settings.cues.length; i++) {
-       settings.cues[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
-       console.log(settings.cues[i].title);
-     }
-     for (let i = 0; i < settings.cues.length; i++) {
-       settings.cues[i].timecode = JSON.parse(JSON.stringify(req.body[`timeCode${i}`]))
-       console.log(settings.cues[i].timecode);
-     }
+    for (let i = 0; i < userCueList.cues.length; i++) {
+      userCueList.cues[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+      console.log(userCueList.cues[i].title);
+    }
+    for (let i = 0; i < userCueList.cues.length; i++) {
+      userCueList.cues[i].timecode = JSON.parse(JSON.stringify(req.body[`timeCode${i}`]))
+      console.log(userCueList.cues[i].timecode);
+    }
+    userCueList.cues.sort(function(a, b) {
+      return a.timecode.localeCompare(b.timecode);
+    });
+    console.log(userCueList);
 
-     settings.cues.sort(function(a, b) {
-       return a.timecode.localeCompare(b.timecode);
-     });
+    await submitUserData.write(user,userCueList);
 
-     sleep(1000)
-     .then(() => {fs.writeFile(path, JSON.stringify(settings, null, 4), (err) => {
-         if (err) console.log('Error writing file:', err)
-       })})
-     .then();
-   })
-   sleep(1200)
-   .then(() => {res.redirect("/mathias")})
+  }
+  catch(error){
+    console.log(error);
+  }
+
+     res.redirect(backURL)
+
 
   });
 
