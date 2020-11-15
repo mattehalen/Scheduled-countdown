@@ -32,3 +32,14 @@ Download Nodejs -> https://nodejs.org/en/download/
 
 # Websites I got code from
 - https://github.com/nexe/nexe / https://www.youtube.com/watch?v=ODlYsEITCBM&t=8s / https://guides.github.com/features/mastering-markdown/
+
+
+
+
+
+
+
+
+
+https://www.paypal.com/donate?hosted_button_id=N7GK2QCY8QAWQ
+
