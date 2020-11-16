@@ -13,9 +13,9 @@ Download Nodejs -> https://nodejs.org/en/download/
 
 
 ## New features
-# 2020-11-16
+### 2020-11-16
 - [X] SEND Warning Message on FULL SCREEN
-# Earlier features
+### Earlier features
 - [X] Select which days the Schedule runs. Function dayOfWeek. Added to adminpage
 
 # Task lists
@@ -24,14 +24,14 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [] JZZ-gui-Select for midi interface
 
 
-## Bugs
+# Bugs
 - [] offsetTime dosn't effect 5min countdown
 
 
 ## Bug Fixes
-# 2020-11-15
+### 2020-11-15
 - [X] Save on /Mathias dosen't save to correct
-# Earlier fixes
+### Earlier fixes
 - [X] OffsetTime .json writes empty files sometimes. - tried using sleep didn't work. - now trying increase setTimeoutTime = 150 instead of 50.
 - [x] deleteButton on Scheduled don't work more then once. after deleting one it loops thrue and ads old cues again. Move Delete part to socket and don't jump back to adminScript.js?
 
