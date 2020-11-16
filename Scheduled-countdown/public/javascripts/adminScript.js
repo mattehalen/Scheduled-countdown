@@ -216,18 +216,21 @@ socket.on("sendIpArrayToAdminPage", function(data){
 
 
 });
-// socket.on("send_Delete_Button_from_Socket", function(data) {
-//   console.log(data);
-//   listIndex = data.listIndex
-//   console.log("send_Delete_Button_from_Socket: listIndex= " + listIndex);
-//
-//   document.getElementById(listIndex).remove();
-//   deleteIndexInScheduledTimes(listIndex);
-//
-// });
 socket.on("sendTimeCode",function(data){
   timeCode.textContent = data.smpteString
   //console.log(data.smpteString);
+
+});
+
+socket.on("alertText_adminUrl",function(data){
+  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>'+data.text+'</H1></div>');
+  console.log(data.text);
+
+  sleep(5000).then(() => {
+    $( ".blink" ).remove();
+    });
+
+
 
 });
 //--------------------------------------------------
@@ -518,6 +521,52 @@ if (toggleMainPreview === true) {
   toggleMainPreview = false;
   return
 }
+
+};
+function alertButton(){
+  var text = $("#alertText").val();
+
+  if ($("#startUrl").val() == 1){
+    socket.emit("startUrl", {
+      text: text
+    });
+  }
+  if ($("#adminUrl").val() == 1){
+    socket.emit("adminUrl", {
+      text: text
+    });
+  }
+  if ($("#fohUrl").val() == 1){
+    socket.emit("fohUrl", {
+      text: text
+    });
+  }
+  if ($("#stageUrl").val() == 1){
+    socket.emit("stageUrl", {
+      text: text
+    });
+  }
+  if ($("#watchUrl").val() == 1){
+    socket.emit("watchUrl", {
+      text: text
+    });
+  }
+  if ($("#countdownUrl").val() == 1){
+    socket.emit("countdownUrl", {
+      text: text
+    });
+  }
+  if ($("#allUsersUrl").val() == 1){
+    socket.emit("allUsersUrl", {
+      text: text
+    });
+  }
+
+
+
+
+
+
 
 };
 //--------------------------------

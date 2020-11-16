@@ -195,7 +195,6 @@ input[type=time] {
   font-family: Verdana;
 
 } */
-
 /* --------------------------------------------------*/
 /* Index */
 /* --------------------------------------------------*/
@@ -307,7 +306,6 @@ input[type=time] {
   bottom: 0;
   width: 100%;
 }
-
 .slideshowCountDown{
   height: 99.9%;
   width: 99.9%;
@@ -341,18 +339,12 @@ input[type=time] {
     top: 40%;
     transform: translateY(-50%);
 }
-
-
-
 .overlay {
     position: absolute;
     left: 0; top: 0; right: 0; bottom: 0;
     z-index: 10;
     background: rgba(255,0,0,0.05);
 }
-
-
-
 .mywrapper {
     position: relative;
     /* border-style:solid; */
@@ -371,11 +363,29 @@ input[type=time] {
     text-align: center;
     z-index: 100;
 }
-
 .centeredOverlay span {
     position: absolute;
     top:50%;
     left:50%;
     -webkit-transform:translate(-50%, -50%);
     transform:translate(-50%, -50%);
+}
+/* --------------------------------------------------*/
+@-webkit-keyframes blinker {
+  from {background-color:darkred;}
+  to {background-color:black;}
+}
+.blink{
+
+  height: 100%;
+  width: : 100%;
+  align-items: center;
+  justify-content: center;
+
+	text-decoration: blink;
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
 }

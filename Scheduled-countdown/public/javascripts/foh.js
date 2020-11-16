@@ -4,6 +4,8 @@ var myLocalip = document.getElementById("myLocalip").textContent;
 var myLocalipAndPort = myLocalip
 console.log(myLocalipAndPort);
 var socket = io.connect(myLocalipAndPort);
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+
 //--------------------------------------------------
 var nowText = document.getElementById("now");
 var nowTopRow = document.getElementById("nowTopRow");
@@ -137,6 +139,17 @@ socket.emit("getTimeCode", {});
 socket.on("sendTimeCode", function(data) {
   timeCode.textContent = data.smpteString
   //console.log(data.smpteString);
+
+});
+socket.on("alertText_fohUrl",function(data){
+  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>'+data.text+'</H1></div>');
+  console.log(data.text);
+
+  sleep(5000).then(() => {
+    $( ".blink" ).remove();
+    });
+
+
 
 });
 

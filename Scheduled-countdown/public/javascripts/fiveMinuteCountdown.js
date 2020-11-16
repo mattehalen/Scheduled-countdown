@@ -7,6 +7,8 @@ console.log(myLocalipAndPort);
 var countDownTime = "";
 
 var socket = io.connect(myLocalipAndPort);
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+
 socket.on("sendMin_To_countDown", function(data) {
   //console.log("sendMin_To_countDown: "+data.countDownTime);
   //console.log(data.countDownTime.countDownTime);
@@ -17,7 +19,17 @@ socket.on("sendMin_To_countDown", function(data) {
   showObjects();
 
 });
+socket.on("alertText_countdownUrl",function(data){
+  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>'+data.text+'</H1></div>');
+  console.log(data.text);
 
+  sleep(5000).then(() => {
+    $( ".blink" ).remove();
+    });
+
+
+
+});
 function showObjects(){
 console.log(countDownTime);
 switch (countDownTime) {

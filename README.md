@@ -12,11 +12,13 @@ Download Nodejs -> https://nodejs.org/en/download/
  2. Run "Scheduled-countdown MAC V2.scpt"
 
 
-# New features
+## New features
+# 2020-11-16
+- [X] SEND Warning Message on FULL SCREEN
+# Earlier features
 - [X] Select which days the Schedule runs. Function dayOfWeek. Added to adminpage
 
 # Task lists
-- [] SEND Warning Message on FULL SCREEN
 - [] Implament varibles from "timeSettings" countDown, countUp, cueCountDown, cueCountUp, useMIDI_ProgramChange
 - [] Install React Native & Socket.io & react-native-watch-connectivity  https://blog.bam.tech/developer-news/how-to-add-an-apple-watch-extension-to-your-react-native-application
 - [] JZZ-gui-Select for midi interface

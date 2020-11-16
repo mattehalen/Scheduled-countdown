@@ -594,6 +594,58 @@ io.on('connection', function(socket) {
     addNewCueRowToUser(data.user);
   })
 
+  socket.on("startUrl", function(data) {
+    console.log("startUrl = "+data.text);
+    io.emit("alertText_startUrl", {
+      text: data.text
+    })
+  })
+  socket.on("adminUrl", function(data) {
+    console.log("adminUrl = "+data.text);
+    io.emit("alertText_adminUrl", {
+      text: data.text
+    })
+  })
+  socket.on("fohUrl", function(data) {
+    console.log("fohUrl = "+data.text);
+    io.emit("alertText_fohUrl", {
+      text: data.text
+    })
+  })
+  socket.on("stageUrl", function(data) {
+    console.log("stageUrl = "+data.text);
+    io.emit("alertText_stageUrl", {
+      text: data.text
+    })
+  })
+  socket.on("watchUrl", function(data) {
+    console.log("watchUrl = "+data.text);
+    io.emit("alertText_watchUrl", {
+      text: data.text
+    })
+  })
+  socket.on("countdownUrl", function(data) {
+    console.log("countdownUrl = "+data.text);
+    io.emit("alertText_countdownUrl", {
+      text: data.text
+    })
+  })
+  socket.on("allUsersUrl", function(data) {
+    console.log("allUsersUrl = "+data.text);
+    io.emit("alertText_allUsersUrl", {
+      text: data.text
+    })
+  })
+
+  io.emit("alertText_startUrl_stop", {})
+  io.emit("alertText_adminUrl_stop", {})
+  io.emit("alertText_fohUrl_stop", {})
+  io.emit("alertText_stageUrl_stop", {})
+  io.emit("alertText_watchUrl_stop", {})
+  io.emit("alertText_countdownUrl_stop", {})
+  io.emit("alertText_allUsersUrl_stop", {})
+
+
 
 });
 

@@ -115,6 +115,17 @@ socket.on("sendTimeCode",function(data){
     midi_ProgramChange.textContent = data.midi_ProgramChange,
     midi_Channel = midi_Channel
   });
+socket.on("alertText_allUsersUrl",function(data){
+    $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>'+data.text+'</H1></div>');
+    console.log(data.text);
+
+    sleep(5000).then(() => {
+      $( ".blink" ).remove();
+      });
+
+
+
+  });
 
 
 function getTimeCodeLoop(){

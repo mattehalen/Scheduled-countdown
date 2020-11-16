@@ -4,6 +4,8 @@ var myLocalip = document.getElementById("myLocalip").textContent;
 var myLocalipAndPort = myLocalip
 console.log(myLocalipAndPort);
 var socket = io.connect(myLocalipAndPort);
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
+
 //--------------------------------------------------
 var nowText = document.getElementById("now");
 var nowTopRow = document.getElementById("nowTopRow");
@@ -60,5 +62,16 @@ socket.on("centerTextContent", function(data){
             document.body.style.backgroundColor = "darkgreen";
           }
         }
+
+});
+socket.on("alertText_watchUrl",function(data){
+  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>'+data.text+'</H1></div>');
+  console.log(data.text);
+
+  sleep(5000).then(() => {
+    $( ".blink" ).remove();
+    });
+
+
 
 });

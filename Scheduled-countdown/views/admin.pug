@@ -16,6 +16,8 @@ block content
             a#Settings-tab.nav-link(data-toggle='tab' href='#Settings' role='tab' aria-controls='Settings' aria-selected='false') Settings
           li.nav-item
             a#overview-tab.nav-link(data-toggle='tab' href='#overview' role='tab' aria-controls='overview' aria-selected='false') Overview
+          li.nav-item
+            a#alert-tab.nav-link(data-toggle='tab' href='#alert' role='tab' aria-controls='alert' aria-selected='false') Alert
         #myTabContent.tab-content.shadow.p-3.mb-5.rounded
           #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
               form(method='POST' action='/admin/dayOfWeek' style='width: 100%')
@@ -117,6 +119,43 @@ block content
                   button#five.btn.btn-dark(style='width: 20%') 5min
                 .row
                   button#alpha.btn.btn-dark(style='width: 100%') Alpha
+          #alert.tab-pane.fade(role='tabpanel' aria-labelledby='alert-tab')
+            .row(style="font-size: 10px")
+              .col-1
+                | /
+              .col-1
+                | /admin
+              .col-1
+                | /foh
+              .col-1
+                | /stage
+              .col-1
+                | /watch
+              .col-1
+                | /countdown
+              .col-1
+                | /allUsers
+            .row
+              .col-1
+                input.slider(type="range",value=0 name="startUrl", id="startUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="adminUrl", id="adminUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="fohUrl", id="fohUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="stageUrl", id="stageUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="watchUrl", id="watchUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="countdownUrl", id="countdownUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="allUsersUrl", id="allUsersUrl",, min="0" max="1")
+            .row
+              .col-10
+                input.form-control(type='text', value="Hello", name="alertText" id="alertText")
+              .col-2
+                button.btn.btn-danger(type="reset",name="alertButton", id="alertButton", onClick="alertButton()") Send Alert
+            
       
   .downSite
     #cueTime.fiveMinute 
