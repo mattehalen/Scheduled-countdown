@@ -22,11 +22,13 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [] Implament varibles from "timeSettings" countDown, countUp, cueCountDown, cueCountUp, useMIDI_ProgramChange
 - [] Install React Native & Socket.io & react-native-watch-connectivity  https://blog.bam.tech/developer-news/how-to-add-an-apple-watch-extension-to-your-react-native-application
 - [] JZZ-gui-Select for midi interface
+- [] Add save/load to folder for saving adminsettings on other places for backup.
 
 
 # Bugs
 - [] offsetTime dosn't effect 5min countdown
-
+- [] Navigated to chrome-error://chromewebdata/ - for some users. macbookAir - Chrome
+- [] Dosn't work on Internet Explorer
 
 ## Bug Fixes
 ### 2020-11-15
