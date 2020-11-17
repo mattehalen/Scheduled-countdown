@@ -23,6 +23,7 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [] Install React Native & Socket.io & react-native-watch-connectivity  https://blog.bam.tech/developer-news/how-to-add-an-apple-watch-extension-to-your-react-native-application
 - [] JZZ-gui-Select for midi interface
 - [] Add save/load to folder for saving adminsettings on other places for backup.
+- [] Add Time-varible to Alert Function
 
 
 # Bugs
