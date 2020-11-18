@@ -214,6 +214,24 @@ router.post('/admin/addNewRowDefault', async function(req, res){
 
   res.redirect("/admin");
 });
+router.post('/admin/deleteButton', async function(req, res){
+  console.log("deleteButton knappen funkar");
+  try{
+    var addString = "";
+    const adminSettings = await scheduledTimes.get();
+    console.log(adminSettings);
+    console.log(req.body.listIndex);
+    var listIndex = req.body.listIndex;
+    adminSettings.schedule.splice(listIndex, 1);
+    console.log(adminSettings);
+    await scheduledTimes.write(adminSettings);
+  }
+  catch(error){
+    console.log(error);
+  }
+
+  res.redirect("/admin");
+});
 
 router.post('/admin/offsetPlus', async function(req, res){
   try{

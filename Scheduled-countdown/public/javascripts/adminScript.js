@@ -319,6 +319,7 @@ $("#addNewRow").on('click', function() {
     document.body.appendChild(form)
     form.submit();
   });
+
 $(":input").keypress(function (e) {
     if (e.which == 13) {
       socket.emit("sortingButton_To_Socket", {})
@@ -402,13 +403,43 @@ function updateScheduledTimesArray() {
   });
 };
 function delete_button_click(listIndex) {
-  socket.emit("send_Delete_Button_To_Socket", {
-    listIndex: listIndex
-  });
+  var path = "http://"+myLocalip+"/admin/deleteButton";
 
-  sleep(500).then(() => {
-    document.location.reload();
-  });
+  $(document).ready(function(){
+    console.log("deleteButton");
+    var path = "http://"+myLocalip+"/admin/deleteButton";
+    console.log(path);
+
+
+    var form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', path);
+      // form.style.display = 'hidden';
+      form.name= listIndex;
+      form.text= listIndex;
+
+      // Create an input element for Full Name
+    var input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("name", "listIndex");
+    input.value= listIndex;
+
+
+    form.append(input);
+
+      document.body.appendChild(form)
+
+      form.submit();
+
+    });
+
+  // socket.emit("send_Delete_Button_To_Socket", {
+  //   listIndex: listIndex
+  // });
+
+  // sleep(500).then(() => {
+  //   document.location.reload();
+  // });
 };
 function printArraysToElements() {
   console.log("printArraysToElements");
