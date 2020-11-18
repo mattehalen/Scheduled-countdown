@@ -36,8 +36,6 @@ async function useScheduleBool(){
 
 //--from Script.js
 var offsetTimeInit = 0;
-var scheduledTimesArray = [];
-var scheduledTimesArraylength = 0;
 var offsetTimejson = [];
 //--------------------------------------------------
 var countDown = 7; // how many minutes before
@@ -144,8 +142,9 @@ function mtcTOString() {
 mtcTOString();
 var midiTriggerCountDownCounter=0;
 async function midiTriggerCountDown(){
-  var useMIDI_ProgramChange = (await adminSettingsJson.get()).timeSettings.useMIDI_ProgramChange;
-
+  const adminSettingsData = await adminSettingsJson.get();
+  const useMIDI_ProgramChange = adminSettingsData.timeSettings.useMIDI_ProgramChange;
+  const scheduledTimes = adminSettingsData.schedules
 
   var offsetTime = newOffsetTime();
   var startTime = newCurrentTimeInMs() + countDown;
@@ -161,7 +160,7 @@ async function midiTriggerCountDown(){
   if (midiTriggerCountDownCounter===0 && useMIDI_ProgramChange!=0) {
       midiTriggerCountDownCounter++;
       startTimeTextHolder = s;
-      startTitleHolder = scheduledTimesArray.schedule[midi_ProgramChange].title;
+      startTitleHolder = scheduledTimes[midi_ProgramChange].title;
     };
   if (midi_ProgramChange===127 && useMIDI_ProgramChange!=0) {
       var a = new Date(newCurrentTimeInMs() - countUp);
@@ -379,9 +378,6 @@ function getscheduledTimes() {
       console.log('Error reading file:', err)
       return
     }
-
-    scheduledTimesArray = adminSettings;
-    scheduledTimesArraylength = adminSettings.schedule.length;
 
     for (let i = 0; i < adminSettings.schedule.length; i++) {
       startTitleArray[i] = adminSettings.schedule[i].title
@@ -661,16 +657,19 @@ io.on('connection', function(socket) {
 //--------------------------------------------------
 //Uppdaterad
 async function newTimeArraySorting() {
-  var useMIDI_ProgramChange = (await adminSettings.get()).timeSettings.useMIDI_ProgramChange;
+  const adminSettingsData = (await adminSettings.get());
+  const scheduledTimes = adminSettingsData.schedule;
+
+  var useMIDI_ProgramChange = adminSettingsData.timeSettings.useMIDI_ProgramChange;
+  
   useScheduleBool();
-  console.log("startTimeTextHolder = "+startTimeTextHolder);
+  //console.log("startTimeTextHolder = "+startTimeTextHolder);
   //--------------------------------------------------
   //---Get next title / StartTime / cueLength
   //--------------------------------------------------
   sleep(500).then(() => {
-    if (newArrayIndex < scheduledTimesArraylength && useMIDI_ProgramChange===0 && scheduleBool) {
-      var time = scheduledTimesArray.schedule[newArrayIndex].startTime
-      var timInMs = 0;
+    if (newArrayIndex < scheduledTimes.length && useMIDI_ProgramChange===0 && scheduleBool) {
+      var time = scheduledTimes[newArrayIndex].startTime
 
       var d = new Date();
       var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
@@ -678,12 +677,12 @@ async function newTimeArraySorting() {
       if (nowInMs > ((dd.getTime() + newOffsetTime()) + countUp)) {
         newArrayIndex++;
       } else {
-        startTitleHolder = scheduledTimesArray.schedule[newArrayIndex].title;
-        startTimeTextHolder = scheduledTimesArray.schedule[newArrayIndex].startTime;
-        cueLengthTextHolder = scheduledTimesArray.schedule[newArrayIndex].cueLength;
+        startTitleHolder = scheduledTimes[newArrayIndex].title;
+        startTimeTextHolder = scheduledTimes[newArrayIndex].startTime;
+        cueLengthTextHolder = scheduledTimes[newArrayIndex].cueLength;
 
-        cueBoolHolder = scheduledTimesArray.schedule[newArrayIndex].cueBool;
-        fiveBoolHolder = scheduledTimesArray.schedule[newArrayIndex].fiveBool;
+        cueBoolHolder = scheduledTimes[newArrayIndex].cueBool;
+        fiveBoolHolder = scheduledTimes[newArrayIndex].fiveBool;
 
       }
     };
