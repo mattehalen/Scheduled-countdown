@@ -1,8 +1,13 @@
 // var scheduledTimes = require('../public/scheduledTimes.json');
-var scheduledTimesBackup = require('../public/admin-settings-backup.json');
-var adminSettingsJson = require('../public/admin-settings.json');
-var myip = adminSettingsJson.ipsettings.ipadress;
-//var ip = require("ip");
+// var scheduledTimesBackup = require('../public/admin-settings-backup.json');
+// var adminSettingsJson = require('../public/admin-settings.json');
+
+const adminSettings = require('./adminSettings');
+const scheduledTimesBackup = require('./adminSettingsBackup');
+
+
+// var myip = adminSettingsJson.ipsettings.ipadress;
+// var ip = require("ip");
 const fs = require('fs');
 var startTimeArray = [""];
 var startTitleHolder = "";
@@ -116,7 +121,6 @@ var smpteString;
 var smpteMs;
 var midi_ProgramChange;
 var midi_Channel;
-var useMIDI_ProgramChange = adminSettingsJson.timeSettings.useMIDI_ProgramChange;
 
 function mtcTOString() {
   var JZZ = require('jzz');
@@ -139,7 +143,9 @@ function mtcTOString() {
 };
 mtcTOString();
 var midiTriggerCountDownCounter=0;
-function midiTriggerCountDown(){
+async function midiTriggerCountDown(){
+  var useMIDI_ProgramChange = (await adminSettingsJson.get()).timeSettings.useMIDI_ProgramChange;
+
 
   var offsetTime = newOffsetTime();
   var startTime = newCurrentTimeInMs() + countDown;
@@ -147,6 +153,7 @@ function midiTriggerCountDown(){
 
   var d = new Date(newCurrentTimeInMs() + countDown);
   var s = "";
+
   s += (10 > d.getHours() ? "0" : "") + d.getHours() + ":";
   s += (10 > d.getMinutes() ? "0" : "") + d.getMinutes() + ":";
   s += (10 > d.getSeconds() ? "0" : "") + d.getSeconds();
@@ -156,7 +163,7 @@ function midiTriggerCountDown(){
       startTimeTextHolder = s;
       startTitleHolder = scheduledTimesArray.schedule[midi_ProgramChange].title;
     };
-    if (midi_ProgramChange===127 && useMIDI_ProgramChange!=0) {
+  if (midi_ProgramChange===127 && useMIDI_ProgramChange!=0) {
       var a = new Date(newCurrentTimeInMs() - countUp);
       d = a;
 
@@ -653,8 +660,10 @@ io.on('connection', function(socket) {
 //- CurrentTime
 //--------------------------------------------------
 //Uppdaterad
-function newTimeArraySorting() {
+async function newTimeArraySorting() {
+  var useMIDI_ProgramChange = (await adminSettings.get()).timeSettings.useMIDI_ProgramChange;
   useScheduleBool();
+  console.log("startTimeTextHolder = "+startTimeTextHolder);
   //--------------------------------------------------
   //---Get next title / StartTime / cueLength
   //--------------------------------------------------
@@ -948,6 +957,7 @@ function sendCenterText() {
     var showNowClock = true;
   }
   //console.log(newStartTimeInMs(startTimeTextHolder)-newCurrentTimeInMs(),);
+  // console.log("countDownString = "+countDownString);
   io.emit("centerTextContent", {
     countDownString: countDownString,
     countDownTimeInMS: newStartTimeInMs(startTimeTextHolder) - newCurrentTimeInMs(),
