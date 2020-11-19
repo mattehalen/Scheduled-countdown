@@ -63,9 +63,12 @@ block content
                         input.slider(type="range",value=person.fiveBool, name="fiveBool" + index, id="fiveBool" + index,, min="0" max="1")
                       .col-1
                         button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
-              button.btn.btn-dark(type='submit' id="addNewRow" style='width: 100%') Add Row
-              button#loadDefaultArray.btn.btn-dark(style='width: 50%') Load from Backup
-              button#writeDefaultArray.btn.btn-dark(style='width: 50%') Save to Backup
+                button.btn.btn-dark(type='submit' id="addNewRow" style='width: 100%') Add Row
+                button#loadDefaultArray.btn.btn-dark(type='submit' style='width: 50%' formaction="/admin/loadDefault") Load from Backup
+                button#writeDefaultArray.btn.btn-dark(type='submit'  style='width: 50%' formaction="/admin/writeToDefault") Save to Backup
+
+              
+              
           #Settings.tab-pane.fade(role='tabpanel' aria-labelledby='Settings-tab') 
             .row
               .col-3

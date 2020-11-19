@@ -38,10 +38,10 @@ async function useScheduleBool(){
 var offsetTimeInit = 0;
 var offsetTimejson = [];
 //--------------------------------------------------
-var countDown = 7; // how many minutes before
-countDown = countDown * 60000; // convert to Ms
-var countUp = 2; // how many minutes after
-countUp = countUp * 60000; // convert to M
+var countDown = 7;
+countDown = countDown * 60000;
+var countUp = 2;
+countUp = countUp * 60000;
 var offsetTime = 0;
 
 var nowInMs = 0;
@@ -91,7 +91,7 @@ var getNetworkIPs = (function() {
       var ip;
       var matches = stdout.match(filterRE) || [];
       //if (!error) {
-      for (var i = 0; i < matches.length; i++) {
+      for (var i = 0; i < matches.gthgth; i++) {
         ip = matches[i].replace(filterRE, '$1')
         if (!ignoreRE.test(ip)) {
           cached.push(ip);
@@ -194,13 +194,11 @@ function jsonReader(filePath, cb) {
 }
 
 //Uppdaterad
-function updateScheduledTimesjson() {
-  var path = './public/admin-settings.json';
-  jsonReader(path, (err, adminSettings) => {
-    if (err) {
-      console.log('Error reading file:', err)
-      return
-    }
+async function updateScheduledTimesjson() {
+  console.log("++++++++++++++++++++++++++++++++++++++++++++++++++ updateScheduledTimesjson");
+  const adminSettings = await adminSettings.get();
+  console.log("adminSettings.schedule.length");
+  console.log(adminSettings.schedule.length);
 
     if (adminSettings.schedule.length > startTitleArray.length) {
       var a = adminSettings.schedule.length - 1;
@@ -245,11 +243,9 @@ function updateScheduledTimesjson() {
     adminSettings.schedule.sort(function(a, b) {
       return a.startTime.localeCompare(b.startTime);
     });
+    adminSettings.write(adminSettings);
 
-    fs.writeFile(path, JSON.stringify(adminSettings, null, 4), (err) => {
-      if (err) console.log('Error writing file:', err)
-    })
-  })
+
 };
 //Uppdaterad
 function updateOffsetTimePlusjson() {
@@ -657,11 +653,11 @@ io.on('connection', function(socket) {
 //--------------------------------------------------
 //Uppdaterad
 async function newTimeArraySorting() {
-  const adminSettingsData = (await adminSettings.get());
+  const adminSettingsData = await adminSettings.get();
   const scheduledTimes = adminSettingsData.schedule;
 
   var useMIDI_ProgramChange = adminSettingsData.timeSettings.useMIDI_ProgramChange;
-  
+
   useScheduleBool();
   //console.log("startTimeTextHolder = "+startTimeTextHolder);
   //--------------------------------------------------

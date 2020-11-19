@@ -19,49 +19,7 @@ console.log(myLocalipAndPort);
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var offsetTime = document.getElementById("offsetTime");
 
-
 //--------------------------------------------------
-function deleteIndexInScheduledTimes(index) {
-  const request = async () => {
-    const response = await fetch('/scheduledTimes.json');
-    const json = await response.json();
-    scheduledTimesArray = json;
-    console.log("deleteIndexInScheduledTimes");
-    console.log(scheduledTimesArray.profiles[index]);
-    scheduledTimesArray.profiles.splice(index, 1);
-
-    //----------------------------------------
-    var i;
-    var a;
-    var b;
-    var c;
-    var d;
-    var e;
-    startTimeArray  = [];
-    startTitleArray = [];
-    cueLengthArray  = [];
-    cueBoolArray    = [];
-    fiveBoolArray   = [];
-    for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
-      a = scheduledTimesArray.profiles[i].title;
-      startTitleArray.push(a);
-      b = scheduledTimesArray.profiles[i].startTime;
-      startTimeArray.push(b);
-      c = scheduledTimesArray.profiles[i].cueLength;
-      cueLengthArray.push(c);
-      d = scheduledTimesArray.profiles[i].cueBool;
-      cueBoolArray.push(d);
-      e = scheduledTimesArray.profiles[i].fiveBool;
-      fiveBoolArray.push(e);
-
-    }
-    //----------------------------------------
-    console.log("here i am");
-    sendDB_To_Socket_On_Delete();
-  }
-
-  request();
-};
 function getOffsetTime() {
   const request = async () => {
     const response = await fetch('/admin-settings.json');
@@ -77,9 +35,11 @@ getOffsetTime();
 
 function getscheduledTimes() {
   const request = async () => {
-    const response = await fetch('/scheduledTimes.json');
+    const response = await fetch('/admin-settings.json');
     const json = await response.json();
     scheduledTimesArray = json;
+    console.log("getscheduledTimes() = scheduledTimesArray =  ");
+    console.log(json);
     //console.log(scheduledTimesArray.profiles[0].title);
     //----------------------------------------
     var i;
@@ -93,16 +53,16 @@ function getscheduledTimes() {
     cueLengthArray = [];
     cueBoolArray  = [];
     fiveBoolArray   = [];
-    for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
-      a = scheduledTimesArray.profiles[i].title;
+    for (i = 0; i < scheduledTimesArray.schedule.length; i++) {
+      a = scheduledTimesArray.schedule[i].title;
       startTitleArray.push(a);
-      b = scheduledTimesArray.profiles[i].startTime;
+      b = scheduledTimesArray.schedule[i].startTime;
       startTimeArray.push(b);
-      c = scheduledTimesArray.profiles[i].cueLength;
+      c = scheduledTimesArray.schedule[i].cueLength;
       cueLengthArray.push(c);
-      d = scheduledTimesArray.profiles[i].cueBool;
+      d = scheduledTimesArray.schedule[i].cueBool;
       cueBoolArray.push(d);
-      e = scheduledTimesArray.profiles[i].fiveBool;
+      e = scheduledTimesArray.schedule[i].fiveBool;
       fiveBoolArray.push(e);
       //----------------------------------------
     }
@@ -110,7 +70,7 @@ function getscheduledTimes() {
 
   request();
 };
-getscheduledTimes();
+// getscheduledTimes();
 //--------------------------------------------------
 
 
@@ -142,7 +102,8 @@ socket.on("sendDB_TO_Admin", function(data) {
   fiveBoolArray   = data.socketDBArray.fiveBoolArray
 });
 socket.on("updatebutton_From_Socket", function(data) {
-  updateScheduledTimesArray();
+  console.log("updatebutton_From_Socket - DISABELED");
+  // updateScheduledTimesArray();
 })
 socket.on("updateDB_From_Socket", function(data) {
   //console.log("updateDB_From_Socket: ");
@@ -165,7 +126,7 @@ socket.on("pushGetscheduledTimes", function(data) {
 
 });
 socket.on("sortingButton_From_Socket", function(data) {
-  console.log("knapp funkar");
+  console.log("+++++++++++ sortingButton_From_Socket");
 
   updateScheduledTimesArray();
   sleep(750).then(() => {
@@ -279,35 +240,44 @@ $("#offsetReset").on('click', function() {
       document.body.appendChild(form)
       form.submit();
 });
-$("#loadDefaultArray").on('click', function() {
-  console.log("loadDefaultArray");
-  socket.emit('loadDefaultToSocket', {
-    message: "loadDefaultToSocket: Sent"
-  });
-
-  sleep(500).then(() => {
-    window.location.reload(true)
-  });
-
-});
-$("#writeDefaultArray").on('click', function() {
-  console.log("writeDefaultArray");
-
-  getElementsToArrays();
-
-  sleep(100).then(() => {
-    console.log("AFTER SLEEP: " + startTitleArray);
-    socket.emit('writeDefaultToSocket', {
-      startTitleArray: startTitleArray,
-      startTimeArray: startTimeArray,
-      cueLengthArray: cueLengthArray,
-      cueBoolArray: cueBoolArray,
-      fiveBoolArray: fiveBoolArray
-    });
-
-  });
-
-});
+// $("#loadDefaultArray").on('click', function() {
+//   console.log("loadDefaultArray");
+//   var path = "http://"+myLocalip+"/admin/loadDefault";
+//   console.log(path);
+//   var form = document.createElement('form');
+//     form.setAttribute('method', 'post');
+//     form.setAttribute('action', path);
+//     form.style.display = 'hidden';
+//     document.body.appendChild(form)
+//     form.submit();
+//   });
+// $("#writeDefaultArray").on('click', function() {
+//   console.log("writeDefaultArray");
+//   var path = "http://"+myLocalip+"/admin/writeToDefault";
+//   console.log(path);
+//   var form = document.createElement('form');
+//     form.setAttribute('method', 'post');
+//     form.setAttribute('action', path);
+//     form.style.display = 'hidden';
+//     document.body.appendChild(form)
+//     form.submit();
+//
+//
+//
+//   // getElementsToArrays();
+//   // sleep(100).then(() => {
+//   //   console.log("AFTER SLEEP: " + startTitleArray);
+//   //   socket.emit('writeDefaultToSocket', {
+//   //     startTitleArray: startTitleArray,
+//   //     startTimeArray: startTimeArray,
+//   //     cueLengthArray: cueLengthArray,
+//   //     cueBoolArray: cueBoolArray,
+//   //     fiveBoolArray: fiveBoolArray
+//   //   });
+//   //
+//   // });
+//
+// });
 $("#addNewRow").on('click', function() {
   console.log("addNewRow");
   var path = "http://"+myLocalip+"/admin/addNewRowDefault";

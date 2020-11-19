@@ -18,7 +18,11 @@ Download Nodejs -> https://nodejs.org/en/download/
 ### Earlier features
 - [X] Select which days the Schedule runs. Function dayOfWeek. Added to adminpage
 
-# Task lists
+## Task lists
+### 2020-11-19
+- [X] Moved loadDefaultArray from Socket to Rout/Index.js
+- [X] Move writeDefaultArray from Socket to Rout/Index.js
+### Earlier
 - [] Implament varibles from "timeSettings" countDown, countUp, cueCountDown, cueCountUp, useMIDI_ProgramChange
 - [] Install React Native & Socket.io & react-native-watch-connectivity  https://blog.bam.tech/developer-news/how-to-add-an-apple-watch-extension-to-your-react-native-application
 - [] JZZ-gui-Select for midi interface

@@ -175,8 +175,11 @@ router.post('/admin/submitSettings', async function(req, res){
 })
 router.post('/admin/loadDefault', async function(req, res){
   try{
-    const adminSettings = await scheduledTimes.get();
-    await scheduledTimesBackup.write(adminSettings);
+    const adminSettingsBackup = await scheduledTimesBackup.get();
+    await scheduledTimes.write(adminSettingsBackup);
+
+    // const adminSettings = await scheduledTimes.get();
+    // await scheduledTimesBackup.write(adminSettings);
   }
   catch(error){
     console.log(error);
@@ -185,8 +188,31 @@ router.post('/admin/loadDefault', async function(req, res){
 })
 router.post('/admin/writeToDefault', async function(req, res){
   try{
+    console.log("++++++++++ - - - - - -------------------------------------");
+    console.log(req.body);
+
     const adminSettingsBackup = await scheduledTimesBackup.get();
-    await scheduledTimes.write(adminSettingsBackup);
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettingsBackup.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+    }
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettingsBackup.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
+    }
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettingsBackup.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
+    }
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettingsBackup.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
+    }
+    for (let i = 0; i < adminSettings.schedule.length; i++) {
+      adminSettingsBackup.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
+    }
+
+    adminSettingsBackup.schedule.sort(function(a, b) {
+      return a.startTime.localeCompare(b.startTime);
+    });
+
+    await scheduledTimesBackup.write(adminSettingsBackup);
   }
   catch(error){
     console.log(error);
