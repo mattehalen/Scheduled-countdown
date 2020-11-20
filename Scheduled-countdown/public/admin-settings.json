@@ -23,96 +23,96 @@
         "countUpColor": "#00ff00"
     },
     "dayOfWeek": {
-        "Monday": 0,
-        "Tuesday": 0,
+        "Monday": 1,
+        "Tuesday": 1,
         "Wednesday": 1,
-        "Thursday": 0,
+        "Thursday": 1,
         "Friday": 1,
         "Saturday": 1,
-        "Sunday": 0
+        "Sunday": 1
     },
     "schedule": [
         {
-            "title": "Greatest Show",
-            "startTime": "02:00",
-            "cueLength": "00:00",
-            "cueBool": "0",
-            "fiveBool": "0"
-        },
-        {
-            "title": "David",
-            "startTime": "02:05",
-            "cueLength": "00:07:47",
-            "cueBool": "1",
-            "fiveBool": "1"
-        },
-        {
-            "title": "David Act 2",
-            "startTime": "02:05",
-            "cueLength": "00:06:51",
-            "cueBool": "1",
-            "fiveBool": "1"
-        },
-        {
-            "title": "Celebration",
-            "startTime": "02:10",
-            "cueLength": "00:07:02",
-            "cueBool": "1",
-            "fiveBool": "1"
-        },
-        {
             "title": "Open Doors",
-            "startTime": "02:15",
+            "startTime": "17:15",
             "cueLength": "00:00",
             "cueBool": "0",
             "fiveBool": "0"
         },
         {
-            "title": "Eurythmics",
-            "startTime": "02:25",
-            "cueLength": "00:08:52",
-            "cueBool": "1",
+            "title": "Saxophon guy",
+            "startTime": "17:39",
+            "cueLength": "00:00",
+            "cueBool": "0",
+            "fiveBool": "0"
+        },
+        {
+            "title": "David Warm Up",
+            "startTime": "17:55",
+            "cueLength": "00:00",
+            "cueBool": "0",
             "fiveBool": "1"
         },
         {
-            "title": "Queen",
-            "startTime": "02:25",
-            "cueLength": "00:05:00",
-            "cueBool": "1",
-            "fiveBool": "1"
+            "title": "Greatest Show",
+            "startTime": "18:00",
+            "cueLength": "00:00",
+            "cueBool": "0",
+            "fiveBool": "0"
         },
         {
             "title": "WWWY",
-            "startTime": "02:35",
+            "startTime": "18:35",
             "cueLength": "00:06:35",
             "cueBool": "1",
             "fiveBool": "1"
         },
         {
-            "title": "Saxophon guy",
-            "startTime": "02:39",
-            "cueLength": "00:00",
-            "cueBool": "0",
-            "fiveBool": "0"
+            "title": "David",
+            "startTime": "19:05",
+            "cueLength": "00:07:47",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "Eurythmics",
+            "startTime": "19:25",
+            "cueLength": "00:08:52",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "ASIB",
+            "startTime": "19:55",
+            "cueLength": "00:07:54",
+            "cueBool": "1",
+            "fiveBool": "1"
+        },
+        {
+            "title": "Celebration",
+            "startTime": "20:10",
+            "cueLength": "00:07:02",
+            "cueBool": "1",
+            "fiveBool": "1"
         },
         {
             "title": "Star Catcher",
-            "startTime": "02:40",
+            "startTime": "20:40",
             "cueLength": "00:07:33",
             "cueBool": "1",
             "fiveBool": "1"
         },
         {
-            "title": "David Warm Up",
-            "startTime": "02:55",
-            "cueLength": "00:00",
-            "cueBool": "0",
+            "title": "David Act 2",
+            "startTime": "21:05",
+            "cueLength": "00:06:51",
+            "cueBool": "1",
             "fiveBool": "1"
         },
         {
-            "title": "ASIB",
-            "startTime": "02:55",
-            "cueLength": "00:07:54",
+            "title": "Queen",
+            "startTime": "21:25",
+            "cueLength": "00:05:00",
             "cueBool": "1",
             "fiveBool": "1"
         }

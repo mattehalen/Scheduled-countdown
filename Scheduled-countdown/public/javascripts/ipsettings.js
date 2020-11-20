@@ -259,35 +259,35 @@ $("#offsetReset").on('click', function() {
     offsetTime: offsetTimeInit
   });
 });
-$("#loadDefaultArray").on('click', function() {
-  console.log("loadDefaultArray");
-  socket.emit('loadDefaultToSocket', {
-    message: "loadDefaultToSocket: Sent"
-  });
-
-  sleep(250).then(() => {
-    // window.location.reload(true)
-  });
-
-});
-$("#writeDefaultArray").on('click', function() {
-  console.log("writeDefaultArray");
-
-  getElementsToArrays();
-
-  sleep(100).then(() => {
-    console.log("AFTER SLEEP: " + startTitleArray);
-    socket.emit('writeDefaultToSocket', {
-      startTitleArray: startTitleArray,
-      startTimeArray: startTimeArray,
-      cueLengthArray: cueLengthArray,
-      cueBoolArray: cueBoolArray,
-      fiveBoolArray: fiveBoolArray
-    });
-
-  });
-
-});
+// $("#loadDefaultArray").on('click', function() {
+//   console.log("loadDefaultArray");
+//   socket.emit('loadDefaultToSocket', {
+//     message: "loadDefaultToSocket: Sent"
+//   });
+//
+//   sleep(250).then(() => {
+//     // window.location.reload(true)
+//   });
+//
+// });
+// $("#writeDefaultArray").on('click', function() {
+//   console.log("writeDefaultArray");
+//
+//   getElementsToArrays();
+//
+//   sleep(100).then(() => {
+//     console.log("AFTER SLEEP: " + startTitleArray);
+//     socket.emit('writeDefaultToSocket', {
+//       startTitleArray: startTitleArray,
+//       startTimeArray: startTimeArray,
+//       cueLengthArray: cueLengthArray,
+//       cueBoolArray: cueBoolArray,
+//       fiveBoolArray: fiveBoolArray
+//     });
+//
+//   });
+//
+// });
 $("#addNewRow").on('click', function() {
   console.log("addNewRow");
   socket.emit("send_addNewRow_To_Socket", {})

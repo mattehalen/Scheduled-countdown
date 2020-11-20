@@ -33,43 +33,43 @@ function getOffsetTime() {
 };
 getOffsetTime();
 
-function getscheduledTimes() {
-  const request = async () => {
-    const response = await fetch('/admin-settings.json');
-    const json = await response.json();
-    scheduledTimesArray = json;
-    console.log("getscheduledTimes() = scheduledTimesArray =  ");
-    console.log(json);
-    //console.log(scheduledTimesArray.profiles[0].title);
-    //----------------------------------------
-    var i;
-    var a;
-    var b;
-    var c;
-    var d;
-    var e;
-    startTimeArray = [];
-    startTitleArray = [];
-    cueLengthArray = [];
-    cueBoolArray  = [];
-    fiveBoolArray   = [];
-    for (i = 0; i < scheduledTimesArray.schedule.length; i++) {
-      a = scheduledTimesArray.schedule[i].title;
-      startTitleArray.push(a);
-      b = scheduledTimesArray.schedule[i].startTime;
-      startTimeArray.push(b);
-      c = scheduledTimesArray.schedule[i].cueLength;
-      cueLengthArray.push(c);
-      d = scheduledTimesArray.schedule[i].cueBool;
-      cueBoolArray.push(d);
-      e = scheduledTimesArray.schedule[i].fiveBool;
-      fiveBoolArray.push(e);
-      //----------------------------------------
-    }
-  }
-
-  request();
-};
+// function getscheduledTimes() {
+//   const request = async () => {
+//     const response = await fetch('/admin-settings.json');
+//     const json = await response.json();
+//     scheduledTimesArray = json;
+//     console.log("getscheduledTimes() = scheduledTimesArray =  ");
+//     console.log(json);
+//     //console.log(scheduledTimesArray.profiles[0].title);
+//     //----------------------------------------
+//     var i;
+//     var a;
+//     var b;
+//     var c;
+//     var d;
+//     var e;
+//     startTimeArray = [];
+//     startTitleArray = [];
+//     cueLengthArray = [];
+//     cueBoolArray  = [];
+//     fiveBoolArray   = [];
+//     for (i = 0; i < scheduledTimesArray.schedule.length; i++) {
+//       a = scheduledTimesArray.schedule[i].title;
+//       startTitleArray.push(a);
+//       b = scheduledTimesArray.schedule[i].startTime;
+//       startTimeArray.push(b);
+//       c = scheduledTimesArray.schedule[i].cueLength;
+//       cueLengthArray.push(c);
+//       d = scheduledTimesArray.schedule[i].cueBool;
+//       cueBoolArray.push(d);
+//       e = scheduledTimesArray.schedule[i].fiveBool;
+//       fiveBoolArray.push(e);
+//       //----------------------------------------
+//     }
+//   }
+//
+//   request();
+// };
 // getscheduledTimes();
 //--------------------------------------------------
 
@@ -82,16 +82,16 @@ socket.emit("start", {});
 socket.emit("getTimeCode",{});
 
 //sendDB_To_Socket
-sleep(1000).then(() => {
-  socket.emit("sendDB_To_Socket", {
-    startTitleArray: startTitleArray,
-    startTimeArray: startTimeArray,
-    cueLengthArray: cueLengthArray,
-    cueBoolArray: cueBoolArray,
-    fiveBoolArray: fiveBoolArray
-
-  });
-});
+// sleep(1000).then(() => {
+//   socket.emit("sendDB_To_Socket", {
+//     startTitleArray: startTitleArray,
+//     startTimeArray: startTimeArray,
+//     cueLengthArray: cueLengthArray,
+//     cueBoolArray: cueBoolArray,
+//     fiveBoolArray: fiveBoolArray
+//
+//   });
+// });
 //--------------------------------------------------
 //--------------------------------------------------
 socket.on("sendDB_TO_Admin", function(data) {
@@ -101,10 +101,10 @@ socket.on("sendDB_TO_Admin", function(data) {
   cueBoolArray    = data.socketDBArray.cueBoolArray;
   fiveBoolArray   = data.socketDBArray.fiveBoolArray
 });
-socket.on("updatebutton_From_Socket", function(data) {
-  console.log("updatebutton_From_Socket - DISABELED");
-  // updateScheduledTimesArray();
-})
+// socket.on("updatebutton_From_Socket", function(data) {
+//   console.log("updatebutton_From_Socket - DISABELED");
+//   // updateScheduledTimesArray();
+// })
 socket.on("updateDB_From_Socket", function(data) {
   //console.log("updateDB_From_Socket: ");
   startTimeArray  = data.startTimeArray;
@@ -125,21 +125,21 @@ socket.on("pushGetscheduledTimes", function(data) {
   });
 
 });
-socket.on("sortingButton_From_Socket", function(data) {
-  console.log("+++++++++++ sortingButton_From_Socket");
-
-  updateScheduledTimesArray();
-  sleep(750).then(() => {
-    //sortscheduledTimes();
-    // window.location.reload(true)
-
-    sleep(1000).then(() => {
-      //document.location.reload();
-    });
-
-  });
-
-})
+// socket.on("sortingButton_From_Socket", function(data) {
+//   console.log("+++++++++++ sortingButton_From_Socket");
+//
+//   updateScheduledTimesArray();
+//   sleep(750).then(() => {
+//     //sortscheduledTimes();
+//     // window.location.reload(true)
+//
+//     sleep(1000).then(() => {
+//       //document.location.reload();
+//     });
+//
+//   });
+//
+// })
 socket.on("updateOffsetTime_From_Socket", function(data) {
   console.log("updateOffsetTime_From_Socket");
   console.log(data);
@@ -187,7 +187,7 @@ socket.on("alertText_adminUrl",function(data){
   $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>'+data.text+'</H1></div>');
   console.log(data.text);
 
-  sleep(5000).then(() => {
+  sleep(10000).then(() => {
     $( ".blink" ).remove();
     });
 
@@ -195,9 +195,9 @@ socket.on("alertText_adminUrl",function(data){
 
 });
 //--------------------------------------------------
-$("#updateScheduledTimesArray").on('click', function() {
-  socket.emit("updatebutton_To_Socket", {})
-});
+// $("#updateScheduledTimesArray").on('click', function() {
+//   socket.emit("updatebutton_To_Socket", {})
+// });
 $("#sorting").on('click', function() {
   socket.emit("sortingButton_To_Socket", {})
 });
@@ -240,44 +240,51 @@ $("#offsetReset").on('click', function() {
       document.body.appendChild(form)
       form.submit();
 });
-// $("#loadDefaultArray").on('click', function() {
-//   console.log("loadDefaultArray");
-//   var path = "http://"+myLocalip+"/admin/loadDefault";
-//   console.log(path);
-//   var form = document.createElement('form');
-//     form.setAttribute('method', 'post');
-//     form.setAttribute('action', path);
-//     form.style.display = 'hidden';
-//     document.body.appendChild(form)
-//     form.submit();
-//   });
-// $("#writeDefaultArray").on('click', function() {
-//   console.log("writeDefaultArray");
-//   var path = "http://"+myLocalip+"/admin/writeToDefault";
-//   console.log(path);
-//   var form = document.createElement('form');
-//     form.setAttribute('method', 'post');
-//     form.setAttribute('action', path);
-//     form.style.display = 'hidden';
-//     document.body.appendChild(form)
-//     form.submit();
-//
-//
-//
-//   // getElementsToArrays();
-//   // sleep(100).then(() => {
-//   //   console.log("AFTER SLEEP: " + startTitleArray);
-//   //   socket.emit('writeDefaultToSocket', {
-//   //     startTitleArray: startTitleArray,
-//   //     startTimeArray: startTimeArray,
-//   //     cueLengthArray: cueLengthArray,
-//   //     cueBoolArray: cueBoolArray,
-//   //     fiveBoolArray: fiveBoolArray
-//   //   });
-//   //
-//   // });
-//
-// });
+$("#adminsubmit").on('click', function() {
+  var path = "http://"+myLocalip+"/admin/submit";
+    console.log(path);
+    socket.emit("reload", {})
+
+
+    var form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', path);
+      form.style.display = 'hidden';
+      document.body.appendChild(form)
+      form.submit();
+});
+
+
+$("#loadDefaultArray").on('click', function() {
+  console.log("loadDefaultArray");
+  var path = "http://"+myLocalip+"/admin/loadDefault";
+  console.log(path);
+  socket.emit("reload", {})
+
+    sleep(1000).then(() => {
+
+      var form = document.createElement('form');
+        form.setAttribute('method', 'post');
+        form.setAttribute('action', path);
+        form.style.display = 'hidden';
+        document.body.appendChild(form)
+        form.submit();
+    });
+
+
+  });
+$("#writeDefaultArray").on('click', function() {
+  console.log("writeDefaultArray");
+  var path = "http://"+myLocalip+"/admin/writeToDefault";
+  console.log(path);
+  socket.emit("reload", {})
+  var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', path);
+    form.style.display = 'hidden';
+    document.body.appendChild(form)
+    form.submit();
+});
 $("#addNewRow").on('click', function() {
   console.log("addNewRow");
   var path = "http://"+myLocalip+"/admin/addNewRowDefault";
@@ -289,11 +296,24 @@ $("#addNewRow").on('click', function() {
     document.body.appendChild(form)
     form.submit();
   });
+$("#dayOfWeekSubmit").on('click', function() {
+    console.log("dayOfWeekSubmit");
+    var path = "http://"+myLocalip+"/admin/dayOfWeek";
+    console.log(path);
+    socket.emit("reload", {})
+    var form = document.createElement('form');
+      form.setAttribute('method', 'post');
+      form.setAttribute('action', path);
+      form.style.display = 'hidden';
+      document.body.appendChild(form)
+      form.submit();
+    });
 
 $(":input").keypress(function (e) {
     if (e.which == 13) {
       socket.emit("sortingButton_To_Socket", {})
-        alert('enter key is pressed and list is updated');
+      socket.emit("reload", {})
+        // alert('enter key is pressed and list is updated');
     }
 });
 
@@ -333,45 +353,45 @@ $("#alpha").on("click",function (e) {
     });
 });
 //--------------------------------------------------
-function updateScheduledTimesArray() {
-  console.log("updateScheduledTimesArray");
-  console.log(fiveBoolArray);
-  for (let i = 0; i < startTitleArray.length; i++) {
-    startTitleArray[i] = $("#title" + i).val()
-  }
-  for (let i = 0; i < startTimeArray.length; i++) {
-    startTimeArray[i] = $("#startTime" + i).val()
-  }
-  for (let i = 0; i < cueLengthArray.length; i++) {
-    cueLengthArray[i] = $("#cueLength" + i).val()
-  }
-  for (let i = 0; i < cueBoolArray.length; i++) {
-    cueBoolArray[i] = $("#cueBool" + i).val()
-  }
-  for (let i = 0; i < fiveBoolArray.length; i++) {
-    fiveBoolArray[i] = $("#fiveBool" + i).val()
-    console.log(fiveBoolArray[i]);
-  }
-  console.log("------------------------------> socket emit writeToScheduledTimesjson = "+fiveBoolArray);
-  socket.emit("writeToScheduledTimesjson", {
-    startTitleArray: startTitleArray,
-    startTimeArray: startTimeArray,
-    cueLengthArray: cueLengthArray,
-    cueBoolArray: cueBoolArray,
-    fiveBoolArray: fiveBoolArray
-  });
-  socket.emit('updateScheduledTimesArray', {
-    startTitleArray: startTitleArray,
-    startTimeArray: startTimeArray,
-    cueLengthArray: cueLengthArray,
-    cueBoolArray: cueBoolArray,
-    fiveBoolArray: fiveBoolArray
-  });
-
-  sleep(1000).then(() => {
-    getscheduledTimes();
-  });
-};
+// function updateScheduledTimesArray() {
+//   console.log("updateScheduledTimesArray");
+//   console.log(fiveBoolArray);
+//   for (let i = 0; i < startTitleArray.length; i++) {
+//     startTitleArray[i] = $("#title" + i).val()
+//   }
+//   for (let i = 0; i < startTimeArray.length; i++) {
+//     startTimeArray[i] = $("#startTime" + i).val()
+//   }
+//   for (let i = 0; i < cueLengthArray.length; i++) {
+//     cueLengthArray[i] = $("#cueLength" + i).val()
+//   }
+//   for (let i = 0; i < cueBoolArray.length; i++) {
+//     cueBoolArray[i] = $("#cueBool" + i).val()
+//   }
+//   for (let i = 0; i < fiveBoolArray.length; i++) {
+//     fiveBoolArray[i] = $("#fiveBool" + i).val()
+//     console.log(fiveBoolArray[i]);
+//   }
+//   console.log("------------------------------> socket emit writeToScheduledTimesjson = "+fiveBoolArray);
+//   socket.emit("writeToScheduledTimesjson", {
+//     startTitleArray: startTitleArray,
+//     startTimeArray: startTimeArray,
+//     cueLengthArray: cueLengthArray,
+//     cueBoolArray: cueBoolArray,
+//     fiveBoolArray: fiveBoolArray
+//   });
+//   socket.emit('updateScheduledTimesArray', {
+//     startTitleArray: startTitleArray,
+//     startTimeArray: startTimeArray,
+//     cueLengthArray: cueLengthArray,
+//     cueBoolArray: cueBoolArray,
+//     fiveBoolArray: fiveBoolArray
+//   });
+//
+//   sleep(1000).then(() => {
+//     getscheduledTimes();
+//   });
+// };
 function delete_button_click(listIndex) {
   var path = "http://"+myLocalip+"/admin/deleteButton";
 

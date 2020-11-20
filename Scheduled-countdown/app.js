@@ -5,6 +5,7 @@ var app = express();
 var path = require('path');
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
+app.io = io;
 //---------- socket io ernd
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');

@@ -11,6 +11,7 @@ var myipjson = adminSettings.ipsettings.ipadress;
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var myIpArray= [];
 var myLocalip = myipjson+":3000";
+
 //--------------------------------------------------
 
 const scheduledTimes = require('../lib/adminSettings');
@@ -78,6 +79,7 @@ if (error) {
 //--------------------------------------------------
 console.log("index.js -> myipjson");
 console.log(myipjson);
+
 //-------------------------------------------------------------------------
 //OLD jsonReader
 function jsonReader(filePath, cb) {
@@ -99,17 +101,15 @@ async function readJsonFile(filename){
   const data = await fs.readFile(filename)
   return JSON.parse(data);
 }
-async function writeJsonFIle(filename,data){
-  await fs.writeFile(filename, JSON.stringify(data, null, 4));
-  console.log("----------> data from writeJsonFIle =");
-  console.log(data);
-}
+// async function writeJsonFIle(filename,data){
+//   await fs.writeFile(filename, JSON.stringify(data, null, 4));
+//   console.log("----------> data from writeJsonFIle =");
+//   console.log(data);
+// }
 // With async
+
 router.post('/admin/submit', async function(req, res){
   try{
-    console.log("---------------------------------------------- - - - - - -------------------------------------");
-    console.log(req.body);
-
     const adminSettings = await scheduledTimes.get();
     for (let i = 0; i < adminSettings.schedule.length; i++) {
       adminSettings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
@@ -136,7 +136,6 @@ router.post('/admin/submit', async function(req, res){
   catch(error){
     console.log(error);
   }
-
   res.redirect("/admin");
 
 })
@@ -175,6 +174,7 @@ router.post('/admin/submitSettings', async function(req, res){
 })
 router.post('/admin/loadDefault', async function(req, res){
   try{
+    console.log("++--++--++--++--++ loadDefault ++--++--++--++--++");
     const adminSettingsBackup = await scheduledTimesBackup.get();
     await scheduledTimes.write(adminSettingsBackup);
 
@@ -333,17 +333,20 @@ router.post('/admin/setLoopbackip', function(req, res, next){
 });
 router.post('/admin/dayOfWeek', async function(req, res){
   try{
+    req.app.io.sockets.emit('reload', {});
+    console.log("------------------------------------------ dayOfWeek ---------------------------------------------");
+    // console.log(req.body);
     const adminSettings = await scheduledTimes.get();
     const data = JSON.parse(JSON.stringify(req.body));
     const entries = Object.entries(data)
-    console.log(entries);
+    // console.log(entries);
 
     for (const [title, value] of entries) {
-      console.log(`${title} ${value}`)
+      // console.log(`${title} ${value}`)
       adminSettings.dayOfWeek[`${title}`] = parseInt(value, 10);
 
     }
-    console.log(adminSettings.dayOfWeek);
+    // console.log(adminSettings.dayOfWeek);
 
     await scheduledTimes.write(adminSettings);
   }
@@ -497,5 +500,13 @@ router.post('/submitmathias', async function(req, res){
 
 
   });
+
+
+
+
+
+
+
+
 
 module.exports = router;

@@ -19,7 +19,9 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [X] Select which days the Schedule runs. Function dayOfWeek. Added to adminpage
 
 ## Task lists
-### 2020-11-19
+### DONE 2020-11-20
+- [X] SAVE on /admin dosn't set newArrayIndex to 0. it's still at the last value. Fix so it goes to 0 when save. Maybe install Socket on rout/index.js - QUICK FIX - newTimeArraySorting() now resets newArrayIndex=0 if newArrayIndex === scheduledTimes.length
+### DONE 2020-11-18
 - [X] Moved loadDefaultArray from Socket to Rout/Index.js
 - [X] Move writeDefaultArray from Socket to Rout/Index.js
 ### Earlier
@@ -28,12 +30,18 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [] JZZ-gui-Select for midi interface
 - [] Add save/load to folder for saving adminsettings on other places for backup.
 - [] Add Time-varible to Alert Function
+- [] Socket - getscheduledTimes to Async
+- [] scheduleBool in socket.js Seams to not update correctly -
+    save dayOfWeek dosn't update the dayOfWeek.js function. Reload of Server make this WORK.
+- [] install Socket.js ON index.js
+
 
 
 # Bugs
 - [] offsetTime dosn't effect 5min countdown
 - [] Navigated to chrome-error://chromewebdata/ - for some users. macbookAir - Chrome
 - [] Dosn't work on Internet Explorer
+- [] myIpArray dont work after update in socket.js
 
 ## Bug Fixes
 ### 2020-11-15

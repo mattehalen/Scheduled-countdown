@@ -7,8 +7,6 @@ async function read(filename){
 
 async function write(filename, data){
   await fs.writeFile(filename, JSON.stringify(data, null, 4));
-  console.log("----------> data from writeJsonFIle =");
-  console.log(data);
 }
 
 module.exports = {

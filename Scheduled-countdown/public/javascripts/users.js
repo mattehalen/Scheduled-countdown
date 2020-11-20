@@ -119,7 +119,7 @@ socket.on("alertText_allUsersUrl",function(data){
     $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>'+data.text+'</H1></div>');
     console.log(data.text);
 
-    sleep(5000).then(() => {
+    sleep(10000).then(() => {
       $( ".blink" ).remove();
       });
 

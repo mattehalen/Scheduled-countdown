@@ -8,7 +8,7 @@ async function get() {
   if (!currentState) {
     currentState = await jsonFiles.read(filepath);
   }
-
+// console.log(currentState.dayOfWeek);
 
   var d = new Date();
   var weekday = new Array(7);
@@ -22,9 +22,11 @@ async function get() {
   var n = weekday[d.getDay()];
 
 
+
   const entries = Object.entries(currentState.dayOfWeek)
   var i=0;
   for (const [day, value] of entries) {
+    // console.log("dayOfWeek day + value = " + day + " - " + value);
 
     if (day === n) {
       return value;
