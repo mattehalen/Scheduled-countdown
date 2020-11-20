@@ -239,57 +239,35 @@ async function updateScheduledTimesjson() {
 
 };
 //Uppdaterad
-function updateOffsetTimePlusjson() {
+async function updateOffsetTimePlusjson() {
+  try{
+    const adminSettings = await scheduledTimes.get();
+    adminSettings.timeSettings.offsetTime += 1;
+    await scheduledTimes.write(adminSettings);
 
-  jsonReader('./public/admin-settings.json', (err, settings) => {
-    if (err) {
-      console.log('Error reading file:', err)
-      return
-    }
-
-    settings.timeSettings.offsetTime += 1;
-
-    fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
-      if (err) console.log('Error writing file:', err)
-    })
-  })
-
-
+  }catch(error){
+    console.log(error);
+  }
 };
-function updateOffsetTimeMinusjson() {
+async function updateOffsetTimeMinusjson() {
+  try{
+    const adminSettings = await scheduledTimes.get();
+    adminSettings.timeSettings.offsetTime -= 1;
+    await scheduledTimes.write(adminSettings);
 
-
-  jsonReader('./public/admin-settings.json', (err, settings) => {
-    if (err) {
-      console.log('Error reading file:', err)
-      return
-    }
-
-    settings.timeSettings.offsetTime -= 1;
-    fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
-      if (err) console.log('Error writing file:', err)
-    })
-  })
-
+  }catch(error){
+    console.log(error);
+  }
 };
-function updateOffsetTimeResetjson() {
+async function updateOffsetTimeResetjson() {
+  try{
+    const adminSettings = await scheduledTimes.get();
+    adminSettings.timeSettings.offsetTime = 0;
+    await scheduledTimes.write(adminSettings);
 
-
-  jsonReader('./public/admin-settings.json', (err, settings) => {
-    if (err) {
-      console.log('Error reading file:', err)
-      return
-    }
-
-  settings.timeSettings.offsetTime = 0;
-    sleep(1000).then(() => {
-      fs.writeFile('./public/admin-settings.json', JSON.stringify(settings, null, 4), (err) => {
-        if (err) console.log('Error writing file:', err)
-      })
-    });
-
-  })
-
+  }catch(error){
+    console.log(error);
+  }
 };
 //Uppdaterad
 function loadDefaultjson() {
@@ -422,16 +400,6 @@ io.on('connection', function(socket) {
     });
     //mtcTOString();
   });
-
-  // socket.on("sendDB_To_Socket", function(data) {
-  //   console.log("sendDB_To_Socket:"+ JSON.stringify(data) )
-  //   io.emit("sendDB_TO_Main", {
-  //     socketDBArray: data
-  //   });
-  //   io.emit("sendDB_TO_Admin", {
-  //     socketDBArray: data
-  //   });
-  // });
   socket.on("writeToScheduledTimesjson", function(data) {
     console.log("--------------------> writeToScheduledTimesjson <--------------------");
     startTitleArray = data.startTitleArray;
@@ -1133,8 +1101,6 @@ function deleteRowFromSchedule(listIndex) {
   })
 
 };
-
-
 
 function addNewCueRowToUser_FIXME(user) {
   console.log("addNewCueRowToUser + user  = " + user);

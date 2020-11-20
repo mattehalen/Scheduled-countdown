@@ -81,32 +81,11 @@ console.log("index.js -> myipjson");
 console.log(myipjson);
 
 //-------------------------------------------------------------------------
-//OLD jsonReader
-function jsonReader(filePath, cb) {
-    fs.readFile(filePath, (err, fileData) => {
-        if (err) {
-            return cb && cb(err)
-        }
-        try {
-            const object = JSON.parse(fileData)
-            return cb && cb(null, object)
-        } catch(err) {
-            return cb && cb(err)
-        }
-    })
-}
 //-------------------------------------------------------------------------
-//New async jsonReader
 async function readJsonFile(filename){
   const data = await fs.readFile(filename)
   return JSON.parse(data);
 }
-// async function writeJsonFIle(filename,data){
-//   await fs.writeFile(filename, JSON.stringify(data, null, 4));
-//   console.log("----------> data from writeJsonFIle =");
-//   console.log(data);
-// }
-// With async
 
 router.post('/admin/submit', async function(req, res){
   try{
@@ -140,9 +119,8 @@ router.post('/admin/submit', async function(req, res){
 
 })
 router.post('/admin/submitSettings', async function(req, res){
-  const filePath = './public/admin-settings.json';
   try{
-    const adminSettings = await readJsonFile(filePath);
+    const adminSettings = await scheduledTimes.get();
     const entries = Object.entries(adminSettings.timeSettings)
     var i=0;
     for (const [title, value] of entries) {
@@ -157,12 +135,9 @@ router.post('/admin/submitSettings', async function(req, res){
       }
       i++;
     }
+    console.log("---------- '/admin/submitSettings");
     console.log(adminSettings.timeSettings);
-
-    await writeJsonFIle(filePath,adminSettings);
-
-
-
+    await scheduledTimes.write(adminSettings);
   }
   catch(error){
     console.log(error);
@@ -258,7 +233,6 @@ router.post('/admin/deleteButton', async function(req, res){
 
   res.redirect("/admin");
 });
-
 router.post('/admin/offsetPlus', async function(req, res){
   try{
     const adminSettings = await scheduledTimes.get();
@@ -272,7 +246,6 @@ router.post('/admin/offsetPlus', async function(req, res){
 
   res.redirect("/admin");
 });
-
 router.post('/admin/offsetMinus', async function(req, res){
   try{
     const adminSettings = await scheduledTimes.get();
@@ -299,36 +272,16 @@ router.post('/admin/offsetReset', async function(req, res){
 
   res.redirect("/admin");
 });
-router.post('/admin/setLoopbackip', function(req, res, next){
-  console.log("setLoopbackip:-----------------------------------------------------------");
-  const fs = require('fs')
-  function jsonReader(filePath, cb) {
-      fs.readFile(filePath, (err, fileData) => {
-          if (err) {
-              return cb && cb(err)
-          }
-          try {
-              const object = JSON.parse(fileData)
-              return cb && cb(null, object)
-          } catch(err) {
-              return cb && cb(err)
-          }
-      })
+router.post('/admin/setLoopbackip', async function(req, res){
+  try{
+    console.log("----------------------------------------------------------- setLoopbackip:-----------------------------------------------------------");
+    const adminSettings = await scheduledTimes.get();
+    console.log("mycustomip:"+adminSettings.ipsettings.ipadress);
+    adminSettings.ipsettings.ipadress = "127.0.0.1";
+    await scheduledTimes.write(adminSettings);
+  }catch(error){
+    console.log(error);
   }
-  jsonReader('./public/admin-settings.json', (err, mycustomip) => {
-    if (err) {
-        console.log('Error reading file:',err)
-        return
-    }
-    console.log("mycustomip:"+mycustomip.ipsettings.ipadress);
-
-    mycustomip.ipsettings.ipadress = "127.0.0.1";
-
-  fs.writeFile('./public/admin-settings.json', JSON.stringify(mycustomip, null,4), (err) => {
-        if (err) console.log('Error writing file:', err)
-    })
-  })
-
   res.redirect("/admin");
 });
 router.post('/admin/dayOfWeek', async function(req, res){
@@ -357,7 +310,6 @@ router.post('/admin/dayOfWeek', async function(req, res){
   res.redirect("/admin");
 
 })
-
 //-------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
