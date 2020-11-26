@@ -1,8 +1,6 @@
 const SocketListeners = require('./socketio-listener');
 const Utilities = require('./../services/utilties');
 
-var myIpArray = [];
-
 //-------------------------------------------------------------------------
 // Socket Code here
 //-------------------------------------------------------------------------
@@ -15,10 +13,6 @@ io.on('connection', async function (socket) {
 
   socket.on("start", function () {
     // Blank
-  });
-
-  io.emit("sendIpArrayToAdminPage", {
-    myIpArray: myIpArray
   });
 
   // Registering all Socket Event listeners here.
@@ -35,13 +29,6 @@ io.on('connection', async function (socket) {
   io.emit("alertText_allUsersUrl_stop", {})
 })
 //-------------------------------------------------------------------------
-
-Utilities.getNetworkIPs(function (error, ip) {
-  myIpArray = ip
-  if (error) {
-      console.log('error:', error);
-  }
-}, false);
 
 module.exports = {
   io: io,

@@ -4,10 +4,6 @@ var router = express.Router();
 const AdminSettings = require('./../services/admin-settings');
 const FileOperation = require('./../services/file-operations');
 
-async function getLocalIP() {
-    let IPAddress = (await AdminSettings.get()).ipsettings.ipadress;
-    return IPAddress + ":3000";
-}
   
 router.get('/', async function (req, res) {
     const adminSettings = await AdminSettings.get();
@@ -19,8 +15,7 @@ router.get('/', async function (req, res) {
             schedule: adminSettings.schedule,
             dayOfWeek: adminSettings.dayOfWeek,
             timeSettings: adminSettings.timeSettings,
-            offsetTime: adminSettings.timeSettings.offsetTime,
-            myLocalip: await getLocalIP()
+            offsetTime: adminSettings.timeSettings.offsetTime
         });
     } catch (error) {
         console.log(error);

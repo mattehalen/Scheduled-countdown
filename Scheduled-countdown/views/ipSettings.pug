@@ -18,13 +18,17 @@ block content
               option IP Adress
             button.btn.btn-dark( onClick="saveMyIpTo_myipjson()") Save ip
                 form(method='POST' action='/admin/setLoopbackip')
-                  button.btn.btn-dark(type='submit' onClick="setLoopbackip()" style="width: 100%") Set Ip 127.0.0.1  
-      
-    
-    
-    
-    
-  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+                  button.btn.btn-dark(type='submit' onClick="setLoopbackip()" style="width: 100%") Set Ip 127.0.0.1
+
+
+
+
+
+  //- Libraries Included
   script(src='/socket.io/socket.io.js')
   script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-  script(src="static/javascripts/ipsettings.js")
+
+  //- Custom Scripts
+  script(src="/javascripts/socket.js")
+  script(src="/javascripts/utilities.js")
+  script(src='/javascripts/ipsettings.js')

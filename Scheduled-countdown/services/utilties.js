@@ -1,11 +1,11 @@
 var getNetworkIPs = (function () {
     const ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
-  
+
     const exec = require('child_process').exec;
     var cached;
     var command;
     var filterRE;
-  
+
     switch (process.platform) {
       case 'win32':
         //case 'win64': // TODO: test
@@ -23,7 +23,7 @@ var getNetworkIPs = (function () {
         // filterRE = /\binet6[^:]+:\s*([^\s]+)/g; // IPv6
         break;
     }
-  
+
     return function (callback, bypassCache) {
       if (cached && !bypassCache) {
         callback(null, cached);
@@ -46,8 +46,10 @@ var getNetworkIPs = (function () {
       });
     };
   })();
-  
+
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 module.exports = {
-    getNetworkIPs
+    getNetworkIPs,
+    sleep
 }

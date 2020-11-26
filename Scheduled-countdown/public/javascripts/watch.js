@@ -1,10 +1,5 @@
 "use strict";
 
-var myLocalip = document.getElementById("myLocalip").textContent;
-var myLocalipAndPort = myLocalip
-console.log(myLocalipAndPort);
-var socket = io.connect(myLocalipAndPort);
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 //--------------------------------------------------
 var nowText = document.getElementById("now");

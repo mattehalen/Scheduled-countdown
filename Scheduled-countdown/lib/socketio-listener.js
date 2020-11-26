@@ -1,6 +1,3 @@
-// var scheduledTimes = require('../public/scheduledTimes.json');
-// var scheduledTimesBackup = require('../public/admin-settings-backup.json');
-
 const fs = require('fs');
 
 const Utilities = require('./../services/utilties');
@@ -8,6 +5,8 @@ const FileOperation = require('./../services/file-operations');
 const AdminSettings = require('./../services/admin-settings');
 const ADMIN_SETTINGS_JSON_FILE = './public/admin-settings.json';
 
+
+// This is th socket for server
 let io = null;
 
 
@@ -41,18 +40,8 @@ countUp = countUp * 60000;
 
 var nowInMs = 0;
 var setTimeoutTime = 150;
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var newArrayIndex = 0;
 
-
-
-var myIpArray = "";
-Utilities.getNetworkIPs(function (error, ip) {
-    myIpArray = ip
-    if (error) {
-        console.log('error:', error);
-    }
-}, false);
 
 
 
@@ -70,19 +59,18 @@ function mtcTOString() {
     var port = JZZ().openMidiIn(1);
     var smpte = JZZ.SMPTE();
     var midi = JZZ.MIDI();
-    console.log(JZZ.info());
-    port
-        .connect(function (msg) {
-            smpte.read(msg);
-            smpteString = smpte.toString();
-            smpteMs = timeStringToMs(smpteString);
-            if (msg.toString().includes("Program Change")) {
-                midi_Channel = msg[0] - 191;
-                midi_ProgramChange = msg[1];
-                midiTriggerCountDown();
-            }
 
-        });
+    port.connect(function (msg) {
+        smpte.read(msg);
+        smpteString = smpte.toString();
+        smpteMs = timeStringToMs(smpteString);
+        if (msg.toString().includes("Program Change")) {
+            midi_Channel = msg[0] - 191;
+            midi_ProgramChange = msg[1];
+            midiTriggerCountDown();
+        }
+
+    });
 };
 
 async function midiTriggerCountDown() {
@@ -241,7 +229,7 @@ function addNewRowDefault() {
 
     });
 
-    sleep(1000).then(() => {
+    Utilities.sleep(1000).then(() => {
         fs.writeFile(ADMIN_SETTINGS_JSON_FILE, addString, (err) => {
             if (err) throw err;
         });
@@ -581,7 +569,7 @@ function sendCenterText() {
 };
 
 function autoResetOffsetTime() {
-    sleep(1 * 6000).then(() => {
+    Utilities.sleep(1 * 6000).then(() => {
         console.log("autoResetOffsetTime");
         offsetTimeInit = 0;
 
@@ -603,7 +591,7 @@ function autoResetOffsetTime() {
 function resetsetTimeout() {
 
     //---------
-    sleep(1000 * 60 * 60).then(() => {
+    Utilities.sleep(1000 * 60 * 60).then(() => {
         console.log("----------> resetsetTimeout() <----------   " + newCurrentTime());
         fs.writeFile('./autoRestartServer.json', JSON.stringify("adminSettings", null, 4), (err) => {
             if (err) console.log('Error writing file:', err)
@@ -663,7 +651,7 @@ function addNewCueRowToUser(user) {
         })
     //----- UserCueList
 
-    sleep(250).then(() => {
+    Utilities.sleep(250).then(() => {
         jsonReader(path, (err, cueList) => {
             if (err) {
                 console.log('Error reading file:', err)
@@ -679,7 +667,7 @@ function addNewCueRowToUser(user) {
             });
             console.log(cueList.cues);
 
-            sleep(250).then(() => {
+            Utilities.sleep(250).then(() => {
                 fs.writeFile(path, JSON.stringify(cueList, null, 4), (err) => {
                     if (err) console.log('Error writing file:', err)
                 })
@@ -703,7 +691,7 @@ function deleteCueRowFromUser(user, listIndex) {
         cueList.cues.splice(listIndex, 1);
         console.log(cueList.cues);
 
-        sleep(250).then(() => {
+        Utilities.sleep(250).then(() => {
             fs.writeFile(path, JSON.stringify(cueList, null, 4), (err) => {
                 if (err) console.log('Error writing file:', err)
             })
@@ -725,7 +713,7 @@ function deleteRowFromSchedule(listIndex) {
         adminSettings.schedule.splice(listIndex, 1);
         console.log(adminSettings.schedule);
 
-        sleep(250).then(() => {
+        Utilities.sleep(250).then(() => {
             fs.writeFile(ADMIN_SETTINGS_JSON_FILE, JSON.stringify(adminSettings, null, 4), (err) => {
                 if (err) console.log('Error writing file:', err)
             })
@@ -818,7 +806,7 @@ function updateOffsetTimeReset(data) {
 //   console.log("loadDefaultToSocket: " + data.message);
 //   loadDefaultjson();
 //
-//   sleep(10).then(() => {
+//   Utilities.sleep(10).then(() => {
 //     io.emit("pushGetscheduledTimes", {
 //       offsetTime: offsetTimeInit
 //     });

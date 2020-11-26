@@ -1,10 +1,7 @@
 "use strict";
 
-var myLocalip = document.getElementById("myLocalip").textContent;
 var user = document.getElementById("user").textContent;
-var myLocalipAndPort = myLocalip
-console.log(myLocalipAndPort);
-var socket = io.connect(myLocalipAndPort);
+
 //--------------------------------------------------
 var nowText = document.getElementById("now");
 var nowTopRow = document.getElementById("nowTopRow");
@@ -18,7 +15,6 @@ var timeCodeArray = [""];
 var timeCodeBool = true;
 var cuelistHideBool = true;
 var setTimeoutTime = 150;
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 //--------------------------------------------------
 var offsetTimeInit = 0;

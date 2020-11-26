@@ -1,10 +1,5 @@
 "use strict";
 
-var myLocalip = document.getElementById("myLocalip").textContent;
-//var myLocalipAndPort = myLocalip + ":3000"
-var myLocalipAndPort = myLocalip
-console.log(myLocalipAndPort);
-
 
 var nowText = document.getElementById("now");
 var nowTopRow = document.getElementById("nowTopRow");
@@ -18,6 +13,8 @@ var myArray = "";
 var scheduledTimesArrayGlobal = [];
 var scheduledTimesArray = [];
 var offsetTimejson = [];
+
+
 //--------------------------------------------------
 // - Variables & Booleans
 //--------------------------------------------------
@@ -50,6 +47,7 @@ var fiveMinuteFromMsToTime = 0;
 
 var setTimeoutTime = 150;
 
+
 //--------------------------------------------------
 // - getScheduledTimes
 //--------------------------------------------------
@@ -77,6 +75,8 @@ function getscheduledTimes(){
 getscheduledTimes();
 //--------------------------------------------------
 
+
+
 //--------------------------------------------------
 // - getOffsetTime
 //--------------------------------------------------
@@ -94,7 +94,6 @@ function getOffsetTime(){
 };
 getOffsetTime();
 //--------------------------------------------------
-
 
 
 
@@ -390,7 +389,6 @@ fiveMinuteCountDown();
 //--------------------------------------------------
 
 
-var socket = io.connect(myLocalipAndPort);
 
 //---------- My sockets NOT IN USE???
 socket.on("updateDB_From_Socket", function(data) {

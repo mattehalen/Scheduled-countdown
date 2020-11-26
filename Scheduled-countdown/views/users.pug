@@ -35,13 +35,13 @@ block content
         #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow-x: auto")
           #Tab1.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Tab1-tab' style="font-size: calc(5px + 1vw)")
             .form-row
-            
+
             form.overflow-auto-x(method='POST' action='/submit'+name style="height: 45vh")
               button.btn.btn-dark(type='submit' style='width: 100%') Save
               button.btn.btn-dark(type="button",style='width: 50%' id="AddNewCueRow") Add new Row
               button.btn.btn-dark(type="button",style='width: 25%' id="ToggleTC") TimeCode is ON
               button.btn.btn-dark(type="button",style='width: 25%' id="ResetTC") Hide Rows ON/OFF
-              
+
               .form-row
                 .col-1.text-right
                   | #
@@ -59,7 +59,7 @@ block content
                 div.form-row.mywrapper(id="cueListRow" + index)
                   .centeredOverlay(id="centeredOverlay" + index)
                     //- span Loading...
-      
+
                   .col-1.text-right= index+1
                   .col-4
                     input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
@@ -72,9 +72,9 @@ block content
                   .col-1
                     button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
           #Tab2.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Tab2-tab' style="font-size: calc(5px + 1vw)")
-    
-    
-    
+
+
+
   #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
     .form-row
       .col-1.text-left
@@ -91,13 +91,16 @@ block content
       .col-3.text-left#nextCountdown
         | Countdown
       p#midi_ProgramChange= midi_ProgramChange
-        
-            
-            
-            
 
-    
 
+
+
+    //- Libraries Included
     script(src='/socket.io/socket.io.js')
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-    script(src='static/javascripts/users.js')
+
+    //- Custom Scripts
+    script(src="/javascripts/socket.js")
+    script(src="/javascripts/utilities.js")
+    script(src='/javascripts/users.js')
+

@@ -1,13 +1,7 @@
 "use strict";
 
-var myLocalip = document.getElementById("myLocalip").textContent;
-//var myLocalipAndPort = myLocalip + ":3000"
-var myLocalipAndPort = myLocalip
-console.log(myLocalipAndPort);
 var countDownTime = "";
 
-var socket = io.connect(myLocalipAndPort);
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 socket.on("sendMin_To_countDown", function(data) {
   //console.log("sendMin_To_countDown: "+data.countDownTime);

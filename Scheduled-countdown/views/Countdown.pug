@@ -13,7 +13,13 @@ html
        p#threeMin.color(hidden='') 3 min to show
        p#twoMin.color(hidden='') 2 min to show
        p#oneMin.color(hidden='') 1 min to show
-       script(src='/socket.io/socket.io.js')
-       script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-       script(src='static/javascripts/fiveMinuteCountdown.js')
-  
+
+
+      //- Libraries Included
+      script(src='/socket.io/socket.io.js')
+      script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+
+      //- Custom Scripts
+      script(src="/javascripts/socket.js")
+      script(src="/javascripts/utilities.js")
+      script(src="/javascripts/fiveMinuteCountdown.js")

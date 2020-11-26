@@ -9,15 +9,8 @@ var nowTopRow = document.getElementById("nowTopRow");
 var cueTimeText = document.getElementById("cueTime");
 var timeCode = document.getElementById("timeCode");
 var startText = document.getElementById("start");
-var myIpArrayBool = 0;
-var toggleMainPreview = false;
-
-var myLocalip = document.getElementById("myLocalip").textContent;
-var myLocalipAndPort = myLocalip
-console.log(myLocalipAndPort);
-
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var offsetTime = document.getElementById("offsetTime");
+var toggleMainPreview = false;
 
 
 //--------------------------------------------------
@@ -117,7 +110,6 @@ getscheduledTimes();
 
 
 //--------------------------------------------------
-var socket = io.connect(myLocalipAndPort);
 socket.emit("start", {});
 socket.emit("getTimeCode",{});
 
@@ -197,24 +189,8 @@ socket.on("centerTextContent", function(data) {
   startText.textContent = data.countDownString
 });
 socket.on("sendIpArrayToAdminPage", function(data){
-  // console.log("sendIpArrayToAdminPage");
-  // console.log(data.myIpArray);
-
-  var select = document.getElementById("selectNumber");
-  var options = data.myIpArray;
-
-  if (myIpArrayBool != 1) {
-    for(var i = 0; i < options.length; i++) {
-        var opt = options[i];
-        var el = document.createElement("option");
-        el.textContent = opt;
-        el.value = opt;
-        select.appendChild(el);
-        myIpArrayBool =1;
-    }
-  }
-
-
+  console.log("sendIpArrayToAdminPage");
+  console.log(data);
 });
 socket.on("send_Delete_Button_from_Socket", function(data) {
   console.log(data);

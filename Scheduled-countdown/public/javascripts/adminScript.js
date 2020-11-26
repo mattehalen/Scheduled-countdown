@@ -12,11 +12,6 @@ var startText = document.getElementById("start");
 var myIpArrayBool = 0;
 var toggleMainPreview = false;
 
-var myLocalip = document.getElementById("myLocalip").textContent;
-var myLocalipAndPort = myLocalip
-console.log('myLocalipAndPort-', myLocalipAndPort);
-
-const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var offsetTime = document.getElementById("offsetTime");
 
 //--------------------------------------------------
@@ -33,51 +28,7 @@ function getOffsetTime() {
 };
 getOffsetTime();
 
-// function getscheduledTimes() {
-//   const request = async () => {
-//     const response = await fetch('/admin-settings.json');
-//     const json = await response.json();
-//     scheduledTimesArray = json;
-//     console.log("getscheduledTimes() = scheduledTimesArray =  ");
-//     console.log(json);
-//     //console.log(scheduledTimesArray.profiles[0].title);
-//     //----------------------------------------
-//     var i;
-//     var a;
-//     var b;
-//     var c;
-//     var d;
-//     var e;
-//     startTimeArray = [];
-//     startTitleArray = [];
-//     cueLengthArray = [];
-//     cueBoolArray  = [];
-//     fiveBoolArray   = [];
-//     for (i = 0; i < scheduledTimesArray.schedule.length; i++) {
-//       a = scheduledTimesArray.schedule[i].title;
-//       startTitleArray.push(a);
-//       b = scheduledTimesArray.schedule[i].startTime;
-//       startTimeArray.push(b);
-//       c = scheduledTimesArray.schedule[i].cueLength;
-//       cueLengthArray.push(c);
-//       d = scheduledTimesArray.schedule[i].cueBool;
-//       cueBoolArray.push(d);
-//       e = scheduledTimesArray.schedule[i].fiveBool;
-//       fiveBoolArray.push(e);
-//       //----------------------------------------
-//     }
-//   }
-//
-//   request();
-// };
-// getscheduledTimes();
 //--------------------------------------------------
-
-
-
-
-//--------------------------------------------------
-var socket = io.connect(myLocalipAndPort);
 socket.emit("start", {});
 socket.emit("getTimeCode", {});
 
@@ -116,7 +67,7 @@ socket.on("updateDB_From_Socket", function (data) {
     printArraysToElements();
   });
 });
-socket.on("pushGetscheduledTimes", function (data) {
+socket.on("pushGetscheduledTimes", function () {
   console.log("pushGetscheduledTimes: ");
   getscheduledTimes();
 
@@ -149,7 +100,7 @@ socket.on("updateOffsetTime_From_Socket", function (data) {
 socket.on("getCueTimeString_From_Socket", function (data) {
   cueTimeText.textContent = data.string;
 });
-socket.on("changesOnScheduledTimes", function (data) {
+socket.on("changesOnScheduledTimes", function () {
   console.log("changesOnScheduledTimes");
   alert("Changes to ScheduledTimes.json has been made. Please update browser to se them");
 });
@@ -159,28 +110,10 @@ socket.on("centerTextContent", function (data) {
 });
 socket.on("sendIpArrayToAdminPage", function (data) {
   // console.log("sendIpArrayToAdminPage");
-  // console.log(data.myIpArray);
-
-  var select = document.getElementById("selectNumber");
-  var options = data.myIpArray;
-
-  // if (myIpArrayBool != 1) {
-  //   for(var i = 0; i < options.length; i++) {
-  //       var opt = options[i];
-  //       var el = document.createElement("option");
-  //       el.textContent = opt;
-  //       el.value = opt;
-  //       select.appendChild(el);
-  //       myIpArrayBool =1;
-  //   }
-  // }
-
-
 });
 socket.on("sendTimeCode", function (data) {
   timeCode.textContent = data.smpteString
   //console.log(data.smpteString);
-
 });
 
 socket.on("alertText_adminUrl", function (data) {
@@ -321,41 +254,41 @@ $(":input").keypress(function (e) {
 });
 
 //-- New Buttons for Reseting 5min CountDown
-$("#reloadFiveMinCountDown").on("click", function (e) {
+$("#reloadFiveMinCountDown").on("click", function () {
   socket.emit("reloadFiveMinCountDown", {});
 });
 
-$("#one").on("click", function (e) {
+$("#one").on("click", function () {
   socket.emit("force5MinCountDownCase", {
     case: 1
   });
 });
 
-$("#two").on("click", function (e) {
+$("#two").on("click", function () {
   socket.emit("force5MinCountDownCase", {
     case: 2
   });
 });
 
-$("#three").on("click", function (e) {
+$("#three").on("click", function () {
   socket.emit("force5MinCountDownCase", {
     case: 3
   });
 });
 
-$("#four").on("click", function (e) {
+$("#four").on("click", function () {
   socket.emit("force5MinCountDownCase", {
     case: 4
   });
 });
 
-$("#five").on("click", function (e) {
+$("#five").on("click", function () {
   socket.emit("force5MinCountDownCase", {
     case: 5
   });
 });
 
-$("#alpha").on("click", function (e) {
+$("#alpha").on("click", function () {
   socket.emit("force5MinCountDownCase", {
     case: 0
   });
@@ -403,7 +336,6 @@ $("#alpha").on("click", function (e) {
 // };
 
 function delete_button_click(listIndex) {
-  var path = "/admin/deleteButton";
 
   $(document).ready(function () {
     console.log("deleteButton");
@@ -508,7 +440,7 @@ function sendDB_To_Socket_On_Delete() {
 
 };
 
-function saveMyIpTo_myipjson(myChosenIp) {
+function saveMyIpTo_myipjson() {
   var e = document.getElementById("selectNumber");
   var strUser = e.options[e.selectedIndex].value;
   console.log("---------------------: " + strUser);

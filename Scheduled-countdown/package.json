@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "npx nodemon ./bin/www",
     "debug": "node --inspect ./bin/www",
     "debug-brk": "node --inspect-brk ./bin/www",
     "build": "nexe ./bin/www -r public/**/* -r lib/**/* -r bin/**/* -r routes/**/* -r views/**/* -r app.js -r node_modules/**/*"

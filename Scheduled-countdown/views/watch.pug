@@ -7,8 +7,8 @@ block content
   //-     button#play.commandButton(hidden='') Activate Audio
   //-   #nowTopRow.topRowText
   #mainContentBox(style="position: relative;height:100%;")
-  
-      
+
+
     #centerNowText(style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);")
       h1#now(style="font-size: 21vw")
 
@@ -16,6 +16,12 @@ block content
       h1#title(style="font-size: 13vw")
       h1#start(style="font-size: 20vw")
 
+
+    //- Libraries Included
     script(src='/socket.io/socket.io.js')
     script(src='https://code.jquery.com/jquery-3.2.1.min.js')
-    script(src='static/javascripts/watch.js')
+
+    //- Custom Scripts
+    script(src="/javascripts/socket.js")
+    script(src="/javascripts/utilities.js")
+    script(src='/javascripts/watch.js')
