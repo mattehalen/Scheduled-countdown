@@ -14,19 +14,19 @@ var toggleMainPreview = false;
 
 var offsetTime = document.getElementById("offsetTime");
 
-//--------------------------------------------------
-function getOffsetTime() {
-  const request = async () => {
-    const response = await fetch('/admin-settings.json');
-    const json = await response.json();
-    offsetTimejson = json;
-    //console.log("Get offsetTime: "+offsetTimejson.offsetTime);
-    offsetTimeInit = offsetTimejson.timeSettings.offsetTime;
-  }
 
-  request();
-};
+
+//--------------------------------------------------
+// - getOffsetTime
+//--------------------------------------------------
+async function getOffsetTime() {
+  const json = await getAdminSettingsJson();
+  offsetTimeInit = json.timeSettings.offsetTime;
+  console.log("Get offsetTime: " + json.timeSettings.offsetTime);
+}
 getOffsetTime();
+//--------------------------------------------------
+
 
 //--------------------------------------------------
 socket.emit("start", {});

@@ -3,7 +3,7 @@ const fs = require('fs');
 const Utilities = require('./../services/utilties');
 const FileOperation = require('./../services/file-operations');
 const AdminSettings = require('./../services/admin-settings');
-const ADMIN_SETTINGS_JSON_FILE = './public/admin-settings.json';
+const ADMIN_SETTINGS_JSON_FILE = AdminSettings.FILEPATH.ADMIN_SETTINGS_JSON_FILENAME;
 
 
 // This is th socket for server
@@ -25,7 +25,6 @@ var fiveBoolArray = [""];
 var fiveBoolHolder = [""];
 var sendMin_To_countDownBoole = 100;
 //--------------------------------------------------
-// const dayOfWeek = require('../lib/dayOfWeek');
 var scheduleBool;
 //--------------------------------------------------
 
@@ -59,6 +58,8 @@ function mtcTOString() {
     var port = JZZ().openMidiIn(1);
     var smpte = JZZ.SMPTE();
     var midi = JZZ.MIDI();
+    // console.log(midi);
+    midi
 
     port.connect(function (msg) {
         smpte.read(msg);
@@ -181,20 +182,6 @@ async function updateOffsetTimeResetjson() {
     }
 }
 
-//Uppdaterad
-function loadDefaultjson() {
-    var path = './public/admin-settings.json';
-    getscheduledTimes();
-
-    fs.writeFile(path, JSON.stringify(scheduledTimesBackup, null, 4), (err) => {
-        if (err) throw err;
-    });
-}
-
-//Uppdaterad
-function writeDefaultjson() {
-    AdminSettings.createBackup()
-}
 
 function getOffsetTimejson() {
     AdminSettings.get()

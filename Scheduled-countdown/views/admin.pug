@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  p(hidden='')#myLocalip= myLocalip
+  p(hidden='')
   .topRow.shadow.p-3.mb-5.rounded.sticky-top
     #timeCode.timeCodeText
     #start(style="font-size: 5vh; font-weight: 100;")
@@ -101,16 +101,16 @@ block content
             .row.row-cols-3
               .col
                 p#mainPreviewTitle(style="cursor: pointer;" onclick="iframePreviewFullscreen()") Preview
-                iframe.preview(src='http://' + myLocalip)
+                iframe.preview(src='/')
               .col
                 p Stage
-                iframe.preview(src='http://' + myLocalip + '/stage')
+                iframe.preview(src='/stage')
               .col
                 p FOH
-                iframe.preview(src='http://' + myLocalip + '/foh')
+                iframe.preview(src='/foh')
               .col
                 p 5Min countdown
-                iframe.preview(src='http://' + myLocalip + '/countdown')
+                iframe.preview(src='/countdown')
               .col
                 .row(style="height: 50%")
                 .row

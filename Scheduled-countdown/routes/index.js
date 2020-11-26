@@ -1,9 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-const Utilities = require('./../services/utilties');
 const AdminSettings = require('./../services/admin-settings');
-const submitUserData = require('../lib/submitUserData');
 
 // var scheduledTimesJson = require('../public/scheduledTimes.json');
 
@@ -12,7 +10,6 @@ const submitUserData = require('../lib/submitUserData');
 // Initial Page
 //-------------------------------------------------------------------------
 router.get('/', async function (req, res) {
-  const adminSettingsData = await AdminSettings.get();
   res.render('index', {
     title: 'Scheduled-CountDown',
     now: "s"
@@ -24,14 +21,12 @@ router.get('/', async function (req, res) {
 // Pages on Admin
 //-------------------------------------------------------------------------
 router.get('/stage', async function (req, res) {
-  let adminSettingsData = await AdminSettings.get();
   res.render('stage', {
     title: 'Scheduled-CountDown',
     now: "s"
   });
 });
 router.get('/foh', async function (req, res) {
-  let adminSettingsData = await AdminSettings.get();
   res.render('foh', {
     title: 'Scheduled-CountDown',
     now: "s"
