@@ -23,17 +23,17 @@
         "countUpColor": "#00ff00"
     },
     "dayOfWeek": {
-        "Monday": 1,
-        "Tuesday": 1,
+        "Monday": 0,
+        "Tuesday": 0,
         "Wednesday": 1,
-        "Thursday": 1,
+        "Thursday": 0,
         "Friday": 1,
         "Saturday": 1,
-        "Sunday": 1
+        "Sunday": 0
     },
     "schedule": [
         {
-            "title": "Open Doors",
+            "title": "Open Doors5ss",
             "startTime": "17:15",
             "cueLength": "00:00",
             "cueBool": "0",

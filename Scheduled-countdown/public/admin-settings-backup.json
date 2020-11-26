@@ -33,7 +33,7 @@
     },
     "schedule": [
         {
-            "title": "Open Doors",
+            "title": "Open Doors2",
             "startTime": "17:15",
             "cueLength": "00:00",
             "cueBool": "0",
@@ -118,3 +118,4 @@
         }
     ]
 }
+

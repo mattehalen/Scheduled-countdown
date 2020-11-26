@@ -1,26 +1,23 @@
-const jsonFiles = require('./jsonFiles');
+const FileOperation = require('./../services/file-operations');
 
-// const filepath = './public/admin-settings.json';
+let currentState = null;
 
-let currentState;
 
 async function get(user) {
   if (!currentState) {
-    // const filepath = './public/admin-settings.json';
-    const filepath = './public/CueLists/'+user+".json"
-    currentState = await jsonFiles.read(filepath);
+    const filepath = './public/CueLists/' + user + ".json";
+    currentState = await FileOperation.readFromFile(filepath);
   }
-
   return currentState;
 }
 
-async function write(user,data) {
-  const filepath = './public/CueLists/'+user+".json"
+async function write(user, data) {
+  const filepath = './public/CueLists/' + user + ".json";
+  await FileOperation.writeToFile(filepath, currentState);
   currentState = data;
-  await jsonFiles.write(filepath, currentState);
 }
 
 module.exports = {
   get,
   write,
-};
+}

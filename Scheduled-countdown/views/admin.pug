@@ -28,7 +28,7 @@ block content
                     input.slider(type="range",value=value, name=day, id=day, min="0" max="1")                    
                 button.btn.btn-dark(type='submit') Save dayOfWeek
                 
-              form(method='POST' action='/admin/submit')
+              form#formTable(method='POST' action='/admin/submit')
                 button.btn.btn-dark(type='reset' style='width: 100%' name="adminsubmit", id="adminsubmit") Save
                 .form-row
                     .col-1.text-right
@@ -170,4 +170,5 @@ block content
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
   script(src='/socket.io/socket.io.js')
   script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+  script(src="https://unpkg.com/axios/dist/axios.min.js")
   script(src="static/javascripts/adminScript.js")
