@@ -28,19 +28,19 @@ getOffsetTime();
 
 
 //--------------------------------------------------
-socket.emit("start", {});
-socket.emit("getTimeCode", {});
+sendSocketMessage("start");
+sendSocketMessage("getTimeCode");
 
 //sendDB_To_Socket
 // sleep(1000).then(() => {
-//   socket.emit("sendDB_To_Socket", {
-//     startTitleArray: startTitleArray,
-//     startTimeArray: startTimeArray,
-//     cueLengthArray: cueLengthArray,
-//     cueBoolArray: cueBoolArray,
-//     fiveBoolArray: fiveBoolArray
-//
-//   });
+  sendSocketMessage("sendDB_To_Socket", {
+    startTitleArray: startTitleArray,
+    startTimeArray: startTimeArray,
+    cueLengthArray: cueLengthArray,
+    cueBoolArray: cueBoolArray,
+    fiveBoolArray: fiveBoolArray
+
+  });
 // });
 //--------------------------------------------------
 //--------------------------------------------------
@@ -126,11 +126,11 @@ socket.on("alertText_adminUrl", function (data) {
 
 //--------------------------------------------------
 // $("#updateScheduledTimesArray").on('click', function() {
-//   socket.emit("updatebutton_To_Socket", {})
+//   sendSocketMessage("updatebutton_To_Socket")
 // });
 
 $("#sorting").on('click', function () {
-  socket.emit("sortingButton_To_Socket", {})
+  sendSocketMessage("sortingButton_To_Socket")
 });
 
 $("#offsetPlus").on('click', function () {
@@ -144,7 +144,7 @@ $("#offsetPlus").on('click', function () {
   form.submit();
 
   // offsetTimeInit += 1;
-  // socket.emit('updateOffsetTimePlus', {
+  // sendSocketMessage("updateOffsetTimePlus", {
   //   offsetTime: offsetTimeInit
   // });
 });
@@ -174,7 +174,7 @@ $("#offsetReset").on('click', function () {
 $("#adminsubmit").on('click', function () {
   var path = "/admin/submit";
   console.log(path);
-  socket.emit("reload", {})
+  sendSocketMessage("reload")
 
   var form = document.createElement('form');
   form.setAttribute('method', 'post');
@@ -189,7 +189,7 @@ $("#loadDefaultArray").on('click', function () {
   console.log("loadDefaultArray");
   var path = "/admin/loadDefault";
   console.log(path);
-  socket.emit("reload", {})
+  sendSocketMessage("reload")
 
   sleep(1000).then(() => {
 
@@ -206,7 +206,7 @@ $("#writeDefaultArray").on('click', function () {
   console.log("writeDefaultArray");
   var path = "/admin/writeToDefault";
   console.log(path);
-  socket.emit("reload", {});
+  sendSocketMessage("reload");
 
   var form = document.getElementById('formTable');
   form.submit();
@@ -235,7 +235,7 @@ $("#dayOfWeekSubmit").on('click', function () {
   console.log("dayOfWeekSubmit");
   var path = "/admin/dayOfWeek";
   console.log(path);
-  socket.emit("reload", {})
+  sendSocketMessage("reload")
   var form = document.createElement('form');
   form.setAttribute('method', 'post');
   form.setAttribute('action', path);
@@ -246,49 +246,49 @@ $("#dayOfWeekSubmit").on('click', function () {
 
 $(":input").keypress(function (e) {
   if (e.which == 13) {
-    socket.emit("sortingButton_To_Socket", {})
-    socket.emit("reload", {})
+    sendSocketMessage("sortingButton_To_Socket")
+    sendSocketMessage("reload")
     // alert('enter key is pressed and list is updated');
   }
 });
 
 //-- New Buttons for Reseting 5min CountDown
 $("#reloadFiveMinCountDown").on("click", function () {
-  socket.emit("reloadFiveMinCountDown", {});
+  sendSocketMessage("reloadFiveMinCountDown");
 });
 
 $("#one").on("click", function () {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 1
   });
 });
 
 $("#two").on("click", function () {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 2
   });
 });
 
 $("#three").on("click", function () {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 3
   });
 });
 
 $("#four").on("click", function () {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 4
   });
 });
 
 $("#five").on("click", function () {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 5
   });
 });
 
 $("#alpha").on("click", function () {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 0
   });
 });
@@ -314,14 +314,14 @@ $("#alpha").on("click", function () {
 //     console.log(fiveBoolArray[i]);
 //   }
 //   console.log("------------------------------> socket emit writeToScheduledTimesjson = "+fiveBoolArray);
-//   socket.emit("writeToScheduledTimesjson", {
+//   sendSocketMessage("writeToScheduledTimesjson", {
 //     startTitleArray: startTitleArray,
 //     startTimeArray: startTimeArray,
 //     cueLengthArray: cueLengthArray,
 //     cueBoolArray: cueBoolArray,
 //     fiveBoolArray: fiveBoolArray
 //   });
-//   socket.emit('updateScheduledTimesArray', {
+//   sendSocketMessage("updateScheduledTimesArray", {
 //     startTitleArray: startTitleArray,
 //     startTimeArray: startTimeArray,
 //     cueLengthArray: cueLengthArray,
@@ -364,7 +364,7 @@ function delete_button_click(listIndex) {
 
   });
 
-  // socket.emit("send_Delete_Button_To_Socket", {
+  // sendSocketMessage("send_Delete_Button_To_Socket", {
   //   listIndex: listIndex
   // });
 
@@ -422,14 +422,14 @@ function getElementsToArrays() {
 function sendDB_To_Socket_On_Delete() {
   console.log("sendDB_To_Socket_On_Delete")
 
-  socket.emit("writeToScheduledTimesjson", {
+  sendSocketMessage("writeToScheduledTimesjson", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray,
     cueBoolArray: cueBoolArray,
     fiveBoolArray: fiveBoolArray
   });
-  socket.emit('updateScheduledTimesArray', {
+  sendSocketMessage("updateScheduledTimesArray", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray,
@@ -444,14 +444,14 @@ function saveMyIpTo_myipjson() {
   var strUser = e.options[e.selectedIndex].value;
   console.log("---------------------: " + strUser);
 
-  socket.emit("sendChosenIp_To_Socket", {
+  sendSocketMessage("sendChosenIp_To_Socket", {
     myChosenIp: strUser
   })
 };
 
 
 function getTimeCodeLoop() {
-  socket.emit("getTimeCode", {});
+  sendSocketMessage("getTimeCode");
   setTimeout(getTimeCodeLoop, 100);
 };
 getTimeCodeLoop()
@@ -494,46 +494,39 @@ function alertButton() {
   var text = $("#alertText").val();
 
   if ($("#startUrl").val() == 1) {
-    socket.emit("startUrl", {
+    sendSocketMessage("startUrl", {
       text: text
     });
   }
   if ($("#adminUrl").val() == 1) {
-    socket.emit("adminUrl", {
+    sendSocketMessage("adminUrl", {
       text: text
     });
   }
   if ($("#fohUrl").val() == 1) {
-    socket.emit("fohUrl", {
+    sendSocketMessage("fohUrl", {
       text: text
     });
   }
   if ($("#stageUrl").val() == 1) {
-    socket.emit("stageUrl", {
+    sendSocketMessage("stageUrl", {
       text: text
     });
   }
   if ($("#watchUrl").val() == 1) {
-    socket.emit("watchUrl", {
+    sendSocketMessage("watchUrl", {
       text: text
     });
   }
   if ($("#countdownUrl").val() == 1) {
-    socket.emit("countdownUrl", {
+    sendSocketMessage("countdownUrl", {
       text: text
     });
   }
   if ($("#allUsersUrl").val() == 1) {
-    socket.emit("allUsersUrl", {
+    sendSocketMessage("allUsersUrl", {
       text: text
     });
   }
-
-
-
-
-
-
-
 };
 //--------------------------------

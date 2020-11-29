@@ -109,12 +109,12 @@ getscheduledTimes();
 
 
 //--------------------------------------------------
-socket.emit("start", {});
-socket.emit("getTimeCode", {});
+sendSocketMessage("start");
+sendSocketMessage("getTimeCode");
 
 //sendDB_To_Socket
 sleep(1000).then(() => {
-  socket.emit("sendDB_To_Socket", {
+  sendSocketMessage("sendDB_To_Socket", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray,
@@ -209,34 +209,34 @@ socket.on("sendTimeCode", function (data) {
 });
 //--------------------------------------------------
 $("#updateScheduledTimesArray").on('click', function () {
-  socket.emit("updatebutton_To_Socket", {})
+  sendSocketMessage("updatebutton_To_Socket")
 });
 $("#sorting").on('click', function () {
-  socket.emit("sortingButton_To_Socket", {})
+  sendSocketMessage("sortingButton_To_Socket")
 });
 $("#offsetPlus").on('click', function () {
   offsetTimeInit += 1;
-  socket.emit('updateOffsetTimePlus', {
+  sendSocketMessage("updateOffsetTimePlus", {
     offsetTime: offsetTimeInit
   });
 });
 $("#offsetMinus").on('click', function () {
   offsetTimeInit -= 1;
   //$("#offsetTime").html(offsetTimeInit);
-  socket.emit('updateOffsetTimeMinus', {
+  sendSocketMessage("updateOffsetTimeMinus", {
     offsetTime: offsetTimeInit
   });
 });
 $("#offsetReset").on('click', function () {
   offsetTimeInit = 0;
   //$("#offsetTime").html(offsetTimeInit);
-  socket.emit('updateOffsetTimeReset', {
+  sendSocketMessage("updateOffsetTimeReset", {
     offsetTime: offsetTimeInit
   });
 });
 // $("#loadDefaultArray").on('click', function() {
 //   console.log("loadDefaultArray");
-//   socket.emit('loadDefaultToSocket', {
+//   sendSocketMessage("loadDefaultToSocket", {
 //     message: "loadDefaultToSocket: Sent"
 //   });
 //
@@ -252,7 +252,7 @@ $("#offsetReset").on('click', function () {
 //
 //   sleep(100).then(() => {
 //     console.log("AFTER SLEEP: " + startTitleArray);
-//     socket.emit('writeDefaultToSocket', {
+//     sendSocketMessage("writeDefaultToSocket", {
 //       startTitleArray: startTitleArray,
 //       startTimeArray: startTimeArray,
 //       cueLengthArray: cueLengthArray,
@@ -265,7 +265,7 @@ $("#offsetReset").on('click', function () {
 // });
 $("#addNewRow").on('click', function () {
   console.log("addNewRow");
-  socket.emit("send_addNewRow_To_Socket", {})
+  sendSocketMessage("send_addNewRow_To_Socket")
 
   sleep(1500).then(() => {
     //sortscheduledTimes();
@@ -274,42 +274,42 @@ $("#addNewRow").on('click', function () {
 });
 $(":input").keypress(function (e) {
   if (e.which == 13) {
-    socket.emit("sortingButton_To_Socket", {})
+    sendSocketMessage("sortingButton_To_Socket")
     alert('enter key is pressed and list is updated');
   }
 });
 
 //-- New Buttons for Reseting 5min CountDown
 $("#reloadFiveMinCountDown").on("click", function (e) {
-  socket.emit("reloadFiveMinCountDown", {});
+  sendSocketMessage("reloadFiveMinCountDown");
 });
 $("#one").on("click", function (e) {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 1
   });
 });
 $("#two").on("click", function (e) {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 2
   });
 });
 $("#three").on("click", function (e) {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 3
   });
 });
 $("#four").on("click", function (e) {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 4
   });
 });
 $("#five").on("click", function (e) {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 5
   });
 });
 $("#alpha").on("click", function (e) {
-  socket.emit("force5MinCountDownCase", {
+  sendSocketMessage("force5MinCountDownCase", {
     case: 0
   });
 });
@@ -334,14 +334,14 @@ function updateScheduledTimesArray() {
     console.log(fiveBoolArray[i]);
   }
   console.log("------------------------------> socket emit writeToScheduledTimesjson = " + fiveBoolArray);
-  socket.emit("writeToScheduledTimesjson", {
+  sendSocketMessage("writeToScheduledTimesjson", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray,
     cueBoolArray: cueBoolArray,
     fiveBoolArray: fiveBoolArray
   });
-  socket.emit('updateScheduledTimesArray', {
+  sendSocketMessage("updateScheduledTimesArray", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray,
@@ -355,7 +355,7 @@ function updateScheduledTimesArray() {
 };
 
 function delete_button_click(listIndex) {
-  socket.emit("send_Delete_Button_To_Socket", {
+  sendSocketMessage("send_Delete_Button_To_Socket", {
     listIndex: listIndex
   });
 };
@@ -407,14 +407,14 @@ function printArraysToElements() {
 function sendDB_To_Socket_On_Delete() {
   console.log("sendDB_To_Socket_On_Delete")
 
-  socket.emit("writeToScheduledTimesjson", {
+  sendSocketMessage("writeToScheduledTimesjson", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray,
     cueBoolArray: cueBoolArray,
     fiveBoolArray: fiveBoolArray
   });
-  socket.emit('updateScheduledTimesArray', {
+  sendSocketMessage("updateScheduledTimesArray", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
     cueLengthArray: cueLengthArray,
@@ -428,7 +428,7 @@ function saveMyIpTo_myipjson(myChosenIp) {
   var strUser = e.options[e.selectedIndex].value;
   console.log("---------------------: " + strUser);
 
-  socket.emit("sendChosenIp_To_Socket", {
+  sendSocketMessage("sendChosenIp_To_Socket", {
     myChosenIp: strUser
   })
 };
@@ -439,7 +439,7 @@ function setLoopbackip() {
 }
 
 function getTimeCodeLoop() {
-  socket.emit("getTimeCode", {});
+  sendSocketMessage("getTimeCode");
   setTimeout(getTimeCodeLoop, 100);
 };
 getTimeCodeLoop()

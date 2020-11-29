@@ -31,7 +31,7 @@ var countDownTimeInMS = "";
 //--------------------------------------------------
 
 $("#AddNewCueRow").on('click', function() {
-  socket.emit("AddNewCueRow",{user: user});
+  sendSocketMessage("AddNewCueRow",{user: user});
 
   sleep(1000).then(() => {
       document.location.reload(true)
@@ -68,7 +68,7 @@ function captureTCButton(listIndex) {
 };
 function delete_button_click(listIndex) {
   console.log("delete_button_click");
-  socket.emit("send_Delete_CueButton_To_Socket", {
+  sendSocketMessage("send_Delete_CueButton_To_Socket", {
     listIndex: listIndex,
     user: user
   });
@@ -100,11 +100,11 @@ socket.on("cueListFromSocket", function(data){
   console.log(timeCodeArray);
 });
 
-socket.emit("user", {
+sendSocketMessage("user", {
   user: user
 
 });
-socket.emit("getTimeCode",{});
+sendSocketMessage("getTimeCode",{});
 socket.on("sendTimeCode",function(data){
     timeCode.textContent = data.smpteString,
     timeCodeMs = data.smpteMs,
@@ -126,7 +126,7 @@ socket.on("alertText_allUsersUrl",function(data){
 
 function getTimeCodeLoop(){
   $("#timecodeMs").text(timeCodeMs);
-  socket.emit("getTimeCode",{});
+  sendSocketMessage("getTimeCode",{});
   setTimeout(getTimeCodeLoop,100);
 };
 getTimeCodeLoop()

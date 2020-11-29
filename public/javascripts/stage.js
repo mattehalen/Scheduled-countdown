@@ -90,7 +90,7 @@ socket.on("centerTextContent", function(data){
 
           // if (sendMin_To_countDownBoole != 5){
           //   sendMin_To_countDownBoole = 5;
-          //   socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+          //   sendSocketMessage("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
           //
           // };
         }
@@ -101,7 +101,7 @@ socket.on("centerTextContent", function(data){
 
           // if (sendMin_To_countDownBoole != 4){
           //   sendMin_To_countDownBoole = 4;
-          //   socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+          //   sendSocketMessage("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
           // };
         }
         // 3min Alarm
@@ -110,7 +110,7 @@ socket.on("centerTextContent", function(data){
           document.getElementById('music3').play();
           // if (sendMin_To_countDownBoole != 3){
           //   sendMin_To_countDownBoole = 3;
-          //   socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+          //   sendSocketMessage("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
           //
           // };
         }
@@ -121,7 +121,7 @@ socket.on("centerTextContent", function(data){
 
           // if (sendMin_To_countDownBoole != 2){
           //   sendMin_To_countDownBoole = 2;
-          //   socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+          //   sendSocketMessage("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
           //
           // };
         }
@@ -132,7 +132,7 @@ socket.on("centerTextContent", function(data){
 
           // if (sendMin_To_countDownBoole != 1){
           //   sendMin_To_countDownBoole = 1;
-          //   socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+          //   sendSocketMessage("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
           //
           // };
         }
@@ -141,7 +141,7 @@ socket.on("centerTextContent", function(data){
         //if (countDownTimeInMS < 0) {;
           // if (sendMin_To_countDownBoole != 0){
           //   sendMin_To_countDownBoole = 0;
-          //   socket.emit("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
+          //   sendSocketMessage("fiveMinPageLoad_To_Socket",{countDownTime: sendMin_To_countDownBoole});
           //
           // };
         }
@@ -150,7 +150,7 @@ socket.on("centerTextContent", function(data){
 
 });
 
-socket.emit("getTimeCode",{});
+sendSocketMessage("getTimeCode",{});
 socket.on("sendTimeCode",function(data){
   timeCode.textContent = data.smpteString
   //console.log(data.smpteString);
@@ -169,7 +169,7 @@ socket.on("alertText_stageUrl",function(data){
 });
 
 function getTimeCodeLoop(){
-  socket.emit("getTimeCode",{});
+  sendSocketMessage("getTimeCode",{});
   setTimeout(getTimeCodeLoop,100);
 };
 getTimeCodeLoop()

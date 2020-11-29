@@ -3,6 +3,7 @@ const router = require('express').Router();
 const AdminService = require('./service');
 const AdminSettings = require('./../../services/admin-settings');
 const FileOperation = require('./../../services/file-operations');
+const WebSocketService = require('./../../websocket/websocket-service');
 
 
 router.get('/', async function (req, res) {
@@ -40,7 +41,6 @@ router.post('/submit', async function (req, res) {
     } catch (error) {
         console.log(error);
     }
-
     res.redirect("/admin");
 })
 
@@ -82,7 +82,7 @@ router.post('/loadDefault', async function (req, res) {
 
 router.post('/writeToDefault', async function (req, res) {
     try {
-        console.log("++++++++++ - - - - - -------------------------------------");
+        console.log("++++++++++ - writeToDefault -------------------------------------");
         console.log('Body-', req.body);
 
         const adminSettings = await AdminSettings.get();
@@ -104,7 +104,6 @@ router.post('/writeToDefault', async function (req, res) {
     } catch (error) {
         console.log(error);
     }
-
     res.redirect("/admin");
 })
 
@@ -127,7 +126,6 @@ router.post('/addNewRowDefault', async function (req, res) {
     } catch (error) {
         console.log(error);
     }
-
     res.redirect("/admin");
 });
 
@@ -145,7 +143,6 @@ router.post('/deleteButton', async function (req, res) {
     } catch (error) {
         console.log(error);
     }
-
     res.redirect("/admin");
 });
 
@@ -203,28 +200,21 @@ router.post('/setLoopbackip', async function (req, res) {
 
 router.post('/dayOfWeek', async function (req, res) {
     try {
-        req.app.io.sockets.emit('reload', {});
+        WebSocketService.broadcastToAll('reload');
         console.log("------------------------------------------ dayOfWeek ---------------------------------------------");
-        // console.log(req.body);
         const adminSettings = await AdminSettings.get();
         const data = JSON.parse(JSON.stringify(req.body));
         const entries = Object.entries(data)
-        // console.log(entries);
 
         for (const [title, value] of entries) {
-            // console.log(`${title} ${value}`)
             adminSettings.dayOfWeek[`${title}`] = parseInt(value, 10);
-
         }
-        // console.log(adminSettings.dayOfWeek);
-
         await AdminSettings.write(adminSettings);
     } catch (error) {
         console.log(error);
     }
 
     res.redirect("/admin");
-
 })
 
 module.exports = router;

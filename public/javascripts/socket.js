@@ -1,7 +1,13 @@
 const socket = io({ path: '/ws' });
+const SOCKET_MESSAGE_BUCKET = [];
 
 socket.on('connect', () => {
     console.log('SocketConnected!');
+
+    while (SOCKET_MESSAGE_BUCKET.length > 0) {
+        const { key, data } = SOCKET_MESSAGE_BUCKET.shift();
+        // sendSocketMessage(key, data);
+    }
 });
 socket.on('disconnect', () => {
     console.log('Socket Disonnected!');
@@ -18,16 +24,19 @@ socket.on('message', (data) => {
 
 
 // Use this method to send socket message
-function sendSocketMessage(key, data) {
+function sendSocketMessage(key, data = {}) {
+    // console.log('Connected: ', socket.connected);
     if (socket && socket.connected) {
-        return {
+        let message = {
             type: key,
             message: data
         }
+        socket.emit('message', message);
     } else {
-        console.log('Socket is not conncted. Therefore, cannot send socket message.');
-        console.log('Key  - ', key);
-        console.log('Data - ', data);
-        console.log();
+        console.log(`Socket is not connected. Therefore, cannot send socket message. Key-${key}   Data-${JSON.stringify(data)}`);
+        SOCKET_MESSAGE_BUCKET.push({
+            key: key,
+            data: data
+        });
     }
 }

@@ -130,7 +130,7 @@ socket.on("getCueTimeString_From_Socket", function(data) {
     //document.getElementsByClassName("fiveMinute").style.backgroundColor = "#2b2b2b";
   }
 });
-socket.emit("getTimeCode", {});
+sendSocketMessage("getTimeCode");
 socket.on("sendTimeCode", function(data) {
   timeCode.textContent = data.smpteString
   //console.log(data.smpteString);
@@ -149,7 +149,7 @@ socket.on("alertText_fohUrl",function(data){
 });
 
 function getTimeCodeLoop() {
-  socket.emit("getTimeCode", {});
+  sendSocketMessage("getTimeCode");
   setTimeout(getTimeCodeLoop, 100);
 };
 getTimeCodeLoop()
