@@ -3,8 +3,6 @@ var router = express.Router();
 
 const AdminSettings = require('./../services/admin-settings');
 
-// var scheduledTimesJson = require('../public/scheduledTimes.json');
-
 
 //-------------------------------------------------------------------------
 // Initial Page
@@ -44,7 +42,6 @@ router.get('/Countdown', async function (req, res) {
   res.render('Countdown', {
     title: 'Countdown',
     now: "now",
-    // scheduledTimesJson : scheduledTimesJson.profiles,
     offsetTime: adminSettingsData.timeSettings.offsetTime
   });
 });
@@ -57,7 +54,6 @@ router.get('/slideshow', async function (req, res) {
   res.render('slideshow', {
     title: 'Scheduled-CountDown',
     now: "now",
-    // scheduledTimesJson : scheduledTimesJson.profiles,
     offsetTime: adminSettingsData.timeSettings.offsetTime
   });
 });

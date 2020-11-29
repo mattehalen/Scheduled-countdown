@@ -9,10 +9,9 @@ var nowTopRow = document.getElementById("nowTopRow");
 var cueTimeText = document.getElementById("cueTime");
 var timeCode = document.getElementById("timeCode");
 var startText = document.getElementById("start");
-var myIpArrayBool = 0;
-var toggleMainPreview = false;
-
 var offsetTime = document.getElementById("offsetTime");
+
+var toggleMainPreview = false;
 
 
 

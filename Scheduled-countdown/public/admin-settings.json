@@ -11,7 +11,7 @@
         "countUpColor": "darkgreen"
     },
     "timeSettings": {
-        "offsetTime": 0,
+        "offsetTime": 1,
         "countDown": 7,
         "countUp": 2,
         "cueCountDown": 7,

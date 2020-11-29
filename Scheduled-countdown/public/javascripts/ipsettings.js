@@ -1,7 +1,7 @@
 var startTimeArray = [];
 var startTitleArray = [];
 var cueLengthArray = [];
-var cueBoolArray  = [];
+var cueBoolArray = [];
 var fiveBoolArray = [];
 var offsetTimejson = [];
 var offsetTimeInit = [];
@@ -30,11 +30,11 @@ function deleteIndexInScheduledTimes(index) {
     var c;
     var d;
     var e;
-    startTimeArray  = [];
+    startTimeArray = [];
     startTitleArray = [];
-    cueLengthArray  = [];
-    cueBoolArray    = [];
-    fiveBoolArray   = [];
+    cueLengthArray = [];
+    cueBoolArray = [];
+    fiveBoolArray = [];
     for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
       a = scheduledTimesArray.profiles[i].title;
       startTitleArray.push(a);
@@ -83,8 +83,8 @@ function getscheduledTimes() {
     startTimeArray = [];
     startTitleArray = [];
     cueLengthArray = [];
-    cueBoolArray  = [];
-    fiveBoolArray   = [];
+    cueBoolArray = [];
+    fiveBoolArray = [];
     for (i = 0; i < scheduledTimesArray.profiles.length; i++) {
       a = scheduledTimesArray.profiles[i].title;
       startTitleArray.push(a);
@@ -110,7 +110,7 @@ getscheduledTimes();
 
 //--------------------------------------------------
 socket.emit("start", {});
-socket.emit("getTimeCode",{});
+socket.emit("getTimeCode", {});
 
 //sendDB_To_Socket
 sleep(1000).then(() => {
@@ -125,28 +125,28 @@ sleep(1000).then(() => {
 });
 //--------------------------------------------------
 //--------------------------------------------------
-socket.on("sendDB_TO_Admin", function(data) {
-  startTimeArray  = data.socketDBArray.startTimeArray;
+socket.on("sendDB_TO_Admin", function (data) {
+  startTimeArray = data.socketDBArray.startTimeArray;
   startTitleArray = data.socketDBArray.startTitleArray;
-  cueLengthArray  = data.socketDBArray.cueLengthArray;
-  cueBoolArray    = data.socketDBArray.cueBoolArray;
-  fiveBoolArray   = data.socketDBArray.fiveBoolArray
+  cueLengthArray = data.socketDBArray.cueLengthArray;
+  cueBoolArray = data.socketDBArray.cueBoolArray;
+  fiveBoolArray = data.socketDBArray.fiveBoolArray
 });
-socket.on("updatebutton_From_Socket", function(data) {
+socket.on("updatebutton_From_Socket", function (data) {
   updateScheduledTimesArray();
 })
-socket.on("updateDB_From_Socket", function(data) {
+socket.on("updateDB_From_Socket", function (data) {
   //console.log("updateDB_From_Socket: ");
-  startTimeArray  = data.startTimeArray;
+  startTimeArray = data.startTimeArray;
   startTitleArray = data.startTitleArray;
-  cueLengthArray  = data.cueLengthArray;
-  cueBoolArray    = data.cueBoolArray;
-  fiveBoolArray   = data.fiveBoolArray;
+  cueLengthArray = data.cueLengthArray;
+  cueBoolArray = data.cueBoolArray;
+  fiveBoolArray = data.fiveBoolArray;
   sleep(100).then(() => {
     printArraysToElements();
   });
 });
-socket.on("pushGetscheduledTimes", function(data) {
+socket.on("pushGetscheduledTimes", function (data) {
   console.log("pushGetscheduledTimes: ");
   getscheduledTimes();
 
@@ -155,7 +155,7 @@ socket.on("pushGetscheduledTimes", function(data) {
   });
 
 });
-socket.on("sortingButton_From_Socket", function(data) {
+socket.on("sortingButton_From_Socket", function (data) {
   console.log("knapp funkar");
 
   updateScheduledTimesArray();
@@ -170,7 +170,7 @@ socket.on("sortingButton_From_Socket", function(data) {
   });
 
 })
-socket.on("updateOffsetTime_From_Socket", function(data) {
+socket.on("updateOffsetTime_From_Socket", function (data) {
   console.log("updateOffsetTime_From_Socket");
   console.log(data);
   offsetTimeInit = data.offsetTime;
@@ -179,19 +179,19 @@ socket.on("updateOffsetTime_From_Socket", function(data) {
 // socket.on("getCueTimeString_From_Socket", function(data) {
 //   cueTimeText.textContent = data.string;
 // });
-socket.on("changesOnScheduledTimes", function(data) {
+socket.on("changesOnScheduledTimes", function (data) {
   console.log("changesOnScheduledTimes");
   alert("Changes to ScheduledTimes.json has been made. Please update browser to se them");
 });
-socket.on("centerTextContent", function(data) {
+socket.on("centerTextContent", function (data) {
   nowTopRow.textContent = data.newCurrentTime,
-  startText.textContent = data.countDownString
+    startText.textContent = data.countDownString
 });
-socket.on("sendIpArrayToAdminPage", function(data){
+socket.on("sendIpArrayToAdminPage", function (data) {
   console.log("sendIpArrayToAdminPage");
   console.log(data);
 });
-socket.on("send_Delete_Button_from_Socket", function(data) {
+socket.on("send_Delete_Button_from_Socket", function (data) {
   console.log(data);
   listIndex = data.listIndex
   console.log("send_Delete_Button_from_Socket: listIndex= " + listIndex);
@@ -202,32 +202,32 @@ socket.on("send_Delete_Button_from_Socket", function(data) {
     // window.location.reload(true)
   });
 });
-socket.on("sendTimeCode",function(data){
+socket.on("sendTimeCode", function (data) {
   timeCode.textContent = data.smpteString
   //console.log(data.smpteString);
 
 });
 //--------------------------------------------------
-$("#updateScheduledTimesArray").on('click', function() {
+$("#updateScheduledTimesArray").on('click', function () {
   socket.emit("updatebutton_To_Socket", {})
 });
-$("#sorting").on('click', function() {
+$("#sorting").on('click', function () {
   socket.emit("sortingButton_To_Socket", {})
 });
-$("#offsetPlus").on('click', function() {
+$("#offsetPlus").on('click', function () {
   offsetTimeInit += 1;
   socket.emit('updateOffsetTimePlus', {
     offsetTime: offsetTimeInit
   });
 });
-$("#offsetMinus").on('click', function() {
+$("#offsetMinus").on('click', function () {
   offsetTimeInit -= 1;
   //$("#offsetTime").html(offsetTimeInit);
   socket.emit('updateOffsetTimeMinus', {
     offsetTime: offsetTimeInit
   });
 });
-$("#offsetReset").on('click', function() {
+$("#offsetReset").on('click', function () {
   offsetTimeInit = 0;
   //$("#offsetTime").html(offsetTimeInit);
   socket.emit('updateOffsetTimeReset', {
@@ -263,7 +263,7 @@ $("#offsetReset").on('click', function() {
 //   });
 //
 // });
-$("#addNewRow").on('click', function() {
+$("#addNewRow").on('click', function () {
   console.log("addNewRow");
   socket.emit("send_addNewRow_To_Socket", {})
 
@@ -273,46 +273,45 @@ $("#addNewRow").on('click', function() {
   });
 });
 $(":input").keypress(function (e) {
-    if (e.which == 13) {
-      socket.emit("sortingButton_To_Socket", {})
-        alert('enter key is pressed and list is updated');
-    }
+  if (e.which == 13) {
+    socket.emit("sortingButton_To_Socket", {})
+    alert('enter key is pressed and list is updated');
+  }
 });
 
 //-- New Buttons for Reseting 5min CountDown
-$("#reloadFiveMinCountDown").on("click",function (e) {
-    socket.emit("reloadFiveMinCountDown", {
-    });
+$("#reloadFiveMinCountDown").on("click", function (e) {
+  socket.emit("reloadFiveMinCountDown", {});
 });
-$("#one").on("click",function (e) {
-    socket.emit("force5MinCountDownCase", {
-      case:1
-    });
+$("#one").on("click", function (e) {
+  socket.emit("force5MinCountDownCase", {
+    case: 1
+  });
 });
-$("#two").on("click",function (e) {
-    socket.emit("force5MinCountDownCase", {
-      case:2
-    });
+$("#two").on("click", function (e) {
+  socket.emit("force5MinCountDownCase", {
+    case: 2
+  });
 });
-$("#three").on("click",function (e) {
-    socket.emit("force5MinCountDownCase", {
-      case:3
-    });
+$("#three").on("click", function (e) {
+  socket.emit("force5MinCountDownCase", {
+    case: 3
+  });
 });
-$("#four").on("click",function (e) {
-    socket.emit("force5MinCountDownCase", {
-      case:4
-    });
+$("#four").on("click", function (e) {
+  socket.emit("force5MinCountDownCase", {
+    case: 4
+  });
 });
-$("#five").on("click",function (e) {
-    socket.emit("force5MinCountDownCase", {
-      case:5
-    });
+$("#five").on("click", function (e) {
+  socket.emit("force5MinCountDownCase", {
+    case: 5
+  });
 });
-$("#alpha").on("click",function (e) {
-    socket.emit("force5MinCountDownCase", {
-      case:0
-    });
+$("#alpha").on("click", function (e) {
+  socket.emit("force5MinCountDownCase", {
+    case: 0
+  });
 });
 //--------------------------------------------------
 function updateScheduledTimesArray() {
@@ -334,7 +333,7 @@ function updateScheduledTimesArray() {
     fiveBoolArray[i] = $("#fiveBool" + i).val()
     console.log(fiveBoolArray[i]);
   }
-  console.log("------------------------------> socket emit writeToScheduledTimesjson = "+fiveBoolArray);
+  console.log("------------------------------> socket emit writeToScheduledTimesjson = " + fiveBoolArray);
   socket.emit("writeToScheduledTimesjson", {
     startTitleArray: startTitleArray,
     startTimeArray: startTimeArray,
@@ -354,11 +353,13 @@ function updateScheduledTimesArray() {
     getscheduledTimes();
   });
 };
+
 function delete_button_click(listIndex) {
   socket.emit("send_Delete_Button_To_Socket", {
     listIndex: listIndex
   });
 };
+
 function printArraysToElements() {
   console.log("printArraysToElements");
   console.log(startTitleArray);
@@ -420,56 +421,59 @@ function sendDB_To_Socket_On_Delete() {
     cueBoolArray: cueBoolArray,
     fiveBoolArray: fiveBoolArray
   });
-
 };
-function saveMyIpTo_myipjson(myChosenIp){
+
+function saveMyIpTo_myipjson(myChosenIp) {
   var e = document.getElementById("selectNumber");
   var strUser = e.options[e.selectedIndex].value;
-  console.log("---------------------: "+strUser);
+  console.log("---------------------: " + strUser);
 
-  socket.emit("sendChosenIp_To_Socket",{myChosenIp:strUser})
+  socket.emit("sendChosenIp_To_Socket", {
+    myChosenIp: strUser
+  })
 };
-function setLoopbackip(){
+
+function setLoopbackip() {
 
 
 }
-function getTimeCodeLoop(){
-  socket.emit("getTimeCode",{});
-  setTimeout(getTimeCodeLoop,100);
+
+function getTimeCodeLoop() {
+  socket.emit("getTimeCode", {});
+  setTimeout(getTimeCodeLoop, 100);
 };
 getTimeCodeLoop()
 
-function iframePreviewFullscreen(){
+function iframePreviewFullscreen() {
   console.log(toggleMainPreview);
 
   if (toggleMainPreview === false) {
-  document.getElementById("mainPreview").style.position = "absolute";
-  document.getElementById("mainPreview").style.width = "99.9%";
-  document.getElementById("mainPreview").style.height = "91.5%";
-  document.getElementById("mainPreview").style.left = "0";
-  document.getElementById("mainPreview").style.top = "0";
-  document.getElementById("mainPreview").style.zIndex = "1";
+    document.getElementById("mainPreview").style.position = "absolute";
+    document.getElementById("mainPreview").style.width = "99.9%";
+    document.getElementById("mainPreview").style.height = "91.5%";
+    document.getElementById("mainPreview").style.left = "0";
+    document.getElementById("mainPreview").style.top = "0";
+    document.getElementById("mainPreview").style.zIndex = "1";
 
-  document.getElementById("mainPreviewTitle").style.position = "absolute";
-  document.getElementById("mainPreviewTitle").style.top = "0";
-  document.getElementById("mainPreviewTitle").style.left = "0";
-  document.getElementById("mainPreviewTitle").style.zIndex = "2";
+    document.getElementById("mainPreviewTitle").style.position = "absolute";
+    document.getElementById("mainPreviewTitle").style.top = "0";
+    document.getElementById("mainPreviewTitle").style.left = "0";
+    document.getElementById("mainPreviewTitle").style.zIndex = "2";
 
-  toggleMainPreview = true;
-  return
-}
-if (toggleMainPreview === true) {
-  document.getElementById("mainPreview").style.position = null;
-  document.getElementById("mainPreview").style.width = null;
-  document.getElementById("mainPreview").style.height = null;
-  document.getElementById("mainPreview").style.left = null;
-  document.getElementById("mainPreview").style.top = null;
+    toggleMainPreview = true;
+    return
+  }
+  if (toggleMainPreview === true) {
+    document.getElementById("mainPreview").style.position = null;
+    document.getElementById("mainPreview").style.width = null;
+    document.getElementById("mainPreview").style.height = null;
+    document.getElementById("mainPreview").style.left = null;
+    document.getElementById("mainPreview").style.top = null;
 
-  document.getElementById("mainPreviewTitle").style.position = null;
-  document.getElementById("mainPreviewTitle").style.top = null;
-  toggleMainPreview = false;
-  return
-}
-
+    document.getElementById("mainPreviewTitle").style.position = null;
+    document.getElementById("mainPreviewTitle").style.top = null;
+    toggleMainPreview = false;
+    return
+  }
 };
 //--------------------------------

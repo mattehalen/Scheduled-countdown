@@ -11,7 +11,6 @@ router.get('/', async function (req, res) {
         res.render('admin', {
             title: 'Scheduled-CountDown',
             now: "now",
-            // scheduledTimesJson : scheduledTimesJson.profiles,
             schedule: adminSettings.schedule,
             dayOfWeek: adminSettings.dayOfWeek,
             timeSettings: adminSettings.timeSettings,
