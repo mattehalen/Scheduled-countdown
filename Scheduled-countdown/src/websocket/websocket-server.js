@@ -11,6 +11,15 @@ function createMessage(key, data = {}) {
   }
 }
 
+function stripOffIPv6(ipv6) {
+  const FFFF = '::ffff:';
+  if (ipv6 && ipv6.startsWith(FFFF)) {
+    return ipv6.substring(FFFF.length);
+  } else {
+    return ipv6;
+  }
+}
+
 class WebSocket {
   socket = null
   allClients = [];
@@ -36,7 +45,8 @@ class WebSocket {
 
   onConnection(client) {
     client.uuid = uuidv4();
-    console.log('A user/socketClient is connected - ', client.handshake.address);
+    client.hostAddress = stripOffIPv6(client.handshake.address);
+    console.log('A user/socketClient is connected - ', client.hostAddress);
 
     this.addClient(client);
 
