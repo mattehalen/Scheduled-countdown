@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-const Utilities = require('./../services/utilties');
-const FileOperation = require('./../services/file-operations');
-const AdminSettings = require('./../services/admin-settings');
+const UtilityService = require('./../services/utility-service');
+const FileOperation  = require('./../services/file-operations');
+const AdminSettings  = require('./../services/admin-settings');
 const ADMIN_SETTINGS_JSON_FILE = AdminSettings.FILEPATH.ADMIN_SETTINGS_JSON_FILENAME;
 
 
@@ -216,7 +216,7 @@ function addNewRowDefault() {
 
     });
 
-    Utilities.sleep(1000).then(() => {
+    UtilityService.sleep(1000).then(() => {
         fs.writeFile(ADMIN_SETTINGS_JSON_FILE, addString, (err) => {
             if (err) throw err;
         });
@@ -556,7 +556,7 @@ function sendCenterText() {
 };
 
 function autoResetOffsetTime() {
-    Utilities.sleep(1 * 6000).then(() => {
+    UtilityService.sleep(1 * 6000).then(() => {
         console.log("autoResetOffsetTime");
         offsetTimeInit = 0;
 
@@ -575,21 +575,6 @@ function autoResetOffsetTime() {
 
 }
 
-function resetsetTimeout() {
-
-    //---------
-    Utilities.sleep(1000 * 60 * 60).then(() => {
-        console.log("----------> resetsetTimeout() <----------   " + newCurrentTime());
-        fs.writeFile('./autoRestartServer.json', JSON.stringify("adminSettings", null, 4), (err) => {
-            if (err) console.log('Error writing file:', err)
-        })
-
-    });
-
-
-
-    //setTimeout(resetsetTimeout,(1000*60*5))
-}
 
 function checkIfUserExist(user) {
     console.log("checkIfUserExist + user  = " + user);
@@ -638,7 +623,7 @@ function addNewCueRowToUser(user) {
         })
     //----- UserCueList
 
-    Utilities.sleep(250).then(() => {
+    UtilityService.sleep(250).then(() => {
         jsonReader(path, (err, cueList) => {
             if (err) {
                 console.log('Error reading file:', err)
@@ -654,7 +639,7 @@ function addNewCueRowToUser(user) {
             });
             console.log(cueList.cues);
 
-            Utilities.sleep(250).then(() => {
+            UtilityService.sleep(250).then(() => {
                 fs.writeFile(path, JSON.stringify(cueList, null, 4), (err) => {
                     if (err) console.log('Error writing file:', err)
                 })
@@ -678,7 +663,7 @@ function deleteCueRowFromUser(user, listIndex) {
         cueList.cues.splice(listIndex, 1);
         console.log(cueList.cues);
 
-        Utilities.sleep(250).then(() => {
+        UtilityService.sleep(250).then(() => {
             fs.writeFile(path, JSON.stringify(cueList, null, 4), (err) => {
                 if (err) console.log('Error writing file:', err)
             })
@@ -700,7 +685,7 @@ function deleteRowFromSchedule(listIndex) {
         adminSettings.schedule.splice(listIndex, 1);
         console.log(adminSettings.schedule);
 
-        Utilities.sleep(250).then(() => {
+        UtilityService.sleep(250).then(() => {
             fs.writeFile(ADMIN_SETTINGS_JSON_FILE, JSON.stringify(adminSettings, null, 4), (err) => {
                 if (err) console.log('Error writing file:', err)
             })
@@ -793,7 +778,7 @@ function updateOffsetTimeReset(data) {
 //   console.log("loadDefaultToSocket: " + data.message);
 //   loadDefaultjson();
 //
-//   Utilities.sleep(10).then(() => {
+//   UtilityService.sleep(10).then(() => {
 //     io.emit("pushGetscheduledTimes", {
 //       offsetTime: offsetTimeInit
 //     });
@@ -956,7 +941,6 @@ module.exports = {
         newCountDown();
         newCueCountDown();
         sendCenterText();
-        resetsetTimeout();
     },
     EVENTS: {
         user,

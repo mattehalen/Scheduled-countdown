@@ -2,8 +2,9 @@ const path = require('path');
 
 const FileOperation = require('./file-operations');
 
-const ADMIN_SETTINGS_JSON_FILENAME        = path.join(__dirname + '../../public/admin-settings.json');
-const ADMIN_SETTINGS_BACKUP_JSON_FILEPATH = path.join(__dirname + '../../public/admin-settings-backup.json');
+console.log(path.join(__dirname, '../../public/admin-settings.json'));
+const ADMIN_SETTINGS_JSON_FILENAME        = path.join(__dirname, '../../public/admin-settings.json');
+const ADMIN_SETTINGS_BACKUP_JSON_FILEPATH = path.join(__dirname, '../../public/admin-settings-backup.json');
 
 
 // This variable stores the latest/current state.

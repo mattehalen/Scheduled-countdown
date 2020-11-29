@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
+const router = require('express').Router();
 
-const AdminSettings = require('./../services/admin-settings');
-const FileOperation = require('./../services/file-operations');
+const AdminService = require('./service');
+const AdminSettings = require('./../../services/admin-settings');
+const FileOperation = require('./../../services/file-operations');
 
-  
+
 router.get('/', async function (req, res) {
     const adminSettings = await AdminSettings.get();
     try {

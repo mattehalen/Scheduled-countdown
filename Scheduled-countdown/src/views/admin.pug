@@ -25,9 +25,9 @@ block content
                   each value, day in dayOfWeek
                     .col
                     p=day
-                    input.slider(type="range",value=value, name=day, id=day, min="0" max="1")                    
+                    input.slider(type="range",value=value, name=day, id=day, min="0" max="1")
                 button.btn.btn-dark(type='submit') Save dayOfWeek
-                
+
               form#formTable(method='POST' action='/admin/submit')
                 button.btn.btn-dark(type='reset' style='width: 100%' name="adminsubmit", id="adminsubmit") Save
                 .form-row
@@ -58,7 +58,7 @@ block content
                       .col-1
                         //- label Q
                         input.slider(type="range",value=person.cueBool, name="cueBool" + index, id="cueBool" + index, min="0" max="1")
-                      .col-1  
+                      .col-1
                         //- label 5
                         input.slider(type="range",value=person.fiveBool, name="fiveBool" + index, id="fiveBool" + index,, min="0" max="1")
                       .col-1
@@ -66,25 +66,25 @@ block content
                 button.btn.btn-dark(type='submit' id="addNewRow" style='width: 100%' formaction="/admin/addNewRowDefault") Add Row
                 button#loadDefaultArray.btn.btn-dark(type='button' style='width: 50%') Load from Backup
                 button#writeDefaultArray.btn.btn-dark(type='button'  style='width: 50%') Save to Backup
-                
 
-              
-              
-          #Settings.tab-pane.fade(role='tabpanel' aria-labelledby='Settings-tab') 
+
+
+
+          #Settings.tab-pane.fade(role='tabpanel' aria-labelledby='Settings-tab')
             .row
               .col-3
                 h2#offsetTime= offsetTime
-                p Adjust Time  
+                p Adjust Time
                 button#offsetMinus.btn.btn-dark  -
                 button#offsetPlus.btn.btn-dark  +
                 button#offsetReset.btn.btn-dark  Reset
               .col-9
                 form(method='POST' action='/admin/submitSettings')
-                  button.btn.btn-primary.btn-block() SAVE 
+                  button.btn.btn-primary.btn-block() SAVE
                   .form-row
                   -var i =0;
                   each val, index in timeSettings
-                    
+
                     .form-row.row-cols-2
                       .col-9
                         .input-group
@@ -95,7 +95,7 @@ block content
                           else if typeof val === "number"
                               input.form-control(type='number', value=val, name="value" + i, id="value" + i)
                     -i++
-                  
+
 
           #overview.tab-pane.fade(role='tabpanel' aria-labelledby='overview-tab')
             .row.row-cols-3
@@ -159,18 +159,13 @@ block content
                 input.form-control(type='text', value="Hello", name="alertText" id="alertText")
               .col-2
                 button.btn.btn-danger(type="reset",name="alertButton", id="alertButton", onClick="alertButton()") Send Alert
-            
-      
-  .downSite
-    #cueTime.fiveMinute 
-    
-    
-    
-  //- Libraries Included
-  script(src='/socket.io/socket.io.js')
-  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
 
-  //- Custom Scripts
-  script(src="/javascripts/socket.js")
-  script(src="/javascripts/utilities.js")
+
+  .downSite
+    #cueTime.fiveMinute
+
+
+
+block pagescripts
+  // Admin Scripts
   script(src="/javascripts/adminScript.js")

@@ -15,10 +15,9 @@ router.get('/', async function (req, res) {
     now: "s"
   });
 });
-//-------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------
-// Pages on Admin
+// Stage Page
 //-------------------------------------------------------------------------
 router.get('/stage', async function (req, res) {
   res.render('stage', {
@@ -26,12 +25,20 @@ router.get('/stage', async function (req, res) {
     now: "s"
   });
 });
+
+//-------------------------------------------------------------------------
+// FOH Page
+//-------------------------------------------------------------------------
 router.get('/foh', async function (req, res) {
   res.render('foh', {
     title: 'Scheduled-CountDown',
     now: "s"
   });
 });
+
+//-------------------------------------------------------------------------
+// Countdown Page
+//-------------------------------------------------------------------------
 router.get('/Countdown', async function (req, res) {
   let adminSettingsData = await AdminSettings.get();
   res.render('Countdown', {
@@ -41,6 +48,10 @@ router.get('/Countdown', async function (req, res) {
     offsetTime: adminSettingsData.timeSettings.offsetTime
   });
 });
+
+//-------------------------------------------------------------------------
+// Slideshow Page
+//-------------------------------------------------------------------------
 router.get('/slideshow', async function (req, res) {
   let adminSettingsData = await AdminSettings.get();
   res.render('slideshow', {
@@ -50,7 +61,6 @@ router.get('/slideshow', async function (req, res) {
     offsetTime: adminSettingsData.timeSettings.offsetTime
   });
 });
-//-------------------------------------------------------------------------
 
 
 module.exports = router;

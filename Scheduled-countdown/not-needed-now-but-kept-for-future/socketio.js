@@ -1,5 +1,5 @@
 const SocketListeners = require('./socketio-listener');
-const Utilities = require('./../services/utilties');
+const Utilities = require('./../services/utility-service');
 
 //-------------------------------------------------------------------------
 // Socket Code here

@@ -33,6 +33,11 @@
     },
     "schedule": [
         {
+            "title": "New row added",
+            "startTime": "12:00",
+            "cueLength": "00:01:10"
+        },
+        {
             "title": "Saxophon guy",
             "startTime": "17:39",
             "cueLength": "00:00",

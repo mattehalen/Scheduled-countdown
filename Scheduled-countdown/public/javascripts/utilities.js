@@ -6,11 +6,3 @@ async function getAdminSettingsJson() {
     const json = await response.json();
     return json;
 }
-
-
-
-
-// x.then(res => {
-//     console.log(res.json())
-// })
-
