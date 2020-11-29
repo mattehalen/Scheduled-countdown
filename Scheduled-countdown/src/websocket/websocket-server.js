@@ -36,7 +36,7 @@ class WebSocket {
 
   onConnection(client) {
     client.uuid = uuidv4();
-    console.log('New User/SocketClient is connected.');
+    console.log('A user/socketClient is connected - ', client.handshake.address);
 
     this.addClient(client);
 

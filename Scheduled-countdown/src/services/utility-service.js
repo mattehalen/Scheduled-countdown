@@ -50,16 +50,13 @@ var getNetworkIPs = (function () {
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 function getPort() {
-  const PORT = '3000'; //default port
-  if (process.env.PORT) {
-    return process.env.PORT
-  } else {
-    return PORT;
-  }
+  const defaultPort = '3000'; //default port
+  return process.env.PORT || defaultPort;
 }
 
 function loadEnvironmentConfiguration() {
-  // load dotenv here - future use
+  // load dotenv here - future use.
+  // For reference: https://www.npmjs.com/package/dotenv
 }
 
 module.exports = {
