@@ -25,9 +25,11 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
-Scheduled-countdown/public/myip.json
-Scheduled-countdown/public/scheduledTimes.json
-Scheduled-countdown/public/scheduledTimes-backup.json
+
+
+public/myip.json
+public/scheduledTimes.json
+public/scheduledTimes-backup.json
 
 .vscode
 .settings
