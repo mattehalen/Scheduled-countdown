@@ -50,7 +50,7 @@ var getNetworkIPs = (function () {
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
 function getPort() {
-  const defaultPort = '3000'; //default port
+  const defaultPort = '8080'; //default port
   return process.env.PORT || defaultPort;
 }
 
