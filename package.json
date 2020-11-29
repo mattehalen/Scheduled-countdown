@@ -5,8 +5,7 @@
   "scripts": {
     "start": "nodemon ./index.js",
     "debug": "node --inspect ./index.js",
-    "debug-brk": "node --inspect-brk ./index.js",
-    "build": "nexe ./bin/www -r public/**/* -r lib/**/* -r bin/**/* -r routes/**/* -r views/**/* -r app.js -r node_modules/**/*"
+    "debug-brk": "node --inspect-brk ./index.js"
   },
   "dependencies": {
     "compression": "^1.7.4",
