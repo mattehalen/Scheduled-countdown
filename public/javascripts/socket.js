@@ -4,10 +4,12 @@ const SOCKET_MESSAGE_BUCKET = [];
 socket.on('connect', () => {
     console.log('SocketConnected!');
 
-    while (SOCKET_MESSAGE_BUCKET.length > 0) {
-        const { key, data } = SOCKET_MESSAGE_BUCKET.shift();
-        // sendSocketMessage(key, data);
-    }
+    // Not sure if this is required or not. Depends on situation.
+    // Send stored socket messages.
+    // while (SOCKET_MESSAGE_BUCKET.length > 0) {
+    //     const { key, data } = SOCKET_MESSAGE_BUCKET.shift();
+    //     sendSocketMessage(key, data);
+    // }
 });
 socket.on('disconnect', () => {
     console.log('Socket Disonnected!');
@@ -25,7 +27,7 @@ socket.on('message', (data) => {
 
 // Use this method to send socket message
 function sendSocketMessage(key, data = {}) {
-    // console.log('Connected: ', socket.connected);
+    // console.log('isSocketConnected: ', socket.connected);
     if (socket && socket.connected) {
         let message = {
             type: key,
