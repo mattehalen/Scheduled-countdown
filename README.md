@@ -19,7 +19,8 @@ Download Nodejs -> https://nodejs.org/en/download/
 - [X] Select which days the Schedule runs. Function dayOfWeek. Added to adminpage
 
 # Task lists
-- [] ADD DMX Toggle on Settings Page and to admin-settings.js
+- [] New admin-settings structure. Settings -> IP/timeSettings/dayOfWeek/DMX/MIDI/OBS/Color || schedule
+- [] ADD DMX Toggle on Settings Page and to admin-settings.js - Toggle Should have a BREAK on the artnet.js so it dosn't log if disalbed.
 - [] ADD OBS IP AND PORT to admin-settings
 - [] Implament varibles from "timeSettings" countDown, countUp, cueCountDown, cueCountUp, useMIDI_ProgramChange
 - [] Install React Native & Socket.io & react-native-watch-connectivity  https://blog.bam.tech/developer-news/how-to-add-an-apple-watch-extension-to-your-react-native-application
