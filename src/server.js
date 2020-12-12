@@ -11,7 +11,8 @@ const compression = require('compression');
 
 
 // Custom Imports
-const UtilityService = require('./services/utility-service');
+const UtilityService  = require('./services/utility-service');
+const Clock           = require('./websocket-clock/clock');
 
 // ExpressJs Server App
 const app = express();

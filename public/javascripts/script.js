@@ -159,3 +159,23 @@ socket.on("alertText_startUrl",function(data){
 
 
 });
+
+
+
+
+
+
+
+
+
+
+// HERE IS WHERE I'm TRYING TO GET THE CurrentTime
+//----------------------------------------------------------------------
+// Capture websocket message from Server like this.
+const EVENTS = {
+    GET_CURRENT_TIME: 'CurrentTime'
+};
+WebSocketService.onEvent(WebSocketService.EVENTS.GET_CURRENT_TIME, (message) => {
+    console.log('Message from server: ', message);
+})
+//----------------------------------------------------------------------
