@@ -131,7 +131,7 @@ class MessageEvent {
     this.callbackForBroadcastToAll = callbackForBroadcastToAll;
   }
 
-  getType() {
+  getKey() {
     return this.type;
   }
 
