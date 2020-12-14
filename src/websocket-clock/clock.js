@@ -1,10 +1,8 @@
-console.log("------ Clock");
+console.log("---------- Clock.js");
 const WebSocketService = require('../websocket/websocket-service');
-
 
 function CurrentTime() {
     const date = new Date();
-    //nowInMs = date.getTime();
 
     var time = "";
     time += (10 > date.getHours() ? "0" : "") + date.getHours() + ":";
@@ -13,14 +11,15 @@ function CurrentTime() {
 
     return time;
 }
-function looper(){
-  console.log(CurrentTime());
-  // To broadcast message to all UI clients.
-  WebSocketService.broadcastToAll('CurrentTime', CurrentTime() ) ;
-  setTimeout(looper, 1000);
+function CurrentTimeInMs() {
+    var date = new Date();
+    var dInMs = date.getTime()
+
+    return dInMs
 }
-looper();
+
 
 module.exports = {
-  CurrentTime: CurrentTime()
+  CurrentTime,
+  CurrentTimeInMs
 }

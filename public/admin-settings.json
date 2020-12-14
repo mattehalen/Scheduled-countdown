@@ -23,19 +23,21 @@
         "countUpColor": "#00ff00"
     },
     "dayOfWeek": {
-        "Monday": 0,
-        "Tuesday": 0,
+        "Monday": 1,
+        "Tuesday": 1,
         "Wednesday": 1,
-        "Thursday": 0,
+        "Thursday": 1,
         "Friday": 1,
         "Saturday": 1,
-        "Sunday": 0
+        "Sunday": 1
     },
     "schedule": [
         {
             "title": "New row added",
-            "startTime": "12:00",
-            "cueLength": "00:01:10"
+            "startTime": "01:10",
+            "cueLength": "00:01:10",
+            "cueBool": "0",
+            "fiveBool": "0"
         },
         {
             "title": "Saxophon guy",
