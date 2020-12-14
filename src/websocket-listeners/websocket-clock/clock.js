@@ -1,5 +1,5 @@
 console.log("---------- Clock.js");
-const WebSocketService = require('../websocket/websocket-service');
+const WebSocketService = require('../../websocket/websocket-service');
 
 function CurrentTime() {
     const date = new Date();

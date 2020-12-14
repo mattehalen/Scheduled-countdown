@@ -1,6 +1,6 @@
 console.log("---------- countDown.js");
 const Clock             = require("./clock.js");
-const AdminSettings     = require('./../services/admin-settings');
+const AdminSettings     = require('../../services/admin-settings');
 const TimeArraySorting  = require('./TimeArraySorting');
 
 const setTimeoutTime = 150;

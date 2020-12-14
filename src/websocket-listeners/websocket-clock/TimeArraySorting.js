@@ -1,6 +1,6 @@
 console.log("---------- TimeArraySorting.js");
 const Clock   = require("./clock.js");
-const AdminSettings  = require('./../services/admin-settings');
+const AdminSettings  = require('../../services/admin-settings');
 const setTimeoutTime = 150;
 let newArrayIndex = 0;
 let scheduleBool;
