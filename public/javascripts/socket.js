@@ -56,7 +56,8 @@ class WebSocketService {
 
     static KEYS = {
         'GETADMIN': 'GETADMIN',
-        'GET_TIME_CODE': 'getTimeCode'
+        'GET_TIME_CODE': 'getTimeCode',
+        "GET_CURRENT_TIME": "CurrentTime"
     };
 
     static onEvent(key, callback) {

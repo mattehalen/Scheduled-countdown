@@ -29,8 +29,13 @@ async function getWeekDay() {
     var n = weekdays[date.getDay()];
 
     const entries = Object.entries(data.dayOfWeek)
-    for (const [day, value] of entries) {
+    for (let [day, value] of entries) {
         if (day === n) {
+          if (value===0){
+            value = false;
+          }else if(value === 1){
+            value = true;
+          }
             return value;
         }
     }
