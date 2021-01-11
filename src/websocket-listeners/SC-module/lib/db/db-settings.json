@@ -1,0 +1,38 @@
+{
+    "ipsettings": {
+        "ipadress": "127.0.0.1",
+        "port": "3000"
+    },
+    "timeSettings": {
+        "offsetTime": 0,
+        "countDown": 7,
+        "countUp": 2,
+        "cueCountDown": 7,
+        "cueCountUp": 2,
+        "changeBgColorTimeCountDown": 3,
+        "changeBgColorTimeCountUp": 0
+    },
+    "dayOfWeek": {
+        "Monday": 1,
+        "Tuesday": 1,
+        "Wednesday": 1,
+        "Thursday": 1,
+        "Friday": 1,
+        "Saturday": 1,
+        "Sunday": 1
+    },
+    "MIDI":{
+      "useMIDI_ProgramChange": 0
+    },
+    "ARTNET":{
+      "subnet": 0,
+      "universe": 15,
+      "net": 0,
+      "DmxCH_StartOBSRecording":1,
+      "DmxCH_StopOBSRecording":255
+    },
+    "Color":{
+      "countDownColor": "#ff0000",
+      "countUpColor": "#00ff00"
+    }
+}

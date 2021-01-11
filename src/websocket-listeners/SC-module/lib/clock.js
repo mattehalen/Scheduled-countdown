@@ -1,6 +1,4 @@
-console.log("---------- Clock.js");
-const WebSocketService = require('../../websocket/websocket-service');
-
+//console.log("---------- Clock.js");
 function CurrentTime() {
     const date = new Date();
 
@@ -14,7 +12,6 @@ function CurrentTime() {
 function CurrentTimeInMs() {
     var date = new Date();
     var dInMs = date.getTime()
-
     return dInMs
 }
 
