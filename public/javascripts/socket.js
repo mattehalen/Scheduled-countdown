@@ -19,7 +19,7 @@ socket.on('error', (error) => {
     console.log('Socket Error - ', error);
 });
 socket.on('message', (data) => {
-    console.log('message received from server - ', data);
+    //console.log('message received from server - ', data);
     const { type, message } = data;
     WebSocketService.onMessage(type, message);
 });
@@ -32,6 +32,7 @@ function onSocketConnected() {
             WebSocketService.sendSocketMessage(key, data);
         }
     }
+    WebSocketService.sendSocketMessage('get_currentTime', 'some-data');
 }
 
 // Use this method to send socket message
@@ -55,9 +56,7 @@ class WebSocketService {
     static #callback = {};
 
     static KEYS = {
-        'GETADMIN': 'GETADMIN',
-        'GET_TIME_CODE': 'getTimeCode',
-        "GET_CURRENT_TIME": "CurrentTime"
+
     };
 
     static onEvent(key, callback) {
@@ -84,6 +83,8 @@ class WebSocketService {
         sendSocketMessage(key, data);
     }
 }
+
+
 
 /*
     ---------------------------------------------------------------------------

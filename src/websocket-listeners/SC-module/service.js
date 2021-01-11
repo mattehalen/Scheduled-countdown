@@ -1,8 +1,8 @@
 
-const CLOCK       = require('../SC-module/lib/clock');
-const DB          = require('../SC-module/lib/db');
-const DB_SETTINGS = require('../SC-module/lib/db-settings');
-const COUNTDOWN   = require("../SC-module/lib/countDown");
+const CLOCK       = require('./lib/clock');
+const DB          = require('./lib/db');
+const DB_SETTINGS = require('./lib/db-settings');
+const COUNTDOWN   = require("./lib/countDown");
 
 function currentTime(){
   return CLOCK.CurrentTime();
@@ -23,10 +23,10 @@ async function settings() {
   return data
 }
 
+
 module.exports = {
-  currentTime,
-  currentTimeMs,
-  countDown,
-  cueCountDown,
-  settings,
-};
+    currentTime,
+    currentTimeMs,
+    countDown,
+    settings
+}

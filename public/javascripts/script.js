@@ -1,26 +1,37 @@
 // "use strict";
-socket.on('connect', function (data) {
-  console.log("==========>> This Script !!");
-});
-socket.on('currentTime', function (time) {
-  document.getElementById("nowTopRow").textContent = time
-  document.getElementById("now").textContent = time
-});
-socket.on('countDown', function (time) {
-  if (time.bool) {
-    document.getElementById("title").textContent = time.title
-    document.getElementById("start").textContent = time.start
+    // Capture websocket message from Server like this.
+   const KEYS = {
+    'GET_CURRENTTIME': 'currentTime',
+    'GET_CURRENTTIMEMS': 'currentTimeMs',
+    "COUNTDOWN": "countDown",
+    "SETTINGS": 'settings'
+  };
+
+WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
+  document.getElementById("nowTopRow").textContent = message;
+  document.getElementById("now").textContent = message;
+})
+
+WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
+  //console.log('Message from server: ', message);
+})
+
+WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
+  //console.log('Message from server: ', message);
+  if (message.bool) {
+    document.getElementById("title").textContent = message.title
+    document.getElementById("start").textContent = message.start
 
     document.getElementById("centerNowText").style.display = "none";
     document.getElementById("titleContentBox").style.display = "block";
 
-    if (time.countDownTimeInMS < ((3*-60000))) {
+    if (message.countDownTimeInMS < ((3*-60000))) {
       document.body.style.backgroundColor = "#2b2b2b";
     }
-    if (time.countDownTimeInMS > ((3*-60000))) {
+    if (message.countDownTimeInMS > ((3*-60000))) {
       document.body.style.backgroundColor = "darkred";
     }
-    if (time.countDownTimeInMS > 0) {
+    if (message.countDownTimeInMS > 0) {
       document.body.style.backgroundColor = "darkgreen";
     }
 
@@ -33,7 +44,12 @@ socket.on('countDown', function (time) {
   if (true) {
 
   }
-});
+})
+
+WebSocketService.onEvent(KEYS.SETTINGS, (message) => {
+  //console.log('Message from server: ', message);
+})
+
 
 function timeStringToMs(t) {
     if (t > 5) {
