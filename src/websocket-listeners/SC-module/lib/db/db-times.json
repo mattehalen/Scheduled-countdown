@@ -2,7 +2,7 @@
   "schedule": [
       {
           "title": "Open Doors",
-          "startTime": "13:55",
+          "startTime": "14:50",
           "cueLength": "00:05",
           "cueBool": "0",
           "fiveBool": "0"

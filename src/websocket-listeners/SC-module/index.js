@@ -23,6 +23,6 @@ async function start() {
     WebSocketService.broadcastToAll(EVENTS.CUE_COUNTDOWN, cueCountDown);
     WebSocketService.broadcastToAll(EVENTS.SETTINGS, settings);
 
-  }, 1000);
+  }, 250);
 }
 start();
