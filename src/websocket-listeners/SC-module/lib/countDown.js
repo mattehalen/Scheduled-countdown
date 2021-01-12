@@ -107,13 +107,16 @@ async function CueCountDown() {
     }
 
     //--------------------------------------------------
-    if (cueLength.length > 5) {
+    if (cueLength) {
+      if (cueLength.length > 5) {
         cueLength = timeStringToMs(cueLength);
     } else {
 
         cueLength = cueLength + ":00"
         cueLength = timeStringToMs(cueLength);
     }
+    }
+   
     //--------------------------------------------------
     // system.on("offsetTime",function(data){
     //   _offsetTime = data;
@@ -140,13 +143,6 @@ async function CueCountDown() {
     if (now > (cueStarTime-CountDown) &&  now < (cueStarTime+CountUp)) {
       cueCountDownBool=true;
     }else{cueCountDownBool=false}
-
-    var textString = "";
-    if (now > (cueStarTime - CountDown) && now < (cueStarTime + (1000 * 60 * 2)) && timeArraySorting_cueBool == 1) {
-        textString = "CUE - " + startTitleHolder + ": " + time
-    } else {
-        textString = ""
-    }
 
   }
   catch(error){
