@@ -32,7 +32,7 @@ function onSocketConnected() {
             WebSocketService.sendSocketMessage(key, data);
         }
     }
-    WebSocketService.sendSocketMessage('get_currentTime', 'some-data');
+    //WebSocketService.sendSocketMessage('get_currentTime', 'some-data');
 }
 
 // Use this method to send socket message

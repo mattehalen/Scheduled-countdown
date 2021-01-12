@@ -41,11 +41,27 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
     document.body.style.backgroundColor = "#2b2b2b";
 
   }
-document.getElementById("cueTime").textContent = message.time;
 })
 
-WebSocketService.onEvent(KEYS.cueCountDown, (message) => {
-  console.log('Message from server: ', message);
+WebSocketService.onEvent(KEYS.CUE_COUNTDOWN, (message) => {
+  if (message.bool) {
+    document.getElementById("cueTime").textContent = "Cue: " + message.time;
+
+    if (message.cueCountDownTimeInMS < ((3*-60000))) {
+      //document.body.style.backgroundColor = "#2b2b2b";
+      document.getElementById("cueTime").style.backgroundColor = "#3b3b3b";
+    }
+    if (message.cueCountDownTimeInMS > ((3*-60000))) {
+      document.getElementById("cueTime").style.backgroundColor = "darkred";
+    }
+    if (message.cueCountDownTimeInMS > 0) {
+      document.getElementById("cueTime").style.backgroundColor =  "darkgreen";
+    }
+    
+  }else{
+    document.getElementById("cueTime").style.backgroundColor = "#3b3b3b";
+    document.getElementById("cueTime").textContent = "";
+  }
 })
 
 //--------------------------------------------------

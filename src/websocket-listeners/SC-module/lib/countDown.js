@@ -7,6 +7,7 @@ let _offsetTime         =0;
 
 const setTimeoutTime = 150;
 let countDownBool;
+let cueCountDownBool;
 
 function msToTime(s) {
     var ms = s % 1000;
@@ -118,13 +119,14 @@ async function CueCountDown() {
     //   _offsetTime = data;
     // });
     let timeArraySorting_cueBool    = await timeArraySorting[3];
-    let OffsetTime          = (adminSettings.timeSettings.offsetTime)*(1000 * 60);
-    const CountUp           = adminSettings.timeSettings.countUp;
-    const CountDown         = adminSettings.timeSettings.countDown;
+    let OffsetTime          = (adminSettings.timeSettings.offsetTime) *(60000);
+    const CountUp           = adminSettings.timeSettings.countUp      *(60000);
+    const CountDown         = adminSettings.timeSettings.countDown    *(60000);
     var startTime           = StartTimeInMs(timeArraySorting_startTime);
     var cueStarTime = (startTime - cueLength);
     cueStarTime += (_offsetTime*60000);
     var now = await Clock.CurrentTimeInMs();
+    var cueCountDownTimeInMS = now - cueStarTime;
     var time = "";
 
     if (now > cueStarTime) {
@@ -134,6 +136,10 @@ async function CueCountDown() {
         time = cueStarTime - now
         time = "-" + (msToTime(time))
     }
+
+    if (now > (cueStarTime-CountDown) &&  now < (cueStarTime+CountUp)) {
+      cueCountDownBool=true;
+    }else{cueCountDownBool=false}
 
     var textString = "";
     if (now > (cueStarTime - CountDown) && now < (cueStarTime + (1000 * 60 * 2)) && timeArraySorting_cueBool == 1) {
@@ -147,7 +153,11 @@ async function CueCountDown() {
     console.log(error);
   }
 
-  return time
+  return {
+    time:time,
+    bool:cueCountDownBool,
+    cueCountDownTimeInMS:cueCountDownTimeInMS
+  };
 }
 
 module.exports = {

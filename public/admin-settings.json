@@ -34,7 +34,7 @@
     "schedule": [
         {
             "title": "New row added",
-            "startTime": "01:10",
+            "startTime": "13:40",
             "cueLength": "00:01:10",
             "cueBool": "0",
             "fiveBool": "0"
