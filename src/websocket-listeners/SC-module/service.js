@@ -28,5 +28,6 @@ module.exports = {
     currentTime,
     currentTimeMs,
     countDown,
+    cueCountDown,
     settings
 }

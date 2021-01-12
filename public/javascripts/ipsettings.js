@@ -439,7 +439,7 @@ function setLoopbackip() {
 }
 
 function getTimeCodeLoop() {
-  sendSocketMessage("getTimeCode");
+  // sendSocketMessage("getTimeCode");
   setTimeout(getTimeCodeLoop, 100);
 };
 getTimeCodeLoop()

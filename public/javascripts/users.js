@@ -126,7 +126,7 @@ socket.on("alertText_allUsersUrl",function(data){
 
 function getTimeCodeLoop(){
   $("#timecodeMs").text(timeCodeMs);
-  sendSocketMessage("getTimeCode",{});
+  // sendSocketMessage("getTimeCode",{});
   setTimeout(getTimeCodeLoop,100);
 };
 getTimeCodeLoop()

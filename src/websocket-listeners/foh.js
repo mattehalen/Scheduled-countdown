@@ -9,6 +9,5 @@ const EVENTS = {
 
 WebSocketService.onEvent(EVENTS.GET_FOH_DATA, (messageEvent) => {
     const message = messageEvent.getMessage();
-    console.log(message);
+    //console.log(message);
 });
-

@@ -1,11 +1,10 @@
 // "use strict";
-    // Capture websocket message from Server like this.
-   const KEYS = {
-    'GET_CURRENTTIME': 'currentTime',
-    'GET_CURRENTTIMEMS': 'currentTimeMs',
-    "COUNTDOWN": "countDown",
-    "SETTINGS": 'settings'
-  };
+const KEYS = {
+  'GET_CURRENTTIME': 'currentTime',
+  'GET_CURRENTTIMEMS': 'currentTimeMs',
+  "COUNTDOWN": "countDown",
+  "SETTINGS": 'settings'
+};
 
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
   document.getElementById("nowTopRow").textContent = message;
@@ -20,7 +19,7 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   //console.log('Message from server: ', message);
   if (message.bool) {
     document.getElementById("title").textContent = message.title
-    document.getElementById("start").textContent = message.start
+    document.getElementById("start").textContent = message.time
 
     document.getElementById("centerNowText").style.display = "none";
     document.getElementById("titleContentBox").style.display = "block";

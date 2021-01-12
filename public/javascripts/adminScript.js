@@ -28,8 +28,8 @@ getOffsetTime();
 
 
 //--------------------------------------------------
-sendSocketMessage("start");
-sendSocketMessage("getTimeCode");
+// sendSocketMessage("start");
+// sendSocketMessage("getTimeCode");
 
 //sendDB_To_Socket
 // sleep(1000).then(() => {
@@ -451,7 +451,7 @@ function saveMyIpTo_myipjson() {
 
 
 function getTimeCodeLoop() {
-  sendSocketMessage("getTimeCode");
+  //sendSocketMessage("getTimeCode");
   setTimeout(getTimeCodeLoop, 100);
 };
 getTimeCodeLoop()

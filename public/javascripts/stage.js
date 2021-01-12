@@ -169,7 +169,7 @@ socket.on("alertText_stageUrl",function(data){
 });
 
 function getTimeCodeLoop(){
-  sendSocketMessage("getTimeCode",{});
+  // sendSocketMessage("getTimeCode",{});
   setTimeout(getTimeCodeLoop,100);
 };
 getTimeCodeLoop()
