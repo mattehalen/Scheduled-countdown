@@ -4,10 +4,11 @@
 ### currentTime
 1. (X) Fix /admin currentTime   - 2021-01-12
 2. (X) Fix /foh currentTime     - 2021-01-12
-3. () Fix /stage currentTime
+3. (X) Fix /stage currentTime   - 2021-01-12
 ### cueCountDown
 1. (X) Fix /foh cueCountDown    - 2021-01-12
 2. (X) Fix /admin cueCountDown  - 2021-01-12
+3. (X) Fix /stage cueCountDown  - 2021-01-12
 ### Sound Button
 1. () - Add soun button again to / - /admin - /foh - /stage
 ### TimeCode
