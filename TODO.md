@@ -18,4 +18,7 @@
 ## Back End / Database
 1. Move db to APPDATA
 2. Get Timecode to work again
-3. 
+## Other
+1. Install Electron !!
+2. Install Angular
+3. Install TypeScript
