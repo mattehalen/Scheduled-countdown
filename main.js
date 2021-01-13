@@ -1,9 +1,44 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
-const path = require('path')
-const Store = require('./lib/store.js');
-const express = require('./index.js')
-console.log(app.getPath('userData'));
+const {app, BrowserWindow}    = require('electron')
+const path                    = require('path')
+const fs 											= require('fs');
+
+const Store                   = require('./lib/store.js');
+const express                 = require('./index.js')
+
+const settings_assetPath      = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-settings.json")
+const times_assetPath         = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-times.json")
+const db_path                 = app.getPath('userData');
+const db_settings_filname     = "db-settings"
+const db_times_filname        = "db-times"
+const db_settings_path        = path.join(db_path, db_settings_filname + ".json");
+const db_times_path           = path.join(db_path, db_times_filname + ".json");
+
+// Check if db_settings.json exist in DB folder. If not Copy from ./SC-module/lib/db
+if (fs.existsSync(db_settings_path)) {
+  console.log("db_settings_path file exist");
+} else {
+  console.log("db_settings_path does not exist");
+  function callback(err) {
+    if (err) throw err;
+    console.log('db_settings.json was copied');
+  }
+  fs.copyFile(settings_assetPath, db_settings_path ,callback);
+}
+
+if (fs.existsSync(db_times_path)) {
+  console.log("db_times_path file exist");
+} else {
+  console.log("db_times_path does not exist");
+  function callback(err) {
+    if (err) throw err;
+    console.log('db_times.json was copied');
+  }
+  fs.copyFile(times_assetPath, db_times_path ,callback);
+}
+
+
+
 
 function createWindow () {
   // Create the browser window.
@@ -45,14 +80,3 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 // First instantiate the class
-const store = new Store({
-  // We'll call our data file 'user-preferences'
-  configName: 'user-preferences',
-  defaults: {
-    // 800x600 is the default size of our window
-    windowBounds: { width: 800, height: 600 }
-  }
-});
-store.set('windowBounds', { width: 1800, height: 600  });
-console.log("--------------------------------------------- this is what i'm looking for");
-console.log(store.get("windowBounds").width);
