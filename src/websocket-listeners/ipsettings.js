@@ -9,6 +9,6 @@ const EVENTS = {
 
 WebSocketService.onEvent(EVENTS.GET_IPSETTINGS, (messageEvent) => {
     const message = messageEvent.getMessage();
-    console.log(message);
+    //console.log(message);
 });
 

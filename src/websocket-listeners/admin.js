@@ -11,7 +11,7 @@ WebSocketService.onEvent(EVENTS.GET_TIME_CODE, (messageEvent) => {
     const key     = messageEvent.getKey();
     const message = messageEvent.getMessage();
 
-    console.log(message);
+    //console.log(message);
 
     // To send data back to UI client.
     // messageEvent.sendToClient('key', 'some-data');

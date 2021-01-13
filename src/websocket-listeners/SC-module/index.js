@@ -27,7 +27,9 @@ async function start() {
   }, 250);
 
   setInterval(async () => {
-    const midi          = await SCModuleService.midi();
+    const settings  = await SCModuleService.settings();
+    const midi_interface_ID = settings.MIDI.midi_interface_ID;
+    const midi            = await SCModuleService.midi(midi_interface_ID);
 
     WebSocketService.broadcastToAll(EVENTS.MIDI, midi);
 

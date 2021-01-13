@@ -23,8 +23,9 @@ async function settings() {
   let data = await DB_SETTINGS.get();
   return data
 }
-async function midi() {
-  let data = await MIDI.mtcTOString();
+async function midi(midi_interface_ID) {
+  //console.log(midi_interface);
+  let data = await MIDI.mtcTOString(midi_interface_ID);
   return data
 }
 

@@ -22,7 +22,8 @@
         "Sunday": 1
     },
     "MIDI":{
-      "useMIDI_ProgramChange": 0
+      "useMIDI_ProgramChange": 0,
+      "midi_interface_ID":1
     },
     "ARTNET":{
       "subnet": 0,

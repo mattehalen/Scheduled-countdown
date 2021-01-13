@@ -18,7 +18,7 @@
 
 ## Back End / Database
 1. Move db to APPDATA
-2. Get Timecode to work again
+2. (X) Get Timecode to work     - 2021-01-13
 ## Other
 1. Install Electron !!
 2. Install Angular
