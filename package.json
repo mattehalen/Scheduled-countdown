@@ -1,8 +1,31 @@
 {
-  "name": "wallmansclock-v2",
+  "name": "Scheduled-countdown",
   "version": "0.0.0",
   "private": true,
+  "description": "More info comming soon",
+  "main": "main.js",
+  "build": {
+    "appId": "com.Scheduled-Countdown.app",
+    "productName": "Scheduled-Countdown",
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "artifactName": "Scheduled-Countdown-win64.exe",
+      "createStartMenuShortcut": true,
+      "perMachine": true,
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "directories": {
+      "buildResources": "assets/",
+      "output": "electron-output/"
+    }
+  },
   "scripts": {
+    "electron": "electron .",
+    "dist": "electron-builder",
     "start": "nodemon ./index.js",
     "debug": "node --inspect ./index.js",
     "debug-brk": "node --inspect-brk ./index.js"
@@ -18,9 +41,13 @@
     "jzz": "^1.0.9",
     "morgan": "~1.9.1",
     "nexe": "^3.3.2",
-    "nodemon": "^2.0.2",
     "pug": "^2.0.4",
     "socket.io": "^2.3.0",
     "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1",
+    "nodemon": "^2.0.2"
   }
 }
