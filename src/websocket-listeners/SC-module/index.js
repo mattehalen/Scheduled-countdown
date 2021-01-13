@@ -7,6 +7,7 @@ const EVENTS = {
   COUNTDOWN: 'countDown',
   CUE_COUNTDOWN: "cueCountDown",
   SETTINGS: 'settings',
+  MIDI:"midi"
 };
 
 async function start() {
@@ -24,5 +25,12 @@ async function start() {
     WebSocketService.broadcastToAll(EVENTS.SETTINGS, settings);
 
   }, 250);
+
+  setInterval(async () => {
+    const midi          = await SCModuleService.midi();
+
+    WebSocketService.broadcastToAll(EVENTS.MIDI, midi);
+
+  }, 100);
 }
 start();

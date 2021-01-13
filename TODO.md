@@ -12,9 +12,9 @@
 ### Sound Button
 1. () - Add soun button again to / - /admin - /foh - /stage
 ### TimeCode
-1. () Add TC to /admin
-2. () Add TC to /FOH
-3. () Add TC to /STAGE
+1. (X) Add TC to /admin         - 2021-01-13
+2. (X) Add TC to /FOH           - 2021-01-13
+3. (X) Add TC to /STAGE         - 2021-01-13
 
 ## Back End / Database
 1. Move db to APPDATA

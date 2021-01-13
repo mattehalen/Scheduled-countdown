@@ -1,23 +1,30 @@
+console.log("---------- MIDI ----------");
+var smpte_String;
 function mtcTOString() {
     var JZZ = require('jzz');
     var port = JZZ().openMidiIn(1);
     var smpte = JZZ.SMPTE();
     var midi = JZZ.MIDI();
-    // console.log(midi);
-    midi
 
-    port.connect(function (msg) {
+    // console.log(JZZ.info());
+    port
+      .connect(function(msg) {
         smpte.read(msg);
         smpteString = smpte.toString();
+        smpte_String = smpteString;
+        // console.log(smpteString);
         smpteMs = timeStringToMs(smpteString);
+        
         if (msg.toString().includes("Program Change")) {
-            midi_Channel = msg[0] - 191;
-            midi_ProgramChange = msg[1];
-            midiTriggerCountDown();
+          midi_Channel = msg[0]-191;
+          midi_ProgramChange = msg[1];
+          midiTriggerCountDown();
         }
-
-    });
-};
+  
+      });
+      return smpte_String
+  };
+  mtcTOString();
 
 async function midiTriggerCountDown() {
     const adminSettingsData = await AdminSettings.get();
@@ -52,4 +59,10 @@ async function midiTriggerCountDown() {
         console.log("d efter  = " + d);
     };
 }
+
+
 //-------------------------------------------------------------------------
+module.exports = {
+    mtcTOString
+  }
+  

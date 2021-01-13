@@ -3,6 +3,7 @@ const CLOCK       = require('./lib/clock');
 const DB          = require('./lib/db');
 const DB_SETTINGS = require('./lib/db-settings');
 const COUNTDOWN   = require("./lib/countDown");
+const MIDI        = require("./lib/midi");
 
 function currentTime(){
   return CLOCK.CurrentTime();
@@ -22,12 +23,16 @@ async function settings() {
   let data = await DB_SETTINGS.get();
   return data
 }
-
+async function midi() {
+  let data = await MIDI.mtcTOString();
+  return data
+}
 
 module.exports = {
     currentTime,
     currentTimeMs,
     countDown,
     cueCountDown,
-    settings
+    settings,
+    midi
 }

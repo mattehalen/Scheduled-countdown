@@ -4,7 +4,8 @@ const KEYS = {
   'GET_CURRENTTIMEMS': 'currentTimeMs',
   "COUNTDOWN": "countDown",
   "CUE_COUNTDOWN":"cueCountDown",
-  "SETTINGS": 'settings'
+  "SETTINGS": 'settings',
+  "MIDI":"midi"
 };
 
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
@@ -64,6 +65,9 @@ WebSocketService.onEvent(KEYS.CUE_COUNTDOWN, (message) => {
   }
 })
 
+WebSocketService.onEvent(KEYS.MIDI, (message) => {
+  document.getElementById("timeCode").textContent = message;
+})
 
 
 

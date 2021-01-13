@@ -61,8 +61,26 @@ function timeStringToMs(t) {
 
 }
 
-
-
+ var playButton = document.querySelector('#play');
+ playButton.hidden = false;
+// //--------------------------------------------------
+ function startPlayback() {
+   return document.querySelector('.countDownSound').play();
+ }
+ startPlayback().then(function () {
+   //console.log('The play() Promise fulfilled! Rock on!');
+ }).catch(function (error) {
+   //console.log('The play() Promise rejected!');
+   //console.log('Use the Play button instead.');
+   console.log(error);
+   // The user interaction requirement is met if
+   // playback is triggered via a click event.
+   playButton.addEventListener('click', startPlayback);
+ });
+ $("#play").on('click', function () {
+   playButton.hidden = true;
+ });
+//--------------------------------------------------
 
 
 
