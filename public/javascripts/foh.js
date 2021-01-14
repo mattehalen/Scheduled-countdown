@@ -66,7 +66,13 @@ WebSocketService.onEvent(KEYS.CUE_COUNTDOWN, (message) => {
 })
 
 WebSocketService.onEvent(KEYS.MIDI, (message) => {
-  document.getElementById("timeCode").textContent = message;
+  if (typeof(message) == "string") {
+    console.log("this is a string");
+    document.getElementById("timeCode").textContent = message;
+    
+  }else{
+    document.getElementById("timeCode").textContent = "";
+  }
 })
 
 
