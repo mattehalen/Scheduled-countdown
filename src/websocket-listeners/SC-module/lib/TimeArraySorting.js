@@ -70,6 +70,11 @@ async function Sorting(){
   return [null,null,null,null,null]
 }
 
+function reset_newArrayIndex(){
+  newArrayIndex = 0;
+}
+
 module.exports = {
-  Sorting
+  Sorting,
+  reset_newArrayIndex
 }

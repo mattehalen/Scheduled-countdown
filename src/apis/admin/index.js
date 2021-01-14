@@ -3,7 +3,7 @@ const AdminService      = require('./service');
 const AdminSettings     = require('./../../services/admin-settings');
 const FileOperation     = require('./../../services/file-operations');
 const WebSocketService  = require('./../../websocket/websocket-service');
-console.log(AdminSettings);
+const TimeArraySorting  = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
 
 
 router.get('/', async function (req, res) {
@@ -40,6 +40,7 @@ router.post('/submit', async function (req, res) {
         });
 
         await AdminSettings.write(db_times);
+        TimeArraySorting.reset_newArrayIndex();
     } catch (error) {
         console.log(error);
     }
