@@ -1,3 +1,4 @@
+const electron = require('electron');
 const jsonFiles = require('./jsonFiles');
 const path 										= require('path')
 const fs 											= require('fs');
@@ -7,13 +8,14 @@ const fs 											= require('fs');
 let filepath = "db=FilePath";
 let filepath_dbSettings = "db=filepath_dbSettings";
 let currentState,currentState_dbSettings;
+const userDataPath = (electron.app || electron.remote.app).getPath('userData');
 
 async function getFilepath(file){
   var myPath = "";
     try {
       var self = this;
       var filname = file
-      myPath = path.join(__dirname,"db", filname + ".json");
+      myPath = path.join(userDataPath, filname + ".json");
       // console.log("db -> getFilepath -> configdir_get");
       // console.log(myPath);
 

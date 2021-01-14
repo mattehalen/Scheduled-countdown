@@ -1,21 +1,22 @@
-const router = require('express').Router();
-
-const AdminService = require('./service');
-const AdminSettings = require('./../../services/admin-settings');
-const FileOperation = require('./../../services/file-operations');
-const WebSocketService = require('./../../websocket/websocket-service');
+const router            = require('express').Router();
+const AdminService      = require('./service');
+const AdminSettings     = require('./../../services/admin-settings');
+const FileOperation     = require('./../../services/file-operations');
+const WebSocketService  = require('./../../websocket/websocket-service');
+console.log(AdminSettings);
 
 
 router.get('/', async function (req, res) {
-    const adminSettings = await AdminSettings.get();
+    const db_times      = await AdminSettings.get();
+    const db_settings   = await AdminSettings.getDbSettings();
     try {
         res.render('admin', {
             title: 'Scheduled-CountDown',
             now: "now",
-            schedule: adminSettings.schedule,
-            dayOfWeek: adminSettings.dayOfWeek,
-            timeSettings: adminSettings.timeSettings,
-            offsetTime: adminSettings.timeSettings.offsetTime
+            schedule: db_times.schedule,
+            dayOfWeek: db_settings.dayOfWeek,
+            timeSettings: db_settings.timeSettings,
+            offsetTime: db_settings.timeSettings.offsetTime
         });
     } catch (error) {
         console.log(error);
@@ -24,20 +25,21 @@ router.get('/', async function (req, res) {
 
 router.post('/submit', async function (req, res) {
     try {
-        const adminSettings = await AdminSettings.get();
-        for (let i = 0; i < adminSettings.schedule.length; i++) {
-            adminSettings.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
-            adminSettings.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
-            adminSettings.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
-            adminSettings.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
-            adminSettings.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
+        const db_times      = await AdminSettings.get();
+        const db_settings   = await AdminSettings.getDbSettings();
+        for (let i = 0; i < db_times.schedule.length; i++) {
+            db_times.schedule[i].title      = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+            db_times.schedule[i].startTime  = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
+            db_times.schedule[i].cueLength  = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
+            db_times.schedule[i].cueBool    = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
+            db_times.schedule[i].fiveBool   = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
         }
 
-        adminSettings.schedule.sort(function (a, b) {
+        db_times.schedule.sort(function (a, b) {
             return a.startTime.localeCompare(b.startTime);
         });
 
-        await AdminSettings.write(adminSettings);
+        await AdminSettings.write(db_times);
     } catch (error) {
         console.log(error);
     }
@@ -202,14 +204,15 @@ router.post('/dayOfWeek', async function (req, res) {
     try {
         WebSocketService.broadcastToAll('reload');
         console.log("------------------------------------------ dayOfWeek ---------------------------------------------");
-        const adminSettings = await AdminSettings.get();
+        const db_times      = await AdminSettings.get();
+        const db_settings   = await AdminSettings.getDbSettings();
         const data = JSON.parse(JSON.stringify(req.body));
         const entries = Object.entries(data)
 
         for (const [title, value] of entries) {
-            adminSettings.dayOfWeek[`${title}`] = parseInt(value, 10);
+            db_settings.dayOfWeek[`${title}`] = parseInt(value, 10);
         }
-        await AdminSettings.write(adminSettings);
+        await AdminSettings.writeDbSettings(db_settings);
     } catch (error) {
         console.log(error);
     }

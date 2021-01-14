@@ -38,7 +38,7 @@ router.get('/foh', async function (req, res) {
 // Countdown Page
 //-------------------------------------------------------------------------
 router.get('/Countdown', async function (req, res) {
-  let adminSettingsData = await AdminSettings.get();
+  let adminSettingsData = await AdminSettings.getDbSettings();
   res.render('Countdown', {
     title: 'Countdown',
     now: "now",
@@ -50,7 +50,7 @@ router.get('/Countdown', async function (req, res) {
 // Slideshow Page
 //-------------------------------------------------------------------------
 router.get('/slideshow', async function (req, res) {
-  let adminSettingsData = await AdminSettings.get();
+  let adminSettingsData = await AdminSettings.getDbSettings();
   res.render('slideshow', {
     title: 'Scheduled-CountDown',
     now: "now",
