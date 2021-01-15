@@ -16,7 +16,9 @@ router.get('/', async function (req, res) {
             schedule: db_times.schedule,
             dayOfWeek: db_settings.dayOfWeek,
             timeSettings: db_settings.timeSettings,
-            offsetTime: db_settings.timeSettings.offsetTime
+            offsetTime: db_settings.timeSettings.offsetTime,
+            settings:db_settings,
+            midi_interface_ID: db_settings.MIDI.midi_interface_ID
         });
     } catch (error) {
         console.log(error);

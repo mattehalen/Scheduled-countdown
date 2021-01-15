@@ -1,8 +1,6 @@
 extends layout
 
 block content
-  include db/db-settings.pug
-  
   p(hidden='')
   .topRow.shadow.p-3.mb-5.rounded.sticky-top
     #timeCode.timeCodeText
@@ -26,30 +24,31 @@ block content
             include db/db-times.pug
 
           #Settings.tab-pane.fade(role='tabpanel' aria-labelledby='Settings-tab')
-            .row
-              .col-3
-                h2#offsetTime= offsetTime
-                p Adjust Time
-                button#offsetMinus.btn.btn-dark  -
-                button#offsetPlus.btn.btn-dark  +
-                button#offsetReset.btn.btn-dark  Reset
-              .col-9
-                form(method='POST' action='/admin/submitSettings')
-                  button.btn.btn-primary.btn-block() SAVE
-                  .form-row
-                  -var i =0;
-                  each val, index in timeSettings
+            include db/db-settings.pug
+            //- .row
+            //-   .col-3
+            //-     h2#offsetTime= offsetTime
+            //-     p Adjust Time
+            //-     button#offsetMinus.btn.btn-dark  -
+            //-     button#offsetPlus.btn.btn-dark  +
+            //-     button#offsetReset.btn.btn-dark  Reset
+            //-   .col-9
+            //-     form(method='POST' action='/admin/submitSettings')
+            //-       button.btn.btn-primary.btn-block() SAVE
+            //-       .form-row
+            //-       -var i =0;
+            //-       each val, index in timeSettings
 
-                    .form-row.row-cols-2
-                      .col-9
-                        .input-group
-                          span.input-group-text(name="timeSettingstitle" + i, id="timeSettingstitle" + i, style="width:100%")= index
-                      .col-3
-                          if typeof val === "string"
-                              input.form-control(type='color', value=val, name="value" + i, id="value" + i)
-                          else if typeof val === "number"
-                              input.form-control(type='number', value=val, name="value" + i, id="value" + i)
-                    -i++
+            //-         .form-row.row-cols-2
+            //-           .col-9
+            //-             .input-group
+            //-               span.input-group-text(name="timeSettingstitle" + i, id="timeSettingstitle" + i, style="width:100%")= index
+            //-           .col-3
+            //-               if typeof val === "string"
+            //-                   input.form-control(type='color', value=val, name="value" + i, id="value" + i)
+            //-               else if typeof val === "number"
+            //-                   input.form-control(type='number', value=val, name="value" + i, id="value" + i)
+            //-         -i++
 
 
           #overview.tab-pane.fade(role='tabpanel' aria-labelledby='overview-tab')

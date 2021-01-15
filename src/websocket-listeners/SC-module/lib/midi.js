@@ -1,4 +1,5 @@
 console.log("---------- MIDI ----------");
+var JZZ = require('jzz');
 var smpte_String;
 
 function mtcTOString(midi_interface_ID) {
@@ -6,7 +7,6 @@ function mtcTOString(midi_interface_ID) {
 
   if (typeof (midi_interface_ID) == 'number') {
 
-    var JZZ = require('jzz');
     var port = JZZ().openMidiIn(midi_interface_ID);
     var smpte = JZZ.SMPTE();
     var midi = JZZ.MIDI();
@@ -69,8 +69,14 @@ async function midiTriggerCountDown() {
   };
 }
 
+function midi_interface_ID(){
+  console.log(JZZ.info());
+}
+midi_interface_ID();
+
 
 //-------------------------------------------------------------------------
 module.exports = {
-  mtcTOString
+  mtcTOString,
+  midi_interface_ID
 }
