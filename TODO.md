@@ -17,6 +17,13 @@
 2. (X) Add TC to /FOH           - 2021-01-13
 3. (X) Add TC to /STAGE         - 2021-01-13
 4. (X) Fix [object Object] Displayed on /admin & /foh & /stage
+### 5MinCountdown
+1. () Fix
+### Switch to Checkbox insted of range
+1. () dayOfWeek
+2. () cueBool
+3. () fiveBool
+4. () useMIDI_ProgramChange
 
 ## Back End / Database
 1. (X) Move db to APPDATA
@@ -26,6 +33,21 @@
 5. SAVE TO BACKUP   -> Should ask user wherer to save the file
 6. Load FRO BACKUP  -> Should ask user to select a file saved on System.
 7. (X) When SAVE on /admin is pressed this should reset "newArrayIndex" on src\websocket-listeners\SC-module\lib\TimeArraySorting.js - maybe use system emit?
+8. () Implement db-settings
+    ### timeSettings
+    () offsetTime
+    () countDown
+    () countUp
+    () cueCountDown
+    () cueCountUp
+    () changeBgColorTimeCountDown
+    () changeBgColorTimeCountUp
+    ### MIDI
+    () useMIDI_ProgramChange
+    () midi_interface_ID
+    ### Color
+    () countDownColor
+    () countUpColor
 
 ## Other
 1. (X) - Install Electron !!    - 2021-01-13
