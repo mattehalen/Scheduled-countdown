@@ -5,7 +5,6 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 var smpte_String;
 
 function mtcTOString(midi_interface_ID) {
-  //console.log(midi_interface_ID);
 
   if (typeof (midi_interface_ID) == 'number') {
 
@@ -18,7 +17,6 @@ function mtcTOString(midi_interface_ID) {
         smpte.read(msg);
         smpteString = smpte.toString();
         smpte_String = smpteString;
-        // console.log(smpteString);
         smpteMs = timeStringToMs(smpteString);
 
         if (msg.toString().includes("Program Change")) {
@@ -88,19 +86,3 @@ module.exports = {
   mtcTOString,
   midi_interface_IDs
 }
-
-// [
-//   {
-//     id: 'MA',
-//     name: 'MA',
-//     manufacturer: 'unknown',
-//     version: '1.0',
-//     engine: 'node'
-//   },
-//     id: 'Reaper',
-//     name: 'Reaper',
-//     manufacturer: 'unknown',
-//     version: '1.0',
-//     engine: 'node'
-//   }
-// ]

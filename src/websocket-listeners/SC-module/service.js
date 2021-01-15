@@ -1,7 +1,8 @@
 
 const CLOCK       = require('./lib/clock');
-const DB          = require('./lib/db');
-const DB_SETTINGS = require('./lib/db-settings');
+//const DB          = require('./lib/db');
+const DB                = require('./../../services/admin-settings');
+//const DB_SETTINGS = require('./lib/db-settings');
 const COUNTDOWN   = require("./lib/countDown");
 const MIDI        = require("./lib/midi");
 
@@ -20,7 +21,7 @@ async function cueCountDown() {
   return data
 }
 async function settings() {
-  let data = await DB_SETTINGS.get();
+  let data = await DB.getDbSettings();
   return data
 }
 async function midi(midi_interface_ID) {

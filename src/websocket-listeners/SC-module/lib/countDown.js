@@ -1,7 +1,9 @@
 //console.log("---------- countDown.js");
 const Clock             = require("./clock.js");
-const DB                = require('./DB');
-const DB_SETTINGS       = require('./db-settings');
+//const DB                = require('./DB');
+const DB                = require('./../../../services/admin-settings');
+
+//const DB_SETTINGS       = require('./db-settings');
 const TimeArraySorting  = require('./TimeArraySorting');
 let _offsetTime         =0;
 
@@ -42,7 +44,7 @@ function StartTimeInMs(time) {
 
 async function CountDown() {
   try{
-    const adminSettings     = await DB_SETTINGS.get();
+    const adminSettings     = await DB.getDbSettings();
     let timeArraySorting    = await TimeArraySorting.Sorting();
     let timeArraySorting_title = await timeArraySorting[0];
     let timeArraySorting_startTime = await timeArraySorting[1];
@@ -96,7 +98,7 @@ async function CountDown() {
 
 async function CueCountDown() {
   try{
-    const adminSettings             = await DB_SETTINGS.get();
+    const adminSettings             = await DB.getDbSettings();
     let timeArraySorting            = await TimeArraySorting.Sorting();
     let timeArraySorting_startTime  = await timeArraySorting[1];
     let timeArraySorting_cueLength  = await timeArraySorting[2];
@@ -118,9 +120,6 @@ async function CueCountDown() {
     }
    
     //--------------------------------------------------
-    // system.on("offsetTime",function(data){
-    //   _offsetTime = data;
-    // });
     let timeArraySorting_cueBool    = await timeArraySorting[3];
     let OffsetTime          = (adminSettings.timeSettings.offsetTime) *(60000);
     const CountUp           = adminSettings.timeSettings.countUp      *(60000);

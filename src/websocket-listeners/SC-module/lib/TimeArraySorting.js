@@ -1,7 +1,8 @@
 //console.log("---------- TimeArraySorting.js");
 const Clock             = require("./clock.js");
-const DB                = require('./db');
-const DB_SETTINGS       = require('./db-settings');
+//const DB                = require('./db');
+const DB                = require('./../../../services/admin-settings');
+//const DB_SETTINGS       = require('./db-settings');
 const setTimeoutTime = 150;
 let newArrayIndex = 0;
 let scheduleBool;
@@ -10,14 +11,9 @@ var title,startTime;
 async function Sorting(){
   try{
     //console.log("----------> TimeArraySorting -> Sorting()");
-    newArrayIndex
-    // system.on("countdown_reset",function(){
-    //   newArrayIndex = 0;
-    // });
-
 
     const adminSettings = await DB.get();
-    const SETTINGS      = await DB_SETTINGS.get()
+    const SETTINGS      = await DB.getDbSettings()
     const scheduledTimes = adminSettings.schedule;
     const useMIDI_ProgramChange = SETTINGS.MIDI.useMIDI_ProgramChange;
     const WeekDays    = await DB.getWeekDay();
@@ -48,6 +44,7 @@ async function Sorting(){
       if (Clock.CurrentTimeInMs() > ((dd.getTime() + OffsetTime) + CountUp)) {
           newArrayIndex++;
       } else {
+        //console.log(scheduledTimes[newArrayIndex].title);
           return [
             scheduledTimes[newArrayIndex].title,
             scheduledTimes[newArrayIndex].startTime,

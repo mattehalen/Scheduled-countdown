@@ -1,18 +1,17 @@
-const router = require('express').Router();
-const AdminService = require('./service');
-const AdminSettings = require('./../../services/admin-settings');
-const FileOperation = require('./../../services/file-operations');
-const WebSocketService = require('./../../websocket/websocket-service');
-const TimeArraySorting = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
-const MIDI = require("./../../websocket-listeners/SC-module/lib/midi")
+const router                = require('express').Router();
+const AdminService          = require('./service');
+const AdminSettings         = require('./../../services/admin-settings');
+const FileOperation         = require('./../../services/file-operations');
+const WebSocketService      = require('./../../websocket/websocket-service');
+const TimeArraySorting      = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
+const MIDI                  = require("./../../websocket-listeners/SC-module/lib/midi")
 
 
 router.get('/', async function (req, res) {
-    const db_times = await AdminSettings.get();
-    const db_settings = await AdminSettings.getDbSettings();
-    const midi_id = await MIDI.midi_interface_IDs();
-    console.log(midi_id);
-
+    const db_times      = await AdminSettings.get();
+    const db_settings   = await AdminSettings.getDbSettings();
+    const midi_id       = await MIDI.midi_interface_IDs();
+    
     try {
         res.render('admin', {
             title: 'Scheduled-CountDown',
@@ -114,12 +113,14 @@ router.post('/submitSettings', async function (req, res) {
             }
         }
 
-        console.log(db_settings);
+        
         console.log("---------- '/admin/submitSettings");
+        console.log(db_settings);
         await AdminSettings.writeDbSettings(db_settings);
     } catch (error) {
         console.log(error);
     }
+    res.redirect("/admin");
 })
 
 router.post('/loadDefault', async function (req, res) {
@@ -263,6 +264,7 @@ router.post('/dayOfWeek', async function (req, res) {
         for (const [title, value] of entries) {
             db_settings.dayOfWeek[`${title}`] = parseInt(value, 10);
         }
+        console.log(db_settings);
         await AdminSettings.writeDbSettings(db_settings);
     } catch (error) {
         console.log(error);

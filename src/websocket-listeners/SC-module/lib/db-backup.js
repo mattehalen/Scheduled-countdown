@@ -1,10 +1,8 @@
-const electron = require('electron');
-const jsonFiles = require('./jsonFiles');
+const electron                = require('electron');
+const jsonFiles               = require('./jsonFiles');
 const path 										= require('path')
 const fs 											= require('fs');
-//const filepath = './public/admin-settings.json';
-//const filepath = './SC-module/db/db-times.json';
-//const filepath_dbSettings = './SC-module/db/db-settings.json';
+
 let filepath = "db=FilePath";
 let filepath_dbSettings = "db=filepath_dbSettings";
 let currentState,currentState_dbSettings;
@@ -16,9 +14,6 @@ async function getFilepath(file){
       var self = this;
       var filname = file
       myPath = path.join(userDataPath, filname + ".json");
-      // console.log("db -> getFilepath -> configdir_get");
-      // console.log(myPath);
-
     } catch (err) {
       console.log(err);
     }
@@ -50,7 +45,9 @@ async function getDbSettings() {
   return currentState_dbSettings;
 }
 async function getWeekDay() {
+  //console.log("----------> getWeekDay <----------");
     let data = await getDbSettings();
+    //console.log(data);
     var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     var date = new Date();
     var n = weekdays[date.getDay()];
