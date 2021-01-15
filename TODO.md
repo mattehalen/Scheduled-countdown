@@ -25,6 +25,7 @@
 5. SAVE TO BACKUP   -> Should ask user wherer to save the file
 6. Load FRO BACKUP  -> Should ask user to select a file saved on System.
 7. (X) When SAVE on /admin is pressed this should reset "newArrayIndex" on src\websocket-listeners\SC-module\lib\TimeArraySorting.js - maybe use system emit?
+8. () Fix dayOfWeek not storing correcty OBS SAME AS 4.
 
 ## Other
 1. (X) - Install Electron !!    - 2021-01-13

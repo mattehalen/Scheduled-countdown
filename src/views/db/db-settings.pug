@@ -41,7 +41,7 @@
                     .col-3
                         if index == "midi_interface_ID"
                             select.form-control(type='select')
-                                each val, key in settings.MIDI.midi_interface_ID
+                                each val, key in midi_interface_ID
                                     option= key
                         else
                             input.form-control(type='number', value=val, name="value" + i, id="value" + i)

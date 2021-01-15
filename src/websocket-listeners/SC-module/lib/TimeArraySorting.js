@@ -29,7 +29,7 @@ async function Sorting(){
       return [false,"useMIDI_ProgramChange = "+useMIDI_ProgramChange]
     }
     if(WeekDays === false ){
-      console.log("[TimeArraySorting] -> WeekDays = FALSE(0)");
+      //console.log("[TimeArraySorting] -> WeekDays = FALSE(0)");
       return [false,"WeekDays = "+WeekDays]
     }
 

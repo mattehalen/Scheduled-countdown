@@ -1,5 +1,8 @@
 console.log("---------- MIDI ----------");
 var JZZ = require('jzz');
+require('jzz-gui-select')(JZZ);
+
+const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var smpte_String;
 
 function mtcTOString(midi_interface_ID) {
@@ -69,14 +72,36 @@ async function midiTriggerCountDown() {
   };
 }
 
-function midi_interface_ID(){
-  console.log(JZZ.info());
-}
-midi_interface_ID();
+async function midi_interface_IDs() {
+  let midi_inputs = JZZ.info().inputs;
+  let midi_input_obj = {};
 
+  for (const [key, value] of Object.entries(midi_inputs)) {
+    midi_input_obj[(midi_inputs[key].name)] = key;
+  }
+
+  return midi_input_obj
+
+}
 
 //-------------------------------------------------------------------------
 module.exports = {
   mtcTOString,
-  midi_interface_ID
+  midi_interface_IDs
 }
+
+// [
+//   {
+//     id: 'MA',
+//     name: 'MA',
+//     manufacturer: 'unknown',
+//     version: '1.0',
+//     engine: 'node'
+//   },
+//     id: 'Reaper',
+//     name: 'Reaper',
+//     manufacturer: 'unknown',
+//     version: '1.0',
+//     engine: 'node'
+//   }
+// ]
