@@ -1,6 +1,5 @@
 console.log("---------- MIDI ----------");
 var JZZ = require('jzz');
-require('jzz-gui-select')(JZZ);
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 var smpte_String;

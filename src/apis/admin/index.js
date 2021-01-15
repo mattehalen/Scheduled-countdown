@@ -1,16 +1,16 @@
-const router            = require('express').Router();
-const AdminService      = require('./service');
-const AdminSettings     = require('./../../services/admin-settings');
-const FileOperation     = require('./../../services/file-operations');
-const WebSocketService  = require('./../../websocket/websocket-service');
-const TimeArraySorting  = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
-const MIDI    = require("./../../websocket-listeners/SC-module/lib/midi")
+const router = require('express').Router();
+const AdminService = require('./service');
+const AdminSettings = require('./../../services/admin-settings');
+const FileOperation = require('./../../services/file-operations');
+const WebSocketService = require('./../../websocket/websocket-service');
+const TimeArraySorting = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
+const MIDI = require("./../../websocket-listeners/SC-module/lib/midi")
 
 
 router.get('/', async function (req, res) {
-    const db_times      = await AdminSettings.get();
-    const db_settings   = await AdminSettings.getDbSettings();
-    const midi_id       = await MIDI.midi_interface_IDs();
+    const db_times = await AdminSettings.get();
+    const db_settings = await AdminSettings.getDbSettings();
+    const midi_id = await MIDI.midi_interface_IDs();
     console.log(midi_id);
 
     try {
@@ -21,7 +21,7 @@ router.get('/', async function (req, res) {
             dayOfWeek: db_settings.dayOfWeek,
             timeSettings: db_settings.timeSettings,
             offsetTime: db_settings.timeSettings.offsetTime,
-            settings:db_settings,
+            settings: db_settings,
             midi_interface_ID: midi_id
         });
     } catch (error) {
@@ -31,14 +31,14 @@ router.get('/', async function (req, res) {
 
 router.post('/submit', async function (req, res) {
     try {
-        const db_times      = await AdminSettings.get();
-        const db_settings   = await AdminSettings.getDbSettings();
+        const db_times = await AdminSettings.get();
+        const db_settings = await AdminSettings.getDbSettings();
         for (let i = 0; i < db_times.schedule.length; i++) {
-            db_times.schedule[i].title      = JSON.parse(JSON.stringify(req.body[`title${i}`]))
-            db_times.schedule[i].startTime  = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
-            db_times.schedule[i].cueLength  = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
-            db_times.schedule[i].cueBool    = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
-            db_times.schedule[i].fiveBool   = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
+            db_times.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
+            db_times.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
+            db_times.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
+            db_times.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
+            db_times.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
         }
 
         db_times.schedule.sort(function (a, b) {
@@ -55,24 +55,68 @@ router.post('/submit', async function (req, res) {
 
 router.post('/submitSettings', async function (req, res) {
     try {
-        const adminSettings = await AdminSettings.get();
-        const entries = Object.entries(adminSettings.timeSettings)
-        var i = 0;
-        for (const [title, value] of entries) {
-            console.log(`${title} ${value}`)
-            var first_string = JSON.parse(JSON.stringify(req.body[`value${i}`]));
-            var isNumber = parseInt(first_string, 10);
+        const db_times = await AdminSettings.get();
+        const db_settings = await AdminSettings.getDbSettings();
+        const data = JSON.parse(JSON.stringify(req.body));
+        const entries = Object.entries(data)
 
-            if (isNumber >= 0) {
-                adminSettings.timeSettings[`${title}`] = isNumber;
-            } else {
-                adminSettings.timeSettings[`${title}`] = first_string;
+        for (const [title, value] of entries) {
+            if (title.startsWith("timeSettings")) {
+                var key = title.replace("timeSettings ", "");
+
+                var first_string = JSON.parse(JSON.stringify(value));
+                var isNumber = parseInt(first_string, 10);
+
+                if (isNumber >= 0) {
+                    db_settings.timeSettings[key] = isNumber;
+                } else {
+                    db_settings.timeSettings[key] = first_string;
+                }
             }
-            i++;
+
+            if (title.startsWith("Color")) {
+                var key = title.replace("Color ", "");
+
+                var first_string = JSON.parse(JSON.stringify(value));
+                var isNumber = parseInt(first_string, 10);
+
+                if (isNumber >= 0) {
+                    db_settings.Color[key] = isNumber;
+                } else {
+                    db_settings.Color[key] = first_string;
+                }
+            }
+
+            if (title.startsWith("MIDI")) {
+                var key = title.replace("MIDI ", "");
+
+                var first_string = JSON.parse(JSON.stringify(value));
+                var isNumber = parseInt(first_string, 10);
+
+                if (isNumber >= 0) {
+                    db_settings.MIDI[key] = isNumber;
+                } else {
+                    db_settings.MIDI[key] = first_string;
+                }
+
+            }
+
+            if (title.startsWith("ARTNET")) {
+                var key = title.replace("ARTNET ", "");
+                var first_string = JSON.parse(JSON.stringify(value));
+                var isNumber = parseInt(first_string, 10);
+
+                if (isNumber >= 0) {
+                    db_settings.ARTNET[key] = isNumber;
+                } else {
+                    db_settings.ARTNET[key] = first_string;
+                }
+            }
         }
+
+        console.log(db_settings);
         console.log("---------- '/admin/submitSettings");
-        console.log(adminSettings.timeSettings);
-        await AdminSettings.write(adminSettings);
+        await AdminSettings.writeDbSettings(db_settings);
     } catch (error) {
         console.log(error);
     }
@@ -211,8 +255,8 @@ router.post('/dayOfWeek', async function (req, res) {
     try {
         WebSocketService.broadcastToAll('reload');
         console.log("------------------------------------------ dayOfWeek ---------------------------------------------");
-        const db_times      = await AdminSettings.get();
-        const db_settings   = await AdminSettings.getDbSettings();
+        const db_times = await AdminSettings.get();
+        const db_settings = await AdminSettings.getDbSettings();
         const data = JSON.parse(JSON.stringify(req.body));
         const entries = Object.entries(data)
 

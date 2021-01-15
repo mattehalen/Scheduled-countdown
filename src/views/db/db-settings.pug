@@ -17,9 +17,9 @@
                 .form-row.row-cols-2
                     .col-9
                         .input-group
-                            span.input-group-text(name="timeSettingstitle" + i, id="timeSettingstitle" + i, style="width:100%")= index
+                            span.input-group-text(name="timeSettings " + index, id=index, style="width:100%")= index
                     .col-3
-                            input.form-control(type='number', value=val, name="value" + i, id="value" + i)
+                            input.form-control(type='number', value=val, name="timeSettings " + index, id=index)
                 -i++
             .col-12.bg-dark
                 h3 Color
@@ -27,9 +27,9 @@
                 .form-row.row-cols-2
                     .col-9
                         .input-group
-                            span.input-group-text(name="timeSettingstitle" + i, id="timeSettingstitle" + i, style="width:100%")= index
+                            span.input-group-text(name="Color " + index + i, id=index, style="width:100%")= index
                     .col-3
-                            input.form-control(type='color', value=val, name="value" + i, id="value" + i)
+                            input.form-control(type='color', value=val, name="Color " + index, id=index)
                 -i++
             .col-12.bg-dark
                 h3 MIDI
@@ -37,14 +37,14 @@
                 .form-row.row-cols-2
                     .col-9
                         .input-group
-                            span.input-group-text(name="timeSettingstitle" + i, id="timeSettingstitle" + i, style="width:100%")= index
+                            span.input-group-text(name="MIDI " + index, id=index, style="width:100%")= index
                     .col-3
                         if index == "midi_interface_ID"
-                            select.form-control(type='select')
+                            select.form-control(type='select',name="MIDI " +index,id=index,)
                                 each val, key in midi_interface_ID
                                     option= key
                         else
-                            input.form-control(type='number', value=val, name="value" + i, id="value" + i)
+                            input.form-control(type='number', value=val, name="MIDI " +index, id=index)
                 -i++
             .col-12.bg-dark
                 h3 ARTNET
@@ -52,7 +52,7 @@
                 .form-row.row-cols-2
                     .col-9
                         .input-group
-                            span.input-group-text(name="timeSettingstitle" + i, id="timeSettingstitle" + i, style="width:100%")= index
+                            span.input-group-text(name="ARTNET " +index, id=index, style="width:100%")= index
                     .col-3
-                            input.form-control(type='number', value=val, name="value" + i, id="value" + i)
+                            input.form-control(type='number', value=val, name="ARTNET " +index, id=index)
                 -i++
