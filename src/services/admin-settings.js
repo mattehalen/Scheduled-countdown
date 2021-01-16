@@ -9,6 +9,7 @@ let filepath_dbSettings = "db=filepath_dbSettings";
 let currentState, currentState_dbSettings;
 
 const ADMIN_SETTINGS_JSON_FILENAME = path.join(__dirname, "");
+const DB_TIMES_FILEPATH = path.join(userDataPath, "db-times" + ".json");
 const ADMIN_SETTINGS_BACKUP_JSON_FILEPATH = path.join(__dirname, '../../public/admin-settings-backup.json');
 
 
@@ -126,6 +127,7 @@ module.exports = {
     LoadFromBackup,
     FILEPATH: {
         ADMIN_SETTINGS_JSON_FILENAME,
-        ADMIN_SETTINGS_BACKUP_JSON_FILEPATH
+        ADMIN_SETTINGS_BACKUP_JSON_FILEPATH,
+        DB_TIMES_FILEPATH
     }
 }

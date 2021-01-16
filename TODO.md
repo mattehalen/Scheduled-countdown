@@ -48,6 +48,8 @@
     ### Color
     () countDownColor
     () countUpColor
+9. SAVE TO BACKUP - Should store with current date and custom text to a folder named Backups at getPath('userData'). 
+10. LOAD FROM BACKUP - should list all files inside of Backups.
 
 ## Other
 1. (X) - Install Electron !!    - 2021-01-13

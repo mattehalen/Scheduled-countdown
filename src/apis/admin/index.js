@@ -1,17 +1,31 @@
-const router                = require('express').Router();
-const AdminService          = require('./service');
-const AdminSettings         = require('./../../services/admin-settings');
-const FileOperation         = require('./../../services/file-operations');
-const WebSocketService      = require('./../../websocket/websocket-service');
-const TimeArraySorting      = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
-const MIDI                  = require("./../../websocket-listeners/SC-module/lib/midi")
+const router = require('express').Router();
+const AdminService = require('./service');
+const AdminSettings = require('./../../services/admin-settings');
+const FileOperation = require('./../../services/file-operations');
+const WebSocketService = require('./../../websocket/websocket-service');
+const TimeArraySorting = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
+const MIDI = require("./../../websocket-listeners/SC-module/lib/midi")
+const fileDialog = require('file-dialog')
+
+console.log(AdminSettings.FILEPATH.DB_TIMES_FILEPATH);
+
+
+
+
+
+router.post('/download2', async function (req, res) {
+
+});
+
+
+
 
 
 router.get('/', async function (req, res) {
-    const db_times      = await AdminSettings.get();
-    const db_settings   = await AdminSettings.getDbSettings();
-    const midi_id       = await MIDI.midi_interface_IDs();
-    
+    const db_times = await AdminSettings.get();
+    const db_settings = await AdminSettings.getDbSettings();
+    const midi_id = await MIDI.midi_interface_IDs();
+
     try {
         res.render('admin', {
             title: 'Scheduled-CountDown',
@@ -30,6 +44,8 @@ router.get('/', async function (req, res) {
 
 router.post('/submit', async function (req, res) {
     try {
+
+
         const db_times = await AdminSettings.get();
         const db_settings = await AdminSettings.getDbSettings();
         for (let i = 0; i < db_times.schedule.length; i++) {
@@ -113,7 +129,7 @@ router.post('/submitSettings', async function (req, res) {
             }
         }
 
-        
+
         console.log("---------- '/admin/submitSettings");
         console.log(db_settings);
         await AdminSettings.writeDbSettings(db_settings);
@@ -272,5 +288,22 @@ router.post('/dayOfWeek', async function (req, res) {
 
     res.redirect("/admin");
 })
+
+
+
+
+router.post('/download', async function (req, res) {
+    try {
+        var d = new Date();
+        var n = d.toLocaleDateString();
+        const filename = n + " - db-times.json"
+
+        res.download(AdminSettings.FILEPATH.DB_TIMES_FILEPATH,filename);
+    } catch (error) {
+        console.log(error);
+    }
+
+    //res.redirect("/admin");
+});
 
 module.exports = router;
