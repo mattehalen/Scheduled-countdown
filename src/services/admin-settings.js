@@ -6,6 +6,7 @@ const FileOperation = require('./file-operations');
 const userDataPath = (electron.app || electron.remote.app).getPath('userData');
 let filepath = "db=FilePath";
 let filepath_dbSettings = "db=filepath_dbSettings";
+let filepath_backup = "db=filepath_backup";
 let currentState, currentState_dbSettings;
 
 const ADMIN_SETTINGS_JSON_FILENAME = path.join(__dirname, "");
@@ -75,43 +76,26 @@ async function getWeekDay() {
         }
     }
 }
+async function createBackup(data) {
+    var d = new Date();
+    var date = d.toLocaleDateString();
+    var time = d.toLocaleTimeString();
+    var string = date + " - " + time + " - " + "db-backup"
+    let backupState = data;
+    let folder = path.join(userDataPath,"backup");
+    let filename = myPath = path.join(folder, string + ".json");
+    //filepath_backup = await getFilepath("/backup/db-backup");
 
 
-/* async function get() {
-    if (content === null) {
-        content = await FileOperation.readFromFile(ADMIN_SETTINGS_JSON_FILENAME);
-    }
-    return content;
+    if (fs.existsSync(folder)) {
+        await FileOperation.writeToFile(filename, backupState);
+      }else{
+        fs.mkdir(folder, { recursive: true }, (err) => {
+            if (err) throw err;
+          });
+        await FileOperation.writeToFile(filename, backupState); 
+      }    
 }
-
-async function write(data) {
-    await FileOperation.writeToFile(ADMIN_SETTINGS_JSON_FILENAME, data);
-    content = data;
-}
-
-async function getWeekDay() {
-    let data = await get();
-    var weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    var date = new Date();
-    var n = weekdays[date.getDay()];
-
-    const entries = Object.entries(data.dayOfWeek)
-    for (let [day, value] of entries) {
-        if (day === n) {
-          if (value===0){
-            value = false;
-          }else if(value === 1){
-            value = true;
-          }
-            return value;
-        }
-    }
-}
- */
-async function createBackup() {
-    await FileOperation.writeToFile(ADMIN_SETTINGS_BACKUP_JSON_FILEPATH, content || {});
-}
-
 async function LoadFromBackup() {
     let data = await FileOperation.readFromFile(ADMIN_SETTINGS_BACKUP_JSON_FILEPATH);
     await write(data);

@@ -9,18 +9,6 @@ const fileDialog = require('file-dialog')
 
 console.log(AdminSettings.FILEPATH.DB_TIMES_FILEPATH);
 
-
-
-
-
-router.post('/download2', async function (req, res) {
-
-});
-
-
-
-
-
 router.get('/', async function (req, res) {
     const db_times = await AdminSettings.get();
     const db_settings = await AdminSettings.getDbSettings();
@@ -292,7 +280,7 @@ router.post('/dayOfWeek', async function (req, res) {
 
 
 
-router.post('/download', async function (req, res) {
+router.post('/download3', async function (req, res) {
     try {
         var d = new Date();
         var n = d.toLocaleDateString();
@@ -305,5 +293,16 @@ router.post('/download', async function (req, res) {
 
     //res.redirect("/admin");
 });
+
+router.post('/download', async function (req, res) {
+    try {
+        const db_times = await AdminSettings.get();
+        await AdminSettings.createBackup(db_times);
+        TimeArraySorting.reset_newArrayIndex();
+    } catch (error) {
+        console.log(error);
+    }
+    res.redirect("/admin");
+})
 
 module.exports = router;
