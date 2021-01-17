@@ -77,6 +77,13 @@ $("#createBackup").on('click', function () {
   sendSocketMessage("createBackup", title);
 });
 
+$("#loadBackup").on('click', function () {
+  //var title = prompt("Please enter title", "db-backup");
+  // console.log(title);
+  $( "#loadBackup" ).dialog();
+  // sendSocketMessage("createBackup", title);
+});
+
 
 
 
