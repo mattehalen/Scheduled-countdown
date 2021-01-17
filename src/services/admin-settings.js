@@ -83,7 +83,7 @@ async function createBackup(data,title) {
     var string = date + " - " + time + " - " + title
     let backupState = data;
     let folder = path.join(userDataPath,"backup");
-    let filename = myPath = path.join(folder, string + ".json");
+    let filename = path.join(folder, string + ".json");
     //filepath_backup = await getFilepath("/backup/db-backup");
 
 
@@ -96,11 +96,36 @@ async function createBackup(data,title) {
         await FileOperation.writeToFile(filename, backupState); 
       }    
 }
-async function LoadFromBackup() {
-    let data = await FileOperation.readFromFile(ADMIN_SETTINGS_BACKUP_JSON_FILEPATH);
-    await write(data);
-}
+async function listBackups(){
+    let folder = path.join(userDataPath,"backup");
+    fs.readdir(folder, (err, files) => {
+        files.forEach(file => {
+          console.log(file);
+        });
+      });
 
+}
+//listBackups();
+
+async function LoadFromBackup(file) {
+    let folder = path.join(userDataPath,"backup",file);
+
+    if (fs.existsSync(folder)) {
+        backupData = await FileOperation.readFromFile(folder);
+        write(backupData);
+    } else {
+        fs.mkdir(folder, {
+            recursive: true
+        }, (err) => {
+            if (err) throw err;
+        });
+        console.log("NO FILES INSIDE OF FOLDER");
+        // backupData = await FileOperation.readFromFile(folder);
+        // write(backupData);
+    }
+}
+//LoadFromBackup("2021-01-17 - 21:38:53 - Test.json");
+//LoadFromBackup("2021-01-17 - 21:40:13 - Only two Shows.json");
 
 module.exports = {
     get,
@@ -109,6 +134,7 @@ module.exports = {
     writeDbSettings,
     getWeekDay,
     createBackup,
+    listBackups,
     LoadFromBackup,
     FILEPATH: {
         ADMIN_SETTINGS_JSON_FILENAME,
