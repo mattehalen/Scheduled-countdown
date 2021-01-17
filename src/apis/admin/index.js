@@ -305,4 +305,34 @@ router.post('/download', async function (req, res) {
     res.redirect("/admin");
 })
 
+
+
+const EVENTS = {
+    CREATEBACKUP: 'createBackup'
+};
+
+// Capture websocket message from FrontEnd like this.
+WebSocketService.onEvent(EVENTS.CREATEBACKUP, async (messageEvent) => {
+    const key     = messageEvent.getKey();
+    const message = messageEvent.getMessage();
+
+    try {
+        const db_times = await AdminSettings.get();
+        await AdminSettings.createBackup(db_times,message);
+        TimeArraySorting.reset_newArrayIndex();
+    } catch (error) {
+        console.log(error);
+    }
+
+
+    // // To send data back to UI client.
+    // messageEvent.sendToClient('key', 'some-data');
+
+    // // To broadcast message to all UI clients.
+    // messageEvent.broadcastToAll('key', 'some-data');
+
+    // // To broadcast message to all UI clients.
+    // WebSocketService.broadcastToAll('key', 'some-data');
+});
+
 module.exports = router;

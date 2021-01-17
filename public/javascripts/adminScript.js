@@ -70,7 +70,12 @@ WebSocketService.onEvent(KEYS.MIDI, (message) => {
   
 })
 
+$("#createBackup").on('click', function () {
+  var title = prompt("Please enter title", "db-backup");
+  console.log(title);
 
+  sendSocketMessage("createBackup", title);
+});
 
 
 

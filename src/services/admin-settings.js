@@ -76,11 +76,11 @@ async function getWeekDay() {
         }
     }
 }
-async function createBackup(data) {
+async function createBackup(data,title) {
     var d = new Date();
     var date = d.toLocaleDateString();
     var time = d.toLocaleTimeString();
-    var string = date + " - " + time + " - " + "db-backup"
+    var string = date + " - " + time + " - " + title
     let backupState = data;
     let folder = path.join(userDataPath,"backup");
     let filename = myPath = path.join(folder, string + ".json");
@@ -100,6 +100,7 @@ async function LoadFromBackup() {
     let data = await FileOperation.readFromFile(ADMIN_SETTINGS_BACKUP_JSON_FILEPATH);
     await write(data);
 }
+
 
 module.exports = {
     get,

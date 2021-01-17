@@ -3,7 +3,7 @@ extends layout
 block content
   form#formTable(method='POST' action='/admin/download')
     button.btn.btn-dark(type='submit' style='width: 100%') Save
-  
+  button#createBackup.btn.btn-dark(style="width: 100%") Save to Backup
   p(hidden='')
   .topRow.shadow.p-3.mb-5.rounded.sticky-top
     #timeCode.timeCodeText
