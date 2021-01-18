@@ -5,35 +5,42 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 var smpte_String;
 
 function mtcTOString(midi_interface_ID) {
+  //console.log("midi_interface_ID = "+midi_interface_ID);
+  var port = JZZ().openMidiIn(midi_interface_ID);
+  var smpte = JZZ.SMPTE();
+  var midi = JZZ.MIDI();
+  //console.log(JZZ.info());
+  port
+    .connect(function (msg) {
+      smpte.read(msg);
+      smpteString = smpte.toString();
+      smpte_String = smpteString;
+      console.log(smpte_String);
+      smpteMs = timeStringToMs(smpteString);
 
-  if (typeof (midi_interface_ID) == 'number') {
+      if (msg.toString().includes("Program Change")) {
+        midi_Channel = msg[0] - 191;
+        midi_ProgramChange = msg[1];
+        midiTriggerCountDown();
+      }
 
-    var port = JZZ().openMidiIn(midi_interface_ID);
-    var smpte = JZZ.SMPTE();
-    var midi = JZZ.MIDI();
-    //console.log(JZZ.info());
-    port
-      .connect(function (msg) {
-        smpte.read(msg);
-        smpteString = smpte.toString();
-        smpte_String = smpteString;
-        smpteMs = timeStringToMs(smpteString);
+    });
+  return smpte_String
+  // if (typeof (midi_interface_ID) == 'string') {
 
-        if (msg.toString().includes("Program Change")) {
-          midi_Channel = msg[0] - 191;
-          midi_ProgramChange = msg[1];
-          midiTriggerCountDown();
-        }
+  //   midi_interface_ID = 0;
+  // }
+    
 
-      });
-    return smpte_String
+  // if (typeof (midi_interface_ID) == 'number') {
+    
 
-  }
+  // }
 
 
 
 };
-mtcTOString();
+//mtcTOString();
 
 async function midiTriggerCountDown() {
   const adminSettingsData = await AdminSettings.get();
