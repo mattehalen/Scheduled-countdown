@@ -8,10 +8,14 @@ async function readFromFile(filePath) {
     }
     return content;
 }
-
 async function writeToFile(filePath, data) {
-    let content = JSON.stringify(data, null, 4);
-    await fs.writeFile(filePath, content);
+    try {
+        let content = JSON.stringify(data, null, 4);
+        await fs.writeFile(filePath, content);
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
 module.exports = {

@@ -96,16 +96,37 @@ async function createBackup(data,title) {
         await FileOperation.writeToFile(filename, backupState); 
       }    
 }
-async function listBackups(){
-    let folder = path.join(userDataPath,"backup");
-    fs.readdir(folder, (err, files) => {
-        files.forEach(file => {
-          console.log(file);
-        });
-      });
+// async function listBackups(){
+//     let folder = path.join(userDataPath,"backup");
+//     fs.readdir(folder, (err, files) => {
+//         console.log(files);
+//         return files
+//       });
+// }
 
+const listBackups = () => {
+    return new Promise((resolve,reject) => {
+        try {
+            const folder = path.join(userDataPath,"backup");
+
+            fs.readdir(folder, (err, files) => {
+                console.log(files);
+                resolve(files)
+              });
+            
+        } catch (error) {
+            
+        }
+    })
 }
-//listBackups();
+const getList = async () =>{
+    try {
+        const files = await listBackups();
+        return files
+    } catch (error) {
+        console.log(error);
+    }
+}
 
 async function LoadFromBackup(file) {
     let folder = path.join(userDataPath,"backup",file);
@@ -134,7 +155,7 @@ module.exports = {
     writeDbSettings,
     getWeekDay,
     createBackup,
-    listBackups,
+    getList,
     LoadFromBackup,
     FILEPATH: {
         ADMIN_SETTINGS_JSON_FILENAME,

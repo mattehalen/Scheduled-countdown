@@ -5,14 +5,17 @@ const FileOperation = require('./../../services/file-operations');
 const WebSocketService = require('./../../websocket/websocket-service');
 const TimeArraySorting = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
 const MIDI = require("./../../websocket-listeners/SC-module/lib/midi")
-const fileDialog = require('file-dialog')
+//const fileDialog = require('file-dialog')
 
-console.log(AdminSettings.FILEPATH.DB_TIMES_FILEPATH);
+// console.log(AdminSettings.FILEPATH.DB_TIMES_FILEPATH);
 
 router.get('/', async function (req, res) {
     const db_times = await AdminSettings.get();
     const db_settings = await AdminSettings.getDbSettings();
     const midi_id = await MIDI.midi_interface_IDs();
+    const listBackups = await AdminSettings.getList();
+    console.log("----------> AAA = "+listBackups);
+    console.log(listBackups);
 
     try {
         res.render('admin', {
@@ -23,8 +26,10 @@ router.get('/', async function (req, res) {
             timeSettings: db_settings.timeSettings,
             offsetTime: db_settings.timeSettings.offsetTime,
             settings: db_settings,
-            midi_interface_ID: midi_id
+            midi_interface_ID: midi_id,
+            listBackups:listBackups
         });
+        console.log(listBackups);
     } catch (error) {
         console.log(error);
     }

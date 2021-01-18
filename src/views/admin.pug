@@ -1,6 +1,13 @@
 extends layout
 
 block content
+  include db/loadBackup.pug
+  //- div(style='position: absolute; left: 50%; ')
+  //-   div(style='position: relative; left: -50%; border: dotted red 1px;')
+  //-     | I am some centered shrink-to-fit content! 
+  //-     br
+  //-     |       tum te tum
+
   button#createBackup.btn.btn-dark(style="width: 100%") Save to Backup
   button#loadBackup.btn.btn-dark(style="width: 100%") Load from Backup
 
