@@ -17,7 +17,6 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
 })
 
 WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
-  console.log(message.colors.countDownColor);
   document.getElementById("start").textContent = message.time;
   if (message.bool) {
 

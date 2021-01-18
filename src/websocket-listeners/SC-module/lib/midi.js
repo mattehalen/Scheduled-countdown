@@ -5,7 +5,7 @@ const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitT
 var smpte_String;
 
 function mtcTOString(midi_interface_ID) {
-  //console.log("midi_interface_ID = "+midi_interface_ID);
+  console.log("midi_interface_ID = "+midi_interface_ID);
   var port = JZZ().openMidiIn(midi_interface_ID);
   var smpte = JZZ.SMPTE();
   var midi = JZZ.MIDI();
