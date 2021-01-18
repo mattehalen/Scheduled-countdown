@@ -80,7 +80,7 @@ async function createBackup(data,title) {
     var d = new Date();
     var date = d.toLocaleDateString();
     var time = d.toLocaleTimeString();
-    var string = date + " - " + time + " - " + title
+    var string = date + " - " + title
     let backupState = data;
     let folder = path.join(userDataPath,"backup");
     let filename = path.join(folder, string + ".json");

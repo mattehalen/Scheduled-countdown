@@ -13,6 +13,9 @@ const db_settings_filname     = "db-settings"
 const db_times_filname        = "db-times"
 const db_settings_path        = path.join(db_path, db_settings_filname + ".json");
 const db_times_path           = path.join(db_path, db_times_filname + ".json");
+const db_backup_path          = path.join(db_path, "backup");
+console.log("----------------------------------------------");
+console.log(db_backup_path);
 
 // Check if db_settings.json exist in DB folder. If not Copy from ./SC-module/lib/db
 if (fs.existsSync(db_settings_path)) {
@@ -35,6 +38,18 @@ if (fs.existsSync(db_times_path)) {
     console.log('db_times.json was copied');
   }
   fs.copyFile(times_assetPath, db_times_path ,callback);
+}
+
+if (fs.existsSync(db_backup_path)) {
+  console.log("db_backup_path file exist");
+} else {
+  console.log("db_backup_path does not exist");
+  function callback(err) {
+    if (err) throw err;
+    console.log('db_backup_path was created');
+  }
+  fs.mkdir(db_backup_path,callback);
+  //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
 
 

@@ -13,8 +13,12 @@ router.get('/', async function (req, res) {
     const db_times = await AdminSettings.get();
     const db_settings = await AdminSettings.getDbSettings();
     const midi_id = await MIDI.midi_interface_IDs();
-    const listBackups = await AdminSettings.getList();
-    console.log("----------> AAA = "+listBackups);
+    let listBackups = await AdminSettings.getList();
+    if (!listBackups || listBackups == 0) {
+        console.log("----------> listBackups === undefined");
+        listBackups = ["No Files Saved"]
+    }
+    console.log("----------> ./ = "+listBackups);
     console.log(listBackups);
 
     try {
@@ -313,7 +317,8 @@ router.post('/download', async function (req, res) {
 
 
 const EVENTS = {
-    CREATEBACKUP: 'createBackup'
+    CREATEBACKUP:   'createBackup',
+    LOADBACKUP:     "loadBackup"
 };
 
 // Capture websocket message from FrontEnd like this.
@@ -324,6 +329,28 @@ WebSocketService.onEvent(EVENTS.CREATEBACKUP, async (messageEvent) => {
     try {
         const db_times = await AdminSettings.get();
         await AdminSettings.createBackup(db_times,message);
+        TimeArraySorting.reset_newArrayIndex();
+    } catch (error) {
+        console.log(error);
+    }
+
+
+    // // To send data back to UI client.
+    // messageEvent.sendToClient('key', 'some-data');
+
+    // // To broadcast message to all UI clients.
+    // messageEvent.broadcastToAll('key', 'some-data');
+
+    // // To broadcast message to all UI clients.
+    // WebSocketService.broadcastToAll('key', 'some-data');
+});
+
+WebSocketService.onEvent(EVENTS.LOADBACKUP, async (messageEvent) => {
+    const key     = messageEvent.getKey();
+    const message = messageEvent.getMessage();
+
+    try {
+        await AdminSettings.LoadFromBackup(message);
         TimeArraySorting.reset_newArrayIndex();
     } catch (error) {
         console.log(error);

@@ -71,20 +71,19 @@ WebSocketService.onEvent(KEYS.MIDI, (message) => {
 })
 
 $("#createBackup").on('click', function () {
-  var title = prompt("Please enter title", "db-backup");
+  console.log("createBackup button pushed");
+  var title = $( "#createBackup_input").val();
   console.log(title);
 
   sendSocketMessage("createBackup", title);
 });
 
 $("#loadBackup").on('click', function () {
-  //var title = prompt("Please enter title", "db-backup");
-  // console.log(title);
-  $( "#loadBackup" ).dialog();
-  // sendSocketMessage("createBackup", title);
+  console.log("loadBackup button pushed");
+  var title = $( "#listBackups option:selected" ).text();
+  console.log(title);
+  sendSocketMessage("loadBackup", title);
 });
-
-
 
 
 
