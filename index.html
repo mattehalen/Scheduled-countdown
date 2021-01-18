@@ -10,38 +10,6 @@
     <div id="wrap">
       <div id="topwrap">
         <h1>Scheduled Countdown</h1>
-        <div class="col-xl-9 col-sm-12 col-xs-12">
-          <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item"><a class="nav-link active" id="IPSettings-tab" data-toggle="tab" href="#IPSettings" role="tab" aria-controls="IPSettings" aria-selected="true">IPSettings</a></li>
-            <li class="nav-item"><a class="nav-link" id="Settings-tab" data-toggle="tab" href="#Settings" role="tab" aria-controls="Settings" aria-selected="false">Settings</a></li>
-            <li class="nav-item"><a class="nav-link" id="overview-tab" data-toggle="tab" href="#overview" role="tab" aria-controls="overview" aria-selected="false">Overview</a></li>
-          </ul>
-          <div class="tab-content shadow p-3 mb-5 rounded" id="myTabContent">
-            <div class="tab-pane fade active show" id="IPSettings" role="tabpanel" aria-labelledby="IPSettings-tab" style="font-size: calc(5px + 1vw)">
-              <h1>IP Settings</h1>
-              <div class="input-group mb-3">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">Select</span>
-                </div>
-                <select class="form-control" id="selectNumber" type="text" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1"><option>IP Adress</option>
-                  <option value="fdb4:8655:9609:3c00:3529:796f:e03a:2ea2">fdb4:8655:9609:3c00:3529:796f:e03a:2ea2</option>
-                  <option value="fdb4:8655:9609:3c00:c463:a87a:4df9:cb09">fdb4:8655:9609:3c00:c463:a87a:4df9:cb09</option>
-                  <option value="fe80::3529:796f:e03a:2ea2%15">fe80::3529:796f:e03a:2ea2%15</option>
-                  <option value="192.168.8.181">192.168.8.181</option>
-                </select>
-                <button class="btn btn-dark" onclick="saveMyIpTo_myipjson()">Save ip<form method="POST" action="/admin/setLoopbackip">
-                </form>
-              </button>
-              <button class="btn btn-dark" type="submit" onclick="setLoopbackip()" style="width: 100%">Set Ip 127.0.0.1  </button>
-            </div>
-            <div class="tab-pane fade" id="Settings" role="tabpanel" aria-labelledby="Settings-tab">
-              <h1>Settings</h1>
-            </div>
-            <div class="tab-pane fade" id="overview" role="tabpanel" aria-labelledby="overview-tab">
-              <h1>overview</h1>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 

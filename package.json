@@ -1,5 +1,6 @@
 {
-  "name": "Scheduled-countdown",
+  "name": "ScheduledCountdown",
+  "author": "Mathias Halén",
   "version": "0.0.0",
   "private": true,
   "description": "More info comming soon",
@@ -7,8 +8,14 @@
   "build": {
     "appId": "com.Scheduled-Countdown.app",
     "productName": "Scheduled-Countdown",
+    "mac": {
+      "category": "se.Scheduled.Countdown",
+      "icon": "./assets/icon.icns"
+		},
     "win": {
-      "target": "nsis"
+      "target": "nsis",
+      "icon": "./assets/icon.ico"
+
     },
     "nsis": {
       "artifactName": "Scheduled-Countdown-win64.exe",
@@ -16,12 +23,17 @@
       "perMachine": true,
       "oneClick": false,
       "allowElevation": true,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "icon.ico"
     },
     "directories": {
       "buildResources": "assets/",
       "output": "electron-output/"
-    }
+    },
+    "files": [
+      "**/*",
+      "assets/icon.ico"
+		]
   },
   "scripts": {
     "electron": "electron .",

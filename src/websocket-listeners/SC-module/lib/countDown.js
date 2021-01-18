@@ -144,7 +144,7 @@ async function CueCountDown() {
         time = "-" + (msToTime(time))
     }
 
-    if (now > (cueStarTime-CountDown) &&  now < (cueStarTime+CountUp)) {
+    if (now > (cueStarTime-CountDown) &&  now < (cueStarTime+CountUp) && timeArraySorting_cueBool == 1) {
       cueCountDownBool=true;
     }else{cueCountDownBool=false}
 
@@ -152,7 +152,7 @@ async function CueCountDown() {
   catch(error){
     console.log(error);
   }
-
+ 
   return {
     time:time,
     bool:cueCountDownBool,

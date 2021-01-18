@@ -4,7 +4,7 @@
       "port": "3000"
   },
   "timeSettings": {
-      "offsetTime": "",
+      "offsetTime": 0,
       "countDown": 7,
       "countUp": 2,
       "cueCountDown": 7,
@@ -23,7 +23,7 @@
   },
   "MIDI": {
       "useMIDI_ProgramChange": 0,
-      "midi_interface_ID": ""
+      "midi_interface_ID": 0
   },
   "ARTNET": {
       "subnet": 0,

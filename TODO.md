@@ -3,8 +3,8 @@
 ## Front End
 ### currentTime
 ### cueCountDown
-4. () Cue appers even if cueBool is marked as off. /admin /foh / stage
-5. () Cue disapers when reaching 0:00:00
+4. (X) Cue appers even if cueBool is marked as off. /admin /foh / stage
+5. (X) Cue disapers when reaching 0:00:00
 ### Sound Button
 1. () - Add soun button again to / - /admin - /foh - /stage
 ### TimeCode
