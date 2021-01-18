@@ -48,6 +48,7 @@ async function CountDown() {
     let timeArraySorting    = await TimeArraySorting.Sorting();
     let timeArraySorting_title = await timeArraySorting[0];
     let timeArraySorting_startTime = await timeArraySorting[1];
+    let colors = adminSettings.Color;
 
 
     if (timeArraySorting[0] === false) {
@@ -86,7 +87,8 @@ async function CountDown() {
       bool:countDownBool,
       CountUp:CountUp,
       CountDown:CountDown,
-      countDownTimeInMS:countDownTimeInMS
+      countDownTimeInMS:countDownTimeInMS,
+      colors: colors
     };
 
 
@@ -98,12 +100,14 @@ async function CountDown() {
 }
 
 async function CueCountDown() {
+  const adminSettings             = await DB.getDbSettings();
+  let colors = adminSettings.Color;
   try{
-    const adminSettings             = await DB.getDbSettings();
     let timeArraySorting            = await TimeArraySorting.Sorting();
     let timeArraySorting_startTime  = await timeArraySorting[1];
     let timeArraySorting_cueLength  = await timeArraySorting[2];
     var cueLength = timeArraySorting_cueLength;
+    let colors = adminSettings.Color;
 
     if (timeArraySorting[0] === false) {
       return "CountDown STOPED due to > "+timeArraySorting[1]
@@ -152,7 +156,8 @@ async function CueCountDown() {
   return {
     time:time,
     bool:cueCountDownBool,
-    cueCountDownTimeInMS:cueCountDownTimeInMS
+    cueCountDownTimeInMS:cueCountDownTimeInMS,
+    colors: colors
   };
 }
 
@@ -165,7 +170,6 @@ function dec_Offset(){
 function reset_Offset(){
   _offsetTime = 0;
 }
-
 
 module.exports = {
   CountDown,

@@ -30,10 +30,10 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
       document.body.style.backgroundColor = "#2b2b2b";
     }
     if (message.countDownTimeInMS > ((3*-60000))) {
-      document.body.style.backgroundColor = "darkred";
+      document.body.style.backgroundColor = message.colors.countDownColor;
     }
     if (message.countDownTimeInMS > 0) {
-      document.body.style.backgroundColor = "darkgreen";
+      document.body.style.backgroundColor = message.colors.countUpColor;
     }
 
   }else{
@@ -53,10 +53,10 @@ WebSocketService.onEvent(KEYS.CUE_COUNTDOWN, (message) => {
       document.getElementById("cueTime").style.backgroundColor = "#3b3b3b";
     }
     if (message.cueCountDownTimeInMS > ((3*-60000))) {
-      document.getElementById("cueTime").style.backgroundColor = "darkred";
+      document.getElementById("cueTime").style.backgroundColor = message.colors.countDownColor;
     }
     if (message.cueCountDownTimeInMS > 0) {
-      document.getElementById("cueTime").style.backgroundColor =  "darkgreen";
+      document.getElementById("cueTime").style.backgroundColor = message.colors.countUpColor;
     }
     
   }else{

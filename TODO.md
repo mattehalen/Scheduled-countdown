@@ -10,6 +10,7 @@
 2. (X) Fix /admin cueCountDown  - 2021-01-12
 3. (X) Fix /stage cueCountDown  - 2021-01-12
 4. () Cue appers even if cueBool is marked as off. /admin /foh / stage
+5. () Cue disapers when reaching 0:00:00
 ### Sound Button
 1. () - Add soun button again to / - /admin - /foh - /stage
 ### TimeCode
@@ -33,8 +34,8 @@
     (X) countUp
     () cueCountDown
     () cueCountUp
-    () changeBgColorTimeCountDown
-    () changeBgColorTimeCountUp
+    (X) changeBgColorTimeCountDown
+    (X) changeBgColorTimeCountUp
     ### MIDI
     () useMIDI_ProgramChange
     () midi_interface_ID

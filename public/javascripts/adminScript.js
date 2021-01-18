@@ -17,6 +17,7 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
 })
 
 WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
+  console.log(message.colors.countDownColor);
   document.getElementById("start").textContent = message.time;
   if (message.bool) {
 
@@ -45,10 +46,10 @@ WebSocketService.onEvent(KEYS.CUE_COUNTDOWN, (message) => {
       document.getElementById("cueTime").style.backgroundColor = "#3b3b3b";
     }
     if (message.cueCountDownTimeInMS > ((3*-60000))) {
-      document.getElementById("cueTime").style.backgroundColor = "darkred";
+      document.getElementById("cueTime").style.backgroundColor =  message.colors.countDownColor;
     }
     if (message.cueCountDownTimeInMS > 0) {
-      document.getElementById("cueTime").style.backgroundColor =  "darkgreen";
+      document.getElementById("cueTime").style.backgroundColor =  message.colors.countUpColor;
     }
     
   }else{
