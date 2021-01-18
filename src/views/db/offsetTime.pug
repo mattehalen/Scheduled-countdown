@@ -1,0 +1,12 @@
+.form-row
+    .col-3
+        p(style="width: 100%") 1
+    .col-3
+        form#formTable(method='POST' action='/admin/offsetPlus')
+            button.btn.btn-dark(type='submit' style='width: 100%' name="offsetPlus", id="offsetPlus") offsetPlus
+    .col-3 
+        form#formTable(method='POST' action='/admin/offsetMinus')
+            button.btn.btn-dark(type='submit' style='width: 100%' name="offsetMinus", id="offsetMinus") offsetMinus
+    .col-3
+        form#formTable(method='POST' action='/admin/offsetReset')
+            button.btn.btn-dark(type='submit' style='width: 100%' name="offsetReset", id="offsetReset") offsetReset

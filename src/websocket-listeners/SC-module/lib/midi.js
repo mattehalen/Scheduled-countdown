@@ -15,7 +15,6 @@ function mtcTOString(midi_interface_ID) {
       smpte.read(msg);
       smpteString = smpte.toString();
       smpte_String = smpteString;
-      console.log(smpte_String);
       smpteMs = timeStringToMs(smpteString);
 
       if (msg.toString().includes("Program Change")) {
@@ -83,7 +82,7 @@ async function midi_interface_IDs() {
   for (const [key, value] of Object.entries(midi_inputs)) {
     midi_input_obj[(midi_inputs[key].name)] = key;
   }
-
+  console.log(midi_input_obj);
   return midi_input_obj
 
 }

@@ -29,6 +29,7 @@ block content
             a#alert-tab.nav-link(data-toggle='tab' href='#alert' role='tab' aria-controls='alert' aria-selected='false') Alert
         #myTabContent.tab-content.shadow.p-3.mb-5.rounded
           #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
+            include db/offsetTime.pug
             include db/db-dayOfWeek.pug
             include db/db-times.pug
 

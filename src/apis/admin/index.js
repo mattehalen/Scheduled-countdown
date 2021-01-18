@@ -5,6 +5,8 @@ const FileOperation = require('./../../services/file-operations');
 const WebSocketService = require('./../../websocket/websocket-service');
 const TimeArraySorting = require("./../../websocket-listeners/SC-module/lib/TimeArraySorting")
 const MIDI = require("./../../websocket-listeners/SC-module/lib/midi")
+const offset = require("./../../websocket-listeners/SC-module/lib/countDown")
+
 //const fileDialog = require('file-dialog')
 
 // console.log(AdminSettings.FILEPATH.DB_TIMES_FILEPATH);
@@ -215,9 +217,7 @@ router.post('/deleteButton', async function (req, res) {
 
 router.post('/offsetPlus', async function (req, res) {
     try {
-        const adminSettings = await AdminSettings.get();
-        adminSettings.timeSettings.offsetTime += 1;
-        await AdminSettings.write(adminSettings);
+        offset.inc_Offset();
 
     } catch (error) {
         console.log(error);
@@ -228,9 +228,10 @@ router.post('/offsetPlus', async function (req, res) {
 
 router.post('/offsetMinus', async function (req, res) {
     try {
-        const adminSettings = await AdminSettings.get();
-        adminSettings.timeSettings.offsetTime -= 1;
-        await AdminSettings.write(adminSettings);
+        // const adminSettings = await AdminSettings.get();
+        // adminSettings.timeSettings.offsetTime -= 1;
+        // await AdminSettings.write(adminSettings);
+        offset.dec_Offset();
 
     } catch (error) {
         console.log(error);
@@ -241,9 +242,10 @@ router.post('/offsetMinus', async function (req, res) {
 
 router.post('/offsetReset', async function (req, res) {
     try {
-        const adminSettings = await AdminSettings.get();
-        adminSettings.timeSettings.offsetTime = 0;
-        await AdminSettings.write(adminSettings);
+        // const adminSettings = await AdminSettings.get();
+        // adminSettings.timeSettings.offsetTime = 0;
+        // await AdminSettings.write(adminSettings);
+        offset.reset_Offset();
 
     } catch (error) {
         console.log(error);

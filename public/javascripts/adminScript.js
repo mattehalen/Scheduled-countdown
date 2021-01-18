@@ -61,7 +61,6 @@ WebSocketService.onEvent(KEYS.MIDI, (message) => {
 
 
   if (typeof(message) == "string") {
-    console.log("this is a string");
     document.getElementById("timeCode").textContent = message;
     
   }else{

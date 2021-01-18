@@ -63,6 +63,7 @@ async function CountDown() {
     var time = "";
     var now = await Clock.CurrentTimeInMs();
     var startTime = StartTimeInMs(timeArraySorting_startTime);
+    //console.log("_offsetTime = "+_offsetTime);
     startTime += (_offsetTime*60000);
     var countDownTimeInMS = now - startTime;
 
@@ -155,7 +156,21 @@ async function CueCountDown() {
   };
 }
 
+function inc_Offset(){
+  _offsetTime++;
+}
+function dec_Offset(){
+  _offsetTime--;
+}
+function reset_Offset(){
+  _offsetTime = 0;
+}
+
+
 module.exports = {
   CountDown,
-  CueCountDown
+  CueCountDown,
+  inc_Offset,
+  dec_Offset,
+  reset_Offset
 }
