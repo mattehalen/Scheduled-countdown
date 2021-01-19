@@ -1,24 +1,17 @@
 extends layout
 
 block content
-  //include db/loadBackup.pug
-  //- div(style='position: absolute; left: 50%; ')
-  //-   div(style='position: relative; left: -50%; border: dotted red 1px;')
-  //-     | I am some centered shrink-to-fit content! 
-  //-     br
-  //-     |       tum te tum
-
-  
-
   p(hidden='')
   .topRow.shadow.p-3.mb-5.rounded.sticky-top
     #timeCode.timeCodeText
     #start(style="font-size: 5vh; font-weight: 100;")
     #nowTopRow.topRowText
   .container-fluid
-    include db/offsetTime.pug
+    
     .row.justify-content-center.overflow-hidden
+      
       .col-xl-9.col-sm-12.col-xs-12
+        include db/offsetTime.pug
         ul#myTab.nav.nav-tabs(role='tablist')
           li.nav-item
             a#Schedule-tab.nav-link.active(data-toggle='tab' href='#Schedule' role='tab' aria-controls='Schedule' aria-selected='true') Schedule

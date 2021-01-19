@@ -249,7 +249,8 @@ router.post('/dayOfWeek', async function (req, res) {
 
 const EVENTS = {
     CREATEBACKUP:   'createBackup',
-    LOADBACKUP:     "loadBackup"
+    LOADBACKUP:     "loadBackup",
+    DELETEBACKUP:   "deleteBackup"
 };
 
 // Capture websocket message from FrontEnd like this.
@@ -282,6 +283,28 @@ WebSocketService.onEvent(EVENTS.LOADBACKUP, async (messageEvent) => {
 
     try {
         await AdminSettings.LoadFromBackup(message);
+        TimeArraySorting.reset_newArrayIndex();
+    } catch (error) {
+        console.log(error);
+    }
+
+
+    // // To send data back to UI client.
+    // messageEvent.sendToClient('key', 'some-data');
+
+    // // To broadcast message to all UI clients.
+    // messageEvent.broadcastToAll('key', 'some-data');
+
+    // // To broadcast message to all UI clients.
+    // WebSocketService.broadcastToAll('key', 'some-data');
+});
+
+WebSocketService.onEvent(EVENTS.DELETEBACKUP, async (messageEvent) => {
+    const key     = messageEvent.getKey();
+    const message = messageEvent.getMessage();
+
+    try {
+        await AdminSettings.DeleteBackup(message);
         TimeArraySorting.reset_newArrayIndex();
     } catch (error) {
         console.log(error);

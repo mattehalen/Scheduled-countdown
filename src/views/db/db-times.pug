@@ -48,5 +48,10 @@ form#formTable(method='POST' action='/admin/submit')
             select.form-control(type='select',name="listBackups",id="listBackups",)
                 each val, key in listBackups
                     option= val
+        .col-8
+            button#deleteBackup.btn.btn-dark(type='button' style="width: 100%") Delete from Backup
         .col-4
+            select.form-control(type='select',name="deleteBackups",id="deleteBackups",)
+                each val, key in listBackups
+                    option= val
             

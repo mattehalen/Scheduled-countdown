@@ -145,6 +145,16 @@ async function LoadFromBackup(file) {
         // write(backupData);
     }
 }
+async function DeleteBackup(file) {
+    let folder = path.join(userDataPath,"backup",file);
+
+    fs.unlink(folder, function (err) {
+        if (err) throw err;
+        // if no error, file has been deleted successfully
+        console.log('File deleted!');
+    }); 
+}
+
 //LoadFromBackup("2021-01-17 - 21:38:53 - Test.json");
 //LoadFromBackup("2021-01-17 - 21:40:13 - Only two Shows.json");
 
@@ -157,6 +167,7 @@ module.exports = {
     createBackup,
     getList,
     LoadFromBackup,
+    DeleteBackup,
     FILEPATH: {
         ADMIN_SETTINGS_JSON_FILENAME,
         ADMIN_SETTINGS_BACKUP_JSON_FILEPATH,
