@@ -41,9 +41,17 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
     document.body.style.backgroundColor = "#2b2b2b";
 
   }
-  if (true) {
 
+  // AUTO Shrink text
+  var textLength = $('#title').text().length;
+  if (textLength <= 14) {
+    $('#title').css('font-size', '10vw');
+  } else if (textLength > 14 && textLength < 19) {
+    $('#title').css('font-size', '8vw');
+  } else if (textLength > 18) {
+    $('#title').css('font-size', '7vw');
   }
+
 })
 
 WebSocketService.onEvent(KEYS.SETTINGS, (message) => {

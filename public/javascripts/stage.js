@@ -63,6 +63,15 @@ WebSocketService.onEvent(KEYS.CUE_COUNTDOWN, (message) => {
     document.getElementById("cueTime").style.backgroundColor = "#3b3b3b";
     document.getElementById("cueTime").textContent = "";
   }
+    // AUTO Shrink text
+    var textLength = $('#title').text().length;
+    if (textLength < 13) {
+      $('#title').css('font-size', '10vw');
+    } else if (textLength > 13 && textLength < 19) {
+      $('#title').css('font-size', '8vw');
+    } else if (textLength > 18) {
+      $('#title').css('font-size', '7vw');
+    }
 })
 
 WebSocketService.onEvent(KEYS.MIDI, (message) => {
