@@ -133,8 +133,8 @@ async function CueCountDown() {
     //--------------------------------------------------
     let timeArraySorting_cueBool    = await timeArraySorting[3];
     let OffsetTime          = (adminSettings.timeSettings.offsetTime) *(60000);
-    const CountUp           = adminSettings.timeSettings.countUp      *(60000);
-    const CountDown         = adminSettings.timeSettings.countDown    *(60000);
+    const CountUp           = adminSettings.timeSettings.cueCountUp      *(60000);
+    const CountDown         = adminSettings.timeSettings.cueCountDown    *(60000);
     var startTime           = StartTimeInMs(timeArraySorting_startTime);
     var cueStarTime = (startTime - cueLength);
     cueStarTime += (_offsetTime*60000);
