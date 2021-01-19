@@ -34,3 +34,4 @@ public/scheduledTimes-backup.json
 
 .vscode
 .settings
+*.code-workspace

@@ -1,10 +1,12 @@
 .form-row
-    .col-3
-        p#offsetTime_display(style="width: 100%") 1
-    .col-3
+    .col-2.text-right(style="font-Size: initial; margin: auto")
+        | Offset Start Time by
+    .col-1
+        input.form-control(type='text', name="offsetTime_display", id="offsetTime_display")
+    .col-3 
         form#form_OffsetPlus_Button(method='POST' action='/admin/offsetPlus')
             button.btn.btn-dark(type='submit' style='width: 100%' name="offsetPlus", id="offsetPlus") offsetPlus
-    .col-3 
+    .col-3
         form#form_OffsetMinus_Button(method='POST' action='/admin/offsetMinus')
             button.btn.btn-dark(type='submit' style='width: 100%' name="offsetMinus", id="offsetMinus") offsetMinus
     .col-3

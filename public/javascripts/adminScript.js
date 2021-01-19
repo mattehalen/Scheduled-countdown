@@ -18,6 +18,9 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
 
 WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   document.getElementById("start").textContent = message.time;
+  document.getElementById("offsetTime_display").textContent = message.offsetTime+" min";
+  document.getElementById("offsetTime_display").value = message.offsetTime+" min";
+  
   if (message.bool) {
 
     if (message.countDownTimeInMS < ((3*-60000))) {

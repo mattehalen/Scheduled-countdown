@@ -89,6 +89,7 @@ async function CountDown() {
     return {
       title:timeArraySorting_title,
       time:time,
+      offsetTime:_offsetTime,
       bool:countDownBool,
       CountUp:CountUp,
       CountDown:CountDown,

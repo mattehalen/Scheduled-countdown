@@ -6,7 +6,7 @@
 3. (X) Add page reload on "Load from / Save to Backup"
 4. () Auto Scale down Text on #title CSS
 5. () Add "Users" to Nav bar on /admin. See which users exist and add / delete new users
-6. () Display current offset on a div - just says 1 now
+6. (X) Display current offset on a div - just says 1 now
 6. () Delete specific db-backups
 
 ### currentTime
