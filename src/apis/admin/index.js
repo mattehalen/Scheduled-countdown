@@ -20,9 +20,6 @@ router.get('/', async function (req, res) {
         console.log("----------> listBackups === undefined");
         listBackups = ["No Files Saved"]
     }
-    console.log("----------> ./ = "+listBackups);
-    console.log(listBackups);
-
     try {
         res.render('admin', {
             title: 'Scheduled-CountDown',
@@ -132,44 +129,6 @@ router.post('/submitSettings', async function (req, res) {
         console.log("---------- '/admin/submitSettings");
         console.log(db_settings);
         await AdminSettings.writeDbSettings(db_settings);
-    } catch (error) {
-        console.log(error);
-    }
-    res.redirect("/admin");
-})
-
-router.post('/loadDefault', async function (req, res) {
-    try {
-        console.log("++--++--++--++--++ loadDefault ++--++--++--++--++");
-        await AdminSettings.LoadFromBackup();
-    } catch (error) {
-        console.log(error);
-    }
-
-    res.redirect("/admin");
-})
-
-router.post('/writeToDefault', async function (req, res) {
-    try {
-        console.log("++++++++++ - writeToDefault -------------------------------------");
-        console.log('Body-', req.body);
-
-        const adminSettings = await AdminSettings.get();
-        const adminSettingsBackup = await FileOperation.readFromFile(AdminSettings.FILEPATH.ADMIN_SETTINGS_BACKUP_JSON_FILEPATH);
-
-        for (let i = 0; i < adminSettings.schedule.length; i++) {
-            adminSettingsBackup.schedule[i].title = JSON.parse(JSON.stringify(req.body[`title${i}`]))
-            adminSettingsBackup.schedule[i].startTime = JSON.parse(JSON.stringify(req.body[`startTime${i}`]))
-            adminSettingsBackup.schedule[i].cueLength = JSON.parse(JSON.stringify(req.body[`cueLength${i}`]))
-            adminSettingsBackup.schedule[i].cueBool = JSON.parse(JSON.stringify(req.body[`cueBool${i}`]))
-            adminSettingsBackup.schedule[i].fiveBool = JSON.parse(JSON.stringify(req.body[`fiveBool${i}`]))
-        }
-
-        adminSettingsBackup.schedule.sort(function (a, b) {
-            return a.startTime.localeCompare(b.startTime);
-        });
-
-        await AdminSettings.write(adminSettingsBackup);
     } catch (error) {
         console.log(error);
     }
@@ -287,36 +246,6 @@ router.post('/dayOfWeek', async function (req, res) {
 
     res.redirect("/admin");
 })
-
-
-
-
-router.post('/download3', async function (req, res) {
-    try {
-        var d = new Date();
-        var n = d.toLocaleDateString();
-        const filename = n + " - db-times.json"
-
-        res.download(AdminSettings.FILEPATH.DB_TIMES_FILEPATH,filename);
-    } catch (error) {
-        console.log(error);
-    }
-
-    //res.redirect("/admin");
-});
-
-router.post('/download', async function (req, res) {
-    try {
-        const db_times = await AdminSettings.get();
-        await AdminSettings.createBackup(db_times);
-        TimeArraySorting.reset_newArrayIndex();
-    } catch (error) {
-        console.log(error);
-    }
-    res.redirect("/admin");
-})
-
-
 
 const EVENTS = {
     CREATEBACKUP:   'createBackup',

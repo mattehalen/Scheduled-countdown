@@ -2,11 +2,28 @@ console.log("---------- MIDI ----------");
 var JZZ = require('jzz');
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
-var smpte_String;
+var smpte_String,interface_IDs;
 
 function mtcTOString(midi_interface_ID) {
+  let selected_key_ID;
+  //console.log("----------> TEST");
+  //console.log(interface_IDs);
+  //console.log(midi_interface_ID);
+  if (interface_IDs) {
+    for (const [key, value] of Object.entries(interface_IDs)) {
+      //console.log(key);
+      if (midi_interface_ID == key) {
+        // console.log("----------------- yes");
+        // console.log(key);
+        // console.log("this should log value = "+value);
+        selected_key_ID = value;
+      }
+    }
+  }
+
+  
   //console.log("midi_interface_ID = "+midi_interface_ID);
-  var port = JZZ().openMidiIn(midi_interface_ID);
+  var port = JZZ().openMidiIn(selected_key_ID);
   var smpte = JZZ.SMPTE();
   var midi = JZZ.MIDI();
   //console.log(JZZ.info());
@@ -83,10 +100,10 @@ async function midi_interface_IDs() {
     midi_input_obj[(midi_inputs[key].name)] = key;
   }
   console.log(midi_input_obj);
+  interface_IDs = JSON.parse(JSON.stringify(midi_input_obj));
   return midi_input_obj
 
 }
-
 //-------------------------------------------------------------------------
 module.exports = {
   mtcTOString,
