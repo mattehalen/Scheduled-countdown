@@ -75,6 +75,7 @@ $("#createBackup").on('click', function () {
   console.log(title);
 
   sendSocketMessage("createBackup", title);
+  location.reload();
 });
 
 $("#loadBackup").on('click', function () {
@@ -82,6 +83,7 @@ $("#loadBackup").on('click', function () {
   var title = $( "#listBackups option:selected" ).text();
   console.log(title);
   sendSocketMessage("loadBackup", title);
+  location.reload();
 });
 
 
@@ -121,12 +123,12 @@ var toggleMainPreview = false;
 //--------------------------------------------------
 // - getOffsetTime
 //--------------------------------------------------
-async function getOffsetTime() {
-  const json = await getAdminSettingsJson();
-  offsetTimeInit = json.timeSettings.offsetTime;
-  console.log("Get offsetTime: " + json.timeSettings.offsetTime);
-}
-getOffsetTime();
+// async function getOffsetTime() {
+//   const json = await getAdminSettingsJson();
+//   offsetTimeInit = json.timeSettings.offsetTime;
+//   console.log("Get offsetTime: " + json.timeSettings.offsetTime);
+// }
+// getOffsetTime();
 //--------------------------------------------------
 
 

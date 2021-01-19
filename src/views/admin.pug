@@ -16,6 +16,7 @@ block content
     #start(style="font-size: 5vh; font-weight: 100;")
     #nowTopRow.topRowText
   .container-fluid
+    include db/offsetTime.pug
     .row.justify-content-center.overflow-hidden
       .col-xl-9.col-sm-12.col-xs-12
         ul#myTab.nav.nav-tabs(role='tablist')
@@ -27,9 +28,10 @@ block content
             a#overview-tab.nav-link(data-toggle='tab' href='#overview' role='tab' aria-controls='overview' aria-selected='false') Overview
           li.nav-item
             a#alert-tab.nav-link(data-toggle='tab' href='#alert' role='tab' aria-controls='alert' aria-selected='false') Alert
+          li.nav-item
+            a#alert-tab.nav-link(data-toggle='tab' href='#users' role='tab' aria-controls='users' aria-selected='false') Users
         #myTabContent.tab-content.shadow.p-3.mb-5.rounded
           #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
-            include db/offsetTime.pug
             include db/db-dayOfWeek.pug
             include db/db-times.pug
 
@@ -126,7 +128,10 @@ block content
               .col-2
                 button.btn.btn-danger(type="reset",name="alertButton", id="alertButton", onClick="alertButton()") Send Alert
 
-
+          #users.tab-pane.fade(role='tabpanel' aria-labelledby='users-tab')
+            .row(style="font-size: 10px")
+                .col-12
+                  h1 In Progress
   .downSite
     #cueTime.fiveMinute
 

@@ -81,6 +81,11 @@ async function CountDown() {
       countDownBool=true;
     }else{countDownBool=false}
 
+    if (time == "-aN:aN:aN"){
+      time = "No more entries today";
+    }
+
+
     return {
       title:timeArraySorting_title,
       time:time,

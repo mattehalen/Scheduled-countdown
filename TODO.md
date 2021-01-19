@@ -1,19 +1,24 @@
 # Todolist
 
 ## Front End
+1. (X) Fix -aN:aN:aN on /admin so it say "No more entries today"
+2. (X) Move offset section to be just under topRow
+3. (X) Add page reload on "Load from / Save to Backup"
+4. () Auto Scale down Text on #title CSS
+5. () Add "Users" to Nav bar on /admin. See which users exist and add / delete new users
+6. () Display current offset on a div - just says 1 now
+6. () Delete specific db-backups
+
 ### currentTime
 ### cueCountDown
-4. (X) Cue appers even if cueBool is marked as off. /admin /foh / stage
-5. (X) Cue disapers when reaching 0:00:00
 ### Sound Button
 1. () - Add soun button again to / - /admin - /foh - /stage
 ### TimeCode
-1. (X) Add TC to /admin         - 2021-01-13
-2. (X) Add TC to /FOH           - 2021-01-13
-3. (X) Add TC to /STAGE         - 2021-01-13
-4. (X) Fix [object Object] Displayed on /admin & /foh & /stage
+
 ### 5MinCountdown
 1. () Fix
+### Alert
+1. Add Alert function back after moving over to Electron
 ### Switch to Checkbox insted of range
 1. () dayOfWeek
 2. () cueBool
@@ -34,11 +39,8 @@
     () useMIDI_ProgramChange
     () midi_interface_ID
     ### Color
-    () countDownColor
-    () countUpColor
-9. (X) SAVE TO BACKUP - Should store with current date and custom text to a folder named Backups at getPath('userData'). 
-10. (X) LOAD FROM BACKUP - should list all files inside of Backups.                     - 2021-01-18
-11. (X) LOAD FROM BACKUP - thrue router.post to get a page reload                       - 2021-01-18
+    (X) countDownColor
+    (X) countUpColor
 12. () midi_interface_ID needs to be a number and not a string. String works on MAC but not PC. Report bug?
 
 ## Other
