@@ -2,6 +2,7 @@
 const {app, BrowserWindow}    = require('electron')
 const path                    = require('path')
 const fs 											= require('fs');
+var RPC                       = require('electron-rpc/server')
 
 const Store                   = require('./lib/store.js');
 const express                 = require('./index.js')
@@ -64,6 +65,12 @@ function createWindow () {
       nodeIntegration: true
   }
   })
+  var rpc = new RPC();
+  rpc.configure(mainWindow.webContents);
+  
+  rpc.on('saveIP', function(req, cb) {
+    console.log("----------> saveIP from MAIN window");
+	});
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
@@ -95,3 +102,6 @@ app.on('window-all-closed', function () {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 // First instantiate the class
+
+
+

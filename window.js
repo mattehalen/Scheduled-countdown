@@ -1,3 +1,8 @@
+var Client = require('electron-rpc/client')
+var client = new Client();
+
+
+
 var myIpArray = "";
 var getNetworkIPs = (function() {
     var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
@@ -73,3 +78,5 @@ $('#SaveIP_Button').click(function(){
     console.log("LoopbackIP_Button");
  });
  
+ 
+client.request('saveIP');
