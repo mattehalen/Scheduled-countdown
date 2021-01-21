@@ -1,23 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Scheduled Countdown</title>
-    <link rel="stylesheet" href="./public/stylesheets/bootstrap-4.5.2-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="./public/stylesheets/style.css">
-  </head>
-  <body>
-    <div id="wrap">
-      <div id="topwrap">
-        <h1>Scheduled Countdown</h1>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Scheduled Countdown</title>
+  <link rel="stylesheet" href="./public/libraries/bootstrap-4.5.2-dist/css/bootstrap.css">
+  <link rel="stylesheet" href="./public/stylesheets/style.css">
+</head>
+
+<body>
+  <!-- <script src="./public/libraries/bootstrap-4.5.2-dist/js/bootstrap.js"></script> -->
+  <div id="wrap">
+    <div id="topwrap">
+      <h1>Scheduled Countdown</h1>
+      <div class="form-group">
+        <label for="ipSelect">Select IP</label>
+        <select class="form-control" id="ipSelect">
+        </select>
+        <button class="btn btn-dark" id="SaveIP_Button" style="width: 100%">Save ip</button>
+        <button class="btn btn-dark" id="LoopbackIP_Button" style="width: 100%">Set Ip 127.0.0.1</button>
       </div>
-    </div>
 
-    </div>
+      <!-- You can also require other files to run in this process -->
 
-    <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="./public/stylesheets/bootstrap-4.5.2-dist/js/bootstrap.js"></script>
-  </body>
+
+</body>
+<!-- Insert this line above script imports  -->
+<script>
+  if (typeof module === 'object') {
+    window.module = module;
+    module = undefined;
+  }
+</script>
+
+<!-- normal script imports etc  -->
+<script src="./public/libraries/jquery-3.5.1.min.js"></script>
+<script>
+  require('./window.js');
+</script>
+
+<!-- Insert this line after script imports -->
+<script>
+  if (window.module) module = window.module;
+</script>
+
+
+
 </html>

@@ -11,11 +11,10 @@
     "mac": {
       "category": "se.Scheduled.Countdown",
       "icon": "./assets/icon.icns"
-		},
+    },
     "win": {
       "target": "nsis",
       "icon": "./assets/icon.png"
-
     },
     "nsis": {
       "artifactName": "Scheduled-Countdown-win64.exe",
@@ -33,7 +32,7 @@
     "files": [
       "**/*",
       "assets/icon.ico"
-		]
+    ]
   },
   "scripts": {
     "electron": "electron .",
@@ -47,6 +46,7 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
+    "electron-rpc": "^2.0.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "ip": "^1.1.5",
