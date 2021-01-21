@@ -69,18 +69,20 @@ function addToSelect(ip) {
 
 $('#SaveIP_Button').click(function(){
     var e = document.getElementById("ipSelect");
+    var port = document.getElementById("port");
     var selectedIP = e.options[e.selectedIndex].value;
     console.log("SaveIP_Button = "+selectedIP);
     ipcRenderer.send('saveIP', {
       ipadress:selectedIP,
-      port: 3000
+      port: port.value
     })
  });
  $('#LoopbackIP_Button').click(function(){
+  var port = document.getElementById("port");
   console.log("LoopbackIP_Button = ");
   ipcRenderer.send('loopbackIP', {
     ipadress:"127.0.0.1",
-    port: 3000
+    port: port.value
   })
     console.log("LoopbackIP_Button");
  });
