@@ -1,11 +1,13 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow}    = require('electron')
+const {app, BrowserWindow,ipcMain}    = require('electron')
 const path                    = require('path')
 const fs 											= require('fs');
 var RPC                       = require('electron-rpc/server')
+const AdminSettings           = require("./src/services/admin-settings");
 
 const Store                   = require('./lib/store.js');
-const express                 = require('./index.js')
+const express                 = require('./index.js');
+const { loopback } = require('ip');
 
 const settings_assetPath      = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-settings.json")
 const times_assetPath         = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-times.json")
@@ -58,6 +60,7 @@ if (fs.existsSync(db_backup_path)) {
 
 function createWindow () {
   // Create the browser window.
+  
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -68,8 +71,10 @@ function createWindow () {
   var rpc = new RPC();
   rpc.configure(mainWindow.webContents);
   
-  rpc.on('saveIP', function(req, cb) {
+  rpc.on('saveIP', async function(req, cb) {
+    const db_settings = await AdminSettings.getDbSettings();
     console.log("----------> saveIP from MAIN window");
+    console.log(db_settings.ipsettings);
 	});
 
   // and load the index.html of the app.
@@ -105,3 +110,20 @@ app.on('window-all-closed', function () {
 
 
 
+ipcMain.on('saveIP', async (event, data) => {
+  const db_settings = await AdminSettings.getDbSettings();
+  console.log("--------------------> ipcMain -> saveIP");
+  db_settings.ipsettings.ipadress = data.ipadress;
+  db_settings.ipsettings.port = data.port;
+
+  await AdminSettings.writeDbSettings(db_settings);
+})
+ipcMain.on('loopbackIP', async (event, data) => {
+  const db_settings = await AdminSettings.getDbSettings();
+  console.log("--------------------> ipcMain -> loopbackIP");
+  db_settings.ipsettings.ipadress = data.ipadress;
+  db_settings.ipsettings.port = data.port;
+
+  await AdminSettings.writeDbSettings(db_settings);
+
+})
