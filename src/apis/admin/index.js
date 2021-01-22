@@ -17,7 +17,6 @@ router.get('/', async function (req, res) {
     const midi_id = await MIDI.midi_interface_IDs();
     let listBackups = await AdminSettings.getList();
     if (!listBackups || listBackups == 0) {
-        console.log("----------> listBackups === undefined");
         listBackups = ["No Files Saved"]
     }
     try {
@@ -32,7 +31,6 @@ router.get('/', async function (req, res) {
             midi_interface_ID: midi_id,
             listBackups:listBackups
         });
-        console.log(listBackups);
     } catch (error) {
         console.log(error);
     }

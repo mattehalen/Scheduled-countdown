@@ -9,5 +9,6 @@ module.exports = {
         require('./users');
         require('./ipsettings');
         require('./foh');
+        require('./alert');
     }
 }

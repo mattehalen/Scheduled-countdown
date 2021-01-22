@@ -5,7 +5,9 @@ const KEYS = {
   "COUNTDOWN": "countDown",
   "CUE_COUNTDOWN":"cueCountDown",
   "SETTINGS": 'settings',
-  "MIDI":"midi"
+  "MIDI":"midi",
+  "FOHURL":         "fohUrl",
+
 };
 
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
@@ -82,7 +84,14 @@ WebSocketService.onEvent(KEYS.MIDI, (message) => {
     document.getElementById("timeCode").textContent = "";
   }
 })
+WebSocketService.onEvent(KEYS.FOHURL, (message) => {
+  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>' + message.text + '</H1></div>');
+  console.log(message.text);
 
+  sleep(10000).then(() => {
+    $(".blink").remove();
+  });
+})
 
 
 //--------------------------------------------------

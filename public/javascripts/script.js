@@ -3,7 +3,8 @@ const KEYS = {
   'GET_CURRENTTIME': 'currentTime',
   'GET_CURRENTTIMEMS': 'currentTimeMs',
   "COUNTDOWN": "countDown",
-  "SETTINGS": 'settings'
+  "SETTINGS": 'settings',
+  "STARTURL":       "startUrl",
 };
 
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
@@ -57,7 +58,14 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
 WebSocketService.onEvent(KEYS.SETTINGS, (message) => {
   //console.log('Message from server: ', message);
 })
+WebSocketService.onEvent(KEYS.STARTURL, (message) => {
+  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>' + message.text + '</H1></div>');
+  console.log(message.text);
 
+  sleep(10000).then(() => {
+    $(".blink").remove();
+  });
+})
 
 function timeStringToMs(t) {
     if (t > 5) {
