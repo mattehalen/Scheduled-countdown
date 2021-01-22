@@ -21,7 +21,8 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   document.getElementById("start").textContent = message.time;
   document.getElementById("offsetTime_display").textContent = message.offsetTime+" min";
   document.getElementById("offsetTime_display").value = message.offsetTime+" min";
-  //console.log(document.getElementById("checkbox_autoReset").checked);  
+  document.getElementById("checkbox_autoReset").checked = message.offsetTime_bool;
+
   if (message.bool) {
 
     if (message.countDownTimeInMS < ((3*-60000))) {
@@ -35,7 +36,7 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
     }
     
     if (message.countDownTimeInMS >= message.CountUp-500) {
-      if (document.getElementById("checkbox_autoReset").checked==true) {
+      if (message.offsetTime_bool) {
         console.log("------------- checkbox_autoReset ------------------");
         offsetReset();
       }
@@ -118,6 +119,14 @@ $("#deleteBackup").on('click', function () {
   sendSocketMessage("deleteBackup", title);
   location.reload();
 });
+$("#checkbox_autoReset").on('click', function () {
+  console.log("checkbox_autoReset button pushed");
+  var data = document.getElementById("checkbox_autoReset").checked
+  console.log(data);
+  sendSocketMessage("checkbox_autoReset", data);
+  // location.reload();
+});
+
 
 
 

@@ -249,7 +249,8 @@ const EVENTS = {
     CREATEBACKUP:       'createBackup',
     LOADBACKUP:         "loadBackup",
     DELETEBACKUP:       "deleteBackup",
-    OVERWRITEBACKUP:    "overwriteBackup"
+    OVERWRITEBACKUP:    "overwriteBackup",
+    CHECKBOX_AUTORESET: "checkbox_autoReset"
 };
 
 // Capture websocket message from FrontEnd like this.
@@ -322,6 +323,23 @@ WebSocketService.onEvent(EVENTS.DELETEBACKUP, async (messageEvent) => {
     } catch (error) {
         console.log(error);
     }
+
+
+    // // To send data back to UI client.
+    // messageEvent.sendToClient('key', 'some-data');
+
+    // // To broadcast message to all UI clients.
+    // messageEvent.broadcastToAll('key', 'some-data');
+
+    // // To broadcast message to all UI clients.
+    // WebSocketService.broadcastToAll('key', 'some-data');
+});
+WebSocketService.onEvent(EVENTS.CHECKBOX_AUTORESET, async (messageEvent) => {
+    const key     = messageEvent.getKey();
+    const message = messageEvent.getMessage();
+    console.log("WebSocketService -> CHECKBOX_AUTORESET");
+
+    offset.setOffsetTime_bool(message);
 
 
     // // To send data back to UI client.

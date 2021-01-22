@@ -10,6 +10,7 @@ let _offsetTime         =0;
 const setTimeoutTime = 150;
 let countDownBool;
 let cueCountDownBool;
+let offsetTime_bool = true;
 
 function msToTime(s) {
     var ms = s % 1000;
@@ -90,6 +91,7 @@ async function CountDown() {
       title:timeArraySorting_title,
       time:time,
       offsetTime:_offsetTime,
+      offsetTime_bool:offsetTime_bool,
       bool:countDownBool,
       CountUp:CountUp,
       CountDown:CountDown,
@@ -176,11 +178,16 @@ function dec_Offset(){
 function reset_Offset(){
   _offsetTime = 0;
 }
+function setOffsetTime_bool(data){
+  console.log("----------> setOffsetTime_bool <---------");
+  offsetTime_bool = data;
+}
 
 module.exports = {
   CountDown,
   CueCountDown,
   inc_Offset,
   dec_Offset,
-  reset_Offset
+  reset_Offset,
+  setOffsetTime_bool
 }
