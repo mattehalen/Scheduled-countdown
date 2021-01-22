@@ -6,7 +6,8 @@
 8. () midi_interface_ID should be the saved in db-settings. The selection of a new midi interface should be one of its own under midi_interface_ID. Now we don't know which interface is saved in db-settings from settings-tab.
 9. (X) remove fs.existsSyn from src\services\admin-settings.js -> listBackups & LoadFromBackup & DeleteBackup
 10. (X) Add Overide existing Backup on /admin
-11. () X Add CheckBox. Auto Reset After each entry ends
+11. (X) X Add CheckBox. Auto Reset After each entry ends
+12. () Add auto reset to db-settings
 
 
 ### currentTime

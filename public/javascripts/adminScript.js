@@ -21,7 +21,7 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   document.getElementById("start").textContent = message.time;
   document.getElementById("offsetTime_display").textContent = message.offsetTime+" min";
   document.getElementById("offsetTime_display").value = message.offsetTime+" min";
-  
+  //console.log(document.getElementById("checkbox_autoReset").checked);  
   if (message.bool) {
 
     if (message.countDownTimeInMS < ((3*-60000))) {
@@ -32,6 +32,14 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
     }
     if (message.countDownTimeInMS > 0) {
       //document.body.style.backgroundColor = "darkgreen";
+    }
+    
+    if (message.countDownTimeInMS >= message.CountUp-500) {
+      if (document.getElementById("checkbox_autoReset").checked==true) {
+        console.log("------------- checkbox_autoReset ------------------");
+        offsetReset();
+      }
+      
     }
 
   }else{
@@ -152,6 +160,48 @@ function alertButton() {
       text: text
     });
   }
+};
+function delete_button_click(listIndex) {
+  $(document).ready(function () {
+    console.log("deleteButton");
+    var path = "/admin/deleteButton";
+    console.log(path);
+    var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', path);
+    // form.style.display = 'hidden';
+    form.name = listIndex;
+    form.text = listIndex;
+    // Create an input element for Full Name
+    var input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("name", "listIndex");
+    input.value = listIndex;
+    form.append(input);
+    document.body.appendChild(form)
+    form.submit();
+  });
+};
+function offsetReset() {
+  $(document).ready(function () {
+    console.log("offsetReset");
+    var path = "/admin/offsetReset";
+    console.log(path);
+    var form = document.createElement('form');
+    form.setAttribute('method', 'post');
+    form.setAttribute('action', path);
+    // form.style.display = 'hidden';
+    form.name = "offsetReset";
+    form.text = "offsetReset";
+    // Create an input element for Full Name
+    var input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("name", "offsetReset");
+    input.value = "offsetReset";
+    form.append(input);
+    document.body.appendChild(form)
+    form.submit();
+  });
 };
 
 

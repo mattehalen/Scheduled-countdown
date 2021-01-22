@@ -1,14 +1,19 @@
 .form-row
-    .col-2.text-right(style="font-Size: initial; margin: auto")
+    .col-3.text-right(style="font-Size: initial; margin: auto")
         | Offset Start Time by
     .col-1
         input.form-control(type='text', name="offsetTime_display", id="offsetTime_display")
-    .col-3 
+    .col-2
         form#form_OffsetPlus_Button(method='POST' action='/admin/offsetPlus')
             button.btn.btn-dark(type='submit' style='width: 100%' name="offsetPlus", id="offsetPlus") offsetPlus
-    .col-3
+    .col-2
         form#form_OffsetMinus_Button(method='POST' action='/admin/offsetMinus')
             button.btn.btn-dark(type='submit' style='width: 100%' name="offsetMinus", id="offsetMinus") offsetMinus
-    .col-3
+    .col-2
         form#form_OffsetReset_Button(method='POST' action='/admin/offsetReset')
             button.btn.btn-dark(type='submit' style='width: 100%' name="offsetReset", id="offsetReset") offsetReset
+    .col-1.text-right(style="font-Size: initial; margin: auto")
+        | Auto Reset
+    .col-1
+        input.form-control(type='checkbox', value=true, name="startTime", id="checkbox_autoReset")
+
