@@ -96,13 +96,26 @@ async function createBackup(data,title) {
         await FileOperation.writeToFile(filename, backupState); 
       }    
 }
-// async function listBackups(){
-//     let folder = path.join(userDataPath,"backup");
-//     fs.readdir(folder, (err, files) => {
-//         console.log(files);
-//         return files
-//       });
-// }
+async function overwriteBackup(data,title) {
+    var d = new Date();
+    var date = d.toLocaleDateString();
+    var time = d.toLocaleTimeString();
+    var string = date + " - " + title
+    let backupState = data;
+    let folder = path.join(userDataPath,"backup");
+    let filename = path.join(folder, title);
+    //filepath_backup = await getFilepath("/backup/db-backup");
+
+
+    if (fs.existsSync(folder)) {
+        await FileOperation.writeToFile(filename, backupState);
+      }else{
+        fs.mkdir(folder, { recursive: true }, (err) => {
+            if (err) throw err;
+          });
+        await FileOperation.writeToFile(filename, backupState); 
+      }    
+}
 
 const listBackups = () => {
     return new Promise((resolve,reject) => {
@@ -165,6 +178,7 @@ module.exports = {
     writeDbSettings,
     getWeekDay,
     createBackup,
+    overwriteBackup,
     getList,
     LoadFromBackup,
     DeleteBackup,

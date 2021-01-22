@@ -5,7 +5,7 @@
 5. () Add "Users" to Nav bar on /admin. See which users exist and add / delete new users
 8. () midi_interface_ID should be the saved in db-settings. The selection of a new midi interface should be one of its own under midi_interface_ID. Now we don't know which interface is saved in db-settings from settings-tab.
 9. () remove fs.existsSyn from src\services\admin-settings.js -> listBackups & LoadFromBackup & DeleteBackup
-10. () Add Overide existing Backup on /admin
+10. (X) Add Overide existing Backup on /admin
 
 
 ### currentTime

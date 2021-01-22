@@ -80,6 +80,16 @@ $("#createBackup").on('click', function () {
   sendSocketMessage("createBackup", title);
   location.reload();
 });
+$("#overwriteBackup").on('click', function () {
+  console.log("overwriteBackup button pushed");
+  var title = $( "#overwriteBackupList option:selected" ).text();
+  console.log(title);
+  sendSocketMessage("overwriteBackup", title);
+  location.reload();
+});
+
+
+
 $("#loadBackup").on('click', function () {
   console.log("loadBackup button pushed");
   var title = $( "#listBackups option:selected" ).text();

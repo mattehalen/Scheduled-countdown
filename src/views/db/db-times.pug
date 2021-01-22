@@ -35,13 +35,21 @@ form#formTable(method='POST' action='/admin/submit')
     div.form-row
         .col-12             
             button.btn.btn-dark(type='submit' id="addNewRow" style='width: 100%' formaction="/admin/addNewRowDefault") Add Row
-    //- button#createBackup.btn.btn-dark(type='button' style='width: 50%' onclick="loadBackup()") Load from Backup
-    //- button#loadBackup.btn.btn-dark(type='button'  style='width: 50%' onclick="loadBackup()" ) Save to Backup
-    div.form-row
+        div.form-row
         .col-8
             button#createBackup.btn.btn-dark(type='button' style="width: 100%") Save to Backup
         .col-4
             input.form-control(type='text', value="db-backups", name="createBackup_input", id="createBackup_input")
+        .col-8
+            button#overwriteBackup.btn.btn-dark(type='button' style="width: 100%") Overwrite Backup
+        .col-4
+            select.form-control(type='select',name="overwriteBackupList",id="overwriteBackupList",)
+                each val, key in listBackups
+                    option= val
+       
+        
+        
+        
         .col-8
             button#loadBackup.btn.btn-dark(type='button' style="width: 100%") Load from Backup
         .col-4
