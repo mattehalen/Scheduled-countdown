@@ -6,6 +6,7 @@
 8. () midi_interface_ID should be the saved in db-settings. The selection of a new midi interface should be one of its own under midi_interface_ID. Now we don't know which interface is saved in db-settings from settings-tab.
 9. (X) remove fs.existsSyn from src\services\admin-settings.js -> listBackups & LoadFromBackup & DeleteBackup
 10. (X) Add Overide existing Backup on /admin
+11. () X Add CheckBox. Auto Reset After each entry ends
 
 
 ### currentTime
@@ -17,7 +18,7 @@
 ### 5MinCountdown
 1. () Fix
 ### Alert
-1. Add Alert function back after moving over to Electron
+1. (X) Add Alert function back after moving over to Electron
 ### Switch to Checkbox insted of range
 1. () dayOfWeek
 2. () cueBool

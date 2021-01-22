@@ -11,11 +11,9 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
   document.getElementById("nowTopRow").textContent = message;
   document.getElementById("now").textContent = message;
 })
-
 WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
   //console.log('Message from server: ', message);
 })
-
 WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   //console.log('Message from server: ', message);
   
@@ -36,11 +34,31 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
       document.body.style.backgroundColor = message.colors.countUpColor;
     }
 
+    // Audio Alarms
+    //--------------------------------------------------
+    if (message.countDownTimeInMS > ((6*-60000)) && message.countDownTimeInMS < ((6*-60000)+500) ) {
+      document.getElementById('musiclong6').play();
+    }
+    if (message.countDownTimeInMS > ((5*-60000)) && message.countDownTimeInMS < ((5*-60000)+500) ) {
+      document.getElementById('music5').play();
+    }
+    if (message.countDownTimeInMS > ((4*-60000)) && message.countDownTimeInMS < ((4*-60000)+500) ) {
+      document.getElementById('musiclong4').play();
+    }
+    if (message.countDownTimeInMS > ((3*-60000)) && message.countDownTimeInMS < ((3*-60000)+500) ) {
+      document.getElementById('music3').play();
+    }
+    if (message.countDownTimeInMS > ((2*-60000)) && message.countDownTimeInMS < ((2*-60000)+500) ) {
+      document.getElementById('musiclong2').play();
+    }
+    if (message.countDownTimeInMS > ((1*-60000)) && message.countDownTimeInMS < ((1*-60000)+500) ) {
+      document.getElementById('music1').play();
+    }
+
   }else{
     document.getElementById("centerNowText").style.display = "block";
     document.getElementById("titleContentBox").style.display = "none";
     document.body.style.backgroundColor = "#2b2b2b";
-
   }
 
   // AUTO Shrink text
@@ -54,7 +72,6 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   }
 
 })
-
 WebSocketService.onEvent(KEYS.SETTINGS, (message) => {
   //console.log('Message from server: ', message);
 })
