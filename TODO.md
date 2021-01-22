@@ -7,7 +7,9 @@
 9. (X) remove fs.existsSyn from src\services\admin-settings.js -> listBackups & LoadFromBackup & DeleteBackup
 10. (X) Add Overide existing Backup on /admin
 11. (X) X Add CheckBox. Auto Reset After each entry ends
-12. () Add auto reset to db-settings
+12. (X) Add auto reset to db-settings
+13. () Start / Stop / Restar Server from main Window
+14. () favicon
 
 
 ### currentTime

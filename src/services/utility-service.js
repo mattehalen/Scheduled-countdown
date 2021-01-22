@@ -1,3 +1,5 @@
+const AdminSettings = require('./admin-settings');
+
 var getNetworkIPs = (function () {
   const ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
 
@@ -49,8 +51,10 @@ var getNetworkIPs = (function () {
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
 
-function getPort() {
-  const defaultPort = '3000'; //default port
+async function getPort() {
+  const db_settings = await AdminSettings.getDbSettings();
+
+  const defaultPort = db_settings.ipsettings.port; //default port
   return process.env.PORT || defaultPort;
 }
 

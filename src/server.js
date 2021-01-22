@@ -18,7 +18,10 @@ const app = express();
 
 
 // PORT Set
-const PORT = UtilityService.getPort();
+const PORT = async () => {
+    return await UtilityService.getPort();
+}
+ 
 
 
 // Creating Http Server
@@ -33,7 +36,9 @@ app.set('view engine', 'pug');
 
 
 // Middlewares and PORT Set
-app.set('port', UtilityService.getPort())
+app.set('port', async () => {
+    return await UtilityService.getPort();}
+)
 app.use(cors()) // Always put CORS as first line in middleware. This is very important.
 app.use(compression())
 app.use(cookieParser())
@@ -55,7 +60,8 @@ app.use('/users',  require('./apis/user'));
 
 
 // OnError handler for httpServer
-function onError(error) {
+async function onError(error) {
+    _port = await UtilityService.getPort();
     if (error.syscall !== 'listen') {
         throw error;
     }
@@ -63,10 +69,10 @@ function onError(error) {
     // handle specific listen errors with friendly messages
     switch (error.code) {
         case 'EACCES':
-            console.error('Port ' + PORT + ' requires elevated privileges');
+            console.error('Port ' + _port + ' requires elevated privileges');
             break;
         case 'EADDRINUSE':
-            console.error('Port ' + PORT + ' is already in use');
+            console.error('Port ' + _port + ' is already in use');
             break;
         default:
             throw error;
@@ -75,15 +81,17 @@ function onError(error) {
 
 
 module.exports = {
-    startServer: () => {
+    startServer: async () => {
+        _port = await UtilityService.getPort();
+        console.log(_port);
         return new Promise((resolve, reject) => {
             httpServer.on('error', error => {
                 console.log('Error while starting server: ', error.message);
                 onError(error);
                 reject(error);
             });
-            httpServer.listen(PORT, () => {
-                console.log('HTTP Server listening on http://localhost:' + PORT + '/');
+            httpServer.listen(_port, () => {
+                console.log('HTTP Server listening on http://localhost:' + _port + '/');
                 resolve();
             });
         })
