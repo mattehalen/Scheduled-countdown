@@ -79,42 +79,21 @@ async function getWeekDay() {
 async function createBackup(data,title) {
     var d = new Date();
     var date = d.toLocaleDateString();
-    var time = d.toLocaleTimeString();
     var string = date + " - " + title
     let backupState = data;
     let folder = path.join(userDataPath,"backup");
     let filename = path.join(folder, string + ".json");
-    //filepath_backup = await getFilepath("/backup/db-backup");
 
-
-    if (fs.existsSync(folder)) {
-        await FileOperation.writeToFile(filename, backupState);
-      }else{
-        fs.mkdir(folder, { recursive: true }, (err) => {
-            if (err) throw err;
-          });
-        await FileOperation.writeToFile(filename, backupState); 
-      }    
+    await FileOperation.writeToFile(filename, backupState); 
 }
 async function overwriteBackup(data,title) {
     var d = new Date();
     var date = d.toLocaleDateString();
-    var time = d.toLocaleTimeString();
-    var string = date + " - " + title
     let backupState = data;
     let folder = path.join(userDataPath,"backup");
     let filename = path.join(folder, title);
-    //filepath_backup = await getFilepath("/backup/db-backup");
 
-
-    if (fs.existsSync(folder)) {
-        await FileOperation.writeToFile(filename, backupState);
-      }else{
-        fs.mkdir(folder, { recursive: true }, (err) => {
-            if (err) throw err;
-          });
-        await FileOperation.writeToFile(filename, backupState); 
-      }    
+    await FileOperation.writeToFile(filename, backupState);
 }
 
 const listBackups = () => {
@@ -167,9 +146,6 @@ async function DeleteBackup(file) {
         console.log('File deleted!');
     }); 
 }
-
-//LoadFromBackup("2021-01-17 - 21:38:53 - Test.json");
-//LoadFromBackup("2021-01-17 - 21:40:13 - Only two Shows.json");
 
 module.exports = {
     get,
