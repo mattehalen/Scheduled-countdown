@@ -100,7 +100,7 @@ $("#createBackup").on('click', function () {
 });
 $("#overwriteBackup").on('click', function () {
   console.log("overwriteBackup button pushed");
-  var title = $( "#overwriteBackupList option:selected" ).text();
+  var title = $( "#listBackups option:selected" ).text();
   console.log(title);
   sendSocketMessage("overwriteBackup", title);
   location.reload();
@@ -114,7 +114,7 @@ $("#loadBackup").on('click', function () {
 });
 $("#deleteBackup").on('click', function () {
   console.log("deleteBackup button pushed");
-  var title = $( "#deleteBackups option:selected" ).text();
+  var title = $( "#listBackups option:selected" ).text();
   console.log(title);
   sendSocketMessage("deleteBackup", title);
   location.reload();

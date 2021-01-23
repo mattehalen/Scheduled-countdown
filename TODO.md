@@ -10,6 +10,7 @@
 12. (X) Add auto reset to db-settings
 13. () Start / Stop / Restar Server from main Window
 14. () favicon
+15. () ios / Safari problem with websocket.
 
 
 ### currentTime

@@ -40,26 +40,14 @@ form#formTable(method='POST' action='/admin/submit')
             button#createBackup.btn.btn-dark(type='button' style="width: 100%") Save to Backup
         .col-4
             input.form-control(type='text', value="db-backups", name="createBackup_input", id="createBackup_input")
-        .col-8
-            button#overwriteBackup.btn.btn-dark(type='button' style="width: 100%") Overwrite Backup
         .col-4
-            select.form-control(type='select',name="overwriteBackupList",id="overwriteBackupList",)
-                each val, key in listBackups
-                    option= val
-       
-        
-        
-        
-        .col-8
             button#loadBackup.btn.btn-dark(type='button' style="width: 100%") Load from Backup
         .col-4
-            select.form-control(type='select',name="listBackups",id="listBackups",)
-                each val, key in listBackups
-                    option= val
-        .col-8
-            button#deleteBackup.btn.btn-dark(type='button' style="width: 100%") Delete from Backup
+            button#overwriteBackup.btn.btn-dark(type='button' style="width: 100%") Overwrite Backup
         .col-4
-            select.form-control(type='select',name="deleteBackups",id="deleteBackups",)
+            button#deleteBackup.btn.btn-dark(type='button' style="width: 100%") Delete from Backup
+        .col-12
+            select.form-control(type='select',name="listBackups",id="listBackups",)
                 each val, key in listBackups
                     option= val
             

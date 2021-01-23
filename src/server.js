@@ -49,9 +49,9 @@ app.use('/', express.static(path.join(__dirname, '..', 'public')))
 // ------------------------------------------------------------
 
 
-
 // Routes Registering
 app.get('/favicon.ico', (req, res) => res.status(204).send());
+app.use('/favicon.ico', express.static('public/favicon.ico'));
 app.use('/',      require('./apis/index'));
 app.use('/admin', require('./apis/admin'));
 app.use('/users',  require('./apis/user'));
