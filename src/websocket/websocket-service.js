@@ -11,8 +11,11 @@ module.exports = {
     },
 
     stop: () => {
+        console.log("----------> ./websocket/websocket-service -> stop");
         if (websocketInstance) {
             websocketInstance.stopServer();
+            console.log("----------> ./websocket/websocket-service -> stop -> inside IF");
+
         }
     },
 

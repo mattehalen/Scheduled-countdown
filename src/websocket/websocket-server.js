@@ -112,7 +112,8 @@ class WebSocket {
   }
 
   stopServer() {
-    // this.socket.close();
+    console.log('./websocket/websocket-server');
+     this.socket.close();
   }
 }
 

@@ -7,7 +7,7 @@ const AdminSettings           = require("./src/services/admin-settings");
 
 const Store                   = require('./lib/store.js');
 const express                 = require('./index.js');
-const { loopback } = require('ip');
+const { loopback }            = require('ip');
 
 const settings_assetPath      = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-settings.json")
 const times_assetPath         = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-times.json")
@@ -127,4 +127,13 @@ ipcMain.on('loopbackIP', async (event, data) => {
 
   await AdminSettings.writeDbSettings(db_settings);
 
+})
+ipcMain.on('start_server', async (event, data) => {
+  console.log("----------> start_server");
+})
+const Server = require('./src/server');
+ipcMain.on('stop_server', async (event, data) => {
+  console.log("----------> ./main.js -> ipcMain.on stop_server");
+  console.log("----------> stop_server");
+  Server.stopServer();
 })

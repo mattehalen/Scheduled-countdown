@@ -105,4 +105,11 @@ module.exports = {
         const WebSocketListeners = require('./websocket-listeners');
         WebSocketListeners.registerSocketListeners();
     },
+    stopServer: async () => {
+        const WebSocketService = require('./websocket/websocket-service');
+
+        console.log("----------> ./src/server -> stopServer");
+        httpServer.close()
+        WebSocketService.stop();
+    },
 }

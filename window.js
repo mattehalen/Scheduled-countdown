@@ -87,3 +87,14 @@ $('#SaveIP_Button').click(function(){
     console.log("LoopbackIP_Button");
  });
 
+ $('#start_server').click(function(){
+  console.log("start_server = ");
+  ipcRenderer.send('start_server', {})
+ });
+
+ $('#stop_server').click(function(){
+  console.log("stop_server = ");
+  ipcRenderer.send('stop_server', {})
+ });
+
+
