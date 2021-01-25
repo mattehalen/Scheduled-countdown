@@ -21,7 +21,7 @@ https://babeljs.io/docs/en/
 ### TimeCode
 
 ### 5MinCountdown
-1. () Fix
+1. (X) Fix
 ### Alert
 1. (X) Add Alert function back after moving over to Electron
 ### Switch to Checkbox insted of range
