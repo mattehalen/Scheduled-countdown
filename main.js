@@ -6,7 +6,7 @@ var RPC                       = require('electron-rpc/server')
 const AdminSettings           = require("./src/services/admin-settings");
 
 const Store                   = require('./lib/store.js');
-const express                 = require('./index.js');
+//const express                 = require('./index.js');
 const { loopback }            = require('ip');
 
 const settings_assetPath      = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-settings.json")
@@ -128,8 +128,11 @@ ipcMain.on('loopbackIP', async (event, data) => {
   await AdminSettings.writeDbSettings(db_settings);
 
 })
+const express                 = require('./index.js');
 ipcMain.on('start_server', async (event, data) => {
   console.log("----------> start_server");
+  
+  express.start();
 })
 const Server = require('./src/server');
 ipcMain.on('stop_server', async (event, data) => {
