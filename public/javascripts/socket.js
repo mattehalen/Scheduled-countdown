@@ -51,38 +51,87 @@ function sendSocketMessage(key, data = {}) {
 }
 
 
+// // Class to handle events send/receive/store
+// class WebSocketService {
+//     static #callback = {};
+
+//     static KEYS = {
+
+//     };
+
+//     static onEvent(key, callback) {
+//         if (Array.isArray(this.#callback[key])) {
+//             this.#callback[key].push(callback);
+//         } else {
+//             this.#callback[key] = [callback];
+//         }
+//     }
+
+//     static onMessage(key, data) {
+//         if (Array.isArray(this.#callback[key])) {
+//             this.#callback[key].forEach(callback => {
+//                 setTimeout(() => {
+//                     callback(data);
+//                 }, 0);
+//             })
+//         } else {
+//             this.#callback[key] = [];
+//         }
+//     }
+
+//     static sendSocketMessage(key, data) {
+//         sendSocketMessage(key, data);
+//     }
+// }
+
+
+
+
+
+
+
+
+
+"use strict";
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classStaticPrivateFieldSpecGet(receiver, classConstructor, descriptor) { if (receiver !== classConstructor) { throw new TypeError("Private static access of wrong provenance"); } if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
+
 // Class to handle events send/receive/store
 class WebSocketService {
-    static #callback = {};
-
-    static KEYS = {
-
-    };
-
-    static onEvent(key, callback) {
-        if (Array.isArray(this.#callback[key])) {
-            this.#callback[key].push(callback);
-        } else {
-            this.#callback[key] = [callback];
-        }
+  static onEvent(key, callback) {
+    if (Array.isArray(_classStaticPrivateFieldSpecGet(this, WebSocketService, _callback)[key])) {
+      _classStaticPrivateFieldSpecGet(this, WebSocketService, _callback)[key].push(callback);
+    } else {
+      _classStaticPrivateFieldSpecGet(this, WebSocketService, _callback)[key] = [callback];
     }
+  }
 
-    static onMessage(key, data) {
-        if (Array.isArray(this.#callback[key])) {
-            this.#callback[key].forEach(callback => {
-                setTimeout(() => {
-                    callback(data);
-                }, 0);
-            })
-        } else {
-            this.#callback[key] = [];
-        }
+  static onMessage(key, data) {
+    if (Array.isArray(_classStaticPrivateFieldSpecGet(this, WebSocketService, _callback)[key])) {
+      _classStaticPrivateFieldSpecGet(this, WebSocketService, _callback)[key].forEach(callback => {
+        setTimeout(() => {
+          callback(data);
+        }, 0);
+      });
+    } else {
+      _classStaticPrivateFieldSpecGet(this, WebSocketService, _callback)[key] = [];
     }
+  }
 
-    static sendSocketMessage(key, data) {
-        sendSocketMessage(key, data);
-    }
+  static sendSocketMessage(key, data) {
+    sendSocketMessage(key, data);
+  }
+
 }
+
+var _callback = {
+  writable: true,
+  value: {}
+};
+
+_defineProperty(WebSocketService, "KEYS", {});
 
 
 

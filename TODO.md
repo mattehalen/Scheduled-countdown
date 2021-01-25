@@ -1,4 +1,5 @@
 # Todolist
+https://babeljs.io/docs/en/
 
 ## Front End
 4. (X) Auto Scale down Text on #title CSS
@@ -8,8 +9,8 @@
 10. (X) Add Overide existing Backup on /admin
 11. (X) X Add CheckBox. Auto Reset After each entry ends
 12. (X) Add auto reset to db-settings
-13. () Start / Stop / Restar Server from main Window
-14. () favicon
+13. (X) Start / Stop / Restar Server from main Window
+14. (X) favicon
 15. () ios / Safari problem with websocket.
 
 
