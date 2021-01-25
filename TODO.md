@@ -11,13 +11,13 @@ https://babeljs.io/docs/en/
 12. (X) Add auto reset to db-settings
 13. (X) Start / Stop / Restar Server from main Window
 14. (X) favicon
-15. () ios / Safari problem with websocket.
+15. (X) ios / Safari problem with websocket.
 
 
 ### currentTime
 ### cueCountDown
 ### Sound Button
-1. () - Add soun button again to / - /admin - /foh - /stage
+1. (X) - Add sound button again to / - /admin - /foh - /stage
 ### TimeCode
 
 ### 5MinCountdown
