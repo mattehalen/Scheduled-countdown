@@ -42,7 +42,7 @@ var getNetworkIPs = (function() {
         for (var i = 0; i < matches.length; i++) {
           ip = matches[i].replace(filterRE, '$1')
           if (!ignoreRE.test(ip)) {
-            addToSelect(ip);
+            // addToSelect(ip);
             cached.push(ip);
           }
         }
@@ -60,12 +60,12 @@ var getNetworkIPs = (function() {
     }
   }, false);
 
-function addToSelect(ip) {
-    var x = document.getElementById("ipSelect");
-    var option = document.createElement("option");
-    option.text = ip;
-    x.add(option);
-}
+// function addToSelect(ip) {
+//     var x = document.getElementById("ipSelect");
+//     var option = document.createElement("option");
+//     option.text = ip;
+//     x.add(option);
+// }
 
 $('#SaveIP_Button').click(function(){
     var e = document.getElementById("ipSelect");
