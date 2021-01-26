@@ -46,17 +46,13 @@ router.get('/Countdown', async function (req, res) {
   });
 });
 
-//-------------------------------------------------------------------------
-// Slideshow Page
-//-------------------------------------------------------------------------
-router.get('/slideshow', async function (req, res) {
-  let adminSettingsData = await AdminSettings.getDbSettings();
-  res.render('slideshow', {
+router.get('/watch', async function (req, res) {
+  res.render('watch', {
     title: 'Scheduled-CountDown',
-    now: "now",
-    offsetTime: adminSettingsData.timeSettings.offsetTime
+    now: "s"
   });
 });
+
 
 
 module.exports = router;
