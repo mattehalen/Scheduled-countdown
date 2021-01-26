@@ -1,0 +1,18 @@
+{
+  "schedule": [
+      {
+          "title": "1st row added",
+          "startTime": "12:00",
+          "cueLength": "00:01",
+          "cueBool": "0",
+          "fiveBool": "0"
+      },
+      {
+        "title": "2nd row added",
+        "startTime": "13:00",
+        "cueLength": "00:02",
+        "cueBool": "1",
+        "fiveBool": "1"
+    }
+  ]
+}

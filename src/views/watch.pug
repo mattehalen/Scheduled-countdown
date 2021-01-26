@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  p(hidden='')
+  #mainContentBox(style="position: relative;height:100%;")
+
+
+    #centerNowText(style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);")
+      h1#now(style="font-size: 21vw")
+
+    #titleContentBox(style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);")
+      h1#title(style="font-size: 13vw")
+      h1#start(style="font-size: 20vw")
+
+
+block pagescripts
+  // Watch Scripts
+  script(src="/javascripts/watch.js")

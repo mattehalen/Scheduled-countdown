@@ -1,4 +1,4 @@
-# github
+# Setup and run
 
 # Installation
 Download Nodejs -> https://nodejs.org/en/download/

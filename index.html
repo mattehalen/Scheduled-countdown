@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Scheduled Countdown</title>
+  <link rel="stylesheet" href="./public/libraries/bootstrap-4.5.2-dist/css/bootstrap.css">
+  <link rel="stylesheet" href="./public/stylesheets/style.css">
+</head>
+
+<body>
+<div style="height: 25% ; background-color: #3b3b3b;">
+  <div class=" h-100 d-flex justify-content-center align-items-center">
+    <h1>Scheduled Countdown Alpha V.1.0.0</h1>
+  </div>
+
+
+  
+</div>
+<div style="height: 75%;" class="">
+
+  <div class=" h-100 d-flex justify-content-center align-items-center">
+    <div class=" form-group w-100 shadow-lg">
+      <h2 style="font-weight: 900;" class="shadow">IN PROGRESS</h2>
+      <!-- <label for="ipSelect">Select IP</label> -->
+      <!-- <select class="form-control" id="ipSelect">
+      </select> -->
+      <div class="form-row">
+        <div class="col-6 text-right">Port</div>
+        <div class="col-6 text-left">
+          <input class="form-control" type="text" value=3000 name="port" id="port" />
+        </div>
+      </div>
+      <div class="form-row">
+        <button class="btn btn-dark" id="SaveIP_Button" style="width: 100%">Save port</button>
+        <!-- <button class="btn btn-dark" id="LoopbackIP_Button" style="width: 100%">Set Ip 127.0.0.1</button> -->
+      </div>
+      <div class="row">
+        <button class="btn btn-success col-6 btn-lg" id="start_server">start_server</button>
+        <button class="btn btn-danger col-6 btn-lg" id="stop_server">stop_server</button>
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+      <!-- You can also require other files to run in this process -->
+
+</body>
+<!-- Insert this line above script imports  -->
+<script>
+  if (typeof module === 'object') {
+    window.module = module;
+    module = undefined;
+  }
+</script>
+
+<!-- normal script imports etc  -->
+<script src="./public/libraries/jquery-3.5.1.min.js"></script>
+<script>
+  require('./window.js');
+</script>
+
+<!-- Insert this line after script imports -->
+<script>
+  if (window.module) module = window.module;
+</script>
+
+
+
+</html>

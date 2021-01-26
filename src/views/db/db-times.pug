@@ -1,0 +1,53 @@
+// db-times
+form#formTable(method='POST' action='/admin/submit')
+    button.btn.btn-dark(type='submit' style='width: 100%' name="adminsubmit", id="adminsubmit") Save
+    .form-row
+        .col-1.text-right
+            | #
+        .col-4.text-left
+            | Title
+        .col-2.text-left
+            | Start Time
+        .col-2.text-left
+            | Cue Length
+        .col-1.text-left
+            | Cue
+        .col-1.text-left
+            | 5Min
+        .col-1.text-left
+            | DEL
+    .col(style="height: 40vh ; overflow-x:hidden ; overflow-y:scroll")
+        each person, index in schedule
+            div.form-row
+                .col-1.text-right= index+1
+                .col-4
+                    input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
+                .col-2
+                    input.form-control(type='time', value=person.startTime, name="startTime" + index, id="startTime" + index)
+                .col-2
+                    input.form-control(type='time', value=person.cueLength, name="cueLength" + index, id="cueLength" + index step=1)
+                .col-1
+                    input.slider(type="range",value=person.cueBool, name="cueBool" + index, id="cueBool" + index, min="0" max="1")
+                .col-1
+                    input.slider(type="range",value=person.fiveBool, name="fiveBool" + index, id="fiveBool" + index,, min="0" max="1")
+                .col-1
+                    button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+    div.form-row
+        .col-12             
+            button.btn.btn-dark(type='submit' id="addNewRow" style='width: 100%' formaction="/admin/addNewRowDefault") Add Row
+        div.form-row
+        .col-8
+            button#createBackup.btn.btn-dark(type='button' style="width: 100%") Save to Backup
+        .col-4
+            input.form-control(type='text', value="db-backups", name="createBackup_input", id="createBackup_input")
+        .col-4
+            button#loadBackup.btn.btn-dark(type='button' style="width: 100%") Load from Backup
+        .col-4
+            button#overwriteBackup.btn.btn-dark(type='button' style="width: 100%") Overwrite Backup
+        .col-4
+            button#deleteBackup.btn.btn-dark(type='button' style="width: 100%") Delete from Backup
+        .col-12
+            select.form-control(type='select',name="listBackups",id="listBackups",)
+                each val, key in listBackups
+                    option= val
+            

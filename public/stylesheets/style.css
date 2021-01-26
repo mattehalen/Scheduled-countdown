@@ -1,0 +1,367 @@
+/* --------------------------------------------------*/
+/* Website ALL */
+/* --------------------------------------------------*/
+body {
+  background: #2b2b2b;
+  height: 100vh;
+  margin: 0;
+  font-size: calc(16px + 1vw);
+
+  /*display: flex;
+  */
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* font-family: Helvetica neue, roboto; */
+  font-family: Verdana;
+}
+body.transp {
+  background: rgba(43, 43, 43, 0);
+
+}
+div {
+  color: white;
+}
+
+h1 {
+  color: #bdbdbd;
+  font-size: calc(1.2em + 3vw);
+  /* font-weight: 400; */
+}
+h2 {
+  font-size: calc(1.2em + 2vw);
+    margin-block-start: 0.2em;
+    margin-block-end: 0.2em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: normal;
+}
+
+p {
+  margin-block-start: 10px;
+  margin-block-end: 10px;
+  color:#FFF;
+}
+p.color {
+  color:rgba(255, 255, 255, 1);
+  height: 1080px;
+  width: 1920px;
+  font-size: 10vw;
+  justify-content: center;
+  align-items: center;   /* <---- NEW    */
+  width: 100%;
+}
+button {
+  font-size: 2vw;
+  float: inherit;
+}
+
+.mainContentBox {
+  height: 70%;
+  width: 98%;
+  /* padding: 1vh; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items:center;
+}
+.downSite {
+  width: 100%;
+  height: 18%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+}
+
+
+/* not in use */
+.TitleNTime {
+  float: left;
+  width: 33.33%;
+  text-align: left;
+  font-size: 30px;
+  font-size: 1.4vw;
+
+}
+.inputclass {
+  float: left;
+  width: 90%;
+}
+.column {
+  float: left;
+  width: 13.83%;
+  min-width: 300px;
+  border-color: #6b6b6b;
+  border-style: solid;
+  border-width: 0.22vw;
+}
+.slider{
+  width: 30px;
+}
+/* .adminContentBox {
+  height: 91%;
+  display: none;
+} */
+/* .bottomRow {
+  height: 3%;
+}
+
+.scheduledTimes {
+  height: 30%;
+} */
+/* button.offsetButton{
+  height: 5vh;
+  font-size: 4vh;
+}
+
+form.offsetButton{
+  display: inline;
+} */
+/* .person {
+  text-align: center;
+}
+
+.person > * {
+  margin-bottom: 5px;
+}
+
+.person-image {
+  width: 100%;
+  height: 300px;
+} */
+
+#now {
+  font-weight: 900;
+  text-align: center;
+  margin: auto;
+  font-size: 16vw;
+}
+#start {
+  font-weight: 900;
+  word-wrap: break-word;
+}
+#title {
+  font-weight: 900;
+  font-size: 10vw;
+  line-height: 1px;
+}
+#adminTitle {
+  font-size: 10vw;
+  line-height: 1px;
+  margin: 30px;
+  padding: 8vh;
+}
+#start {
+  font-size: 300px;
+  font-size: 10vw;
+}
+
+/* input[type=text] {
+  width: 10vw;
+  padding: 0.35vw;
+  margin: 0.2vw;
+  box-sizing: border-box;
+  font-size: 1.5vh;
+}
+input[type=time] {
+  padding: 0.2vw;
+  margin: 0.2vw;
+  box-sizing: border-box;
+  font-size: 1.5vh;
+  font-family: Verdana;
+
+} */
+/* --------------------------------------------------*/
+/* Index */
+/* --------------------------------------------------*/
+/* .row {
+  flex-direction: column;
+} */
+.titleContentBox {
+}
+.audiobutton {
+  float:left;
+}
+.topRow {
+  background-color: #3b3b3b;
+  height: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+}
+.topRowText {
+  /*padding: 1%;
+  */
+  padding-right: 1vh;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 300px;
+  font-size: 5vh
+
+}
+.timeCodeText{
+  padding-left: 1vh;
+  text-align: left;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 300px;
+  font-size: 5vh
+}
+/* --------------------------------------------------*/
+/* Admin */
+/* --------------------------------------------------*/
+.cueTime {
+  width: 100%;
+  font-size: 4vw;
+  height: 4.2vw;
+}
+.floatl{
+  /* overflow-y: scroll;
+  height: 100%; */
+}
+.preview {
+  overflow:hidden;
+  width: 100%;
+  height: 100%;
+  border-width: 1px;
+    border-style: inset;
+    border-color: initial;
+    border-image: initial;
+}
+.buttondiv {
+  font-size: 0.5em;
+}
+.floatl#preview {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  width: 25%;
+  height: 80%;
+}
+.delete {
+	box-shadow:inset 0px 1px 0px 0px #cf866c;
+	background:linear-gradient(to bottom, #d0451b 5%, #bc3315 100%);
+	background-color:#d0451b;
+	border-radius:10px;
+	border:1px solid #942911;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:13px;
+	padding:6px 14px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #854629;
+}
+.delete:hover {
+	background:linear-gradient(to bottom, #bc3315 5%, #d0451b 100%);
+	background-color:#bc3315;
+}
+.delete:active {
+	position:relative;
+	top:1px;
+}
+/* --------------------------------------------------*/
+/* ./countDown */
+/* --------------------------------------------------*/
+.fiveMinuteCenter{
+  text-align: center;
+  margin: auto;
+  font-size: 23vh;
+}
+.fiveMinute {
+  background-color: #3b3b3b;
+  height: 4.2vw;
+  font-size: 4vw;
+  width: 100%;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+.slideshowCountDown{
+  height: 99.9%;
+  width: 99.9%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+}
+.slideshowPictures{
+  height: 99.9%;
+  width: 99.9%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  border:0;
+}
+
+
+/* 5min countdown */
+#transp{
+  background: rgba(43, 43, 43, 1);
+}
+.home-container {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+.some-other-class {
+    position: relative;
+    top: 40%;
+    transform: translateY(-50%);
+}
+.overlay {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    z-index: 10;
+    background: rgba(255,0,0,0.05);
+}
+.mywrapper {
+    position: relative;
+    /* border-style:solid; */
+    border-width: 1px;
+    border-color: red;
+}
+.centeredOverlay {
+    position: absolute;
+    background-color: rgba(255, 0, 0, 0.4);
+    /*dim the background*/
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    color:black;
+    text-align: center;
+    z-index: 100;
+}
+.centeredOverlay span {
+    position: absolute;
+    top:50%;
+    left:50%;
+    -webkit-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);
+}
+/* --------------------------------------------------*/
+@-webkit-keyframes blinker {
+  from {background-color:darkred;}
+  to {background-color:black;}
+}
+.blink{
+
+  height: 100%;
+  width: : 100%;
+  align-items: center;
+  justify-content: center;
+
+	text-decoration: blink;
+	-webkit-animation-name: blinker;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:ease-in-out;
+	-webkit-animation-direction: alternate;
+}

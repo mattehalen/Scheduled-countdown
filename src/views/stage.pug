@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  p(hidden='')
+  .topRow()
+    #timeCode.timeCodeText
+    div.audiobutton
+      button#play.commandButton(hidden='') Activate Audio
+
+    #nowTopRow.topRowText
+  #mainContentBox.row.mainContentBox
+
+
+    #centerNowText
+      h1#now
+
+    #titleContentBox.titleContentBox
+      h1#title
+      h1#start
+
+  .downSite
+    #cueTime.fiveMinute
+
+block pagescripts
+  // Stage Scripts
+  script(src="/javascripts/stage.js")

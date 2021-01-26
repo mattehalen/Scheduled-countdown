@@ -1,0 +1,52 @@
+// db-settings
+.row
+    .col-12
+        form(method='POST' action='/admin/submitSettings')
+            button.btn.btn-primary.btn-block() SAVE
+            .form-row
+            -var i =0;
+            .col-12.bg-dark
+                h3 timeSettings
+            each val, index in settings.timeSettings
+                .form-row.row-cols-2
+                    .col-9
+                        .input-group
+                            span.input-group-text(name="timeSettings " + index, id=index, style="width:100%")= index
+                    .col-3
+                            input.form-control(type='number', value=val, name="timeSettings " + index, id=index)
+                -i++
+            .col-12.bg-dark
+                h3 Color
+            each val, index in settings.Color
+                .form-row.row-cols-2
+                    .col-9
+                        .input-group
+                            span.input-group-text(name="Color " + index + i, id=index, style="width:100%")= index
+                    .col-3
+                            input.form-control(type='color', value=val, name="Color " + index, id=index)
+                -i++
+            .col-12.bg-dark
+                h3 MIDI
+            each val, index in settings.MIDI
+                .form-row.row-cols-2
+                    .col-9
+                        .input-group
+                            span.input-group-text(name="MIDI " + index, id=index, style="width:100%")= index
+                    .col-3
+                        if index == "midi_interface_ID"
+                            select.form-control(type='select',name="MIDI " +index,id=index,)
+                                each val, key in midi_interface_ID
+                                    option= key
+                        else
+                            input.form-control(type='number', value=val, name="MIDI " +index, id=index)
+                -i++
+            .col-12.bg-dark
+                h3 ARTNET
+            each val, index in settings.ARTNET
+                .form-row.row-cols-2
+                    .col-9
+                        .input-group
+                            span.input-group-text(name="ARTNET " +index, id=index, style="width:100%")= index
+                    .col-3
+                            input.form-control(type='number', value=val, name="ARTNET " +index, id=index)
+                -i++

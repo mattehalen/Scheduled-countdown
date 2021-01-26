@@ -1,0 +1,135 @@
+extends layout
+
+block content
+  p(hidden='')
+  .topRow.shadow.p-3.mb-5.rounded.sticky-top
+    #timeCode.timeCodeText
+    #start(style="font-size: 5vh; font-weight: 100;")
+    #nowTopRow.topRowText
+  .container-fluid
+    
+    .row.justify-content-center.overflow-hidden
+      
+      .col-xl-9.col-sm-12.col-xs-12
+        include db/offsetTime.pug
+        ul#myTab.nav.nav-tabs(role='tablist')
+          li.nav-item
+            a#Schedule-tab.nav-link.active(data-toggle='tab' href='#Schedule' role='tab' aria-controls='Schedule' aria-selected='true') Schedule
+          li.nav-item
+            a#Settings-tab.nav-link(data-toggle='tab' href='#Settings' role='tab' aria-controls='Settings' aria-selected='false') Settings
+          li.nav-item
+            a#overview-tab.nav-link(data-toggle='tab' href='#overview' role='tab' aria-controls='overview' aria-selected='false') Overview
+          li.nav-item
+            a#alert-tab.nav-link(data-toggle='tab' href='#alert' role='tab' aria-controls='alert' aria-selected='false') Alert
+          li.nav-item
+            a#alert-tab.nav-link(data-toggle='tab' href='#users' role='tab' aria-controls='users' aria-selected='false') Users
+        #myTabContent.tab-content.shadow.p-3.mb-5.rounded
+          #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
+            include db/db-dayOfWeek.pug
+            include db/db-times.pug
+
+          #Settings.tab-pane.fade(role='tabpanel' aria-labelledby='Settings-tab')
+            include db/db-settings.pug
+            //- .row
+            //-   .col-3
+            //-     h2#offsetTime= offsetTime
+            //-     p Adjust Time
+            //-     button#offsetMinus.btn.btn-dark  -
+            //-     button#offsetPlus.btn.btn-dark  +
+            //-     button#offsetReset.btn.btn-dark  Reset
+            //-   .col-9
+            //-     form(method='POST' action='/admin/submitSettings')
+            //-       button.btn.btn-primary.btn-block() SAVE
+            //-       .form-row
+            //-       -var i =0;
+            //-       each val, index in timeSettings
+
+            //-         .form-row.row-cols-2
+            //-           .col-9
+            //-             .input-group
+            //-               span.input-group-text(name="timeSettingstitle" + i, id="timeSettingstitle" + i, style="width:100%")= index
+            //-           .col-3
+            //-               if typeof val === "string"
+            //-                   input.form-control(type='color', value=val, name="value" + i, id="value" + i)
+            //-               else if typeof val === "number"
+            //-                   input.form-control(type='number', value=val, name="value" + i, id="value" + i)
+            //-         -i++
+
+
+          #overview.tab-pane.fade(role='tabpanel' aria-labelledby='overview-tab')
+            .row.row-cols-3
+              .col
+                p#mainPreviewTitle(style="cursor: pointer;" onclick="iframePreviewFullscreen()") Preview
+                iframe.preview(src='/')
+              .col
+                p Stage
+                iframe.preview(src='/stage')
+              .col
+                p FOH
+                iframe.preview(src='/foh')
+              .col
+                p 5Min countdown
+                iframe.preview(src='/countdown')
+              .col
+                .row(style="height: 50%")
+                .row
+                  button#reloadFiveMinCountDown.btn.btn-dark(style='width: 100%') Reload 5min
+                .row
+                  button#one.btn.btn-dark(style='width: 20%') 1min
+                  button#two.btn.btn-dark(style='width: 20%') 2min
+                  button#three.btn.btn-dark(style='width: 20%') 3min
+                  button#four.btn.btn-dark(style='width: 20%') 4min
+                  button#five.btn.btn-dark(style='width: 20%') 5min
+                .row
+                  button#alpha.btn.btn-dark(style='width: 100%') Alpha
+
+
+          #alert.tab-pane.fade(role='tabpanel' aria-labelledby='alert-tab')
+            .row(style="font-size: 10px")
+              .col-1
+                | /
+              .col-1
+                | /admin
+              .col-1
+                | /foh
+              .col-1
+                | /stage
+              .col-1
+                | /watch
+              .col-1
+                | /countdown
+              .col-1
+                | /allUsers
+            .row
+              .col-1
+                input.slider(type="range",value=0 name="startUrl", id="startUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="adminUrl", id="adminUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="fohUrl", id="fohUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="stageUrl", id="stageUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="watchUrl", id="watchUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="countdownUrl", id="countdownUrl",, min="0" max="1")
+              .col-1
+                input.slider(type="range",value=0, name="allUsersUrl", id="allUsersUrl",, min="0" max="1")
+            .row
+              .col-10
+                input.form-control(type='text', value="Hello", name="alertText" id="alertText")
+              .col-2
+                button.btn.btn-danger(type="reset",name="alertButton", id="alertButton", onClick="alertButton()") Send Alert
+
+          #users.tab-pane.fade(role='tabpanel' aria-labelledby='users-tab')
+            .row(style="font-size: 10px")
+                .col-12
+                  h1 In Progress
+  .downSite
+    #cueTime.fiveMinute
+
+
+
+block pagescripts
+  // Admin Scripts
+  script(src="/javascripts/adminScript.js")

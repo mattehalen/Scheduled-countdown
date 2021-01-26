@@ -1,0 +1,66 @@
+{
+  "name": "Scheduled-countdown",
+  "author": "Mathias Halén",
+  "version": "0.0.1",
+  "private": true,
+  "description": "More info comming soon",
+  "main": "main.js",
+  "build": {
+    "appId": "com.Scheduled-Countdown.app",
+    "productName": "Scheduled-Countdown",
+    "mac": {
+      "category": "se.Scheduled.Countdown",
+      "icon": "./assets/icon.icns"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "./assets/icon.png"
+    },
+    "nsis": {
+      "artifactName": "Scheduled-Countdown-win64.exe",
+      "createStartMenuShortcut": true,
+      "perMachine": true,
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "icon.ico"
+    },
+    "directories": {
+      "buildResources": "assets/",
+      "output": "electron-output/"
+    },
+    "files": [
+      "**/*",
+      "assets/icon.ico"
+    ]
+  },
+  "scripts": {
+    "electron": "electron .",
+    "dist": "electron-builder",
+    "start": "nodemon ./index.js",
+    "debug": "node --inspect ./index.js",
+    "debug-brk": "node --inspect-brk ./index.js"
+  },
+  "dependencies": {
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "electron-rpc": "^2.0.1",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "ip": "^1.1.5",
+    "jzz": "^1.0.9",
+    "jzz-gui-select": "^1.0.2",
+    "morgan": "~1.9.1",
+    "nexe": "^3.3.2",
+    "pug": "^2.0.4",
+    "socket.io": "^2.3.0",
+    "uuid": "^8.3.1"
+  },
+  "devDependencies": {
+    "electron": "^11.1.1",
+    "electron-builder": "^22.9.1",
+    "nodemon": "^2.0.2"
+  }
+}
