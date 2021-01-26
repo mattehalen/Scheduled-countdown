@@ -1,57 +1,34 @@
-# Setup and run
-
 # Installation
-Download Nodejs -> https://nodejs.org/en/download/
+Download Nodejs -> https://github.com/mattehalen/Scheduled-countdown/releases/tag/Alpha_V.1.0.0
 
-## PC
-  1. Open Scheduled-countdown folder and run Run "PC-Install-Script.cmd"
-  2. Run "Scheduled-countdown.cmd"
-
-## MAC
- 1. Open Scheduled-countdown folder and run "Scheduled-countdown MAC V2.scpt"
- 2. Run "Scheduled-countdown MAC V2.scpt"
+https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-testing-V.1.0.0-%5B2021-01-26%5D
 
 
-## New features
-### 2020-11-16
-- [X] SEND Warning Message on FULL SCREEN
-### Earlier features
-- [X] Select which days the Schedule runs. Function dayOfWeek. Added to adminpage
+# CHANGE LOG
+## Alpha V.1.0.0 [2021-01-26]
+1. Rebuild of back-end - https://github.com/mukeshkmr776
+2. Implemanting Electron for dist
+3. Creating SC-module for the clock & countdown part.
 
-# Task lists
-- [] New admin-settings structure. Settings -> IP/timeSettings/dayOfWeek/DMX/MIDI/OBS/Color || schedule
-- [] ADD DMX Toggle on Settings Page and to admin-settings.js - Toggle Should have a BREAK on the artnet.js so it dosn't log if disalbed.
-- [] ADD OBS IP AND PORT to admin-settings
-- [] Implament varibles from "timeSettings" countDown, countUp, cueCountDown, cueCountUp, useMIDI_ProgramChange
-- [] Install React Native & Socket.io & react-native-watch-connectivity  https://blog.bam.tech/developer-news/how-to-add-an-apple-watch-extension-to-your-react-native-application
-- [] JZZ-gui-Select for midi interface
-- [] Add save/load to folder for saving adminsettings on other places for backup.
-- [] Add Time-varible to Alert Function
+## BUGS
+1. Alert functions dosen't work on - /watch & /countdown
+2. Auto Reset needs a delay of X when starting a number eirlier.
+exemple - if show should start at 12:00 and we start at 11:55 with the help of offsetMinus and Auto Reset is enabled this will cause the coutdown to run again after the reset because the Auto Reset is triggerd at the end of countUp. 
 
-
-# Bugs
-- [] offsetTime dosn't effect 5min countdown
-- [] Navigated to chrome-error://chromewebdata/ - for some users. macbookAir - Chrome
-- [] Dosn't work on Internet Explorer
-
-## Bug Fixes
-### 2020-11-15
-- [X] Save on /Mathias dosen't save to correct
-### Earlier fixes
-- [X] OffsetTime .json writes empty files sometimes. - tried using sleep didn't work. - now trying increase setTimeoutTime = 150 instead of 50.
-- [x] deleteButton on Scheduled don't work more then once. after deleting one it loops thrue and ads old cues again. Move Delete part to socket and don't jump back to adminScript.js?
-
+## Known limitations
+1. [Main Window] - Missing conformation when pushing start_server. User don't know if the button is pushed or not. And if button is push more then once the app crashes.
+2. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5mincountdown page.
+3.  [/Admin - Alert-tab] - Missing input for legnth of Alert.
+4.  [/Admin - User-tab] - IN PROGRESS
+ 
 # Websites I got code from
 - https://github.com/nexe/nexe
 - https://www.youtube.com/watch?v=ODlYsEITCBM&t=8s
 - https://guides.github.com/features/mastering-markdown/
 
 
-
-
-
-
-
-
-## Support this project
+# Support this project
 https://www.paypal.com/donate?hosted_button_id=N7GK2QCY8QAWQ
+
+# Special thanks to
+- https://github.com/mukeshkmr776 - help rebuild back-end for Alpha V.1.0.0
