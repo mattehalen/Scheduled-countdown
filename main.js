@@ -17,6 +17,7 @@ const db_times_filname        = "db-times"
 const db_settings_path        = path.join(db_path, db_settings_filname + ".json");
 const db_times_path           = path.join(db_path, db_times_filname + ".json");
 const db_backup_path          = path.join(db_path, "backup");
+const db_users_path           = path.join(db_path, "users.json");
 console.log("----------------------------------------------");
 console.log(db_backup_path);
 
@@ -52,6 +53,29 @@ if (fs.existsSync(db_backup_path)) {
     console.log('db_backup_path was created');
   }
   fs.mkdir(db_backup_path,callback);
+  //fs.copyFile(times_assetPath, db_times_path ,callback);
+}
+
+if (fs.existsSync(db_users_path)) {
+  console.log("db_users_path file exist");
+} else {
+  console.log("db_users_path does not exist");
+  function callback(err) {
+    if (err) throw err;
+    console.log('db_users_path was created');
+  }
+  //fs.mkdir(db_users_path,callback);
+  let userName =
+  {
+    "userName": 
+    [
+        {
+            name: "test",
+        }
+    ]
+  }
+let data = JSON.stringify(userName, null, 4);
+  fs.writeFileSync(db_users_path, data);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
 
