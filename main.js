@@ -69,9 +69,6 @@ if (fs.existsSync(db_users_path)) {
   {
     "userName": 
     [
-        {
-            name: "test",
-        }
     ]
   }
 let data = JSON.stringify(userName, null, 4);

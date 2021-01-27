@@ -16,12 +16,26 @@ WebSocketService.onEvent(EVENTS.GET_USERS, (messageEvent) => {
 WebSocketService.onEvent(EVENTS.ADD_USER, async (messageEvent) => {
     const message   = messageEvent.getMessage();
     const users     = await USERS_SETTINGS.get()
-    console.log(users.userName);
+
     let data = {name:message}
     users.userName.push(data)
-    console.log(users.userName);
+    
+    function removeDuplicates(originalArray, prop) {
+        var newArray = [];
+        var lookupObject  = {};
+   
+        for(var i in originalArray) {
+           lookupObject[originalArray[i][prop]] = originalArray[i];
+        }
+   
+        for(i in lookupObject) {
+            newArray.push(lookupObject[i]);
+        }
+         return newArray;
+    }
+    var uniqueArray = removeDuplicates(users.userName, "name");
+    users.userName = uniqueArray;
 
-    console.log("----------> src/websocket-listeners/users.js");
-    console.log(message);
+    USERS_SETTINGS.write(users);
 });
 
