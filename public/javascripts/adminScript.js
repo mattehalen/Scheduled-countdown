@@ -131,7 +131,7 @@ $("#addUser_button").on('click', function () {
   var data = document.getElementById("user_name").value
   console.log(data);
   sendSocketMessage("addUser", data);
-  // location.reload();
+  location.reload();
 });
 
 

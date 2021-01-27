@@ -1,7 +1,10 @@
+ul.list-group
+each val in users
+  li.list-group-item.list-group-item-dark.text-left(style="font-size: calc(6px + 1vw);")= val.name
 .row
     .col-2
         button.btn.btn-danger(type="button",name="addUser", id="addUser_button") Add user
     .col-10
-        input.form-control(type='text', value="Enter user name", name="user_name" id="user_name")
+        input.form-control(type='text', value="", name="user_name" id="user_name")
     .col-12
         p spacing or special characters is not allowed

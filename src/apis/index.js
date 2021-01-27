@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
 
-const AdminSettings = require('./../services/admin-settings');
+const AdminSettings   = require('./../services/admin-settings');
+const USERS_SETTINGS  = require("./../services/users-settings"); 
+
 
 
 //-------------------------------------------------------------------------
@@ -50,6 +52,22 @@ router.get('/watch', async function (req, res) {
   res.render('watch', {
     title: 'Scheduled-CountDown',
     now: "s"
+  });
+});
+
+router.get('/users/:userID', async function (req, res) {
+  const users = await USERS_SETTINGS.get()
+  var name = req.originalUrl.split('/users/')[1];
+
+  users.userName.forEach(function (arrayItem) {
+    // console.log(arrayItem.name);
+    if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+      console.log(arrayItem.name);
+      res.render('index', {
+        title: 'Scheduled-CountDown',
+        now: "s"
+      });
+    }
   });
 });
 
