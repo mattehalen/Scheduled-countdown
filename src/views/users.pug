@@ -55,7 +55,7 @@ block content
                   | Capture
                 .col-1.text-left
                   | DEL
-              each person, index in myCueList
+              each person, index in cuelist
                 div.form-row.mywrapper(id="cueListRow" + index)
                   .centeredOverlay(id="centeredOverlay" + index)
                     //- span Loading...
@@ -66,7 +66,7 @@ block content
                   .col-3
                     input.form-control(type='text', value=person.timecode, name="timeCode" + index, id="timeCode" + index)
                   .col-2
-                    p(id="timecodeMs" + index) hi
+                    p(id="timecodeMs" + index)
                   .col-1
                     button.btn.btn-success(type="button",name="captureTCButton" + index, id=index, onClick="captureTCButton(this.id)") TC
                   .col-1
@@ -75,22 +75,22 @@ block content
 
 
 
-  #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
-    .form-row
-      .col-1.text-left
-        | Current:
-      .col-8.text-left#currentTitle
-        | Title
-      .col-3.text-left#currentCountdown
-        | Countdown
-    .form-row
-      .col-1.text-left
-        | Next:
-      .col-8.text-left#nextTitle
-        | Title
-      .col-3.text-left#nextCountdown
-        | Countdown
-      p#midi_ProgramChange= midi_ProgramChange
+  //- #myTabContent.tab-content.shadow.p-3.mb-5.rounded(style="overflow: auto")
+  //-   .form-row
+  //-     .col-1.text-left
+  //-       | Current:
+  //-     .col-8.text-left#currentTitle
+  //-       | Title
+  //-     .col-3.text-left#currentCountdown
+  //-       | Countdown
+  //-   .form-row
+  //-     .col-1.text-left
+  //-       | Next:
+  //-     .col-8.text-left#nextTitle
+  //-       | Title
+  //-     .col-3.text-left#nextCountdown
+  //-       | Countdown
+  //-     p#midi_ProgramChange= midi_ProgramChange
 
 
 

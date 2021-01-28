@@ -56,16 +56,22 @@ router.get('/watch', async function (req, res) {
 });
 
 router.get('/users/:userID', async function (req, res) {
+  const db_settings   = await AdminSettings.getDbSettings();
   const users = await USERS_SETTINGS.get()
   var name = req.originalUrl.split('/users/')[1];
+  let cuelist;
 
   users.userName.forEach(function (arrayItem) {
     // console.log(arrayItem.name);
     if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
       console.log(arrayItem.name);
-      res.render('index', {
+      console.log(arrayItem.cues);
+      res.render('users', {
         title: 'Scheduled-CountDown',
-        now: "s"
+        now: "s",
+        name: name,
+        cuelist: arrayItem.cues,
+        settings: db_settings
       });
     }
   });
