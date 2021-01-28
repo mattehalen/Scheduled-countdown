@@ -63,7 +63,7 @@ WebSocketService.onEvent(KEYS.MIDI, (message) => {
 
 
 
-// var user = document.getElementById("user").textContent;
+var user = document.getElementById("user").textContent;
 
 // //--------------------------------------------------
 // var nowText = document.getElementById("now");
@@ -116,7 +116,7 @@ $("#ToggleTC").on('click', function () {
 
 });
 $("#ResetTC").on('click', function () {
-  timeCodeMs = 1000;
+  cueTimeCountDown(1000);
   if (cuelistHideBool == true) {
     cuelistHideBool = false;
     return
