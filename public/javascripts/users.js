@@ -1,4 +1,5 @@
 "use strict";
+let timeCodeMs;
 
 const KEYS = {
   'GET_CURRENTTIME': 'currentTime',
@@ -14,6 +15,7 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
 })
 
 WebSocketService.onEvent(KEYS.MIDI, (message) => {
+  timeCodeMs = timeStringToMs(message);
   // console.log(message);
   // console.log(timeStringToMs(message));
   cueTimeCountDown(timeStringToMs(message));
@@ -68,6 +70,7 @@ $("#ResetTC").on('click', function () {
 });
 
 function captureTCButton(listIndex) {
+  console.log(timeCodeMs);
   console.log("captureTCButton with listIndex = " + listIndex);
   var string = "#timeCode" + listIndex
   $(string).val(msToTime(timeCodeMs))
