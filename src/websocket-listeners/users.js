@@ -1,8 +1,9 @@
 const WebSocketService = require('../websocket/websocket-service');
 const USERS_SETTINGS  = require("../services/users-settings"); 
 const EVENTS = {
-    GET_USERS: 'GET_USERS',
-    ADD_USER:    "addUser"
+    GET_USERS:      'GET_USERS',
+    ADD_USER:       "addUser",
+    DELETE_USER:     "deleteUser"
 };
 
 
@@ -47,3 +48,29 @@ WebSocketService.onEvent(EVENTS.ADD_USER, async (messageEvent) => {
     USERS_SETTINGS.write(users);
 });
 
+WebSocketService.onEvent(EVENTS.DELETE_USER, async (messageEvent) => {
+    const name      = messageEvent.getMessage();
+    const users     = await USERS_SETTINGS.get()
+    let deleteIndex;
+    let index=0;
+
+    try {
+        users.userName.forEach(async function (arrayItem) {
+          if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+            deleteIndex = index;
+              console.log("this should be the id of the selected name = "+index);
+            // arrayItem.cues.splice(listIndex,1);
+            // await USERS_SETTINGS.write(users);
+          }
+          index++;
+        });
+
+        users.userName.splice(deleteIndex,1);
+        console.log(users.userName);
+        await USERS_SETTINGS.write(users);
+      } catch (error) {
+          console.log(error);
+      }
+
+
+});

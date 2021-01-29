@@ -8,3 +8,9 @@ each val in users
         input.form-control(type='text', value="", name="user_name" id="user_name")
     .col-12
         p spacing or special characters is not allowed
+    .col-2
+        button.btn.btn-danger(type="button",name="deleteUser", id="deleteUser_button") Delete user
+    .col-10
+        select.form-control(type='select',name="deleteuser_select ",id="deleteuser_select",)          
+            each val in users
+                option= val.name

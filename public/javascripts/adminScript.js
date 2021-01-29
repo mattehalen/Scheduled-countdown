@@ -133,6 +133,13 @@ $("#addUser_button").on('click', function () {
   sendSocketMessage("addUser", data);
   location.reload();
 });
+$("#deleteUser_button").on('click', function () {
+  console.log("deleteUser_button pushed");
+  var data = document.getElementById("deleteuser_select").value
+  console.log(data);
+  sendSocketMessage("deleteUser", data);
+  location.reload();
+});
 
 
 
