@@ -5,7 +5,6 @@ const Server = require('./src/server');
 console.log("---------------> ./index.js");
 
 function start() {
-    console.log("---------------> ./index.js -> start()");
     Server.startServer()
         .then(output => {
             Server.startSocket();

@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron')
-$('#stop_server').hide();
+// $('#stop_server').hide();
 
 var myIpArray = "";
 var getNetworkIPs = (function() {

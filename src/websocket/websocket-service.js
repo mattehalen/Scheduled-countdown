@@ -5,20 +5,15 @@ var websocketInstance = null;
 
 module.exports = {
     start: (httpServer) => {
-        console.log("----------> ./websocket/websocket-service -> start");
         if (!websocketInstance) {
             websocketInstance = new WebSocketServer(httpServer);
-            console.log("----------> ./websocket/websocket-service -> start -> inside IF");
         }
     },
 
     stop: () => {
-        console.log("----------> ./websocket/websocket-service -> stop");
         if (websocketInstance) {
             websocketInstance.stopServer();
             websocketInstance = null;
-            console.log("----------> ./websocket/websocket-service -> stop -> inside IF");
-
         }
     },
 

@@ -11,7 +11,6 @@ const EVENTS = {
 
 WebSocketService.onEvent(EVENTS.GET_USERS, (messageEvent) => {
     const message = messageEvent.getMessage();
-    //console.log(message);
 });
 
 WebSocketService.onEvent(EVENTS.ADD_USER, async (messageEvent) => {
@@ -58,15 +57,11 @@ WebSocketService.onEvent(EVENTS.DELETE_USER, async (messageEvent) => {
         users.userName.forEach(async function (arrayItem) {
           if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
             deleteIndex = index;
-              console.log("this should be the id of the selected name = "+index);
-            // arrayItem.cues.splice(listIndex,1);
-            // await USERS_SETTINGS.write(users);
           }
           index++;
         });
 
         users.userName.splice(deleteIndex,1);
-        console.log(users.userName);
         await USERS_SETTINGS.write(users);
       } catch (error) {
           console.log(error);

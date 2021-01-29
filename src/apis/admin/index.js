@@ -18,7 +18,6 @@ router.get('/', async function (req, res) {
     const db_settings   = await AdminSettings.getDbSettings();
     const midi_id       = await MIDI.midi_interface_IDs();
     const users         = await  USERS_SETTINGS.get();
-    console.log(users.userName);
     let listBackups = await AdminSettings.getList();
     if (!listBackups || listBackups == 0) {
         listBackups = ["No Files Saved"]
@@ -139,7 +138,6 @@ router.post('/submitSettings', async function (req, res) {
 })
 
 router.post('/addNewRowDefault', async function (req, res) {
-    console.log("addNewRowDefault knappen funkar");
     try {
         const adminSettings = await AdminSettings.get();
         var feed = {
@@ -161,11 +159,9 @@ router.post('/addNewRowDefault', async function (req, res) {
 });
 
 router.post('/deleteButton', async function (req, res) {
-    console.log("deleteButton knappen funkar");
     try {
         const adminSettings = await AdminSettings.get();
         const listIndex = req.body.listIndex;
-        console.log(listIndex);
 
         adminSettings.schedule.splice(listIndex, 1);
         console.log(adminSettings);
@@ -216,18 +212,18 @@ router.post('/offsetReset', async function (req, res) {
     res.redirect("/admin");
 });
 
-router.post('/setLoopbackip', async function (req, res) {
-    try {
-        console.log("----------------------------------------------------------- setLoopbackip:-----------------------------------------------------------");
-        const adminSettings = await AdminSettings.get();
-        console.log("mycustomip:" + adminSettings.ipsettings.ipadress);
-        adminSettings.ipsettings.ipadress = "127.0.0.1";
-        await AdminSettings.write(adminSettings);
-    } catch (error) {
-        console.log(error);
-    }
-    res.redirect("/admin");
-});
+// router.post('/setLoopbackip', async function (req, res) {
+//     try {
+//         console.log("----------------------------------------------------------- setLoopbackip:-----------------------------------------------------------");
+//         const adminSettings = await AdminSettings.get();
+//         console.log("mycustomip:" + adminSettings.ipsettings.ipadress);
+//         adminSettings.ipsettings.ipadress = "127.0.0.1";
+//         await AdminSettings.write(adminSettings);
+//     } catch (error) {
+//         console.log(error);
+//     }
+//     res.redirect("/admin");
+// });
 
 router.post('/dayOfWeek', async function (req, res) {
     try {

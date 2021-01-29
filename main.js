@@ -20,6 +20,7 @@ const db_backup_path          = path.join(db_path, "backup");
 const db_users_path           = path.join(db_path, "users.json");
 console.log("----------------------------------------------");
 console.log(db_backup_path);
+console.log("----------------------------------------------");
 
 // Check if db_settings.json exist in DB folder. If not Copy from ./SC-module/lib/db
 if (fs.existsSync(db_settings_path)) {
