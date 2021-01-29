@@ -33,75 +33,15 @@ WebSocketService.onEvent(KEYS.MIDI, (message) => {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var user = document.getElementById("user").textContent;
-
-// //--------------------------------------------------
-// var nowText = document.getElementById("now");
-// var nowTopRow = document.getElementById("nowTopRow");
-// var titleText = document.getElementById("title");
-// var startText = document.getElementById("start");
-// var timeCode = document.getElementById("timeCode");
-// var timeCodeMs;
-// var midi_ProgramChange = document.getElementById("midi_ProgramChange");
-// var midi_Channel;
-// var timeCodeArray = [""];
 var timeCodeBool = true;
 var cuelistHideBool = true;
-// var setTimeoutTime = 150;
-
-// //--------------------------------------------------
-// var offsetTimeInit = 0;
-// //--------------------------------------------------
-// var sendMin_To_countDownBoole = 0;
-// var startTitleHolder = "";
-// var countDownTimeInMS = "";
-// //--------------------------------------------------
-
-// //--------------------------------------------------
-
-// //--------------------------------------------------
-
-// //--------------------------------------------------
 
 $("#AddNewCueRow").on('click', function () {
   sendSocketMessage("AddNewCueRow", {
     user: user
   });
-
-  sleep(1000).then(() => {
     document.location.reload(true)
-  });
-
 });
 $("#ToggleTC").on('click', function () {
   if (timeCodeBool == true) {
@@ -139,40 +79,14 @@ function delete_button_click(listIndex) {
     listIndex: listIndex,
     user: user
   });
+  document.location.reload(true)
 };
-
 
 sendSocketMessage("user", {
   user: user
 
 });
 sendSocketMessage("getTimeCode", {});
-socket.on("sendTimeCode", function (data) {
-  timeCode.textContent = data.smpteString,
-    timeCodeMs = data.smpteMs,
-    midi_ProgramChange.textContent = data.midi_ProgramChange,
-    midi_Channel = midi_Channel
-});
-socket.on("alertText_allUsersUrl", function (data) {
-  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>' + data.text + '</H1></div>');
-  console.log(data.text);
-
-  sleep(10000).then(() => {
-    $(".blink").remove();
-  });
-
-
-
-});
-
-
-// function getTimeCodeLoop(){
-//   $("#timecodeMs").text(timeCodeMs);
-//   // sendSocketMessage("getTimeCode",{});
-//   setTimeout(getTimeCodeLoop,100);
-// };
-// getTimeCodeLoop()
-
 
 function timeStringToMs(t) {
   if (t > 5) {
@@ -253,38 +167,3 @@ function cueTimeCountDown(timeCodeMs) {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-// if (newArrayIndex < timeCodeArray.length){
-//   if (timeCodeMs > timeStringToMs(timeCodeArray[newArrayIndex].timecode)){
-//   newArrayIndex++;
-//   currentArrayIndex = newArrayIndex - 1;
-// }else{
-//   time = timeStringToMs(timeCodeArray[newArrayIndex].timecode) - timeCodeMs
-//   time = "-" + (msToTime(time))
-
-//   $("#nextCountdown").text(time)
-//   $("#nextTitle").text(timeCodeArray[newArrayIndex].title)
-//   //---
-//   if (newArrayIndex < 1){
-//     $("#currentCountdown").text("")
-//     $("#currentTitle").text("")
-//   }else{
-//     time = timeCodeMs - timeStringToMs(timeCodeArray[currentArrayIndex].timecode)
-//     time = (msToTime(time))
-
-//     $("#currentCountdown").text(time)
-//     $("#currentTitle").text(timeCodeArray[currentArrayIndex].title)
-
-//   }
-
-// }
-// }
-// setTimeout(cueTimeCountDown, setTimeoutTime);
