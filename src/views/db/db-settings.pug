@@ -35,8 +35,15 @@
                     .col-3
                         if index == "midi_interface_ID"
                             select.form-control(type='select',name="MIDI " +index,id=index,)
+                                
                                 each val, key in midi_interface_ID
-                                    option= key
+                                    if key === settings.MIDI.midi_interface_ID
+                                        option(selected='')= key
+
+                                    else 
+                                            option= key
+
+                                
                         else
                             input.form-control(type='number', value=val, name="MIDI " +index, id=index)
                 -i++
