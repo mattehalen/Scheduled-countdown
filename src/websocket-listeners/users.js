@@ -17,7 +17,15 @@ WebSocketService.onEvent(EVENTS.ADD_USER, async (messageEvent) => {
     const message   = messageEvent.getMessage();
     const users     = await USERS_SETTINGS.get()
 
-    let data = {name:message}
+    let data = {
+        name:message,
+        cues:[
+            {
+                title: "Your First Cue",
+                timecode: "00:01:00"
+            }
+        ]
+    }
     users.userName.push(data)
     
     function removeDuplicates(originalArray, prop) {
