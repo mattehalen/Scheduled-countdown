@@ -78,6 +78,61 @@ router.get('/users/:userID', async function (req, res) {
     }
   });
 });
+router.post('/users/submit/:userID', async function (req, res) {
+  // console.log("User Save button presed");
+  // console.log(req.body);
+  var name = req.originalUrl.split('/users/submit/')[1];
+  console.log("----------> = "+name);
+  
+
+
+  try {
+    const db_times = await AdminSettings.get();
+    const db_settings = await AdminSettings.getDbSettings();
+    const users = await USERS_SETTINGS.get()
+    const data = JSON.parse(JSON.stringify(req.body));
+    const entries = Object.entries(data)
+    const tempArray = [];
+    const newCueListArray=[];
+    // console.log(typeof(data));
+
+    // for (const [title, value] of entries) {
+    //   tempArray.push(value)
+    // }
+    // tempArray.forEach(element => {
+    //   let a_obj = {title : tempArray [0],timecode : tempArray[1]};
+    //   newCueListArray.push(a_obj);
+    //   tempArray.splice(0, 2); 
+    // });
+    // console.log(newCueListArray);
+
+
+    var t = Object.keys(data).length / 2;
+    for(var x=0; x < t ; x++){
+      const title = data[`title${x}`];
+      const timecode = data[`timeCode${x}`]
+      newCueListArray.push({
+        title,
+        timecode
+      })
+    }
+    console.log(newCueListArray);
+
+
+    users.userName.forEach(async function (arrayItem) {
+      // console.log(arrayItem.name);
+      if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+        console.log(arrayItem.cues);
+        arrayItem.cues = newCueListArray;
+        await USERS_SETTINGS.write(users)
+      }
+    });
+    
+  } catch (error) {
+    console.log(error);
+  }
+  res.redirect('back');
+});
 
 
 const EVENTS = {
