@@ -1,5 +1,5 @@
 const { ipcRenderer } = require('electron')
-
+$('#stop_server').hide();
 
 var myIpArray = "";
 var getNetworkIPs = (function() {
@@ -90,11 +90,16 @@ $('#SaveIP_Button').click(function(){
  $('#start_server').click(function(){
   console.log("start_server = ");
   ipcRenderer.send('start_server', {})
+  $('#start_server').hide();
+  $('#stop_server').show();
+  
  });
 
  $('#stop_server').click(function(){
   console.log("stop_server = ");
   ipcRenderer.send('stop_server', {})
+  $('#start_server').show();
+  $('#stop_server').hide();
  });
 
 
