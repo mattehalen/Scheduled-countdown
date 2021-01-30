@@ -8,7 +8,7 @@ const KEYS = {
   "CUE_COUNTDOWN": "cueCountDown",
   "SETTINGS": 'settings',
   "MIDI": "midi",
-  "ADMINURL": 'adminUrl'
+  "ALLUSERSURL": 'allUsersUrl'
 };
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
   document.getElementById("nowTopRow").textContent = message;
@@ -29,6 +29,14 @@ WebSocketService.onEvent(KEYS.MIDI, (message) => {
     document.getElementById("timeCode").textContent = "";
   }
 
+})
+WebSocketService.onEvent(KEYS.ALLUSERSURL, (message) => {
+  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>' + message.text + '</H1></div>');
+  console.log(message.text);
+
+  sleep(message.time).then(() => {
+    $(".blink").remove();
+  });
 })
 
 

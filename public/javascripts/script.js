@@ -79,7 +79,7 @@ WebSocketService.onEvent(KEYS.STARTURL, (message) => {
   $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>' + message.text + '</H1></div>');
   console.log(message.text);
 
-  sleep(10000).then(() => {
+  sleep(message.time).then(() => {
     $(".blink").remove();
   });
 })

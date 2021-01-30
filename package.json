@@ -1,7 +1,7 @@
 {
   "name": "Scheduled-countdown",
   "author": "Mathias Halén",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",
@@ -37,7 +37,8 @@
   "scripts": {
     "electron": "electron .",
     "dist": "electron-builder",
-    "start": "nodemon ./index.js",
+    "macdist": "electron-builder --mac",
+		"windist": "electron-builder --win",
     "debug": "node --inspect ./index.js",
     "debug-brk": "node --inspect-brk ./index.js"
   },

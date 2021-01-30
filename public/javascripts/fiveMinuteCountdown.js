@@ -1,6 +1,7 @@
 // "use strict";
 const KEYS = {
-  "COUNTDOWN": "countDown",
+  "COUNTDOWN":      "countDown",
+  "COUNTDOWNURL":       "countdownUrl",
 };
 
 WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
@@ -24,7 +25,14 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   }
 
 })
+WebSocketService.onEvent(KEYS.COUNTDOWNURL, (message) => {
+  $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>' + message.text + '</H1></div>');
+  console.log(message.text);
 
+  sleep(message.time).then(() => {
+    $(".blink").remove();
+  });
+})
 function msToTime(s) {
   s = s*-1
   var ms = s % 1000;

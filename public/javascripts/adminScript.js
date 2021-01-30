@@ -85,7 +85,7 @@ WebSocketService.onEvent(KEYS.ADMINURL, (message) => {
   $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>' + message.text + '</H1></div>');
   console.log(message.text);
 
-  sleep(10000).then(() => {
+  sleep(message.time).then(() => {
     $(".blink").remove();
   });
 })
@@ -146,41 +146,51 @@ $("#deleteUser_button").on('click', function () {
 
 function alertButton() {
   var text = $("#alertText").val();
+  var time = $("#alertTime").val()  *1000;
+
   console.log("alertButton presed");
+  console.log(time);
 
   if ($("#startUrl").val() == 1) {
     sendSocketMessage("startUrl", {
-      text: text
+      text: text,
+      time: time
     });
   }
   if ($("#adminUrl").val() == 1) {
     sendSocketMessage("adminUrl", {
-      text: text
+      text: text,
+      time: time
     });
   }
   if ($("#fohUrl").val() == 1) {
     sendSocketMessage("fohUrl", {
-      text: text
+      text: text,
+      time: time
     });
   }
   if ($("#stageUrl").val() == 1) {
     sendSocketMessage("stageUrl", {
-      text: text
+      text: text,
+      time: time
     });
   }
   if ($("#watchUrl").val() == 1) {
     sendSocketMessage("watchUrl", {
-      text: text
+      text: text,
+      time: time
     });
   }
   if ($("#countdownUrl").val() == 1) {
     sendSocketMessage("countdownUrl", {
-      text: text
+      text: text,
+      time: time
     });
   }
   if ($("#allUsersUrl").val() == 1) {
     sendSocketMessage("allUsersUrl", {
-      text: text
+      text: text,
+      time: time
     });
   }
 };

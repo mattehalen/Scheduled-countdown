@@ -11,7 +11,6 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
   document.getElementById("now").textContent = message;
 })
 WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
-  console.log('Message from server: ', message);
   
   if (message.bool) {
     document.getElementById("title").textContent = message.title
@@ -68,11 +67,11 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   }
 
 })
-WebSocketService.onEvent(KEYS.watchUrl, (message) => {
+WebSocketService.onEvent(KEYS.WATCHURL, (message) => {
   $('body').prepend('<div class="blink d-flex align-items-center justify-content-center"><H1>' + message.text + '</H1></div>');
   console.log(message.text);
 
-  sleep(10000).then(() => {
+  sleep(message.time).then(() => {
     $(".blink").remove();
   });
 })

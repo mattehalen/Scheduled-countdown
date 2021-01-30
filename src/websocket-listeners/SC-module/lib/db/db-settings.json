@@ -33,7 +33,7 @@
       "DmxCH_StopOBSRecording": 255
   },
   "Color": {
-      "countDownColor": "#ff0000",
-      "countUpColor": "#00ff00"
+      "countDownColor": "#640000",
+      "countUpColor": "#006400"
   }
 }

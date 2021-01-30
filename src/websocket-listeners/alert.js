@@ -72,7 +72,7 @@ WebSocketService.onEvent(EVENTS.STAGEURL, async (messageEvent) => {
 WebSocketService.onEvent(EVENTS.WATCHURL, async (messageEvent) => {
     const key     = messageEvent.getKey();
     const message = messageEvent.getMessage();
-    console.log("ADMINURL is pressed = "+message);
+    console.log("WATCHURL is pressed = "+message);
     
 
     // // To send data back to UI client.
@@ -87,7 +87,7 @@ WebSocketService.onEvent(EVENTS.WATCHURL, async (messageEvent) => {
 WebSocketService.onEvent(EVENTS.COUNTDOWNURL, async (messageEvent) => {
     const key     = messageEvent.getKey();
     const message = messageEvent.getMessage();
-    console.log("STARTURL is pressed = "+message);
+    console.log("COUNTDOWNURL is pressed = "+message);
     
 
     // // To send data back to UI client.

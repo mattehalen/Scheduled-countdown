@@ -46,17 +46,8 @@ block content
                 p 5Min countdown
                 iframe.preview(src='/countdown')
               .col
-                .row(style="height: 50%")
-                .row
-                  button#reloadFiveMinCountDown.btn.btn-dark(style='width: 100%') Reload 5min
-                .row
-                  button#one.btn.btn-dark(style='width: 20%') 1min
-                  button#two.btn.btn-dark(style='width: 20%') 2min
-                  button#three.btn.btn-dark(style='width: 20%') 3min
-                  button#four.btn.btn-dark(style='width: 20%') 4min
-                  button#five.btn.btn-dark(style='width: 20%') 5min
-                .row
-                  button#alpha.btn.btn-dark(style='width: 100%') Alpha
+                p Watch
+                iframe.preview(src='/watch')
 
 
           #alert.tab-pane.fade(role='tabpanel' aria-labelledby='alert-tab')
@@ -91,8 +82,10 @@ block content
               .col-1
                 input.slider(type="range",value=0, name="allUsersUrl", id="allUsersUrl",, min="0" max="1")
             .row
-              .col-10
+              .col-8
                 input.form-control(type='text', value="Hello", name="alertText" id="alertText")
+              .col-2
+                input.form-control(type='number', value=10, name="alertTime" id="alertTime")
               .col-2
                 button.btn.btn-danger(type="reset",name="alertButton", id="alertButton", onClick="alertButton()") Send Alert
 
