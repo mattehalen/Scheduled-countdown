@@ -90,6 +90,7 @@ $('#SaveIP_Button').click(function(){
  $('#start_server').click(function(){
   console.log("start_server = ");
   ipcRenderer.send('start_server', {})
+  $('#app_state').text("Online !");
   $('#start_server').hide();
   $('#stop_server').show();
   
@@ -98,6 +99,7 @@ $('#SaveIP_Button').click(function(){
  $('#stop_server').click(function(){
   console.log("stop_server = ");
   ipcRenderer.send('stop_server', {})
+  $('#app_state').text("Offline !");
   $('#start_server').show();
   $('#stop_server').hide();
  });
