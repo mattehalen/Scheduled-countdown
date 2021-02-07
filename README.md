@@ -41,4 +41,4 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     https://www.paypal.com/donate?hosted_button_id=N7GK2QCY8QAWQ        
 
 # Special thanks to
-    - https://github.com/mukeshkmr776 - help rebuild back-end for Alpha V.1.0.0
+    - https://github.com/mukeshkmr776 - help rebuild back-end for Alpha V.0.0.1
