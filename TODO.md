@@ -14,6 +14,7 @@ https://babeljs.io/docs/en/
 ## Back End / Database
 12. () midi_interface_ID needs to be a number and not a string. String works on MAC but not PC. Report bug? - Could be related to RTP midi !!!!!!
 13. electron Main windows -> Save Port dosn't work.
+14. Setting Up a Remote Notification Server - https://github.com/node-apn/node-apn - https://docs.tizen.org/application/web/guides/messaging/push/
 
 ## Other
 1. (X) - Install Electron !!    - 2021-01-13
