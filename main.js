@@ -86,6 +86,8 @@ function createWindow () {
   const mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    resizable: false,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false
@@ -136,7 +138,7 @@ app.on('window-all-closed', function () {
 ipcMain.on('saveIP', async (event, data) => {
   const db_settings = await AdminSettings.getDbSettings();
   console.log("--------------------> ipcMain -> saveIP");
-  db_settings.ipsettings.ipadress = data.ipadress;
+  //db_settings.ipsettings.ipadress = data.ipadress;
   db_settings.ipsettings.port = data.port;
 
   await AdminSettings.writeDbSettings(db_settings);

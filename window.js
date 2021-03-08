@@ -70,10 +70,10 @@ var getNetworkIPs = (function() {
 $('#SaveIP_Button').click(function(){
     var e = document.getElementById("ipSelect");
     var port = document.getElementById("port");
-    var selectedIP = e.options[e.selectedIndex].value;
-    console.log("SaveIP_Button = "+selectedIP);
+    //var selectedIP = e.options[e.selectedIndex].value;
+    console.log("SaveIP_Button = "+port);
     ipcRenderer.send('saveIP', {
-      ipadress:selectedIP,
+      //ipadress:selectedIP,
       port: port.value
     })
  });

@@ -5,6 +5,10 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 
 
 # CHANGE LOG
+
+## Alpha V.0.0.3 [2021-03-08]
+    1. [Main Window] - Remove Scrollers and added  resizable: false, autoHideMenuBar: true,
+    2. [Main Window] - Fixed Bug where Save Port button didn't work after removing choose IP from selection of ip addresses.
 ## Alpha V.0.0.2 [2021-01-29]
     1. [Main Window] - start_server & stop_server now toggles between hidden and shown to prevent double pressing and to easier show if server is started or not.
     2. [/Admin - User-tab] - now lets you add and delete users. Users can then enter there page on url /users/"yourname" example /user/mathias.
