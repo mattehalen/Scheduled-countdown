@@ -1,7 +1,7 @@
 {
-  "name": "Scheduled-countdown",
+  "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",
@@ -13,8 +13,17 @@
       "icon": "./assets/icon.icns"
     },
     "win": {
-      "target": "nsis",
+      "target": ["appx"],
       "icon": "./assets/icon.png"
+    },
+    "appx": {
+      "applicationId": "ScheduledCountdown",
+      "backgroundColor": "#464646",
+      "displayName": "Scheduled-Countdown",
+      "identityName": "4555MathiasHaln.Scheduled-countdown",
+      "publisher": "CN=2D0EA3D9-1A4C-4E8D-A3D2-24A828687B48",
+      "publisherDisplayName": "Mathias Halén",
+      "languages": "EN-US"
     },
     "nsis": {
       "artifactName": "Scheduled-Countdown-win64.exe",
@@ -31,14 +40,20 @@
     },
     "files": [
       "**/*",
-      "assets/icon.ico"
+      "assets/icon.ico",
+      "./assets/win/Square44x44Logo.png",
+      "./assets/win/Square150x150Logo.png",
+      "./assets/win/StoreLogo.png",
+      "./electron-output/appx/Square44x44Logo.png",
+      "./electron-output/appx/Square150x150Logo.png",
+      "./electron-output/appx/StoreLogo.png"
     ]
   },
   "scripts": {
     "electron": "electron .",
     "dist": "electron-builder",
     "macdist": "electron-builder --mac",
-		"windist": "electron-builder --win",
+    "windist": "electron-builder --win",
     "debug": "node --inspect ./index.js",
     "debug-brk": "node --inspect-brk ./index.js"
   },
@@ -62,6 +77,7 @@
   "devDependencies": {
     "electron": "^11.1.1",
     "electron-builder": "^22.9.1",
+    "electron-packager": "^15.2.0",
     "nodemon": "^2.0.2"
   }
 }
