@@ -164,3 +164,15 @@ ipcMain.on('stop_server', async (event, data) => {
   console.log("----------> stop_server");
   Server.stopServer();
 })
+
+ipcMain.on('open_admin', async (event, data) => {
+  const link = "http://localhost:"+data.port+"/admin"
+  console.log("--------------------> ipcMain -> open_admin "+link);
+  require("electron").shell.openExternal(link);
+
+})
+ipcMain.on('open_root', async (event, data) => {
+  const link = "http://localhost:"+data.port+"/"
+  console.log("--------------------> ipcMain -> open_root "+link);
+  require("electron").shell.openExternal(link);
+})

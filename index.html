@@ -8,24 +8,14 @@
   <link rel="stylesheet" href="./public/stylesheets/style.css">
 </head>
 
-<body style="overflow: hidden;">
 <div style="height: 25% ; background-color: #3b3b3b;">
   <div class=" h-100 d-flex justify-content-center align-items-center">
-    <h1>Scheduled Countdown Alpha V.0.0.3</h1>
+    <h1>Scheduled Countdown Alpha V.0.0.4</h1>
   </div>
-
-
-  
 </div>
-<div style="height: 75%;" class="">
+<div style="height: 60%;" class="">
   <h1 style="font-weight: 900; height: 60%; padding-top: 10%;" class="shadow" id="app_state">Server not started.</h1>
-
-  <!-- <div class=" h-100 d-flex justify-content-center align-items-center"> -->
     <div class=" form-group w-100 shadow-lg">
-      
-      <!-- <label for="ipSelect">Select IP</label> -->
-      <!-- <select class="form-control" id="ipSelect">
-      </select> -->
       <div class="form-row">
         <div class="col-6 text-right">Port</div>
         <div class="col-6 text-left">
@@ -34,11 +24,14 @@
       </div>
       <div class="form-row">
         <button class="btn btn-dark" id="SaveIP_Button" style="width: 100%">Save port</button>
-        <!-- <button class="btn btn-dark" id="LoopbackIP_Button" style="width: 100%">Set Ip 127.0.0.1</button> -->
       </div>
       <div class="row">
         <button class="btn btn-success col-12 btn-lg" id="start_server">start_server</button>
         <button class="btn btn-danger col-12 btn-lg" id="stop_server" style="display: none;">stop_server</button>
+      </div>
+      <div class="row" id="openLinks" style="display: none;">
+        <button class="btn btn-dark col-6 btn-lg" id="open_admin">Admin Page</button>
+        <button class="btn btn-dark col-6 btn-lg" id="open_root">Index Page</button>
       </div>
       
     </div>
@@ -46,6 +39,7 @@
 
 </div>
       <!-- You can also require other files to run in this process -->
+      
 
 </body>
 <!-- Insert this line above script imports  -->

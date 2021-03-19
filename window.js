@@ -1,5 +1,4 @@
 const { ipcRenderer } = require('electron')
-// $('#stop_server').hide();
 
 var myIpArray = "";
 var getNetworkIPs = (function() {
@@ -60,13 +59,6 @@ var getNetworkIPs = (function() {
     }
   }, false);
 
-// function addToSelect(ip) {
-//     var x = document.getElementById("ipSelect");
-//     var option = document.createElement("option");
-//     option.text = ip;
-//     x.add(option);
-// }
-
 $('#SaveIP_Button').click(function(){
     var e = document.getElementById("ipSelect");
     var port = document.getElementById("port");
@@ -93,6 +85,7 @@ $('#SaveIP_Button').click(function(){
   $('#app_state').text("Online !");
   $('#start_server').hide();
   $('#stop_server').show();
+  $('#openLinks').show();
   
  });
 
@@ -102,6 +95,14 @@ $('#SaveIP_Button').click(function(){
   $('#app_state').text("Offline !");
   $('#start_server').show();
   $('#stop_server').hide();
+  $('#openLinks').hide();
  });
 
-
+ $('#open_admin').click(function(){
+  var port = document.getElementById("port");
+  ipcRenderer.send('open_admin', {port: port.value})
+ });
+ $('#open_root').click(function(){
+  var port = document.getElementById("port");
+  ipcRenderer.send('open_root', {port: port.value})
+ });
