@@ -5,7 +5,9 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 
 
 # CHANGE LOG
-
+## Alpha V.0.0.4 [2021-03-19]
+    1. [Main Window] - Added buttons to open / & /admin in default browser
+    2. Test Submitted App to MicrosoftStore waiting approval
 ## Alpha V.0.0.3 [2021-03-08]
     1. [Main Window] - Remove Scrollers and added  resizable: false, autoHideMenuBar: true,
     2. [Main Window] - Fixed Bug where Save Port button didn't work after removing choose IP from selection of ip addresses.
