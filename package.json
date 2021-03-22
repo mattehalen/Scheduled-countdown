@@ -14,7 +14,7 @@
     },
     "win": {
       "target": ["appx"],
-      "icon": "./assets/icon.png"
+      "icon": "./assets/icon.jpg"
     },
     "appx": {
       "applicationId": "ScheduledCountdown",
