@@ -77,12 +77,9 @@ async function getWeekDay() {
     }
 }
 async function createBackup(data,title) {
-    var d = new Date();
-    var date = d.toLocaleDateString();
-    var string = date + " - " + title
     let backupState = data;
     let folder = path.join(userDataPath,"backup");
-    let filename = path.join(folder, string + ".json");
+    let filename = path.join(folder, title + ".json");
 
     await FileOperation.writeToFile(filename, backupState); 
 }

@@ -1,7 +1,7 @@
 {
   "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",
@@ -13,7 +13,10 @@
       "icon": "./assets/icon.icns"
     },
     "win": {
-      "target": ["appx"],
+      "target": [
+        "appx",
+        "nsis"
+      ],
       "icon": "./assets/icon.jpg"
     },
     "appx": {
@@ -72,7 +75,8 @@
     "nexe": "^3.3.2",
     "pug": ">=3.0.1",
     "socket.io": "^2.3.0",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.1",
+    "yarn": "^1.22.10"
   },
   "devDependencies": {
     "electron": "^11.1.1",

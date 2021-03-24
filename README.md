@@ -5,6 +5,8 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 
 
 # CHANGE LOG
+## Alpha V.0.0.5 [2021-03-24]
+    1. [src/services/admin-settings.js] - removed local datestring. Didn't save db-Backups on system with local date string using "/".
 ## Alpha V.0.0.4 [2021-03-19]
     1. [Main Window] - Added buttons to open / & /admin in default browser
     2. Test Submitted App to MicrosoftStore waiting approval
