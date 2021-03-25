@@ -13,7 +13,8 @@
       "target": ["mas", "pkg", "dmg"],
       "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "public.app-category.utilities",
-      "icon": "./assets/icon.jpg"
+      "provisioningProfile": "./build/SCmacOSProvisioningProfile.provisionprofile",
+      "icon": "./assets/Scheduled-countdown.icns"
   },
     "mas": {
       "hardenedRuntime" : false,
