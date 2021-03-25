@@ -6,12 +6,22 @@
   "description": "More info comming soon",
   "main": "main.js",
   "build": {
-    "appId": "com.Scheduled-Countdown.app",
+    "appId": "com.Scheduled-countdown-macos",
     "productName": "Scheduled-Countdown",
     "mac": {
-      "category": "se.Scheduled.Countdown",
-      "icon": "./assets/icon.icns"
-    },
+      "type": "distribution",
+      "target": ["mas", "pkg", "dmg"],
+      "artifactName": "${productName}-${version}-${os}.${ext}",
+      "category": "public.app-category.utilities",
+      "icon": "./assets/icon.jpg"
+  },
+    "mas": {
+      "hardenedRuntime" : false,
+      "type": "distribution",
+      "category": "public.app-category.utilities",
+      "entitlements": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.inherit.plist"
+  },
     "win": {
       "target": [
         "appx",
