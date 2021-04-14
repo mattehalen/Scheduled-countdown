@@ -23,3 +23,8 @@ https://babeljs.io/docs/en/
 3. Install TypeScript
 4. Release Apple Watch App that talkes to server.
 5. Release Samsung Watch App that talkes to server.
+
+## User Page
+### Cuelist
+1. Add cueslist's. Chose different cuelists
+2. Import Cuelist / Timecode Cuelist from - HOG - GrandMA - avolites...
