@@ -33,7 +33,8 @@ router.get('/', async function (req, res) {
             settings: db_settings,
             midi_interface_ID: midi_id,
             listBackups:listBackups,
-            users:users.userName
+            users:users.userName,
+            port:db_settings.ipsettings.port
         });
     } catch (error) {
         console.log(error);

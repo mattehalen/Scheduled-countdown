@@ -1,6 +1,8 @@
 ul.list-group
 each val in users
-  li.list-group-item.list-group-item-dark.text-left(style="font-size: calc(6px + 1vw);")= val.name
+  li.list-group-item.list-group-item-dark.text-left(style="font-size: calc(6px + 1vw);")
+    a(href="http://localhost:"+port+"/users/"+val.name)= val.name
+
 .row
     .col-2
         button.btn.btn-danger(type="button",name="addUser", id="addUser_button") Add user
