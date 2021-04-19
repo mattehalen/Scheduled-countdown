@@ -68,11 +68,15 @@ router.get('/users/:userID', async function (req, res) {
     if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
       // console.log(arrayItem.name);
       // console.log(arrayItem.cues);
+      //console.log(arrayItem.cuelist.findIndex(({cuelistName}) => cuelistName === arrayItem.selectedCueList));
       res.render('users', {
         title: 'Scheduled-CountDown',
         now: "s",
         name: name,
-        cuelist: arrayItem.cues,
+        cuelist: arrayItem.cuelist,
+        cues: arrayItem.cues,
+        selectedCueList:arrayItem.selectedCueList,
+        selectedCueListIndex:arrayItem.cuelist.findIndex(({cuelistName}) => cuelistName === arrayItem.selectedCueList),
         settings: db_settings
       });
     }
@@ -114,28 +118,33 @@ router.post('/users/submit/:userID', async function (req, res) {
 
 
 const EVENTS = {
-  ADDNEWCUEROW:       'AddNewCueRow',
-  SEND_DELETE_CUEBUTTON_TO_SOCKET: "send_Delete_CueButton_To_Socket"
+  ADDNEWCUEROW:                     "AddNewCueRow",
+  SEND_DELETE_CUEBUTTON_TO_SOCKET:  "send_Delete_CueButton_To_Socket",
+  SELECTEDCUELIST:                  "selectedCueList",
+  ADDNEWCUELIST:                    "addNewCuelist",
+  LOADCUELIST:                      "loadCuelist",
+  OVERWRITECUELIST:                 "overwriteCuelist",
+  DELETECUELIST:                    "deleteCuelist"
 };
 WebSocketService.onEvent(EVENTS.ADDNEWCUEROW, async (messageEvent) => {
   const key     = messageEvent.getKey();
   const message = messageEvent.getMessage();
   const users = await USERS_SETTINGS.get()
   var name = message.user;
+  var selectedCuelist = message.selectedCuelist
   var data = { title: 'Added Cue', timecode: '00:00:11' };
 
   try {
     users.userName.forEach(async function (arrayItem) {
+    
       if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
-        arrayItem.cues.push(data);
-
-        arrayItem.cues.sort(function (a, b) {
+        console.log("---------->>>  "+ selectedCuelist);
+        const foundCuelist = arrayItem.cuelist.find(({cuelistName}) => cuelistName === selectedCuelist);
+        foundCuelist.cues.push(data);
+        foundCuelist.cues.sort(function (a, b) {
           return a.timecode.localeCompare(b.timecode);
       });
-
-
         await USERS_SETTINGS.write(users);
-        
       }
     });
   } catch (error) {
@@ -158,6 +167,72 @@ WebSocketService.onEvent(EVENTS.SEND_DELETE_CUEBUTTON_TO_SOCKET, async (messageE
     });
   } catch (error) {
       console.log(error);
+  }
+});
+WebSocketService.onEvent(EVENTS.SELECTEDCUELIST, async (messageEvent) => {
+  const key     = messageEvent.getKey();
+  const message = messageEvent.getMessage();
+  const users = await USERS_SETTINGS.get()
+  var name = message.user;
+  var selectedCuelist = message.selectedCuelist
+
+  try {
+    users.userName.forEach(async function (arrayItem) {
+    
+      if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+        console.log("---------->>>  "+ selectedCuelist);
+        console.log(arrayItem.selectedCueList);
+        arrayItem.selectedCueList = selectedCuelist;
+        console.log("after");
+        console.log(arrayItem.selectedCueList);
+        await USERS_SETTINGS.write(users);
+      }
+    });
+  } catch (error) {
+      console.log(error);
+  }
+});
+//--------------------------------------------------
+WebSocketService.onEvent(EVENTS.ADDNEWCUELIST, async (messageEvent) => {
+  const key = messageEvent.getKey();
+  const message = messageEvent.getMessage();
+  const users = await USERS_SETTINGS.get()
+  var name = message.user;
+  var selectedCuelist = message.selectedCuelist;
+  var data = {
+    title: 'Added Cue',
+    timecode: '00:00:11'
+  };
+
+  console.log(message);
+
+  try {
+    users.userName.forEach(async function (arrayItem) {
+
+      if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+
+        console.log("---------->>> ADDNEWCUELIST  " + selectedCuelist);
+        console.log(arrayItem.cuelist);
+        console.log("----------> > > TEST THIS VALUE");
+
+        if (arrayItem.cuelist.some(e => e.cuelistName === 'Cuelist')) {
+        } else {
+          arrayItem.cuelist.push({
+            "cuelistName": message.newCuelistName,
+            "cues": [data]
+          })
+          arrayItem.cuelist.sort(function (a, b) {
+            return a.cuelistName.localeCompare(b.cuelistName);
+          });
+
+        }
+
+        await USERS_SETTINGS.write(users);
+
+      }
+    });
+  } catch (error) {
+    console.log(error);
   }
 });
 

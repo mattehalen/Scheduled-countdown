@@ -48,8 +48,11 @@ var timeCodeBool = true;
 var cuelistHideBool = true;
 
 $("#AddNewCueRow").on('click', function () {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  console.log(selectedCuelist);
   sendSocketMessage("AddNewCueRow", {
-    user: user
+    user: user,
+    selectedCuelist:selectedCuelist
   });
     document.location.reload(true)
 });
@@ -76,6 +79,47 @@ $("#ResetTC").on('click', function () {
     return
   }
 });
+$("#SelectedCuelistButton").on('click', function () {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  console.log(selectedCuelist);
+  sendSocketMessage("selectedCueList", {
+    user: user,
+    selectedCuelist:selectedCuelist
+  });
+    document.location.reload(true)
+});
+
+//--------------------------------------------------
+$("#addNewCuelist").on('click', function () {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var newCuelistName = $( "#createCuelist_input" ).val();
+  sendSocketMessage("addNewCuelist", {
+    user: user,
+    selectedCuelist:selectedCuelist,
+    newCuelistName:newCuelistName
+  });
+    document.location.reload(true)
+});
+$("#loadCuelist").on('click', function () {
+  sendSocketMessage("loadCuelist", {
+    user: user,
+    selectedCuelist:selectedCuelist
+  })
+});
+$("#overwriteCuelist").on('click', function () {
+  sendSocketMessage("overwriteCuelist", {
+    user: user,
+    selectedCuelist:selectedCuelist
+  })
+});
+$("#deleteCuelist").on('click', function () {
+  sendSocketMessage("deleteCuelist", {
+    user: user,
+    selectedCuelist:selectedCuelist
+  })
+});
+//--------------------------------------------------
+
 
 function captureTCButton(listIndex) {
   console.log(timeCodeMs);

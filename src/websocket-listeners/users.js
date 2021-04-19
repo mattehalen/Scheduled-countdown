@@ -3,7 +3,7 @@ const USERS_SETTINGS  = require("../services/users-settings");
 const EVENTS = {
     GET_USERS:      'GET_USERS',
     ADD_USER:       "addUser",
-    DELETE_USER:     "deleteUser"
+    DELETE_USER:    "deleteUser"
 };
 
 
@@ -15,14 +15,21 @@ WebSocketService.onEvent(EVENTS.GET_USERS, (messageEvent) => {
 
 WebSocketService.onEvent(EVENTS.ADD_USER, async (messageEvent) => {
     const message   = messageEvent.getMessage();
-    const users     = await USERS_SETTINGS.get()
+    const users     = await USERS_SETTINGS.get();
+    const cuelistName = "My first Cuelist"
 
     let data = {
         name:message,
-        cues:[
+        selectedCueList: cuelistName,
+        cuelist: [
             {
-                title: "Your First Cue",
-                timecode: "00:01:00"
+                cuelistName: cuelistName,
+                cues: [
+                    {
+                        title: "Your First Cue",
+                        timecode: "00:01:00"
+                    }
+                ]
             }
         ]
     }
