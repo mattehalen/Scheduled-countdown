@@ -86,12 +86,14 @@ router.post('/users/submit/:userID', async function (req, res) {
   var name = req.originalUrl.split('/users/submit/')[1];
   console.log("----------> = "+name);
 
+
   try {
     const users = await USERS_SETTINGS.get()
     const data = JSON.parse(JSON.stringify(req.body));
     const newCueListArray=[];
 
-    var t = Object.keys(data).length / 2;
+  //---------- the - 1 here in T is for the added SelectedCuelist in the form that dosnt need to be in the loop
+    var t = (Object.keys(data).length - 1) / 2;
     for(var x=0; x < t ; x++){
       const title = data[`title${x}`];
       const timecode = data[`timeCode${x}`]
@@ -104,8 +106,22 @@ router.post('/users/submit/:userID', async function (req, res) {
 
     users.userName.forEach(async function (arrayItem) {
       if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
-        console.log(arrayItem.cues);
-        arrayItem.cues = newCueListArray;
+
+
+        const indexPos = arrayItem.cuelist.findIndex(({
+          cuelistName
+        }) => cuelistName === data.SelectedCuelist);
+
+        // console.log(indexPos);
+        // console.log(arrayItem.cuelist[indexPos].cues);
+        // console.log(newCueListArray);
+
+        newCueListArray.sort(function (a, b) {
+          return a.timecode.localeCompare(b.timecode);
+        });
+
+
+        arrayItem.cuelist[indexPos].cues = newCueListArray;
         await USERS_SETTINGS.write(users)
       }
     });
@@ -161,7 +177,15 @@ WebSocketService.onEvent(EVENTS.SEND_DELETE_CUEBUTTON_TO_SOCKET, async (messageE
   try {
     users.userName.forEach(async function (arrayItem) {
       if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
-        arrayItem.cues.splice(listIndex,1);
+        const indexPos = arrayItem.cuelist.findIndex(({
+          cuelistName
+        }) => cuelistName === message.selectedCuelist);
+        console.log("----------> > > CUE DELETE Button");
+        //console.log(indexPos);
+        console.log(arrayItem.cuelist);
+        console.log(arrayItem.cuelist[indexPos]);
+
+        arrayItem.cuelist[indexPos].cues.splice(listIndex,1);
         await USERS_SETTINGS.write(users);
       }
     });
@@ -213,9 +237,8 @@ WebSocketService.onEvent(EVENTS.ADDNEWCUELIST, async (messageEvent) => {
 
         console.log("---------->>> ADDNEWCUELIST  " + selectedCuelist);
         console.log(arrayItem.cuelist);
-        console.log("----------> > > TEST THIS VALUE");
 
-        if (arrayItem.cuelist.some(e => e.cuelistName === 'Cuelist')) {
+        if (arrayItem.cuelist.some(e => e.cuelistName === message.newCuelistName)) {
         } else {
           arrayItem.cuelist.push({
             "cuelistName": message.newCuelistName,
@@ -226,6 +249,72 @@ WebSocketService.onEvent(EVENTS.ADDNEWCUELIST, async (messageEvent) => {
           });
 
         }
+
+        await USERS_SETTINGS.write(users);
+
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+// LOADCUELIST
+WebSocketService.onEvent(EVENTS.LOADCUELIST, async (messageEvent) => {
+  const key     = messageEvent.getKey();
+  const message = messageEvent.getMessage();
+  const users = await USERS_SETTINGS.get()
+  var name = message.user;
+  var cuelistDropdown_input = message.cuelistDropdown_input
+  console.log("---------- > > > "+cuelistDropdown_input);
+
+  try {
+    users.userName.forEach(async function (arrayItem) {
+    
+      if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+
+        arrayItem.selectedCueList = cuelistDropdown_input;
+        await USERS_SETTINGS.write(users);
+      }
+    });
+  } catch (error) {
+      console.log(error);
+  }
+});
+// OVERWRITECUELIST
+WebSocketService.onEvent(EVENTS.DELETECUELIST, async (messageEvent) => {
+  const key = messageEvent.getKey();
+  const message = messageEvent.getMessage();
+  const users = await USERS_SETTINGS.get()
+  var name = message.user;
+  var cuelistDropdown_input = message.cuelistDropdown_input;
+
+  console.log(message);
+
+  try {
+    users.userName.forEach(async function (arrayItem) {
+
+      if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+
+        // console.log("---------->>> DELETECUELIST  " + cuelistDropdown_input);
+        // console.log(arrayItem.cuelist.findIndex(({cuelistName}) => cuelistName === message.cuelistDropdown_input));
+        const indexPos = arrayItem.cuelist.findIndex(({
+          cuelistName
+        }) => cuelistName === message.cuelistDropdown_input);
+
+        if (arrayItem.cuelist.some(e => e.cuelistName === cuelistDropdown_input)) {
+          if (message.selectedCuelist === cuelistDropdown_input) {
+
+            arrayItem.cuelist.splice(indexPos, 1)
+            arrayItem.selectedCueList = arrayItem.cuelist[0].cuelistName;
+
+          } else {
+            arrayItem.cuelist.splice(indexPos, 1)
+          }
+        }
+
+        arrayItem.cuelist.sort(function (a, b) {
+          return a.cuelistName.localeCompare(b.cuelistName);
+        });
 
         await USERS_SETTINGS.write(users);
 

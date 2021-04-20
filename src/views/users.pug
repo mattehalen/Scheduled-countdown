@@ -10,61 +10,66 @@ block content
 
           
   .container-fluid
-    .row.justify-content-center.overflow-hidden
+    .row.justify-content-center
       .col-xl-9.col-sm-12.col-xs-12(style="font-size: calc(5px + 1vw)")
-        div.form-row
-          .col-8
-            select.form-control(type='select',name="SelectedCuelist",id="SelectedCuelist",)
-                each list, index in cuelist
-                    option= list.cuelistName
-          .col-4
-            button.btn.btn-dark(type="button",style='width: 100%' id="SelectedCuelistButton") Save as SelectedCuelist
-        
-        form.overflow-auto-x(method='POST' action='submit/'+name style="height: 45vh")
+        form.overflow-auto-x(method='POST' action='submit/'+name )
+          div.form-row
+            .col-8
+              select.form-control(type='select',name="SelectedCuelist",id="SelectedCuelist",)
+                  each list, index in cuelist
+                    if (list.cuelistName == selectedCueList)
+                      option(selected=true)= list.cuelistName
+                    else
+                      option= list.cuelistName
+                    
+            .col-4
+              button.btn.btn-dark(type="button",style='width: 100%' id="SelectedCuelistButton") Save as SelectedCuelist
+
           button.btn.btn-dark(type='submit' style='width: 100%') Save
           button.btn.btn-dark(type="button",style='width: 50%' id="AddNewCueRow") Add new Row
           button.btn.btn-dark(type="button",style='width: 25%' id="ToggleTC") TimeCode is ON
           button.btn.btn-dark(type="button",style='width: 25%' id="ResetTC") Hide Rows ON/OFF
 
-          h4#user
-            | The selected cuelist is -> #{selectedCueList}
-          .form-row
-            .col-1.text-right
-              | #
-            .col-4.text-left
-              | Title
-            .col-3.text-left
-              | TimeCode
-            .col-2.text-left  
-              | Countdown
-            .col-1.text-left
-              | Capture
-            .col-1.text-left
-              | DEL
+          div(style="height: 50vh; overflow-x:hidden ; overflow-y:scroll")
+            h4#user
+              | The selected cuelist is -> #{selectedCueList}
+            .form-row
+              .col-1.text-right
+                | #
+              .col-4.text-left
+                | Title
+              .col-3.text-left
+                | TimeCode
+              .col-2.text-left  
+                | Countdown
+              .col-1.text-left
+                | Capture
+              .col-1.text-left
+                | DEL
               
-          each person, index in cuelist[selectedCueListIndex].cues
-            div.form-row.mywrapper(id="cueListRow" + index)
-              .centeredOverlay(id="centeredOverlay" + index)
-                //- span Loading...
+            each person, index in cuelist[selectedCueListIndex].cues
+              div.form-row.mywrapper(id="cueListRow" + index)
+                .centeredOverlay(id="centeredOverlay" + index)
+                  //- span Loading...
 
-              .col-1.text-right= index+1
-              .col-4
-                input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
-              .col-3
-                input.form-control(type='text', value=person.timecode, name="timeCode" + index, id="timeCode" + index)
-              .col-2
-                p(id="timecodeMs" + index)
-              .col-1
-                button.btn.btn-success(type="button",name="captureTCButton" + index, id=index, onClick="captureTCButton(this.id)") TC
-              .col-1
-                button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+                .col-1.text-right= index+1
+                .col-4
+                  input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
+                .col-3
+                  input.form-control(type='text', value=person.timecode, name="timeCode" + index, id="timeCode" + index)
+                .col-2
+                  p(id="timecodeMs" + index)
+                .col-1
+                  button.btn.btn-success(type="button",name="captureTCButton" + index, id=index, onClick="captureTCButton(this.id)") TC
+                .col-1
+                  button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+    
+    
+    
   
   
   
-  
-  
-  
-  .shadow.p-3.mb-5.rounded
+  .shadow.p-3.mb-5.rounded.fixed-bottom
     div.form-row
       .col-12             
         | This Section is NOT READY YET
@@ -74,14 +79,14 @@ block content
         //button.btn.btn-dark(type='submit' id="addNewCuelist" style='width: 100%' formaction='submit/'+name+'/addNewCuelist') Add New Cuelist
       .col-4
           input.form-control(type='text', value="Cuelist", name="createCuelist_input", id="createCuelist_input")
-      .col-4
+      .col-6
           button#loadCuelist.btn.btn-dark(type='button' style="width: 100%") Load Cuelist
-      .col-4
-          button#overwriteCuelist.btn.btn-dark(type='button' style="width: 100%") Overwrite Cuelist
-      .col-4
+      //- .col-4
+      //-     button#overwriteCuelist.btn.btn-dark(type='button' style="width: 100%") Overwrite Cuelist
+      .col-6
           button#deleteCuelist.btn.btn-dark(type='button' style="width: 100%") Delete Cuelist
       .col-12
-          select.form-control(type='select',name="listBackups",id="listBackups",)
+          select.form-control(type='select',name="cuelistDropdown_input",id="cuelistDropdown_input",)
               each list, index in cuelist
                     option= list.cuelistName
 block pagescripts

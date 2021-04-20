@@ -101,22 +101,38 @@ $("#addNewCuelist").on('click', function () {
     document.location.reload(true)
 });
 $("#loadCuelist").on('click', function () {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var newCuelistName = $( "#createCuelist_input" ).val();
+  var cuelistDropdown_input = $( "#cuelistDropdown_input" ).val();
   sendSocketMessage("loadCuelist", {
     user: user,
-    selectedCuelist:selectedCuelist
+    selectedCuelist:selectedCuelist,
+    newCuelistName:newCuelistName,
+    cuelistDropdown_input:cuelistDropdown_input
   })
+  document.location.reload(true)
 });
 $("#overwriteCuelist").on('click', function () {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var newCuelistName = $( "#createCuelist_input" ).val();
+  var cuelistDropdown_input = $( "#cuelistDropdown_input" ).val();
   sendSocketMessage("overwriteCuelist", {
     user: user,
-    selectedCuelist:selectedCuelist
+    selectedCuelist:selectedCuelist,
+    newCuelistName:newCuelistName,
+    cuelistDropdown_input:cuelistDropdown_input
   })
+  document.location.reload(true)
 });
 $("#deleteCuelist").on('click', function () {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var cuelistDropdown_input = $( "#cuelistDropdown_input" ).val();
   sendSocketMessage("deleteCuelist", {
     user: user,
-    selectedCuelist:selectedCuelist
+    selectedCuelist:selectedCuelist,
+    cuelistDropdown_input:cuelistDropdown_input
   })
+  document.location.reload(true)
 });
 //--------------------------------------------------
 
@@ -129,9 +145,11 @@ function captureTCButton(listIndex) {
 };
 
 function delete_button_click(listIndex) {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
   console.log("delete_button_click");
   sendSocketMessage("send_Delete_CueButton_To_Socket", {
     listIndex: listIndex,
+    selectedCuelist:selectedCuelist,
     user: user
   });
   document.location.reload(true)
