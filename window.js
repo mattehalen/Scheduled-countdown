@@ -1,4 +1,11 @@
 const { ipcRenderer } = require('electron')
+const package         = require('./package.json');
+const revision = require('child_process')
+  .execSync('git rev-parse HEAD')
+  .toString().trim()
+
+$("#appTitle").text(package.name + " Alpha V." +package.version + " ["+ revision.slice(0,6) + "]" );
+
 
 var myIpArray = "";
 var getNetworkIPs = (function() {
@@ -106,3 +113,7 @@ $('#SaveIP_Button').click(function(){
   var port = document.getElementById("port");
   ipcRenderer.send('open_root', {port: port.value})
  });
+
+console.log("-------------------");
+console.log(package.version );
+console.log("-------------------");
