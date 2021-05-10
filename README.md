@@ -3,6 +3,12 @@ Download Nodejs -> https://github.com/mattehalen/Scheduled-countdown/releases/ta
 
 https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-testing-V.1.0.0-%5B2021-01-26%5D
 
+# WEB API (Companion - Generic HTTP Request)
+    1. Generic HTTP Request
+        * Base URL = http://localhost:[YOUR PORT - Default Port is 3000]/
+            * [POST] - admin\offsetPlus
+            * [POST] - admin\offsetMinus
+            * [POST] - admin\offsetReset
 
 # CHANGE LOG
 ## Alpha V.0.0.5 [2021-03-24]
