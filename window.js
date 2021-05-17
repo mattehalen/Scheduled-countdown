@@ -2,12 +2,15 @@ const {
   ipcRenderer
 } = require('electron')
 const package = require('./package.json');
-const revision = require('child_process')
-  .execSync('git rev-parse HEAD')
-  .toString().trim()
+// const revision = require('child_process')
+//   .execSync('git rev-parse HEAD')
+//   .toString().trim()
 
-$("#appTitle").text(package.name + " Alpha V." + package.version + " [" + revision.slice(0, 6) + "]");
-
+async function get_github_revision() {
+  var data = await ipcRenderer.sendSync('get_github_revision', 'get_github_revision');
+  $("#appTitle").text(package.name + " Alpha V." + package.version + " [" + data + "]");
+}
+get_github_revision();
 
 var myIpArray = "";
 var getNetworkIPs = (function () {

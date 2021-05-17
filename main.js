@@ -7,8 +7,10 @@ const AdminSettings           = require("./src/services/admin-settings");
 const AutoStartSettings       = require("./src/services/autostart-settings");
 
 const Store                   = require('./lib/store.js');
-//const express                 = require('./index.js');
 const { loopback }            = require('ip');
+
+
+
 
 const settings_assetPath      = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-settings.json")
 const times_assetPath         = path.join(__dirname,"src/websocket-listeners/SC-module/lib/db/","db-times.json")
@@ -20,6 +22,40 @@ const db_times_path           = path.join(db_path, db_times_filname + ".json");
 const db_backup_path          = path.join(db_path, "backup");
 const db_users_path           = path.join(db_path, "users.json");
 const db_autoStart_path       = path.join(db_path, "autoStart.json");
+const github_revision_path    = path.join(db_path, "github.json");
+
+function isDev() {
+  return require.main.filename.indexOf('app.asar') === -1;
+}
+if (isDev()) {
+  // Do dev stuff
+
+  const revision = require('child_process')
+  .execSync('git rev-parse HEAD')
+  .toString().trim()
+  .slice(0, 6)
+
+  if (fs.existsSync(github_revision_path)) {
+    console.log("github_revision_path file exist");
+  } else {
+    console.log("github_revision_path does not exist");
+    function callback(err) {
+      if (err) throw err;
+      console.log('github_revision_path was created');
+    }
+    //fs.mkdir(db_users_path,callback);
+    let git_revision =
+    {
+      "revision": revision
+    }
+  let data = JSON.stringify(git_revision, null, 4);
+    fs.writeFileSync(github_revision_path, data);
+    //fs.copyFile(times_assetPath, db_times_path ,callback);
+  }
+}
+
+
+
 console.log("----------------------------------------------");
 console.log(db_backup_path);
 console.log("----------------------------------------------");
@@ -96,6 +132,8 @@ let data = JSON.stringify(autoStart, null, 4);
   fs.writeFileSync(db_autoStart_path, data);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
+
+
 
 
 
@@ -209,3 +247,16 @@ ipcMain.on('getAutoStart',async (event, arg) => {
   console.log(arg) // prints "ping"
   event.returnValue = await AutoStartSettings.get();
 })
+
+ipcMain.on('get_github_revision',async (event, arg) => {
+  console.log(arg) // prints "ping"
+  try {
+    const data = JSON.parse(fs.readFileSync(github_revision_path, 'utf-8'))
+    console.log(data.revision)
+    event.returnValue = data.revision;
+  } catch (err) {
+    console.error(err)
+  }
+})
+
+
