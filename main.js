@@ -4,6 +4,7 @@ const path                    = require('path')
 const fs 											= require('fs');
 var RPC                       = require('electron-rpc/server')
 const AdminSettings           = require("./src/services/admin-settings");
+const AutoStartSettings       = require("./src/services/autostart-settings");
 
 const Store                   = require('./lib/store.js');
 //const express                 = require('./index.js');
@@ -18,6 +19,7 @@ const db_settings_path        = path.join(db_path, db_settings_filname + ".json"
 const db_times_path           = path.join(db_path, db_times_filname + ".json");
 const db_backup_path          = path.join(db_path, "backup");
 const db_users_path           = path.join(db_path, "users.json");
+const db_autoStart_path       = path.join(db_path, "autoStart.json");
 console.log("----------------------------------------------");
 console.log(db_backup_path);
 console.log("----------------------------------------------");
@@ -76,6 +78,25 @@ let data = JSON.stringify(userName, null, 4);
   fs.writeFileSync(db_users_path, data);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
+//-----
+if (fs.existsSync(db_autoStart_path)) {
+  console.log("db_autoStart_path file exist");
+} else {
+  console.log("db_autoStart_path does not exist");
+  function callback(err) {
+    if (err) throw err;
+    console.log('db_autoStart_path was created');
+  }
+  //fs.mkdir(db_users_path,callback);
+  let autoStart =
+  {
+    "autoStart": false
+  }
+let data = JSON.stringify(autoStart, null, 4);
+  fs.writeFileSync(db_autoStart_path, data);
+  //fs.copyFile(times_assetPath, db_times_path ,callback);
+}
+
 
 
 
@@ -175,4 +196,16 @@ ipcMain.on('open_root', async (event, data) => {
   const link = "http://localhost:"+data.port+"/"
   console.log("--------------------> ipcMain -> open_root "+link);
   require("electron").shell.openExternal(link);
+})
+
+ipcMain.on('AutoStart', async (event, data) => {
+  const db_autoStart = await AutoStartSettings.get();
+  //console.log(db_autoStart);
+  console.log(data);
+  await AutoStartSettings.write(data);
+})
+
+ipcMain.on('getAutoStart',async (event, arg) => {
+  console.log(arg) // prints "ping"
+  event.returnValue = await AutoStartSettings.get();
 })

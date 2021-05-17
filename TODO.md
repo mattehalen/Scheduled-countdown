@@ -12,7 +12,7 @@ https://babeljs.io/docs/en/
 4. () useMIDI_ProgramChange
 
 ## Back End / Database
-12. () midi_interface_ID needs to be a number and not a string. String works on MAC but not PC. Report bug? - Could be related to RTP midi !!!!!!
+12. (X) midi_interface_ID needs to be a number and not a string. String works on MAC but not PC. Report bug? - Could be related to RTP midi !!!!!! - [NOT A PROBLEM]
 13. (X) - electron Main windows -> Save Port dosn't work. [2021-03-08]
 14. Setting Up a Remote Notification Server - https://github.com/node-apn/node-apn - https://docs.tizen.org/application/web/guides/messaging/push/
 15. Switch express to https server insted of http
@@ -23,7 +23,8 @@ https://babeljs.io/docs/en/
 3. Install TypeScript
 4. Release Apple Watch App that talkes to server.
 5. Release Samsung Watch App that talkes to server.
-6. Add Auto Start on [MAIN WINDOW]
+6. (X) - [MAIN WINDOW] - Add Auto Start on
+7. [MAIN WINDOW] - Fix so Port input field is linked to the db-settings.json
 
 ## User Page
 ### Cuelist

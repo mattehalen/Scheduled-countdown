@@ -13,6 +13,10 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
+## Alpha V.0.0.8 [2021-05-17]
+    1. [MAIN WINDOW] - Added AutoStart Button
+## Alpha V.0.0.6 -> V.0.0.7
+    1. Tried to make a Appstore version of the software but no luck yet. increse of version number due to not being able to use same version number on upload to Appstore.
 ## Alpha V.0.0.5 [2021-03-24]
     1. [src/services/admin-settings.js] - removed local datestring. Didn't save db-Backups on system with local date string using "/".
 ## Alpha V.0.0.4 [2021-03-19]
@@ -46,7 +50,7 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     1. [Main Window] - Missing conformation when pushing start_server. User don't know if the button is pushed or not. And if button is push more then once the app crashes.
     2. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5mincountdown page.
     3. [/Admin - Alert-tab] - Missing input for legnth of Alert.
-    4. ~[/Admin - User-tab] - IN PROGRESS~
+    4. [/Admin - User-tab] - IN PROGRESS
     
 # Websites I got code from
     - https://github.com/nexe/nexe
