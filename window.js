@@ -91,7 +91,7 @@ $('#LoopbackIP_Button').click(function () {
   console.log("LoopbackIP_Button");
 });
 $('#start_server').click(function () {
-  console.log("start_server = ");
+  console.log("start_server");
   ipcRenderer.send('start_server', {})
   $('#app_state').text("Online !");
   $('#start_server').hide();
@@ -119,12 +119,6 @@ $('#open_root').click(function () {
     port: port.value
   })
 });
-
-console.log("-------------------");
-console.log(package.version);
-console.log("-------------------");
-
-
 $('#AutoStart').change(function () {
   console.log("AutoStart Checkbox");
   var AutoStart = document.getElementById("AutoStart");
@@ -135,7 +129,6 @@ $('#AutoStart').change(function () {
 
 async function getAutoStart() {
   var bool = await ipcRenderer.sendSync('getAutoStart', 'ping').autoStart;
-  console.log(bool);
 
   if (bool) {
     $("#start_server").click();
@@ -146,3 +139,10 @@ async function getAutoStart() {
   return bool
 }
 getAutoStart();
+async function getPort() {
+  var data = await ipcRenderer.sendSync('get_port', 'get_port');
+  console.log(data);
+
+  $("#port").val(data);
+}
+getPort();

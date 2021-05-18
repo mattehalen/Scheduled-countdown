@@ -6,6 +6,8 @@ var RPC                       = require('electron-rpc/server')
 const AdminSettings           = require("./src/services/admin-settings");
 const AutoStartSettings       = require("./src/services/autostart-settings");
 
+console.log("+++++++++++++++++++++++++++++++++++++++++++++");
+
 const Store                   = require('./lib/store.js');
 const { loopback }            = require('ip');
 
@@ -260,3 +262,13 @@ ipcMain.on('get_github_revision',async (event, arg) => {
 })
 
 
+ipcMain.on('get_port',async (event, arg) => {
+  console.log(arg) // prints "ping"
+  try {
+    const data = await AdminSettings.getDbSettings()
+    console.log(data.ipsettings.port)
+    event.returnValue = data.ipsettings.port;
+  } catch (err) {
+    console.error(err)
+  }
+})
