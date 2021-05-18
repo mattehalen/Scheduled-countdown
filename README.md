@@ -44,16 +44,14 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     3. Creating SC-module for the clock & countdown part.
 
 ## BUGS
-    1. (X) Alert functions dosen't work on - /watch & /countdown
-    2. Auto Reset needs a delay of X when starting a number eirlier.
+    1. Auto Reset needs a delay of X when starting a number eirlier.
     exemple - if show should start at 12:00 and we start at 11:55 with the help of offsetMinus and Auto Reset is enabled this will cause the coutdown to run again after the reset because the Auto Reset is triggerd at the end of countUp. 
-    3. () Windows Store Version - Scheduled Countdown Alpha V.0.0.5 - GIVES ERROR - Unhandled exception at 0x00007FF7AD1ACA5C in Scheduled-Countdown.exe: 0xC0000005: Access violation writing location 0x0000000000000000.
+    2. () Windows Store Version - Scheduled Countdown Alpha V.0.0.5 - GIVES ERROR - Unhandled exception at 0x00007FF7AD1ACA5C in Scheduled-Countdown.exe: 0xC0000005: Access violation writing location 0x0000000000000000.
 
 ## Known limitations
-    1. [Main Window] - Missing conformation when pushing start_server. User don't know if the button is pushed or not. And if button is push more then once the app crashes.
-    2. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5mincountdown page.
-    3. [/Admin - Alert-tab] - Missing input for legnth of Alert.
-    4. [/Admin - User-tab] - IN PROGRESS
+    1. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5mincountdown page.
+    2. [/Admin - User-tab] - IN PROGRESS
+    3. [/Admin - Settings-tab] - Sometimes when saving midi_interface_ID the change only take affect after a restart of the APP.
     
 # Websites I got code from
     - https://github.com/nexe/nexe
