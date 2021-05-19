@@ -264,3 +264,13 @@ ipcMain.on('get_github_revision',async (event, arg) => {
 })
 
 
+ipcMain.on('get_port',async (event, arg) => {
+  console.log(arg) // prints "ping"
+  try {
+    const data = await AdminSettings.getDbSettings()
+    console.log(data.ipsettings.port)
+    event.returnValue = data.ipsettings.port;
+  } catch (err) {
+    console.error(err)
+  }
+})
