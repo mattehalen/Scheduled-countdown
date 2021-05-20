@@ -29,7 +29,6 @@
       "languages": "EN-US"
     },
     "nsis": {
-      "artifactName": "Scheduled-Countdown-win64.exe",
       "createStartMenuShortcut": true,
       "perMachine": true,
       "oneClick": false,
