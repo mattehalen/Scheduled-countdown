@@ -1,7 +1,7 @@
 {
   "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",

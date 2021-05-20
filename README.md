@@ -16,6 +16,7 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 
 ## Alpha V.0.0.9
     1.[MAIN WINDOW] - Fixed so Port input field is linked to the db-settings.json
+    2.[Back-end] - fix github HEAD on [MAIN WINDOW]
 ## Alpha V.0.0.8 [2021-05-17]
     1. [MAIN WINDOW] - Added AutoStart Button
 ## Alpha V.0.0.6 -> V.0.0.7
