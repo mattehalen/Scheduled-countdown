@@ -6,9 +6,6 @@ var RPC                       = require('electron-rpc/server')
 const AdminSettings           = require("./src/services/admin-settings");
 const AutoStartSettings       = require("./src/services/autostart-settings");
 const port                    = require("./src/services/admin-settings");
-console.log("+++++++++++++++++++++++++++++++++++++++++++++");
-console.log(port);
-console.log("+++++++++++++++++++++++++++++++++++++++++++++");
 
 const Store                   = require('./lib/store.js');
 const { loopback }            = require('ip');
@@ -26,14 +23,12 @@ const db_times_path           = path.join(db_path, db_times_filname + ".json");
 const db_backup_path          = path.join(db_path, "backup");
 const db_users_path           = path.join(db_path, "users.json");
 const db_autoStart_path       = path.join(db_path, "autoStart.json");
-const github_revision_path    = path.join(db_path, "github.json");
+const github_revision_path    = path.join(__dirname, "github.json");
+const db_github_revision_path    = path.join(db_path, "github.json");
 
-function isDev() {
-  return require.main.filename.indexOf('app.asar') === -1;
-}
-if (isDev()) {
-  // Do dev stuff
 
+
+if (!app.isPackaged) {
   const revision = require('child_process')
   .execSync('git rev-parse HEAD')
   .toString().trim()
@@ -48,14 +43,14 @@ if (isDev()) {
       console.log('github_revision_path was created');
     }
     //fs.mkdir(db_users_path,callback);
-    let git_revision =
-    {
-      "revision": revision
-    }
-  let data = JSON.stringify(git_revision, null, 4);
-    fs.writeFileSync(github_revision_path, data);
-    //fs.copyFile(times_assetPath, db_times_path ,callback);
   }
+  let git_revision =
+  {
+    "revision": revision
+  }
+let data = JSON.stringify(git_revision, null, 4);
+  fs.writeFileSync(github_revision_path, data);
+  //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
 
 
@@ -135,6 +130,17 @@ if (fs.existsSync(db_autoStart_path)) {
 let data = JSON.stringify(autoStart, null, 4);
   fs.writeFileSync(db_autoStart_path, data);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
+}
+
+if (fs.existsSync(db_github_revision_path)) {
+  console.log("db_github_revision_path file exist");
+} else {
+  console.log("db_github_revision_path does not exist");
+  function callback(err) {
+    if (err) throw err;
+    console.log('github.json.json was copied');
+  }
+  fs.copyFile(github_revision_path, db_github_revision_path ,callback);
 }
 
 
@@ -248,7 +254,7 @@ ipcMain.on('AutoStart', async (event, data) => {
 })
 
 ipcMain.on('getAutoStart',async (event, arg) => {
-  console.log(arg) // prints "ping"
+  //console.log(arg) // prints "ping"
   event.returnValue = await AutoStartSettings.get();
 })
 
@@ -256,7 +262,7 @@ ipcMain.on('get_github_revision',async (event, arg) => {
   console.log(arg) // prints "ping"
   try {
     const data = JSON.parse(fs.readFileSync(github_revision_path, 'utf-8'))
-    console.log(data.revision)
+    //console.log(data.revision)
     event.returnValue = data.revision;
   } catch (err) {
     console.error(err)
@@ -268,7 +274,7 @@ ipcMain.on('get_port',async (event, arg) => {
   console.log(arg) // prints "ping"
   try {
     const data = await AdminSettings.getDbSettings()
-    console.log(data.ipsettings.port)
+    //console.log(data.ipsettings.port)
     event.returnValue = data.ipsettings.port;
   } catch (err) {
     console.error(err)
