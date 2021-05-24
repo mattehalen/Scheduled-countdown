@@ -12,6 +12,7 @@ const compression = require('compression');
 
 // Custom Imports
 const UtilityService    = require('./services/utility-service');
+const APNService        = require("./APN/index")
 
 // ExpressJs Server App
 const app = express();
