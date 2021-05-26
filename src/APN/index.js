@@ -9,7 +9,8 @@ var options = {
   production: false
 };
 var apnProvider = new apn.Provider(options);
-let deviceToken = "a9d0ed10e9cfd022a61cb08753f49c5a0b0dfb383697bf9f9d750a1003da19c7"
+let deviceToken = "04ED2C021A346AB3DA6F162146A16A1A994102801B35BC17DF84F8870485AD3F"
+//-- iPhone Mathias = 04ED2C021A346AB3DA6F162146A16A1A994102801B35BC17DF84F8870485AD3F
 
 var note = new apn.Notification();
 note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
