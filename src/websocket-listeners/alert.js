@@ -127,5 +127,5 @@ WebSocketService.onEvent(EVENTS.TESTPUSH, async (messageEvent) => {
     const message = messageEvent.getMessage();
 
     console.log("TESTPUSH is pressed = "+message);
-    APN.sendNotification();
+    APN.sendNotification(1);
 });
