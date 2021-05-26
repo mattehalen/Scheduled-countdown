@@ -1,4 +1,6 @@
 const WebSocketService = require('../websocket/websocket-service');
+const APN = require('../APN');
+
 const EVENTS = {
     STARTURL:       "startUrl",
     ADMINURL:       "adminUrl",
@@ -6,7 +8,8 @@ const EVENTS = {
     STAGEURL:       "stageUrl",
     WATCHURL:       "watchUrl",
     COUNTDOWNURL:   "countdownUrl",
-    ALLUSERSURL:    "allUsersUrl"
+    ALLUSERSURL:    "allUsersUrl",
+    TESTPUSH:       "testPush"
 };
 
 WebSocketService.onEvent(EVENTS.STARTURL, async (messageEvent) => {
@@ -113,4 +116,16 @@ WebSocketService.onEvent(EVENTS.ALLUSERSURL, async (messageEvent) => {
 
     // // To broadcast message to all UI clients.
     // WebSocketService.broadcastToAll('key', 'some-data');
+});
+
+
+
+
+
+WebSocketService.onEvent(EVENTS.TESTPUSH, async (messageEvent) => {
+    const key     = messageEvent.getKey();
+    const message = messageEvent.getMessage();
+
+    console.log("TESTPUSH is pressed = "+message);
+    APN.sendNotification();
 });

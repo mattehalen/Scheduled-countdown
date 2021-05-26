@@ -18,11 +18,25 @@ note.badge = 3;
 note.sound = "ping.aiff";
 note.alert = "\uD83D\uDCE7 \u2709 You have a new message";
 note.payload = {'messageFrom': 'John Appleseed'};
-note.topic = "<your-app-bundle-id>";
+note.topic = "com.Scheduled-countdown";
 
 apnProvider.send(note, deviceToken).then( (result) => {
   // see documentation for an explanation of result
   console.log("->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->");
   console.log(result);
+  console.log(result.failed);
   console.log("->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->");
 });
+
+function sendNotification(){
+  apnProvider.send(note, deviceToken).then( (result) => {
+    // see documentation for an explanation of result
+    console.log("->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->");
+    console.log(result);
+    console.log(result.failed);
+    console.log("->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->->");
+  });
+}
+module.exports = {
+  sendNotification
+}

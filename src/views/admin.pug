@@ -88,6 +88,14 @@ block content
                 input.form-control(type='number', value=10, name="alertTime" id="alertTime")
               .col-2
                 button.btn.btn-danger(type="reset",name="alertButton", id="alertButton", onClick="alertButton()") Send Alert
+            .row
+              .col-12
+                | ...
+            .row
+              .col-12
+            .row
+              .col-12
+                button.btn.btn-danger(type="reset",name="testPush", id="testPush", onClick="testPush()" style='width: 100%') Send Push
 
           #users.tab-pane.fade(role='tabpanel' aria-labelledby='users-tab')
             include db/users.pug

@@ -237,6 +237,12 @@ function offsetReset() {
   });
 };
 
+function testPush() {
+  console.log("testPush is pushed");
+  sendSocketMessage("testPush");
+};
+
+
 
 
 
