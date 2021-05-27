@@ -9,7 +9,8 @@ const EVENTS = {
     WATCHURL:       "watchUrl",
     COUNTDOWNURL:   "countdownUrl",
     ALLUSERSURL:    "allUsersUrl",
-    TESTPUSH:       "testPush"
+    TESTPUSH:       "testPush",
+    DEVICETOKEN:    "deviceToken"
 };
 
 WebSocketService.onEvent(EVENTS.STARTURL, async (messageEvent) => {
@@ -128,4 +129,16 @@ WebSocketService.onEvent(EVENTS.TESTPUSH, async (messageEvent) => {
 
     console.log("TESTPUSH is pressed = "+message);
     APN.sendNotification(1);
+});
+WebSocketService.onEvent(EVENTS.DEVICETOKEN, async (messageEvent) => {
+    const key     = messageEvent.getKey();
+    const message = messageEvent.getMessage();
+    //console.log("DEVICETOKEN is sent from iOS Device = "+message);
+    console.log("----------");
+    console.log(message);
+    console.log("----------");
+    console.log("++++++++++");
+    console.log(message.token);
+    console.log(message.deviceName);
+    console.log("++++++++++");
 });
