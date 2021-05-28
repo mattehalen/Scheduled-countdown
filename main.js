@@ -10,6 +10,28 @@ var RPC = require('electron-rpc/server')
 const AdminSettings = require("./src/services/admin-settings");
 const AutoStartSettings = require("./src/services/autostart-settings");
 const port = require("./src/services/admin-settings");
+const iOSTokens = require("./src/services/iosToken-settings");
+
+async function test(){
+  let DATA = await iOSTokens.get()
+
+  let isUnic = true
+  let testString = "8E4780F45837A4158A50A0C9DECA763FEAE730A32075C3EE514A4B6801E7E7A2"
+  for (i = 0; i < DATA.iosTokens.length; i++) {
+    console.log(DATA.iosTokens[i].token);
+
+    if (DATA.iosTokens[i].token === testString){
+      console.log("found duplicate");
+      isUnic = false
+    }
+  }
+  console.log("//////////////////////////////////////////");
+  console.log(DATA.iosTokens);
+  console.log(DATA.iosTokens.length);
+  console.log("//////////////////////////////////////////");
+}
+//test()
+
 
 const Store = require('./lib/store.js');
 const {
@@ -172,7 +194,7 @@ if (fs.existsSync(db_ios_token_path)) {
   {
     "iosTokens": [
       {
-        "token": "8E4780F45837A4158A50A0C9DECA763FEAE730A32075C3EE514A4B6801E7E7A2",
+        "token": "00000000000",
         "deviceName": "testDeviceName",
         "deviceModel": "deviceModel iPhone xxx"
       }
