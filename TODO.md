@@ -11,7 +11,7 @@ https://babeljs.io/docs/en/
 4. () useMIDI_ProgramChange
 
 ## Back End / Database
-14. Setting Up a Remote Notification Server - https://github.com/node-apn/node-apn - https://docs.tizen.org/application/web/guides/messaging/push/
+14. (/) - (APN = DONE) Setting Up a Remote Notification Server - https://github.com/node-apn/node-apn - https://docs.tizen.org/application/web/guides/messaging/push/
 15. Switch express to https server insted of http
 16. Fix - (node:24651) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 wakeup listeners added to [Connection]. Use emitter.setMaxListeners() to increase limit
 (Use `Electron --trace-warnings ...` to show where the warning was created)

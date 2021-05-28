@@ -14,6 +14,9 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 
 # CHANGE LOG
 
+## Alpha V.0.0.10 [2021-05-28]
+    1.[Back-end] - Start adding support for APN (Apple Push Notification) server. 
+    2.[Back-end] - Added Store ios Token when a ios device is connected. This is so the APN server knows what devices should recive the Notification.
 ## Alpha V.0.0.9 [2021-05-20]
     1.[MAIN WINDOW] - Fixed so Port input field is linked to the db-settings.json
     2.[Back-end] - fix github HEAD on [MAIN WINDOW]
