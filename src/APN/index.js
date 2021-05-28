@@ -13,7 +13,7 @@ var options = {
   production: false
 };
 var apnProvider = new apn.Provider(options);
-let deviceToken = "04ED2C021A346AB3DA6F162146A16A1A994102801B35BC17DF84F8870485AD3F"
+let deviceToken = "8E4780F45837A4158A50A0C9DECA763FEAE730A32075C3EE514A4B6801E7E7A2"
 //-- iPhone Mathias = 04ED2C021A346AB3DA6F162146A16A1A994102801B35BC17DF84F8870485AD3F
 function sendNotification(minutes) {
   var messageString = minutes + "min to next number!"
