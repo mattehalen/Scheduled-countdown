@@ -1,4 +1,5 @@
 const WebSocketService = require('../websocket/websocket-service');
+const iOSTokens         = require("../services/iosToken-settings")
 const APN = require('../APN');
 
 const EVENTS = {
@@ -133,12 +134,19 @@ WebSocketService.onEvent(EVENTS.TESTPUSH, async (messageEvent) => {
 WebSocketService.onEvent(EVENTS.DEVICETOKEN, async (messageEvent) => {
     const key     = messageEvent.getKey();
     const message = messageEvent.getMessage();
-    //console.log("DEVICETOKEN is sent from iOS Device = "+message);
-    console.log("----------");
     console.log(message);
-    console.log("----------");
-    console.log("++++++++++");
     console.log(message.token);
     console.log(message.deviceName);
-    console.log("++++++++++");
+
+    let DATA = await iOSTokens.get()
+    var feed = {
+        token: message.token,
+        deviceName: message.deviceName,
+        deviceModel: message.deviceModel
+    };
+    DATA.iosTokens.push(feed);
+    DATA.iosTokens.sort(function (a, b) {
+        return a.token.localeCompare(b.token);
+    });
+    await iOSTokens.write(DATA);
 });
