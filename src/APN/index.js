@@ -1,9 +1,11 @@
 var apn = require('apn');
 var SC = require('../websocket-listeners/SC-module/service');
+const path = require('path')
+const AuthKey_Path = path.join(__dirname, "AuthKey_WX4QX4S55M.p8")
 
 var options = {
   token: {
-    key: "src/APN/AuthKey_WX4QX4S55M.p8",
+    key: AuthKey_Path,
     keyId: "WX4QX4S55M",
     teamId: "F8993Q6N82"
   },
