@@ -1,9 +1,6 @@
 var apn = require('apn');
 var SC = require('../websocket-listeners/SC-module/service');
-console.log("----------");
-console.log(SC);
-console.log("----------");
-//C:\Users\Admin\Documents\GitHub\My Projects\Electron\Scheduled-countdown\src\websocket-listeners\SC-module
+
 var options = {
   token: {
     key: "src/APN/AuthKey_WX4QX4S55M.p8",

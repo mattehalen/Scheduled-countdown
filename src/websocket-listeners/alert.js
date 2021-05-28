@@ -134,16 +134,16 @@ WebSocketService.onEvent(EVENTS.TESTPUSH, async (messageEvent) => {
 WebSocketService.onEvent(EVENTS.DEVICETOKEN, async (messageEvent) => {
     const key = messageEvent.getKey();
     const message = messageEvent.getMessage();
-    console.log(message);
-    console.log(message.token);
-    console.log(message.deviceName);
+    // console.log(message);
+    // console.log(message.token);
+    // console.log(message.deviceName);
 
     let DATA = await iOSTokens.get()
 
     let isUnic = true
     let testString = message.token
     for (i = 0; i < DATA.iosTokens.length; i++) {
-        console.log(DATA.iosTokens[i].token);
+        //console.log(DATA.iosTokens[i].token);
 
         if (DATA.iosTokens[i].token === testString) {
             console.log("found duplicate");

@@ -1,4 +1,3 @@
-console.log("---------- MIDI ----------");
 var JZZ = require('jzz');
 
 const sleep = (waitTimeInMs) => new Promise(resolve => setTimeout(resolve, waitTimeInMs));
@@ -6,27 +5,19 @@ var smpte_String,interface_IDs;
 
 function mtcTOString(midi_interface_ID) {
   let selected_key_ID;
-  //console.log("----------> TEST");
-  //console.log(interface_IDs);
-  //console.log(midi_interface_ID);
+
   if (interface_IDs) {
     for (const [key, value] of Object.entries(interface_IDs)) {
-      //console.log(key);
       if (midi_interface_ID == key) {
-        // console.log("----------------- yes");
-        // console.log(key);
-        // console.log("this should log value = "+value);
         selected_key_ID = value;
       }
     }
   }
 
-  
-  //console.log("midi_interface_ID = "+midi_interface_ID);
   var port = JZZ().openMidiIn(selected_key_ID);
   var smpte = JZZ.SMPTE();
   var midi = JZZ.MIDI();
-  //console.log(JZZ.info());
+
   port
     .connect(function (msg) {
       smpte.read(msg);
@@ -42,21 +33,8 @@ function mtcTOString(midi_interface_ID) {
 
     });
   return smpte_String
-  // if (typeof (midi_interface_ID) == 'string') {
-
-  //   midi_interface_ID = 0;
-  // }
-    
-
-  // if (typeof (midi_interface_ID) == 'number') {
-    
-
-  // }
-
-
-
 };
-//mtcTOString();
+
 
 async function midiTriggerCountDown() {
   const adminSettingsData = await AdminSettings.get();
