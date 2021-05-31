@@ -56,6 +56,7 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     1. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5mincountdown page.
     2. [/Admin - User-tab] - IN PROGRESS
     3. [/Admin - Settings-tab] - Sometimes when saving midi_interface_ID the change only take affect after a restart of the APP.
+    4. [APN] - Sends notifications to all iOS devices. Even if not connected to the same network. This means that an APP runing "at home" send notifications to people at work.
     
 # Websites I got code from
     - https://github.com/nexe/nexe

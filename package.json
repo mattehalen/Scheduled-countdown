@@ -9,9 +9,11 @@
     "appId": "com.Scheduled-Countdown.app",
     "productName": "Scheduled-Countdown",
     "mac": {
+      "target": "pkg",
       "category": "se.Scheduled.Countdown",
       "icon": "./assets/icon.icns"
     },
+    "pkg": {},
     "win": {
       "target": [
         "appx",
@@ -82,6 +84,7 @@
     "electron": "^12.0.7",
     "electron-builder": "^22.10.5",
     "electron-packager": "^15.2.0",
+    "electron-osx-sign": "^0.5.0",
     "nodemon": "^2.0.7"
   }
 }
