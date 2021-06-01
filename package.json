@@ -1,7 +1,7 @@
 {
   "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",
@@ -10,14 +10,21 @@
     "productName": "Scheduled-Countdown",
     "mac": {
       "type": "distribution",
-      "target": ["mas", "pkg", "dmg"],
+      "target": ["pkg"],
       "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "public.app-category.utilities",
       "provisioningProfile": "./build/SCmacOSProvisioningProfile.provisionprofile",
-      "icon": "./assets/Scheduled-countdown.icns"
+      "icon": "./assets/Scheduled-countdown.icns",
+      "hardenedRuntime":true,
+      "gatekeeperAssess":false
+  },
+  "pkg":{
+    "installLocation": "/Applications",
+    "allowAnywhere":true,
+    "allowCurrentUserHome":true,
+    "allowRootDirectory":true
   },
     "mas": {
-      "hardenedRuntime" : false,
       "type": "distribution",
       "category": "public.app-category.utilities",
       "entitlements": "build/entitlements.mas.plist",
