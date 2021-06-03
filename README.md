@@ -13,6 +13,9 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
+## Alpha V.0.0.11 [2021-06-03]
+    1. [Back-end] - APN now pushes to iOS devices but to all devices and not only local devices. THIS IS A KNOW BUG AND NEDS TO BE FIXED. 
+    2. [AppStore Release] - Many changes made to try and find a way to uppload the app to AppStore. USE MAS and send the pkg file from MAS with transporter to your App store connect.
 
 ## Alpha V.0.0.10 [2021-05-28]
     1.[Back-end] - Start adding support for APN (Apple Push Notification) server. 

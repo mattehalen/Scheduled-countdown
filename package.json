@@ -73,7 +73,6 @@
     "electron": "electron .",
     "dist": "electron-builder",
     "macdist": "electron-builder --mac",
-    "pkg": "CSC_LINK='build/Mac Installer Distribution.p12' CSC_KEY_PASSWORD='mm0077mm' electron-builder --mac pkg",
     "mas": "electron-builder --mac mas",
     "mas-dev": "electron-builder --mac mas-dev",
     "pkgSigned": "CSC_IDENTITY_AUTO_DISCOVERY=true electron-builder --mac pkg",
