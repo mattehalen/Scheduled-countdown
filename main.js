@@ -2,8 +2,11 @@
 const {
   app,
   BrowserWindow,
-  ipcMain
+  ipcMain,
+  Menu
 } = require('electron')
+const isMac = process.platform === 'darwin'
+
 const path = require('path')
 const fs = require('fs');
 var RPC = require('electron-rpc/server')
@@ -83,12 +86,12 @@ if (!app.isPackaged) {
 }
 
 
-
+//---------------------------------------------
+//CREATE FILES --------------------------------
+//---------------------------------------------
 console.log("----------------------------------------------");
 console.log(db_backup_path);
 console.log("----------------------------------------------");
-
-// Check if db_settings.json exist in DB folder. If not Copy from ./SC-module/lib/db
 if (fs.existsSync(db_settings_path)) {
   console.log("db_settings_path file exist");
 } else {
@@ -100,7 +103,6 @@ if (fs.existsSync(db_settings_path)) {
   }
   fs.copyFile(settings_assetPath, db_settings_path, callback);
 }
-
 if (fs.existsSync(db_times_path)) {
   console.log("db_times_path file exist");
 } else {
@@ -112,7 +114,6 @@ if (fs.existsSync(db_times_path)) {
   }
   fs.copyFile(times_assetPath, db_times_path, callback);
 }
-
 if (fs.existsSync(db_backup_path)) {
   console.log("db_backup_path file exist");
 } else {
@@ -125,7 +126,6 @@ if (fs.existsSync(db_backup_path)) {
   fs.mkdir(db_backup_path, callback);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
-
 if (fs.existsSync(db_users_path)) {
   console.log("db_users_path file exist");
 } else {
@@ -143,7 +143,6 @@ if (fs.existsSync(db_users_path)) {
   fs.writeFileSync(db_users_path, data);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
-//-----
 if (fs.existsSync(db_autoStart_path)) {
   console.log("db_autoStart_path file exist");
 } else {
@@ -161,7 +160,6 @@ if (fs.existsSync(db_autoStart_path)) {
   fs.writeFileSync(db_autoStart_path, data);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
-
 if (fs.existsSync(db_github_revision_path)) {
   console.log("db_github_revision_path file exist");
 } else {
@@ -173,13 +171,6 @@ if (fs.existsSync(db_github_revision_path)) {
   }
   fs.copyFile(github_revision_path, db_github_revision_path, callback);
 }
-
-
-
-
-
-
-
 if (fs.existsSync(db_ios_token_path)) {
   console.log("db_ios_token_path file exist");
 } else {
@@ -205,12 +196,9 @@ if (fs.existsSync(db_ios_token_path)) {
   fs.writeFileSync(db_ios_token_path, data);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
-
-
-
-
-
-
+//---------------------------------------------
+//CREATE WINDOW--------------------------------
+//---------------------------------------------
 function createWindow() {
   // Create the browser window.
 
@@ -239,10 +227,6 @@ function createWindow() {
   // Open the DevTools.
   //mainWindow.webContents.openDevTools()
 }
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow()
 
@@ -252,20 +236,12 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
-
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
-// First instantiate the class
-
-
-
+//---------------------------------------------
+//ipcMain--------------------------------------
+//---------------------------------------------
 ipcMain.on('saveIP', async (event, data) => {
   const db_settings = await AdminSettings.getDbSettings();
   console.log("--------------------> ipcMain -> saveIP");
@@ -286,7 +262,6 @@ ipcMain.on('loopbackIP', async (event, data) => {
 const express = require('./index.js');
 ipcMain.on('start_server', async (event, data) => {
   console.log("----------> start_server");
-
   express.start();
 })
 const Server = require('./src/server');
@@ -295,7 +270,6 @@ ipcMain.on('stop_server', async (event, data) => {
   console.log("----------> stop_server");
   Server.stopServer();
 })
-
 ipcMain.on('open_admin', async (event, data) => {
   const link = "http://localhost:" + data.port + "/admin"
   console.log("--------------------> ipcMain -> open_admin " + link);
@@ -307,19 +281,16 @@ ipcMain.on('open_root', async (event, data) => {
   console.log("--------------------> ipcMain -> open_root " + link);
   require("electron").shell.openExternal(link);
 })
-
 ipcMain.on('AutoStart', async (event, data) => {
   const db_autoStart = await AutoStartSettings.get();
   //console.log(db_autoStart);
   console.log(data);
   await AutoStartSettings.write(data);
 })
-
 ipcMain.on('getAutoStart', async (event, arg) => {
   //console.log(arg) // prints "ping"
   event.returnValue = await AutoStartSettings.get();
 })
-
 ipcMain.on('get_github_revision', async (event, arg) => {
   console.log(arg) // prints "ping"
   try {
@@ -330,8 +301,6 @@ ipcMain.on('get_github_revision', async (event, arg) => {
     console.error(err)
   }
 })
-
-
 ipcMain.on('get_port', async (event, arg) => {
   console.log(arg) // prints "ping"
   try {
@@ -342,3 +311,111 @@ ipcMain.on('get_port', async (event, arg) => {
     console.error(err)
   }
 })
+
+//---------------------------------------------
+//CREATE MENU ---------------------------------
+//---------------------------------------------
+const template = [
+  // { role: 'appMenu' }
+  ...(isMac ? [{
+    label: app.name,
+    submenu: [
+      { role: 'about' },
+      { type: 'separator' },
+      { role: 'services' },
+      { type: 'separator' },
+      { role: 'hide' },
+      { role: 'hideothers' },
+      { role: 'unhide' },
+      { type: 'separator' },
+      { role: 'quit' }
+    ]
+  }] : []),
+  // { role: 'fileMenu' }
+  {
+    label: 'File',
+    submenu: [
+      isMac ? { role: 'close' } : { role: 'quit' }
+    ]
+  },
+  // { role: 'editMenu' }
+  {
+    label: 'Edit',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+      ...(isMac ? [
+        { role: 'pasteAndMatchStyle' },
+        { role: 'delete' },
+        { role: 'selectAll' },
+        { type: 'separator' },
+        {
+          label: 'Speech',
+          submenu: [
+            { role: 'startSpeaking' },
+            { role: 'stopSpeaking' }
+          ]
+        }
+      ] : [
+        { role: 'delete' },
+        { type: 'separator' },
+        { role: 'selectAll' }
+      ])
+    ]
+  },
+  // { role: 'viewMenu' }
+  {
+    label: 'View',
+    submenu: [
+      { role: 'reload' },
+      { role: 'forceReload' },
+      { role: 'toggleDevTools' },
+      { type: 'separator' },
+      { role: 'resetZoom' },
+      { role: 'zoomIn' },
+      { role: 'zoomOut' },
+      { type: 'separator' },
+      { role: 'togglefullscreen' }
+    ]
+  },
+  // { role: 'windowMenu' }
+  {
+    label: 'Window',
+    submenu: [
+      { role: 'minimize' },
+      { role: 'zoom' },
+      ...(isMac ? [
+        { type: 'separator' },
+        { role: 'front' },
+        { type: 'separator' },
+        { role: 'window' }
+      ] : [
+        { role: 'close' },
+        { label: "Re-open Main Window",
+        click: async () => {
+          if (BrowserWindow.getAllWindows().length === 0) createWindow()
+        }
+      }
+      ])
+    ]
+  },
+  {
+    role: 'help',
+    submenu: [
+      {
+        label: 'How to',
+        click: async () => {
+          const { shell } = require('electron')
+          await shell.openExternal('https://github.com/mattehalen/Scheduled-countdown/wiki/How-to')
+        }
+      }
+    ]
+  }
+]
+
+const menu = Menu.buildFromTemplate(template)
+Menu.setApplicationMenu(menu)
