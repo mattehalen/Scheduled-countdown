@@ -1,5 +1,5 @@
 # Installation
-Download Nodejs -> https://github.com/mattehalen/Scheduled-countdown/tags
+Download App -> https://github.com/mattehalen/Scheduled-countdown/tags
 
 Microsoft Store -> https://www.microsoft.com/store/apps/9PFCNJKLH31Z
 
