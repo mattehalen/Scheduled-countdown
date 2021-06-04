@@ -13,7 +13,7 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
-## Alpha V.0.0.12
+## Alpha V.0.0.12 [2021-06-04]
     1. Added Menu options to MAC version av app. Re-open Main Window & How to.
     2. [Back-end] - Added temporary fix for Re-open page. Now it only gives error but dosn't close app.
 ## Alpha V.0.0.11 [2021-06-03]
