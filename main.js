@@ -395,11 +395,7 @@ const template = [
         { role: 'window' }
       ] : [
         { role: 'close' },
-        { label: "Re-open Main Window",
-        click: async () => {
-          if (BrowserWindow.getAllWindows().length === 0) createWindow()
-        }
-      }
+
       ])
     ]
   },
@@ -413,6 +409,16 @@ const template = [
           await shell.openExternal('https://github.com/mattehalen/Scheduled-countdown/wiki/How-to')
         }
       }
+    ]
+  },
+  {
+    label: 'Re-open',
+    submenu: [
+      { label: "Re-open Main Window",
+      click: async () => {
+      if (BrowserWindow.getAllWindows().length === 0) createWindow()
+      }
+    }
     ]
   }
 ]
