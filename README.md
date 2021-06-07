@@ -13,6 +13,8 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
+## Alpha V.0.0.13 [2021-06-07]
+    1. Change entitlements -> om.apple.security.app-sandbox to FALSE &  "hardenedRuntime":false in package.json for testupload to Apple Store. WORKS on MAS-DEV
 ## Alpha V.0.0.12 [2021-06-04]
     1. Added Menu options to MAC version av app. Re-open Main Window & How to.
     2. [Back-end] - Added temporary fix for Re-open page. Now it only gives error but dosn't close app.
