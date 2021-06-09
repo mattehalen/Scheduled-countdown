@@ -126,6 +126,10 @@ $('#AutoStart').change(function () {
     autoStart: AutoStart.checked
   })
 });
+$('#openLog').click(function () {
+  console.log("openLog Button was presed");
+  ipcRenderer.send('openLog')
+});
 
 async function getAutoStart() {
   var bool = await ipcRenderer.sendSync('getAutoStart', 'ping').autoStart;

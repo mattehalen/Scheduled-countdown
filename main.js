@@ -9,6 +9,7 @@ const log = require('electron-log');
 console.log = log.log;
 
 const isMac = process.platform === 'darwin'
+const isPC  = process.platform === 'win32'
 
 const path = require('path')
 const fs = require('fs');
@@ -313,6 +314,11 @@ ipcMain.on('get_port', async (event, arg) => {
   } catch (err) {
     console.error(err)
   }
+})
+ipcMain.on('openLog', async (event, data) => {
+  console.log("main -> openLog");
+    const path = log.transports.file.findLogPath();
+    require("electron").shell.openPath(path);
 })
 
 //---------------------------------------------
