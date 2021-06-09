@@ -3,7 +3,7 @@
 <plist version="1.0">
     <dict>
         <key>com.apple.security.app-sandbox</key>
-        <false/>
+        <true/>
         <key>com.apple.security.application-groups</key>
         <string>F8993Q6N82.com.Scheduled-countdown-macos</string>
         <key>com.apple.security.cs.allow-jit</key>
