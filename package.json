@@ -1,7 +1,7 @@
 {
   "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",
@@ -10,26 +10,28 @@
     "productName": "Scheduled-Countdown",
     "mac": {
       "type": "distribution",
-      "target": ["pkg"],
+      "target": [
+        "pkg"
+      ],
       "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "public.app-category.utilities",
       "provisioningProfile": "./build/Mac_App_Store_Provisioning_Profile.provisionprofile",
       "icon": "./assets/Scheduled-countdown.icns",
-      "hardenedRuntime":false,
-      "gatekeeperAssess":false
-  },
-  "pkg":{
-    "installLocation": "/Applications",
-    "allowAnywhere":true,
-    "allowCurrentUserHome":true,
-    "allowRootDirectory":true,
-    "identity":"61D21C2F5BF90DF2D6D5F5E7FF2A4687166F300B"
-  },
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false
+    },
+    "pkg": {
+      "installLocation": "/Applications",
+      "allowAnywhere": true,
+      "allowCurrentUserHome": true,
+      "allowRootDirectory": true,
+      "identity": "61D21C2F5BF90DF2D6D5F5E7FF2A4687166F300B"
+    },
     "mas": {
       "category": "public.app-category.utilities",
       "entitlements": "build/entitlements.mas.plist",
       "entitlementsInherit": "build/entitlements.mas.inherit.plist"
-  },
+    },
     "win": {
       "target": [
         "appx",
@@ -75,25 +77,19 @@
     "macdist": "electron-builder --mac",
     "mas": "electron-builder --mac mas",
     "mas-dev": "electron-builder --mac mas-dev",
-    "pkgSigned": "CSC_IDENTITY_AUTO_DISCOVERY=true electron-builder --mac pkg",
     "dmg": "CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder --mac dmg",
     "dmgSigned": "CSC_IDENTITY_AUTO_DISCOVERY=true electron-builder --mac dmg",
-    "checkCodeSign":"codesign -dv -r- electron-output/mac/Scheduled-Countdown.app",
-    "codeSign":"codesign -f -o runtime --timestamp -s 'Developer ID Application: Mathias Halen (F8993Q6N82)' electron-output/mac/Scheduled-Countdown.app",
     "windist": "electron-builder --win",
     "debug": "node --inspect ./index.js",
-    "debug-brk": "node --inspect-brk ./index.js",
-    "script1":"build/scripts/checkCodesign.sh",
-    "script2":"build/scripts/codesign.sh",
-    "chmod":"build/scripts/chmod.sh",
-    "osx-sign":"electron-packager electron-output/mac/Scheduled-Countdown.app --overwrite --platform=mas --osx-sign.identity=9FF91E5CB3547F49E4FF5A101013E32467529B56 --provisioning-profile=build/SCmacOSProvisioningProfile.provisionprofile --entitlements=build/entitlements.mas.plist --entitlements-inherit=build/entitlements.mas.inherit.plist --deep"
-  },
+    "debug-brk": "node --inspect-brk ./index.js"
+    },
   "dependencies": {
     "apn": "^2.2.0",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "debug": "~2.6.9",
+    "electron-log": "^4.3.5",
     "electron-rpc": "^2.0.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",

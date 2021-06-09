@@ -5,6 +5,9 @@ const {
   ipcMain,
   Menu
 } = require('electron')
+const log = require('electron-log');
+console.log = log.log;
+
 const isMac = process.platform === 'darwin'
 
 const path = require('path')
