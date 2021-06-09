@@ -16,6 +16,7 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 ## Alpha V.0.0.14
     1. install electron-log for loging to file
     2. [MAIN WINDOW] - Added Open log button
+    3. [MAIN WINDOW] - Removing "Alpha" from title
 ## Alpha V.0.0.13 [2021-06-07]
     1. Change entitlements -> om.apple.security.app-sandbox to FALSE &  "hardenedRuntime":false in package.json for testupload to Apple Store. WORKS on MAS-DEV
 ## Alpha V.0.0.12 [2021-06-04]

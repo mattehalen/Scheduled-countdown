@@ -8,7 +8,7 @@ const package = require('./package.json');
 
 async function get_github_revision() {
   var data = await ipcRenderer.sendSync('get_github_revision', 'get_github_revision');
-  $("#appTitle").text(package.name + " Alpha V." + package.version + " [" + data + "]");
+  $("#appTitle").text(package.name + " V." + package.version + " [" + data + "]");
 }
 get_github_revision();
 
