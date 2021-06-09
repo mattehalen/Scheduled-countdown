@@ -77,7 +77,11 @@ async function midi_interface_IDs() {
   for (const [key, value] of Object.entries(midi_inputs)) {
     midi_input_obj[(midi_inputs[key].name)] = key;
   }
+  console.log("-------------------------------------------------------------------------");
+  console.log("--->>> midi_interface_IDs")
   console.log(midi_input_obj);
+  console.log("-------------------------------------------------------------------------");
+
   interface_IDs = JSON.parse(JSON.stringify(midi_input_obj));
   return midi_input_obj
 

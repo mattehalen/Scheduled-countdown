@@ -5,8 +5,17 @@ const {
   ipcMain,
   Menu
 } = require('electron')
+
 const log = require('electron-log');
 console.log = log.log;
+
+// var log = console.log;
+// console.log = function() {
+//     log.apply(console, arguments);
+//     // Print the stack trace
+//     console.trace();
+// };
+
 
 const isMac = process.platform === 'darwin'
 const isPC  = process.platform === 'win32'
@@ -70,6 +79,15 @@ const db_ios_token_path = path.join(db_path, "db-ios-tokens.json");
 
 
 
+
+
+
+//---------------------------------------------
+//CREATE FILES --------------------------------
+//---------------------------------------------
+console.log("--------------------------------------------------------------------------------------------");
+console.log(db_backup_path);
+console.log("--------------------------------------------------------------------------------------------");
 if (!app.isPackaged) {
   const revision = require('child_process')
     .execSync('git rev-parse HEAD')
@@ -94,14 +112,6 @@ if (!app.isPackaged) {
   fs.writeFileSync(github_revision_path, data);
   //fs.copyFile(times_assetPath, db_times_path ,callback);
 }
-
-
-//---------------------------------------------
-//CREATE FILES --------------------------------
-//---------------------------------------------
-console.log("----------------------------------------------");
-console.log(db_backup_path);
-console.log("----------------------------------------------");
 if (fs.existsSync(db_settings_path)) {
   console.log("db_settings_path file exist");
 } else {
@@ -302,7 +312,6 @@ ipcMain.on('getAutoStart', async (event, arg) => {
   event.returnValue = await AutoStartSettings.get();
 })
 ipcMain.on('get_github_revision', async (event, arg) => {
-  console.log(arg) // prints "ping"
   try {
     const data = JSON.parse(fs.readFileSync(github_revision_path, 'utf-8'))
     //console.log(data.revision)
@@ -312,7 +321,6 @@ ipcMain.on('get_github_revision', async (event, arg) => {
   }
 })
 ipcMain.on('get_port', async (event, arg) => {
-  console.log(arg) // prints "ping"
   try {
     const data = await AdminSettings.getDbSettings()
     //console.log(data.ipsettings.port)

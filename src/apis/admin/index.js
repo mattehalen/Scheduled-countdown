@@ -9,16 +9,13 @@ const offset = require("./../../websocket-listeners/SC-module/lib/countDown")
 const USERS_SETTINGS  = require("../../services/users-settings"); 
 
 
-//const fileDialog = require('file-dialog')
-
-// console.log(AdminSettings.FILEPATH.DB_TIMES_FILEPATH);
 
 router.get('/', async function (req, res) {
     const db_times      = await AdminSettings.get();
     const db_settings   = await AdminSettings.getDbSettings();
     const midi_id       = await MIDI.midi_interface_IDs();
     const users         = await  USERS_SETTINGS.get();
-    let listBackups = await AdminSettings.getList();
+    let listBackups     = await AdminSettings.getList();
     if (!listBackups || listBackups == 0) {
         listBackups = ["No Files Saved"]
     }
@@ -40,11 +37,8 @@ router.get('/', async function (req, res) {
         console.log(error);
     }
 });
-
 router.post('/submit', async function (req, res) {
     try {
-
-
         const db_times = await AdminSettings.get();
         const db_settings = await AdminSettings.getDbSettings();
         for (let i = 0; i < db_times.schedule.length; i++) {
@@ -66,7 +60,6 @@ router.post('/submit', async function (req, res) {
     }
     res.redirect("/admin");
 })
-
 router.post('/submitSettings', async function (req, res) {
     try {
         const db_times = await AdminSettings.get();
@@ -137,7 +130,6 @@ router.post('/submitSettings', async function (req, res) {
     }
     res.redirect("/admin");
 })
-
 router.post('/addNewRowDefault', async function (req, res) {
     try {
         const adminSettings = await AdminSettings.get();
@@ -158,7 +150,6 @@ router.post('/addNewRowDefault', async function (req, res) {
     }
     res.redirect("/admin");
 });
-
 router.post('/deleteButton', async function (req, res) {
     try {
         const adminSettings = await AdminSettings.get();
@@ -173,7 +164,6 @@ router.post('/deleteButton', async function (req, res) {
     }
     res.redirect("/admin");
 });
-
 router.post('/offsetPlus', async function (req, res) {
     try {
         offset.inc_Offset();
@@ -184,7 +174,6 @@ router.post('/offsetPlus', async function (req, res) {
 
     res.redirect("/admin");
 });
-
 router.post('/offsetMinus', async function (req, res) {
     try {
         // const adminSettings = await AdminSettings.get();
@@ -198,7 +187,6 @@ router.post('/offsetMinus', async function (req, res) {
 
     res.redirect("/admin");
 });
-
 router.post('/offsetReset', async function (req, res) {
     try {
         // const adminSettings = await AdminSettings.get();
@@ -212,20 +200,6 @@ router.post('/offsetReset', async function (req, res) {
 
     res.redirect("/admin");
 });
-
-// router.post('/setLoopbackip', async function (req, res) {
-//     try {
-//         console.log("----------------------------------------------------------- setLoopbackip:-----------------------------------------------------------");
-//         const adminSettings = await AdminSettings.get();
-//         console.log("mycustomip:" + adminSettings.ipsettings.ipadress);
-//         adminSettings.ipsettings.ipadress = "127.0.0.1";
-//         await AdminSettings.write(adminSettings);
-//     } catch (error) {
-//         console.log(error);
-//     }
-//     res.redirect("/admin");
-// });
-
 router.post('/dayOfWeek', async function (req, res) {
     try {
         WebSocketService.broadcastToAll('reload');
@@ -247,6 +221,11 @@ router.post('/dayOfWeek', async function (req, res) {
     res.redirect("/admin");
 })
 
+
+
+
+
+
 const EVENTS = {
     CREATEBACKUP:       'createBackup',
     LOADBACKUP:         "loadBackup",
@@ -254,8 +233,6 @@ const EVENTS = {
     OVERWRITEBACKUP:    "overwriteBackup",
     CHECKBOX_AUTORESET: "checkbox_autoReset"
 };
-
-// Capture websocket message from FrontEnd like this.
 WebSocketService.onEvent(EVENTS.CREATEBACKUP, async (messageEvent) => {
     const key     = messageEvent.getKey();
     const message = messageEvent.getMessage();
@@ -292,7 +269,6 @@ WebSocketService.onEvent(EVENTS.OVERWRITEBACKUP, async (messageEvent) => {
         console.log(error);
     }
 });
-
 WebSocketService.onEvent(EVENTS.LOADBACKUP, async (messageEvent) => {
     const key     = messageEvent.getKey();
     const message = messageEvent.getMessage();
@@ -314,7 +290,6 @@ WebSocketService.onEvent(EVENTS.LOADBACKUP, async (messageEvent) => {
     // // To broadcast message to all UI clients.
     // WebSocketService.broadcastToAll('key', 'some-data');
 });
-
 WebSocketService.onEvent(EVENTS.DELETEBACKUP, async (messageEvent) => {
     const key     = messageEvent.getKey();
     const message = messageEvent.getMessage();

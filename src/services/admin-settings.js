@@ -99,7 +99,10 @@ const listBackups = () => {
             const folder = path.join(userDataPath,"backup");
 
             fs.readdir(folder, (err, files) => {
+                console.log("-------------------------------------------------------------------------");
+                console.log("--->>> listBackups");
                 console.log(files);
+                console.log("-------------------------------------------------------------------------");
                 resolve(files)
               });
             

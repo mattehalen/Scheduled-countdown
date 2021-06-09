@@ -46,7 +46,7 @@ class WebSocket {
   onConnection(client) {
     client.uuid = uuidv4();
     client.hostAddress = stripOffIPv6(client.handshake.address);
-    console.log('A user/socketClient is connected - ', client.hostAddress);
+    //console.log('A user/socketClient is connected - ', client.hostAddress);
 
     this.addClient(client);
 

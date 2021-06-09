@@ -145,8 +145,6 @@ async function getAutoStart() {
 getAutoStart();
 async function getPort() {
   var data = await ipcRenderer.sendSync('get_port', 'get_port');
-  console.log(data);
-
   $("#port").val(data);
 }
 getPort();
