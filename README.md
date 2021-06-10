@@ -21,37 +21,37 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     2. -> REMOVED THIS ONE -> [macOS] - entitlements.mas & entitlements.mas.inherit - ITSAppUsesNonExemptEncryption changed to false
     3. [iOS] - APN - options-production changed to true
     4. [iOS] - APN - Now reads from the db-ios-tokens.json file and uses those inside the deviceTokens var.
-    OBS !! when reciving token from iOS device. Sometime the Token ends with a ")". This make the token not work. Needs to remove the ")" in the token to get it to recive Push Notificatiions.
+    OBS !! when receiving token from iOS device. Sometime the Token ends with a ")". This make the token not work. Needs to remove the ")" in the token to get it to receive Push Notifications.
     5. [macOS] - entitlements.mas & entitlements.mas.inherit - <key>com.apple.security.network.server</key>
         <true/>
 ## Alpha V.0.0.14 [2021-06-09]
-    1. install electron-log for loging to file
+    1. install electron-log for logging to file
     2. [MAIN WINDOW] - Added Open log button
     3. [MAIN WINDOW] - Removing "Alpha" from title
-    4. [AppStore Release] - Trying again to uppload app to mac AppStore.
+    4. [AppStore Release] - Trying again to upload app to mac AppStore.
 ## Alpha V.0.0.13 [2021-06-07]
-    1. Change entitlements -> om.apple.security.app-sandbox to FALSE &  "hardenedRuntime":false in package.json for testupload to Apple Store. WORKS on MAS-DEV.
-    2. [AppStore Release] - Trying again to uppload app to mac AppStore.
+    1. Change entitlements -> com.apple.security.app-sandbox to FALSE &  "hardenedRuntime":false in package.json for test upload to Apple Store. WORKS on MAS-DEV.
+    2. [AppStore Release] - Trying again to upload app to mac AppStore.
 ## Alpha V.0.0.12 [2021-06-04]
     1. Added Menu options to MAC version av app. Re-open Main Window & How to.
-    2. [Back-end] - Added temporary fix for Re-open page. Now it only gives error but dosn't close app.
-    3. [AppStore Release] - Trying again to uppload app to mac AppStore.
+    2. [Back-end] - Added temporary fix for Re-open page. Now it only gives error but doesn't close app.
+    3. [AppStore Release] - Trying again to upload app to mac AppStore.
 ## Alpha V.0.0.11 [2021-06-03]
     1. [Back-end] - APN now pushes to iOS devices but to all devices and not only local devices. THIS IS A KNOW BUG AND NEDS TO BE FIXED. 
-    2. [AppStore Release] - Many changes made to try and find a way to uppload the app to AppStore. USE MAS and send the pkg file from MAS with transporter to your App store connect.
+    2. [AppStore Release] - Many changes made to try and find a way to upload the app to AppStore. USE MAS and send the pkg file from MAS with transporter to your App store connect.
 
 ## Alpha V.0.0.10 [2021-05-28]
     1.[Back-end] - Start adding support for APN (Apple Push Notification) server. 
-    2.[Back-end] - Added Store ios Token when an ios device is connected. This is so the APN server knows what devices should receive the Notification.
+    2.[Back-end] - Added Store iOS Token when an iOS device is connected. This is so the APN server knows what devices should receive the Notification.
 ## Alpha V.0.0.9 [2021-05-20]
     1.[MAIN WINDOW] - Fixed so Port input field is linked to the db-settings.json
-    2.[Back-end] - fix github HEAD on [MAIN WINDOW]
+    2.[Back-end] - fix GitHub HEAD on [MAIN WINDOW]
 ## Alpha V.0.0.8 [2021-05-17]
     1. [MAIN WINDOW] - Added AutoStart Button
 ## Alpha V.0.0.6 -> V.0.0.7
-    1. Tried to make a Appstore version of the software but no luck yet. increse of version number due to not being able to use same version number on upload to Appstore.
+    1. Tried to make a Appstore version of the software but no luck yet. increase of version number due to not being able to use same version number on upload to Appstore.
 ## Alpha V.0.0.5 [2021-03-24]
-    1. [src/services/admin-settings.js] - removed local datestring. Didn't save db-Backups on system with local date string using "/".
+    1. [src/services/admin-settings.js] - removed local date-string. Didn't save db-Backups on system with local date string using "/".
 ## Alpha V.0.0.4 [2021-03-19]
     1. [Main Window] - Added buttons to open / & /admin in default browser
     2. Test Submitted App to MicrosoftStore waiting approval
@@ -60,30 +60,30 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     2. [Main Window] - Fixed Bug where Save Port button didn't work after removing choose IP from selection of ip addresses.
 ## Alpha V.0.0.2 [2021-01-29]
     1. [Main Window] - start_server & stop_server now toggles between hidden and shown to prevent double pressing and to easier show if server is started or not.
-    2. [/Admin - User-tab] - now lets you add and delete users. Users can then enter there page on url /users/"yourname" example /user/mathias.
+    2. [/Admin - User-tab] - now lets you add and delete users. Users can then enter there page on url /users/"your-name" example /user/mathias.
     3. [/users/xxx] - 
-       1. [Save - button] - Save the cuelist in users.json
-       2. [Add new row - button] - Adds a new row to the cuelist with the title "Added Cue"
+       1. [Save - button] - Save the cue-list in users.json
+       2. [Add new row - button] - Adds a new row to the cue-list with the title "Added Cue"
        3. [TimeCode is ON - button] - TBA
-       4. [Hide Rows ON/OFF - button] - If TimeCode is runing and rows are hidden you can push this to un hide All. Good when Captureing TC on rows.
-    4. [Alert] - Now works on /watch and /countdown and /users/"yourname"
-    5. [/admin - Alert - tab] - Added alertTime så you can chose how long the Alert should last.
+       4. [Hide Rows ON/OFF - button] - If TimeCode is running and rows are hidden you can push this to un hide All. Good when Capturing TC on rows.
+    4. [Alert] - Now works on /watch and /countdown and /users/"your-name"
+    5. [/admin - Alert - tab] - Added alertTime so you can chose how long the Alert should last.
 ## Alpha V.0.0.1 [2021-01-26]
     1. Rebuild of back-end - https://github.com/mukeshkmr776
-    2. Implemanting Electron for dist
+    2. Implementing Electron for dist
     3. Creating SC-module for the clock & countdown part.
 
 ## BUGS
-    1. Auto Reset needs a delay of X when starting a number eirlier.
-    exemple - if show should start at 12:00 and we start at 11:55 with the help of offsetMinus and Auto Reset is enabled this will cause the coutdown to run again after the reset because the Auto Reset is triggerd at the end of countUp. 
+    1. Auto Reset needs a delay of X when starting a number earlier.
+    example - if show should start at 12:00 and we start at 11:55 with the help of offsetMinus and Auto Reset is enabled this will cause the countdown to run again after the reset because the Auto Reset is triggered at the end of countUp. 
     2. () Windows Store Version - Scheduled Countdown Alpha V.0.0.5 - GIVES ERROR - Unhandled exception at 0x00007FF7AD1ACA5C in Scheduled-Countdown.exe: 0xC0000005: Access violation writing location 0x0000000000000000.
-    3. (X) - [iOS] - APN - Sometimes the devidetoken ends with a ")". This make the send function fail and the device with ")" will not recive Push.
+    3. (X) - [iOS] - APN - Sometimes the devidetoken ends with a ")". This make the send function fail and the device with ")" will not receive Push.
 
 ## Known limitations
-    1. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5mincountdown page.
+    1. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5min countdown page.
     2. [/Admin - User-tab] - IN PROGRESS
     3. [/Admin - Settings-tab] - Sometimes when saving midi_interface_ID the change only take affect after a restart of the APP.
-    4. [APN] - Sends notifications to all iOS devices. Even if not connected to the same network. This means that an APP runing "at home" send notifications to people at work.
+    4. [APN] - Sends notifications to all iOS devices. Even if not connected to the same network. This means that an APP running "at home" send notifications to people at work.
     
 # Websites I got code from
     - https://github.com/nexe/nexe
