@@ -13,9 +13,10 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
-## Alpha V.0.0.15
+## Alpha V.0.0.16
+## Alpha V.0.0.15 [2021-06-10]
     1. [Back-End] - Added "Headers" for part of Console.log to see whats triggering the log.
-    2. [macOS] - entitlements.mas & entitlements.mas.inherit - ITSAppUsesNonExemptEncryption changed to false
+    2. -> REMOVED THIS ONE -> [macOS] - entitlements.mas & entitlements.mas.inherit - ITSAppUsesNonExemptEncryption changed to false
     3. [iOS] - APN - options-production changed to true
     4. [iOS] - APN - Now reads from the db-ios-tokens.json file and uses those inside the deviceTokens var.
     OBS !! when reciving token from iOS device. Sometime the Token ends with a ")". This make the token not work. Needs to remove the ")" in the token to get it to recive Push Notificatiions.
