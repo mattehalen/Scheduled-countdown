@@ -15,7 +15,12 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 # CHANGE LOG
 ## Alpha V.0.0.15
     1. [Back-End] - Added "Headers" for part of Console.log to see whats triggering the log.
-
+    2. [macOS] - entitlements.mas & entitlements.mas.inherit - ITSAppUsesNonExemptEncryption changed to false
+    3. [iOS] - APN - options-production changed to true
+    4. [iOS] - APN - Now reads from the db-ios-tokens.json file and uses those inside the deviceTokens var.
+    OBS !! when reciving token from iOS device. Sometime the Token ends with a ")". This make the token not work. Needs to remove the ")" in the token to get it to recive Push Notificatiions.
+    5. [macOS] - entitlements.mas & entitlements.mas.inherit - <key>com.apple.security.network.server</key>
+        <true/>
 ## Alpha V.0.0.14 [2021-06-09]
     1. install electron-log for loging to file
     2. [MAIN WINDOW] - Added Open log button
@@ -69,6 +74,7 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     1. Auto Reset needs a delay of X when starting a number eirlier.
     exemple - if show should start at 12:00 and we start at 11:55 with the help of offsetMinus and Auto Reset is enabled this will cause the coutdown to run again after the reset because the Auto Reset is triggerd at the end of countUp. 
     2. () Windows Store Version - Scheduled Countdown Alpha V.0.0.5 - GIVES ERROR - Unhandled exception at 0x00007FF7AD1ACA5C in Scheduled-Countdown.exe: 0xC0000005: Access violation writing location 0x0000000000000000.
+    3. (X) - [iOS] - APN - Sometimes the devidetoken ends with a ")". This make the send function fail and the device with ")" will not recive Push.
 
 ## Known limitations
     1. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5mincountdown page.

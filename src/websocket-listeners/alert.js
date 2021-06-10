@@ -134,6 +134,9 @@ WebSocketService.onEvent(EVENTS.TESTPUSH, async (messageEvent) => {
 WebSocketService.onEvent(EVENTS.DEVICETOKEN, async (messageEvent) => {
     const key = messageEvent.getKey();
     const message = messageEvent.getMessage();
+    message.token = message.token.replace(")", "");
+    message.token = message.token.replace("(", "");
+    message.token = message.token.replace("#", "");
     // console.log(message);
     // console.log(message.token);
     // console.log(message.deviceName);
