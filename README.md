@@ -14,6 +14,8 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 
 # CHANGE LOG
 ## Alpha V.0.0.16
+    1. [macOS] - entitlements.mas - <key>com.apple.security.cs.disable-library-validation</key> <true/>
+    2. [iOS] - APN - Added message to the sendNotification() in src/APN/index.js
 ## Alpha V.0.0.15 [2021-06-10]
     1. [Back-End] - Added "Headers" for part of Console.log to see whats triggering the log.
     2. -> REMOVED THIS ONE -> [macOS] - entitlements.mas & entitlements.mas.inherit - ITSAppUsesNonExemptEncryption changed to false

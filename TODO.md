@@ -15,11 +15,17 @@ https://babeljs.io/docs/en/
 15. Switch express to https server insted of http
 16. Fix - (node:24651) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 wakeup listeners added to [Connection]. Use emitter.setMaxListeners() to increase limit
 (Use `Electron --trace-warnings ...` to show where the warning was created)
-
+17. Add notification.js under websocket-listeners and move whats now inside alert.js reletaed to notifications.
+18. [MAIN WINDOW] - Seperate all the create FOLDER into it's own .js file - MAKE SURE IT WOKRS WHEN NO FOLDERS ARE THERE. First try faild on this !
+19. Update description.md and github description so it includes all new functions.
+20. Remove folder EXTRAS.
+21. Update github_assets and start using it on github !!!
+22. Update all dependencies & modules
+23. Remove unused modules
 ## Other
 2. Install Angular
 3. Install TypeScript
-4. Release Apple Watch App that talkes to server.
+4. (X) - Release Apple Watch App that talkes to server. -> This is released around 2021-06-01
 5. Release Samsung Watch App that talkes to server.
 6. (X) - [MAIN WINDOW] - Add Auto Start on
 7. (X) - [MAIN WINDOW] - Fix so Port input field is linked to the db-settings.json

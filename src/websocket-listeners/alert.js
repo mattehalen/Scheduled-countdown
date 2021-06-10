@@ -129,7 +129,7 @@ WebSocketService.onEvent(EVENTS.TESTPUSH, async (messageEvent) => {
     const message = messageEvent.getMessage();
 
     console.log("TESTPUSH is pressed = " + message);
-    APN.sendNotification(1);
+    APN.sendNotification("","This is a Push Notification test");
 });
 WebSocketService.onEvent(EVENTS.DEVICETOKEN, async (messageEvent) => {
     const key = messageEvent.getKey();
