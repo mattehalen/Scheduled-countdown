@@ -13,6 +13,11 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
+## Alpha V.0.0.18 [2021-06-11]
+    1. Updated modules. Electron & Electron builder is now using Latest release.
+    2. Remove folder EXTRAS
+    3. Remove unused modules.
+    4.
 ## Alpha V.0.0.17 [2021-06-11]
     1. [MAIN WINDOW] - app.disableHardwareAcceleration()
 
