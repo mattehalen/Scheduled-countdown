@@ -20,7 +20,7 @@ https://babeljs.io/docs/en/
 19. Update description.md and GitHub description so it includes all new functions.
 20. - [X] - Remove folder EXTRAS.
 21. - [ ] - Update GitHub_assets and start using it on GitHub !!!
-22. - [X]- Update all dependencies & modules
+22. - [X] - Update all dependencies & modules
 23. - [X] - Remove unused modules
 ## Other
 2. - [ ] - Install Angular
