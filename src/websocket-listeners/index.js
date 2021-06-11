@@ -10,5 +10,6 @@ module.exports = {
         require('./ipsettings');
         require('./foh');
         require('./alert');
+        require('./APN-notification');
     }
 }

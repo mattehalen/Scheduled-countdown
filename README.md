@@ -17,10 +17,10 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     1. Updated modules. Electron & Electron builder is now using Latest release.
     2. Remove folder EXTRAS
     3. Remove unused modules.
-    4.
+    4. [Back-end] - Created APN-notification.js and moved notification from alert.js to this file.
+    5. [Back-end] - Separate all the create FOLDER into it's own .js file
 ## Alpha V.0.0.17 [2021-06-11]
     1. [MAIN WINDOW] - app.disableHardwareAcceleration()
-
 ## Alpha V.0.0.16 [2021-06-10]
     1. [macOS] - entitlements.mas - <key>com.apple.security.cs.disable-library-validation</key> <true/>
     2. [iOS] - APN - Added message to the sendNotification() in src/APN/index.js

@@ -16,7 +16,7 @@ https://babeljs.io/docs/en/
 16.  - [ ] - Fix - (node:24651) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 wakeup listeners added to [Connection]. Use emitter.setMaxListeners() to increase limit
 (Use `Electron --trace-warnings ...` to show where the warning was created)
 17. - [X] - Add notification.js under websocket-listeners and move whats now inside alert.js related to notifications.
-18. - [ ] - [MAIN WINDOW] - Separate all the create FOLDER into it's own .js file - MAKE SURE IT WOKRS WHEN NO FOLDERS ARE THERE. First try faild on this !
+18. - [X] - [MAIN WINDOW] - Separate all the create FOLDER into it's own .js file - MAKE SURE IT WOKRS WHEN NO FOLDERS ARE THERE. First try faild on this !
 19. Update description.md and GitHub description so it includes all new functions.
 20. - [X] - Remove folder EXTRAS.
 21. - [ ] - Update GitHub_assets and start using it on GitHub !!!
