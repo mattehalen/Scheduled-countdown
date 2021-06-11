@@ -13,7 +13,10 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
-## Alpha V.0.0.16
+## Alpha V.0.0.17 [2021-06-11]
+    1. [MAIN WINDOW] - app.disableHardwareAcceleration()
+
+## Alpha V.0.0.16 [2021-06-10]
     1. [macOS] - entitlements.mas - <key>com.apple.security.cs.disable-library-validation</key> <true/>
     2. [iOS] - APN - Added message to the sendNotification() in src/APN/index.js
 ## Alpha V.0.0.15 [2021-06-10]

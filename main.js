@@ -5,6 +5,7 @@ const {
   ipcMain,
   Menu
 } = require('electron')
+app.disableHardwareAcceleration()
 
 const log = require('electron-log');
 console.log = log.log;
