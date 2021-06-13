@@ -21,12 +21,8 @@ console.log = log.log;
 //----------------------------------------------------------------------
 
 const isMac = process.platform === 'darwin'
-
-const path = require('path')
-const fs = require('fs');
 var RPC = require('electron-rpc/server')
 const AdminSettings = require("./src/services/admin-settings");
-const AutoStartSettings = require("./src/services/autostart-settings");
 
 console.log("////////////////////////////////////////////////////////////////////////////////////////////")
 console.log("--------------------------------------------------------------------------------------------")
@@ -35,10 +31,8 @@ console.log("-------------------------------------------------------------------
 console.log("////////////////////////////////////////////////////////////////////////////////////////////")
 
 require("./lib/createFolders")
-const github_revision_path = path.join(__dirname, "github.json");
-//---------------------------------------------
-//CREATE WINDOW--------------------------------
-//---------------------------------------------
+require("./lib/ipcMain")
+
 function createWindow() {
   // Create the browser window.
 
@@ -80,189 +74,187 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
 //---------------------------------------------
-//ipcMain--------------------------------------
-//---------------------------------------------
-ipcMain.on('saveIP', async (event, data) => {
-  const db_settings = await AdminSettings.getDbSettings();
-  console.log("--------------------> ipcMain -> saveIP");
-  //db_settings.ipsettings.ipadress = data.ipadress;
-  db_settings.ipsettings.port = data.port;
-
-  await AdminSettings.writeDbSettings(db_settings);
-})
-ipcMain.on('loopbackIP', async (event, data) => {
-  const db_settings = await AdminSettings.getDbSettings();
-  console.log("--------------------> ipcMain -> loopbackIP");
-  db_settings.ipsettings.ipadress = data.ipadress;
-  db_settings.ipsettings.port = data.port;
-
-  await AdminSettings.writeDbSettings(db_settings);
-
-})
-const express = require('./index.js');
-ipcMain.on('start_server', async (event, data) => {
-  console.log("----------> start_server");
-  express.start();
-})
-const Server = require('./src/server');
-ipcMain.on('stop_server', async (event, data) => {
-  console.log("----------> ./main.js -> ipcMain.on stop_server");
-  console.log("----------> stop_server");
-  Server.stopServer();
-})
-ipcMain.on('open_admin', async (event, data) => {
-  const link = "http://localhost:" + data.port + "/admin"
-  console.log("--------------------> ipcMain -> open_admin " + link);
-  require("electron").shell.openExternal(link);
-
-})
-ipcMain.on('open_root', async (event, data) => {
-  const link = "http://localhost:" + data.port + "/"
-  console.log("--------------------> ipcMain -> open_root " + link);
-  require("electron").shell.openExternal(link);
-})
-ipcMain.on('AutoStart', async (event, data) => {
-  const db_autoStart = await AutoStartSettings.get();
-  //console.log(db_autoStart);
-  console.log(data);
-  await AutoStartSettings.write(data);
-})
-ipcMain.on('getAutoStart', async (event, arg) => {
-  //console.log(arg) // prints "ping"
-  event.returnValue = await AutoStartSettings.get();
-})
-ipcMain.on('get_github_revision', async (event, arg) => {
-  try {
-    const data = JSON.parse(fs.readFileSync(github_revision_path, 'utf-8'))
-    //console.log(data.revision)
-    event.returnValue = data.revision;
-  } catch (err) {
-    console.error(err)
-  }
-})
-ipcMain.on('get_port', async (event, arg) => {
-  try {
-    const data = await AdminSettings.getDbSettings()
-    //console.log(data.ipsettings.port)
-    event.returnValue = data.ipsettings.port;
-  } catch (err) {
-    console.error(err)
-  }
-})
-ipcMain.on('openLog', async (event, data) => {
-  console.log("main -> openLog");
-    const path = log.transports.file.findLogPath();
-    require("electron").shell.openPath(path);
-})
-
-//---------------------------------------------
 //CREATE MENU ---------------------------------
 //---------------------------------------------
 const template = [
   // { role: 'appMenu' }
   ...(isMac ? [{
     label: app.name,
-    submenu: [
-      { role: 'about' },
-      { type: 'separator' },
-      { role: 'services' },
-      { type: 'separator' },
-      { role: 'hide' },
-      { role: 'hideothers' },
-      { role: 'unhide' },
-      { type: 'separator' },
-      { role: 'quit' }
+    submenu: [{
+        role: 'about'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        role: 'services'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        role: 'hide'
+      },
+      {
+        role: 'hideothers'
+      },
+      {
+        role: 'unhide'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        role: 'quit'
+      }
     ]
   }] : []),
   // { role: 'fileMenu' }
   {
     label: 'File',
     submenu: [
-      isMac ? { role: 'close' } : { role: 'quit' }
+      isMac ? {
+        role: 'close'
+      } : {
+        role: 'quit'
+      }
     ]
   },
   // { role: 'editMenu' }
   {
     label: 'Edit',
-    submenu: [
-      { role: 'undo' },
-      { role: 'redo' },
-      { type: 'separator' },
-      { role: 'cut' },
-      { role: 'copy' },
-      { role: 'paste' },
-      ...(isMac ? [
-        { role: 'pasteAndMatchStyle' },
-        { role: 'delete' },
-        { role: 'selectAll' },
-        { type: 'separator' },
+    submenu: [{
+        role: 'undo'
+      },
+      {
+        role: 'redo'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        role: 'cut'
+      },
+      {
+        role: 'copy'
+      },
+      {
+        role: 'paste'
+      },
+      ...(isMac ? [{
+          role: 'pasteAndMatchStyle'
+        },
+        {
+          role: 'delete'
+        },
+        {
+          role: 'selectAll'
+        },
+        {
+          type: 'separator'
+        },
         {
           label: 'Speech',
-          submenu: [
-            { role: 'startSpeaking' },
-            { role: 'stopSpeaking' }
+          submenu: [{
+              role: 'startSpeaking'
+            },
+            {
+              role: 'stopSpeaking'
+            }
           ]
         }
-      ] : [
-        { role: 'delete' },
-        { type: 'separator' },
-        { role: 'selectAll' }
+      ] : [{
+          role: 'delete'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          role: 'selectAll'
+        }
       ])
     ]
   },
   // { role: 'viewMenu' }
   {
     label: 'View',
-    submenu: [
-      { role: 'reload' },
-      { role: 'forceReload' },
-      { role: 'toggleDevTools' },
-      { type: 'separator' },
-      { role: 'resetZoom' },
-      { role: 'zoomIn' },
-      { role: 'zoomOut' },
-      { type: 'separator' },
-      { role: 'togglefullscreen' }
+    submenu: [{
+        role: 'reload'
+      },
+      {
+        role: 'forceReload'
+      },
+      {
+        role: 'toggleDevTools'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        role: 'resetZoom'
+      },
+      {
+        role: 'zoomIn'
+      },
+      {
+        role: 'zoomOut'
+      },
+      {
+        type: 'separator'
+      },
+      {
+        role: 'togglefullscreen'
+      }
     ]
   },
   // { role: 'windowMenu' }
   {
     label: 'Window',
-    submenu: [
-      { role: 'minimize' },
-      { role: 'zoom' },
-      ...(isMac ? [
-        { type: 'separator' },
-        { role: 'front' },
-        { type: 'separator' },
-        { role: 'window' }
-      ] : [
-        { role: 'close' },
+    submenu: [{
+        role: 'minimize'
+      },
+      {
+        role: 'zoom'
+      },
+      ...(isMac ? [{
+          type: 'separator'
+        },
+        {
+          role: 'front'
+        },
+        {
+          type: 'separator'
+        },
+        {
+          role: 'window'
+        }
+      ] : [{
+          role: 'close'
+        },
 
       ])
     ]
   },
   {
     role: 'help',
-    submenu: [
-      {
-        label: 'How to',
-        click: async () => {
-          const { shell } = require('electron')
-          await shell.openExternal('https://github.com/mattehalen/Scheduled-countdown/wiki/How-to')
-        }
+    submenu: [{
+      label: 'How to',
+      click: async () => {
+        const {
+          shell
+        } = require('electron')
+        await shell.openExternal('https://github.com/mattehalen/Scheduled-countdown/wiki/How-to')
       }
-    ]
+    }]
   },
   {
     label: 'Re-open',
-    submenu: [
-      { label: "Re-open Main Window",
+    submenu: [{
+      label: "Re-open Main Window",
       click: async () => {
-      if (BrowserWindow.getAllWindows().length === 0) createWindow()
+        if (BrowserWindow.getAllWindows().length === 0) createWindow()
       }
-    }
-    ]
+    }]
   }
 ]
 

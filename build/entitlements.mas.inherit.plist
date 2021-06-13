@@ -6,7 +6,5 @@
         <true/>
         <key>com.apple.security.inherit</key>
         <true/>
-        <key>com.apple.security.network.server</key>
-        <true/>
     </dict>
 </plist>

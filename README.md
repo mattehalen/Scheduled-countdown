@@ -13,6 +13,9 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
+## Alpha V.0.0.19 [2021-06-13]
+    1. [macOS] - Removing entitlements.mas & entitlements.mas.inherit - <key>com.apple.security.network.server</key>
+        <true/>
 ## Alpha V.0.0.18 [2021-06-11]
     1. Updated modules. Electron & Electron builder is now using Latest release.
     2. Remove folder EXTRAS
