@@ -73,6 +73,11 @@ app.whenReady().then(() => {
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') app.quit()
 })
+ipcMain.on('openLog', async (event, data) => {
+  console.log("main -> openLog");
+    const path = log.transports.file.findLogPath();
+    require("electron").shell.openPath(path);
+})
 //---------------------------------------------
 //CREATE MENU ---------------------------------
 //---------------------------------------------
