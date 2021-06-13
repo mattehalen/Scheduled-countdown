@@ -13,6 +13,8 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
+## Alpha V.0.0.20 [2021-06-13]
+    1. [macOS] - Adding entitlements.mas - <key>com.apple.security.network.server</key> <true/> - TEST ONLY IF V.0.0.19 dosen't crash on startup at Apple.
 ## Alpha V.0.0.19 [2021-06-13]
     1. [macOS] - Removing entitlements.mas & entitlements.mas.inherit - <key>com.apple.security.network.server</key>
         <true/>
