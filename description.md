@@ -74,8 +74,8 @@ Index | Your Title | HH:MM 24h | HH:MM:SS | TRUE | TRUE | X
 
 
 
-[Schedule]: url "Schedule"
-[Settings]: url "Settings"
-[Overview]: url "Overview"
-[Alert]: url "Alert"
-[Users]: url "Users"
+[Schedule]: https://github.com/mattehalen/Scheduled-countdown/blob/master/github_assets/v.0.0.20/4.%20ADMIN%20-%20Schedule.png "Schedule"
+[Settings]: https://github.com/mattehalen/Scheduled-countdown/blob/master/github_assets/v.0.0.20/5.%20ADMIN%20-%20Settings.png "Settings"
+[Overview]: https://github.com/mattehalen/Scheduled-countdown/blob/master/github_assets/v.0.0.20/6.%20ADMIN%20-%20Overview.png "Overview"
+[Alert]: https://github.com/mattehalen/Scheduled-countdown/blob/master/github_assets/v.0.0.20/7.%20ADMIN%20-%20Alert.png "Alert"
+[Users]: https://github.com/mattehalen/Scheduled-countdown/blob/master/github_assets/v.0.0.20/8.%20ADMIN%20-%20Users.png "Users"
