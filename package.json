@@ -1,7 +1,7 @@
 {
   "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",
@@ -17,7 +17,7 @@
       "category": "public.app-category.utilities",
       "provisioningProfile": "./build/Mac_App_Store_Provisioning_Profile.provisionprofile",
       "icon": "./assets/Scheduled-countdown.icns",
-      "hardenedRuntime": false,
+      "hardenedRuntime": true,
       "gatekeeperAssess": true
     },
     "pkg": {

@@ -16,7 +16,9 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
 <details>
   <summary>CHANGE LOG</summary>
 
-  ## Alpha V.0.0.21 [2021-06-14]
+## Alpha V.0.0.22 [2021-06-14]
+    1."hardenedRuntime": true
+## Alpha V.0.0.21 [2021-06-14]
     1. description
 ## Alpha V.0.0.20 [2021-06-13]
     1. [macOS] - Adding entitlements.mas - <key>com.apple.security.network.server</key> <true/> - TEST ONLY IF V.0.0.19 dosen't crash on startup at Apple.
