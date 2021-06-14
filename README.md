@@ -3,7 +3,7 @@ Download App -> https://github.com/mattehalen/Scheduled-countdown/tags
 
 Microsoft Store -> https://www.microsoft.com/store/apps/9PFCNJKLH31Z
 
-https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-testing-V.1.0.0-%5B2021-01-26%5D
+https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
 
 # WEB API (Companion - Generic HTTP Request)
     1. Generic HTTP Request
