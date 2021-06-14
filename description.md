@@ -44,8 +44,8 @@ Index | Your Title | HH:MM 24h | HH:MM:SS | TRUE | TRUE | X
   <summary>Overview</summary>
 
   ### Overview
-     ![alt text][Overview]
-
+![alt text][Overview]
+s
 ...
 </details>
 
@@ -53,7 +53,7 @@ Index | Your Title | HH:MM 24h | HH:MM:SS | TRUE | TRUE | X
   <summary>Alert</summary>
 
   ### Alert
-     ![alt text][Alert]
+![alt text][Alert]
 
 ...
 </details>
