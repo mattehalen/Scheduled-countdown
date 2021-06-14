@@ -19,7 +19,7 @@ https://babeljs.io/docs/en/
 18. - [X] - [MAIN WINDOW] - Separate all the create FOLDER into it's own .js file - MAKE SURE IT WOKRS WHEN NO FOLDERS ARE THERE. First try faild on this !
 19. Update description.md and GitHub description so it includes all new functions.
 20. - [X] - Remove folder EXTRAS.
-21. - [ ] - Update GitHub_assets and start using it on GitHub !!!
+21. - [X] - Update GitHub_assets and start using it on GitHub !!!
 22. - [X] - Update all dependencies & modules
 23. - [X] - Remove unused modules
 ## Other
