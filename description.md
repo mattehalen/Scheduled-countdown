@@ -47,7 +47,6 @@ Index | Your Title | HH:MM 24h | HH:MM:SS | TRUE | TRUE | X
 
   ### Overview
 ![alt text][Overview]
-s
 ...
 </details>
 

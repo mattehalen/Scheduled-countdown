@@ -13,7 +13,10 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
             * [POST] - admin\offsetReset
 
 # CHANGE LOG
-## Alpha V.0.0.21 [2021-06-14]
+<details>
+  <summary>CHANGE LOG</summary>
+
+  ## Alpha V.0.0.21 [2021-06-14]
     1. description
 ## Alpha V.0.0.20 [2021-06-13]
     1. [macOS] - Adding entitlements.mas - <key>com.apple.security.network.server</key> <true/> - TEST ONLY IF V.0.0.19 dosen't crash on startup at Apple.
@@ -42,8 +45,7 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 ## Alpha V.0.0.14 [2021-06-09]
     1. install electron-log for logging to file
     2. [MAIN WINDOW] - Added Open log button
-    3. [MAIN WINDOW] - Removing "Alpha" from title
-    4. [AppStore Release] - Trying again to upload app to mac AppStore.
+    3. [MAIN WINDOW] - Removikrying again to upload app to mac AppStore.
 ## Alpha V.0.0.13 [2021-06-07]
     1. Change entitlements -> com.apple.security.app-sandbox to FALSE &  "hardenedRuntime":false in package.json for test upload to Apple Store. WORKS on MAS-DEV.
     2. [AppStore Release] - Trying again to upload app to mac AppStore.
@@ -54,7 +56,6 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
 ## Alpha V.0.0.11 [2021-06-03]
     1. [Back-end] - APN now pushes to iOS devices but to all devices and not only local devices. THIS IS A KNOW BUG AND NEDS TO BE FIXED. 
     2. [AppStore Release] - Many changes made to try and find a way to upload the app to AppStore. USE MAS and send the pkg file from MAS with transporter to your App store connect.
-
 ## Alpha V.0.0.10 [2021-05-28]
     1.[Back-end] - Start adding support for APN (Apple Push Notification) server. 
     2.[Back-end] - Added Store iOS Token when an iOS device is connected. This is so the APN server knows what devices should receive the Notification.
@@ -88,11 +89,16 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/Installation-&-Alpha-test
     2. Implementing Electron for dist
     3. Creating SC-module for the clock & countdown part.
 
+
+
+</details>
+
+
 ## BUGS
-    1. Auto Reset needs a delay of X when starting a number earlier.
+1. - [ ] -  Auto Reset needs a delay of X when starting a number earlier.
     example - if show should start at 12:00 and we start at 11:55 with the help of offsetMinus and Auto Reset is enabled this will cause the countdown to run again after the reset because the Auto Reset is triggered at the end of countUp. 
-    2. () Windows Store Version - Scheduled Countdown Alpha V.0.0.5 - GIVES ERROR - Unhandled exception at 0x00007FF7AD1ACA5C in Scheduled-Countdown.exe: 0xC0000005: Access violation writing location 0x0000000000000000.
-    3. (X) - [iOS] - APN - Sometimes the devidetoken ends with a ")". This make the send function fail and the device with ")" will not receive Push.
+2. - [ ] -  Windows Store Version - Scheduled Countdown Alpha V.0.0.5 - GIVES ERROR - Unhandled exception at 0x00007FF7AD1ACA5C in Scheduled-Countdown.exe: 0xC0000005: Access violation writing location 0x0000000000000000.
+3. - [X] -  [iOS] - APN - Sometimes the devidetoken ends with a ")". This make the send function fail and the device with ")" will not receive Push.
 
 ## Known limitations
     1. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5min countdown page.
