@@ -37,3 +37,4 @@ public/scheduledTimes-backup.json
 .settings
 *.code-workspace
 .env
+electron-builder.env

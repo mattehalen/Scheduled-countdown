@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-MY_APP_PATH=/Users/mathiashalen/GitHub/Scheduled-countdown/electron-output/mac/Scheduled-Countdown.app
+MY_APP_PATH=/Users/mathiashalen/GitHub/Scheduled-countdown/electron-output/mas-dev/Scheduled-Countdown.app
 
 #echo "----------------------------------------------------------------------------------------------------"
 #echo "---------->>> codesign -dv -r- "

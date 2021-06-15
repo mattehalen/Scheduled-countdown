@@ -1,17 +1,18 @@
 #!/usr/bin/env bash
-MY_APP_PATH=/Users/mathiashalen/Documents/GitHub/Scheduled-countdown/electron-output/mac/Scheduled-Countdown.app
-MY_SIGN_APPLICATION="3rd Party Mac Developer Installer: Mathias Halen (F8993Q6N82)"
-#MY_SIGN_APPLICATION="3rd Party Mac Developer Application: Mathias Halen (F8993Q6N82)"
-MY_OUTPUT_PKG=/Users/mathiashalen/Documents/GitHub/Scheduled-countdown/electron-output
+MY_APP_PATH=/Users/mathiashalen/Github/Scheduled-countdown/electron-output/mac/Scheduled-Countdown.app
+#MY_SIGN_APPLICATION="3rd Party Mac Developer Installer: Mathias Halen (F8993Q6N82)"
+MY_SIGN_APPLICATION="3rd Party Mac Developer Application: Mathias Halen (F8993Q6N82)"
+MY_OUTPUT_PKG=/Users/mathiashalen/Documents/GitHub/Scheduled-countdown/electron-output/signed
 ENTITLEMENTS=build/entitlements.mac.plist 
 
+#security find-identity -v -p codesigning
+
 # #INFO BEFORE SIGNING
-echo "---------->>> INFO BEFORE SIGNING"
-codesign --display --verbose=2 $MY_APP_PATH #electron-output/mac/Scheduled-Countdown.app
+#codesign --display --verbose=2 $MY_APP_PATH #electron-output/mac/Scheduled-Countdown.app
 
 echo "---------->>> SIGNING"
 # #codesign --sign $MY_SIGN_APPLICATION $MY_APP_PATH --timestamp -o runtime #electron-output/mac/Scheduled-Countdown.app --timestamp -o runtime
- codesign --deep --options runtime --sign "$MY_SIGN_APPLICATION" --entitlements $ENTITLEMENTS $MY_APP_PATH —-timestamp 
+ codesign --deep --options runtime --sign "$MY_SIGN_APPLICATION" --entitlements $ENTITLEMENTS "$MY_APP_PATH" —-timestamp 
 
 # echo "---------->>> INFO AFTER SIGNING"
 # codesign --display --verbose=2 $MY_APP_PATH #electron-output/mac/Scheduled-Countdown.app
