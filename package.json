@@ -30,7 +30,9 @@
       "identity": "61D21C2F5BF90DF2D6D5F5E7FF2A4687166F300B"
     },
     "mas": {
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "entitlements": "build/entitlements.mas.plist",
+      "entitlementsInherit": "build/entitlements.mas.inherit.plist"
     },
     "win": {
       "target": [

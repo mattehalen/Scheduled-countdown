@@ -4,17 +4,13 @@
     <dict>
         <key>com.apple.security.app-sandbox</key>
         <true/>
-        <key>com.apple.security.application-groups</key>
-        <string>F8993Q6N82.com.Scheduled-countdown-macos</string>
         <key>com.apple.security.cs.allow-jit</key>
         <true/>
         <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
         <true/>
-        <key>com.apple.security.cs.disable-library-validation</key>
-        <true/>
         <key>com.apple.security.cs.allow-dyld-environment-variables</key>
         <true/>
-        <key>com.apple.security.network.server</key>
+        <key>com.apple.security.cs.debugger</key>
         <true/>
     </dict>
 </plist>
