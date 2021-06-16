@@ -17,5 +17,8 @@ echo "--------------------------------------------------------------------------
 echo "---------->>> spctl --assess --verbose "
 spctl --assess --verbose=1 $MY_APP_PATH
 
-
+codesign --verify -vvvv $MY_APP_PATH
+spctl --assess --type install --context context:primary-signature -v $MY_APP_PATH
+spctl --assess --type execute --context context:primary-signature -v $MY_APP_PATH
+spctl --assess --type open --context context:primary-signature -v $MY_APP_PATH
 exit 0
