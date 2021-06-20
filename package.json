@@ -1,7 +1,7 @@
 {
   "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",
@@ -10,17 +10,17 @@
     "productName": "Scheduled-Countdown",
     "afterSign": "electron-builder-notarize",
     "mac": {
-      "type": "distribution",
+      "type": "development",
       "target": [
         "pkg"
       ],
       "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "public.app-category.utilities",
-      "provisioningProfile": "./build/Mac_App_Store_Provisioning_Profile.provisionprofile",
+      "provisioningProfile": "./build/MasDev.provisionprofile",
       "entitlements": "./build/entitlements.mac.plist",
       "icon": "./assets/Scheduled-countdown.icns",
       "hardenedRuntime": true,
-      "gatekeeperAssess": true
+      "gatekeeperAssess": false
     },
     "pkg": {
       "installLocation": "/Applications",
@@ -74,6 +74,7 @@
     ]
   },
   "scripts": {
+    "1":"CSC_NAME=\"Mathias Halen (F8993Q6N82)\" electron-builder && bash build/resignAndPackage.sh",
     "electron": "electron .",
     "dist": "electron-builder",
     "macdist": "electron-builder --mac",
