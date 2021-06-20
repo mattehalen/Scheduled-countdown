@@ -10,13 +10,13 @@
     "productName": "Scheduled-Countdown",
     "afterSign": "electron-builder-notarize",
     "mac": {
-      "type": "development",
+      "type": "distribution",
       "target": [
         "pkg"
       ],
       "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "public.app-category.utilities",
-      "provisioningProfile": "./build/MasDev.provisionprofile",
+      "provisioningProfile": "./build/mas.provisionprofile",
       "entitlements": "./build/entitlements.mac.plist",
       "icon": "./assets/Scheduled-countdown.icns",
       "hardenedRuntime": true,
