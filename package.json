@@ -9,6 +9,9 @@
     "appId": "com.Scheduled-countdown-macos",
     "productName": "Scheduled-Countdown",
     "afterSign": "electron-builder-notarize",
+    "asarUnpack": [
+      "**/*.node"
+  ],
     "mac": {
       "type": "distribution",
       "target": [
@@ -16,7 +19,7 @@
       ],
       "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "public.app-category.utilities",
-      "provisioningProfile": "./build/mas.provisionprofile",
+      "provisioningProfile": "./build/masdev.provisionprofile",
       "entitlements": "./build/entitlements.mac.plist",
       "icon": "./assets/Scheduled-countdown.icns",
       "hardenedRuntime": true,
@@ -78,7 +81,7 @@
     "electron": "electron .",
     "dist": "electron-builder",
     "macdist": "electron-builder --mac",
-    "mas": "electron-builder --mac mas",
+    "mas": "electron-builder --mac mas ",
     "mas-dev":    "electron-builder --mac mas-dev",
     "dmg":        "electron-builder --mac dmg",
     "dmgSigned":  "CSC_IDENTITY_AUTO_DISCOVERY=true electron-builder --mac dmg",
