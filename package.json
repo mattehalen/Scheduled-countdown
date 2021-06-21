@@ -1,7 +1,7 @@
 {
   "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "private": true,
   "description": "More info comming soon",
   "main": "main.js",
@@ -19,7 +19,7 @@
       ],
       "artifactName": "${productName}-${version}-${os}.${ext}",
       "category": "public.app-category.utilities",
-      "provisioningProfile": "./build/masdev.provisionprofile",
+      "provisioningProfile": "./build/mas.provisionprofile",
       "entitlements": "./build/entitlements.mac.plist",
       "icon": "./assets/Scheduled-countdown.icns",
       "hardenedRuntime": true,

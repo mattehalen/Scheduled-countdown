@@ -36,5 +36,6 @@ public/scheduledTimes-backup.json
 .vscode
 .settings
 *.code-workspace
-.env
+*.env
+*.provisionprofile
 electron-builder.env
