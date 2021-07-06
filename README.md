@@ -20,6 +20,9 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
 <details>
   <summary>CHANGE LOG</summary>
 
+## Alpha V.0.0.28
+    1. Fixed User href link on /admin user-tab.
+
   ## Alpha V.0.0.27
     1. First apple aproved release
 
