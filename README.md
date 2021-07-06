@@ -2,6 +2,10 @@
 Download App -> https://github.com/mattehalen/Scheduled-countdown/tags
 
 Microsoft Store -> https://www.microsoft.com/store/apps/9PFCNJKLH31Z
+AppleStore -> https://apps.apple.com/se/app/scheduled-countdown/id1560179865?mt=12
+
+iOS Connect APP
+AppleStore -> https://apps.apple.com/se/app/scheduled-countdown-connect/id1557443096
 
 https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
 
@@ -15,6 +19,12 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
 # CHANGE LOG
 <details>
   <summary>CHANGE LOG</summary>
+
+  ## Alpha V.0.0.27
+    1. First apple aproved release
+
+## Alpha V.0.0.23-26
+    1. more apple release tests.
 
 ## Alpha V.0.0.22 [2021-06-14]
     1."hardenedRuntime": true

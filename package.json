@@ -1,9 +1,9 @@
 {
   "name": "Scheduled-Countdown",
   "author": "Mathias Halén",
-  "version": "0.0.27",
+  "version": "0.0.28",
   "private": true,
-  "description": "More info comming soon",
+  "description": "A Scheduled-Countdown App",
   "main": "main.js",
   "build": {
     "appId": "com.Scheduled-countdown-macos",
