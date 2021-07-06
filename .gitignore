@@ -38,4 +38,5 @@ public/scheduledTimes-backup.json
 *.code-workspace
 *.env
 *.provisionprofile
+*.p8
 electron-builder.env
