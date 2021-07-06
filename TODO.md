@@ -2,18 +2,14 @@
 https://babeljs.io/docs/en/
 
 ## Front End
-15. - [X] iOS / Safari problem with websocket.
-
-### Switch to Checkbox instead of range
-1. - [ ] dayOfWeek
-2. - [ ] cueBool
-3. - [ ] fiveBool
-4. - [ ] useMIDI_ProgramChange
-
+15. - [X] - iOS / Safari problem with websocket.
+16. - [ ] - Add a console Log on /admin that reflects all logs on server.
+17. - [ ] - Add seperat user tab for MIDI trigger so yousers can use time and Midi based triggers.
+18. - [ ] - Remove Watch URL when iOS/Watch app is upp and running and tested. No need for this page. 
 ## Back End / Database
 14. - [X] - Setting Up a Remote Notification Server - https://GitHub.com/node-apn/node-apn
 15. - [ ] - Setting Up a Remote Notification Server - https://docs.tizen.org/application/web/guides/messaging/push/
-16.  - [ ] - Fix - (node:24651) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 wakeup listeners added to [Connection]. Use emitter.setMaxListeners() to increase limit
+16. - [ ] - Fix - (node:24651) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 wakeup listeners added to [Connection]. Use emitter.setMaxListeners() to increase limit
 (Use `Electron --trace-warnings ...` to show where the warning was created)
 17. - [X] - Add notification.js under websocket-listeners and move whats now inside alert.js related to notifications.
 18. - [X] - [MAIN WINDOW] - Separate all the create FOLDER into it's own .js file - MAKE SURE IT WOKRS WHEN NO FOLDERS ARE THERE. First try faild on this !
@@ -22,6 +18,8 @@ https://babeljs.io/docs/en/
 21. - [X] - Update GitHub_assets and start using it on GitHub !!!
 22. - [X] - Update all dependencies & modules
 23. - [X] - Remove unused modules
+24. - [ ] - Add support for added Midi Trigger tab on /admin (same thinking as Schedule tab)
+25. - [ ] - Add support for "offline" Timecode running. A normal timmr that you can enable and set startTime 
 ## Other
 2. - [ ] - Install Angular
 3. - [ ] - Install TypeScript
@@ -31,6 +29,7 @@ https://babeljs.io/docs/en/
 7. - [X] - [MAIN WINDOW] - Fix so Port input field is linked to the db-settings.json
 
 ## User Page
+1. - [ ] - Add fullscreen option with only Cuelist shown. Maybe a seperate url with username/full ?
 ### cue-list
 1. - [X] - Add cues-list's. Chose different cue-lists
 2. - [ ] Import cue-list / Timecode cue-list from - HOG - GrandMA - Avolites...
