@@ -32,6 +32,7 @@ https://babeljs.io/docs/en/
 1. - [ ] - Add fullscreen option with only Cuelist shown. Maybe a seperate url with username/full ?
 2. - [ ] Change overlayTime = 10*1000;
 3. - [ ] Add Hide rows so it saves with the user. So when page is reloaded it knows the value.
+4. - [ ] When selecting a cuelist auto Save as SelectedCuelist so the user don't need to push save as selectedCuelist !!
 ### cue-list
 1. - [X] - Add cues-list's. Chose different cue-lists
 2. - [ ] Import cue-list / Timecode cue-list from - HOG - GrandMA - Avolites...
