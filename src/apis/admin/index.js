@@ -231,7 +231,8 @@ const EVENTS = {
     LOADBACKUP:         "loadBackup",
     DELETEBACKUP:       "deleteBackup",
     OVERWRITEBACKUP:    "overwriteBackup",
-    CHECKBOX_AUTORESET: "checkbox_autoReset"
+    CHECKBOX_AUTORESET: "checkbox_autoReset",
+    FORCERELOAD:        "forceReload"
 };
 WebSocketService.onEvent(EVENTS.CREATEBACKUP, async (messageEvent) => {
     const key     = messageEvent.getKey();
@@ -328,6 +329,13 @@ WebSocketService.onEvent(EVENTS.CHECKBOX_AUTORESET, async (messageEvent) => {
     // // To broadcast message to all UI clients.
     // WebSocketService.broadcastToAll('key', 'some-data');
 });
+WebSocketService.onEvent(EVENTS.FORCERELOAD, async (messageEvent) => {
+    const key     = messageEvent.getKey();
+    const message = messageEvent.getMessage();
+    console.log("WebSocketService -> FORCERELOAD");
+    WebSocketService.broadcastToAll('reload');
+});
+
 
 
 module.exports = router;

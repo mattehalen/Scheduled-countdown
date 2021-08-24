@@ -3,7 +3,7 @@ extends layout
 
 block content
   p(hidden='')
-  .topRow()
+  .topRow(ondrop='dropHandler(event);' ondragover='dragOverHandler(event);')
     #timeCode.timeCodeText
     h4#user=name
     #nowTopRow.topRowText
@@ -30,7 +30,7 @@ block content
           button.btn.btn-dark(type="button",style='width: 25%' id="ToggleTC") TimeCode is ON
           button.btn.btn-dark(type="button",style='width: 25%' id="ResetTC") Hide Rows ON/OFF
 
-          div(style="height: 50vh; overflow-x:hidden ; overflow-y:scroll")
+          div(class="userCueList normalCueList")
             h4#user
               | The selected cuelist is -> #{selectedCueList}
             .form-row
@@ -92,3 +92,4 @@ block content
 block pagescripts
   // Users Scripts
   script(src="/javascripts/users.js")
+  script(src="https://unpkg.com/read-excel-file@5.x/bundle/read-excel-file.min.js")

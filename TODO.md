@@ -20,6 +20,7 @@ https://babeljs.io/docs/en/
 23. - [X] - Remove unused modules
 24. - [ ] - Add support for added Midi Trigger tab on /admin (same thinking as Schedule tab)
 25. - [ ] - Add support for "offline" Timecode running. A normal timmr that you can enable and set startTime 
+26. - [ ] - Find solution for "Exit status 4294930435"
 ## Other
 2. - [ ] - Install Angular
 3. - [ ] - Install TypeScript
@@ -30,9 +31,9 @@ https://babeljs.io/docs/en/
 
 ## User Page
 1. - [ ] - Add fullscreen option with only Cuelist shown. Maybe a seperate url with username/full ?
-2. - [ ] Change overlayTime = 10*1000;
-3. - [ ] Add Hide rows so it saves with the user. So when page is reloaded it knows the value.
-4. - [ ] When selecting a cuelist auto Save as SelectedCuelist so the user don't need to push save as selectedCuelist !!
+2. - [X] Change overlayTime = 10*1000;
+3. - [/] Add Hide rows so it saves with the user. So when page is reloaded it knows the value.
+4. - [X] When selecting a cuelist auto Save as SelectedCuelist so the user don't need to push save as selectedCuelist !!
 ### cue-list
 1. - [X] - Add cues-list's. Chose different cue-lists
 2. - [ ] Import cue-list / Timecode cue-list from - HOG - GrandMA - Avolites...

@@ -5,6 +5,7 @@ const KEYS = {
   "COUNTDOWN": "countDown",
   "SETTINGS": 'settings',
   "STARTURL":       "startUrl",
+  "RELOAD": "reload"
 };
 
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
@@ -82,6 +83,11 @@ WebSocketService.onEvent(KEYS.STARTURL, (message) => {
   sleep(message.time).then(() => {
     $(".blink").remove();
   });
+})
+WebSocketService.onEvent(KEYS.RELOAD, (message) => {
+  console.log("-+-+-+-+-+-+-+-+-+-+-+-+");
+  console.log("Reload from socket")
+  location.reload();
 })
 
 function timeStringToMs(t) {

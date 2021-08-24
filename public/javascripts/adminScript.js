@@ -6,7 +6,8 @@ const KEYS = {
   "CUE_COUNTDOWN":"cueCountDown",
   "SETTINGS": 'settings',
   "MIDI":"midi",
-  "ADMINURL": 'adminUrl'
+  "ADMINURL": 'adminUrl',
+  "RELOAD": "reload"
 };
 
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
@@ -89,6 +90,11 @@ WebSocketService.onEvent(KEYS.ADMINURL, (message) => {
     $(".blink").remove();
   });
 })
+WebSocketService.onEvent(KEYS.RELOAD, (message) => {
+  console.log("-+-+-+-+-+-+-+-+-+-+-+-+");
+  console.log("Reload from socket")
+  location.reload();
+})
 
 $("#createBackup").on('click', function () {
   console.log("createBackup button pushed");
@@ -139,6 +145,10 @@ $("#deleteUser_button").on('click', function () {
   console.log(data);
   sendSocketMessage("deleteUser", data);
   location.reload();
+});
+$("#forceReload").on('click', function () {
+  console.log("forceReload");
+  sendSocketMessage("forceReload");
 });
 
 

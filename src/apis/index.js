@@ -140,7 +140,8 @@ const EVENTS = {
   ADDNEWCUELIST:                    "addNewCuelist",
   LOADCUELIST:                      "loadCuelist",
   OVERWRITECUELIST:                 "overwriteCuelist",
-  DELETECUELIST:                    "deleteCuelist"
+  DELETECUELIST:                    "deleteCuelist",
+  ADDNEWCUEFROMEXCEL:               "AddNewCueFromExcel"
 };
 WebSocketService.onEvent(EVENTS.ADDNEWCUEROW, async (messageEvent) => {
   const key     = messageEvent.getKey();
@@ -148,7 +149,7 @@ WebSocketService.onEvent(EVENTS.ADDNEWCUEROW, async (messageEvent) => {
   const users = await USERS_SETTINGS.get()
   var name = message.user;
   var selectedCuelist = message.selectedCuelist
-  var data = { title: 'Added Cue', timecode: '00:00:11' };
+  var data = { title: 'Added Cue', timecode: '10:00:00' };
 
   try {
     users.userName.forEach(async function (arrayItem) {
@@ -160,6 +161,43 @@ WebSocketService.onEvent(EVENTS.ADDNEWCUEROW, async (messageEvent) => {
         foundCuelist.cues.sort(function (a, b) {
           return a.timecode.localeCompare(b.timecode);
       });
+        await USERS_SETTINGS.write(users);
+      }
+    });
+  } catch (error) {
+      console.log(error);
+  }
+});
+WebSocketService.onEvent(EVENTS.ADDNEWCUEFROMEXCEL, async (messageEvent) => {
+
+console.log("---------->>> ADDNEWCUEFROMEXCEL ")
+  const key     = messageEvent.getKey();
+  const message = messageEvent.getMessage();
+  const users = await USERS_SETTINGS.get()
+  var name = message.user;
+  var selectedCuelist = message.selectedCuelist
+  var data = message.excelItems
+
+  try {
+    users.userName.forEach(async function (arrayItem) {
+    
+      if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+        console.log("---------->>>  "+ selectedCuelist);
+        const foundCuelist = arrayItem.cuelist.find(({cuelistName}) => cuelistName === selectedCuelist);
+        console.log(foundCuelist);
+        data.forEach(async function (excelItem){
+          console.log("---------->>>>");
+          console.log(excelItem[0]);
+          var title = excelItem[0]
+          var pushData = { title: title, timecode: '10:00:00' };
+          foundCuelist.cues.push(pushData);
+        })
+        // foundCuelist.cues.push(data);
+        console.log(foundCuelist);
+        console.log(foundCuelist.cues);
+      //   foundCuelist.cues.sort(function (a, b) {
+      //     return a.timecode.localeCompare(b.timecode);
+      // });
         await USERS_SETTINGS.write(users);
       }
     });

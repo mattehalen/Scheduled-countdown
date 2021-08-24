@@ -3,6 +3,7 @@
     .col-12
         form(method='POST' action='/admin/submitSettings')
             button.btn.btn-primary.btn-block() SAVE
+            button.btn.btn-primary.btn-block(type="reset",name="forceReload", id="forceReload") Force Reload On All Views
             .form-row
             -var i =0;
             .col-12.bg-dark

@@ -7,6 +7,7 @@ const KEYS = {
   "SETTINGS": 'settings',
   "MIDI":"midi",
   "STAGEURL":       "stageUrl",
+  "RELOAD": "reload"
 };
 
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
@@ -51,6 +52,11 @@ WebSocketService.onEvent(KEYS.STAGEURL, (message) => {
   sleep(message.time).then(() => {
     $(".blink").remove();
   });
+})
+WebSocketService.onEvent(KEYS.RELOAD, (message) => {
+  console.log("-+-+-+-+-+-+-+-+-+-+-+-+");
+  console.log("Reload from socket")
+  location.reload();
 })
 
 // WebSocketService.onEvent(KEYS.CUE_COUNTDOWN, (message) => {

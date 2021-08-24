@@ -11,7 +11,7 @@
     "afterSign": "electron-builder-notarize",
     "asarUnpack": [
       "**/*.node"
-  ],
+    ],
     "mac": {
       "type": "distribution",
       "target": [
@@ -77,14 +77,14 @@
     ]
   },
   "scripts": {
-    "1":"CSC_NAME=\"Mathias Halen (F8993Q6N82)\" electron-builder && bash build/resignAndPackage.sh",
+    "1": "CSC_NAME=\"Mathias Halen (F8993Q6N82)\" electron-builder && bash build/resignAndPackage.sh",
     "electron": "electron .",
     "dist": "electron-builder",
     "macdist": "electron-builder --mac",
     "mas": "electron-builder --mac mas ",
-    "mas-dev":    "electron-builder --mac mas-dev",
-    "dmg":        "electron-builder --mac dmg",
-    "dmgSigned":  "CSC_IDENTITY_AUTO_DISCOVERY=true electron-builder --mac dmg",
+    "mas-dev": "electron-builder --mac mas-dev",
+    "dmg": "electron-builder --mac dmg",
+    "dmgSigned": "CSC_IDENTITY_AUTO_DISCOVERY=true electron-builder --mac dmg",
     "windist": "electron-builder --win",
     "debug": "node --inspect ./index.js",
     "debug-brk": "node --inspect-brk ./index.js"
@@ -104,14 +104,15 @@
     "pug": ">=3.0.2",
     "socket.io": "^2.3.0",
     "uuid": "^8.3.2",
-    "yarn": "^1.22.10"
+    "yarn": "^1.22.10",
+    "read-excel-file": "^5.2.8"
   },
   "devDependencies": {
     "electron": "^13.1.2",
     "electron-builder": "^22.11.7",
     "electron-packager": "^15.2.0",
     "electron-osx-sign": "^0.5.0",
-    "electron-builder-notarize":"^1.2.0",
+    "electron-builder-notarize": "^1.2.0",
     "nodemon": "^2.0.7"
   }
 }

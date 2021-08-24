@@ -365,3 +365,13 @@ input[type=time] {
 	-webkit-animation-timing-function:ease-in-out;
 	-webkit-animation-direction: alternate;
 }
+
+
+.userCueList{
+
+}
+.normalCueList{
+  height: 50vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+} 

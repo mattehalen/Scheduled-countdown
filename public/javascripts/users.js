@@ -45,7 +45,8 @@ WebSocketService.onEvent(KEYS.ALLUSERSURL, (message) => {
 
 var user = document.getElementById("user").textContent;
 var timeCodeBool = true;
-var cuelistHideBool = true;
+var cuelistHideBool = false;
+var fullscreenToggle = false
 
 $("#AddNewCueRow").on('click', function () {
   var selectedCuelist = $( "#SelectedCuelist" ).val();
@@ -88,6 +89,41 @@ $("#SelectedCuelistButton").on('click', function () {
   });
     document.location.reload(true)
 });
+$("#SelectedCuelist").change(function () {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  console.log(selectedCuelist);
+  sendSocketMessage("selectedCueList", {
+    user: user,
+    selectedCuelist:selectedCuelist
+  });
+    document.location.reload(true)
+})
+
+$("#user").on('click', function () {
+  console.log("TOGGLE FULLSCREEN");
+  
+  if(fullscreenToggle){
+    console.log("toggle true");
+    fullscreenToggle = false
+    hideForFullScreen()
+  }else{
+    console.log("toggle false");
+    fullscreenToggle = true
+    showForFullScreen()
+  }
+});
+
+function hideForFullScreen(){
+  $(".form-row").hide()
+  $(".btn-dark").hide()
+  $(".userCueList").removeClass("normalCueList")
+}
+function showForFullScreen(){
+  $(".form-row").show()
+  $(".btn-dark").show()
+  $(".userCueList").addClass( "normalCueList" );
+}
+
 
 //--------------------------------------------------
 $("#addNewCuelist").on('click', function () {
@@ -191,7 +227,7 @@ function pad(n, z) {
 var newArrayIndex = 0;
 var currentArrayIndex;
 var hideTime = 500;
-var overlayTime = 5000;
+var overlayTime = 15*1000;
 var fadeTime = 750;
 
 function cueTimeCountDown(timeCodeMs) {
@@ -239,4 +275,33 @@ function cueTimeCountDown(timeCodeMs) {
       }, 0);
     }
   }
+}
+
+
+// exel import
+function dropHandler(ev) {
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+
+  console.log('File(s) dropped');
+
+  // Prevent default behavior (Prevent file from being opened)
+  ev.preventDefault();
+  console.log(ev.dataTransfer.files);
+  readXlsxFile(ev.dataTransfer.files[0])
+  .then(function(rows) {
+    console.log(rows);
+    sendSocketMessage("AddNewCueFromExcel", {
+      user: user,
+      selectedCuelist:selectedCuelist,
+      excelItems:rows
+    });
+  })
+  .then(    document.location.reload(true)
+  )
+}
+function dragOverHandler(ev) {
+  console.log('File(s) in drop zone');
+
+  // Prevent default behavior (Prevent file from being opened)
+  ev.preventDefault();
 }

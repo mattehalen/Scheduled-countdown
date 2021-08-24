@@ -27,7 +27,7 @@ WebSocketService.onEvent(EVENTS.ADD_USER, async (messageEvent) => {
                 cues: [
                     {
                         title: "Your First Cue",
-                        timecode: "00:01:00"
+                        timecode: "10:00:00"
                     }
                 ]
             }
