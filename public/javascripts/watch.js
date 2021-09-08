@@ -86,3 +86,9 @@ function timeStringToMs(t) {
     return r;
 
 }
+
+//auto reload page once a day
+setInterval(function(){
+  location.reload();
+  }, 1000*60*60*24);
+  

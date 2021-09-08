@@ -34,7 +34,7 @@ block content
             h4#user
               | The selected cuelist is -> #{selectedCueList}
             .form-row
-              .col-1.text-right
+              .col-1.text-right(onclick="alert('This works')")
                 | #
               .col-4.text-left
                 | Title
@@ -52,7 +52,7 @@ block content
                 .centeredOverlay(id="centeredOverlay" + index)
                   //- span Loading...
 
-                .col-1.text-right= index+1
+                .col-1.text-right(onClick="markAsChecked(this)")= index+1
                 .col-4
                   input.form-control(type='text', value=person.title, name="title" + index, id="title" + index)
                 .col-3

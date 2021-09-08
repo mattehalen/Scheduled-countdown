@@ -114,6 +114,8 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
     example - if show should start at 12:00 and we start at 11:55 with the help of offsetMinus and Auto Reset is enabled this will cause the countdown to run again after the reset because the Auto Reset is triggered at the end of countUp. 
 2. - [ ] -  Windows Store Version - Scheduled Countdown Alpha V.0.0.5 - GIVES ERROR - Unhandled exception at 0x00007FF7AD1ACA5C in Scheduled-Countdown.exe: 0xC0000005: Access violation writing location 0x0000000000000000.
 3. - [X] -  [iOS] - APN - Sometimes the devidetoken ends with a ")". This make the send function fail and the device with ")" will not receive Push.
+4. - [ ] - [Backend] - Sometimes crashes when src\apis\index.js row 66 is triggerd  users.userName.forEach(function (arrayItem)
+5. - [ ] - [Backend] - (node:3392) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 wakeup listeners added to [Connection]. Use emitter.setMaxListeners() to increase limit
 
 ## Known limitations
     1. [/Admin - Overview-tab] Buttons is not connected yet after back-end rebuild. May not need this anymore due to rebuild of 5min countdown page.

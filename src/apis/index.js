@@ -4,6 +4,7 @@ var router = express.Router();
 const AdminSettings   = require('./../services/admin-settings');
 const USERS_SETTINGS  = require("./../services/users-settings"); 
 const WebSocketService = require('./../websocket/websocket-service');
+const SCModule = require("../websocket-listeners/SC-module/service");
 
 
 
@@ -49,6 +50,13 @@ router.get('/Countdown', async function (req, res) {
     offsetTime: adminSettingsData.timeSettings.offsetTime
   });
 });
+router.get('/Countdown/getCountDown', async function (req, res) {
+  let adminSettingsData = await AdminSettings.getDbSettings();
+  const CountDown = await SCModule.countDown()
+  console.log(CountDown)
+
+  res.json(CountDown)
+});
 
 router.get('/watch', async function (req, res) {
   res.render('watch', {
@@ -63,24 +71,30 @@ router.get('/users/:userID', async function (req, res) {
   var name = req.originalUrl.split('/users/')[1];
   let cuelist;
 
-  users.userName.forEach(function (arrayItem) {
-    // console.log(arrayItem.name);
-    if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
-      // console.log(arrayItem.name);
-      // console.log(arrayItem.cues);
-      //console.log(arrayItem.cuelist.findIndex(({cuelistName}) => cuelistName === arrayItem.selectedCueList));
-      res.render('users', {
-        title: 'Scheduled-CountDown',
-        now: "s",
-        name: name,
-        cuelist: arrayItem.cuelist,
-        cues: arrayItem.cues,
-        selectedCueList:arrayItem.selectedCueList,
-        selectedCueListIndex:arrayItem.cuelist.findIndex(({cuelistName}) => cuelistName === arrayItem.selectedCueList),
-        settings: db_settings
-      });
-    }
-  });
+  if(users.userName){
+    users.userName.forEach(function (arrayItem) {
+      console.log(arrayItem.name);
+      if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+
+        res.render('users', {
+          title: 'Scheduled-CountDown',
+          now: "s",
+          name: name,
+          cuelist: arrayItem.cuelist,
+          cues: arrayItem.cues,
+          selectedCueList:arrayItem.selectedCueList,
+          selectedCueListIndex:arrayItem.cuelist.findIndex(({cuelistName}) => cuelistName === arrayItem.selectedCueList),
+          settings: db_settings
+        });
+      }
+    });
+  }
+  if(!users.userName){
+    console.log("THIS THIS PRINT BEFORE THE CRASH !!!!")
+
+  }
+
+
 });
 router.post('/users/submit/:userID', async function (req, res) {
   var name = req.originalUrl.split('/users/submit/')[1];

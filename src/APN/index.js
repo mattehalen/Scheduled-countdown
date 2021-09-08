@@ -11,7 +11,7 @@ var options = {
     keyId: "WX4QX4S55M",
     teamId: "F8993Q6N82"
   },
-  production: true
+  production: false
 };
 var apnProvider = new apn.Provider(options);
 let deviceToken = "D33AFD1B8CEEC2FF471FD7844E2A32D5199325235BA3E6AC7C852D85417555D3"

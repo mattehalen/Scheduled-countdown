@@ -121,3 +121,9 @@ function timeStringToMs(t) {
    playButton.hidden = true;
  });
 //--------------------------------------------------
+
+//auto reload page once a day
+setInterval(function(){
+  location.reload();
+  }, 1000*60*60*24);
+  

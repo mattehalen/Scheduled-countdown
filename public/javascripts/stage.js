@@ -21,6 +21,8 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
 
 WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   //console.log(message);
+  document.getElementById("startTop").textContent = message.time
+  
   if (message.bool) {
     document.getElementById("title").textContent = message.title
     document.getElementById("start").textContent = message.time
@@ -58,37 +60,6 @@ WebSocketService.onEvent(KEYS.RELOAD, (message) => {
   console.log("Reload from socket")
   location.reload();
 })
-
-// WebSocketService.onEvent(KEYS.CUE_COUNTDOWN, (message) => {
-//   if (message.bool) {
-//     document.getElementById("cueTime").textContent = "Cue: " + message.time;
-
-//     if (message.cueCountDownTimeInMS < ((3*-60000))) {
-//       //document.body.style.backgroundColor = "#2b2b2b";
-//       document.getElementById("cueTime").style.backgroundColor = "#3b3b3b";
-//     }
-//     if (message.cueCountDownTimeInMS > ((3*-60000))) {
-//       document.getElementById("cueTime").style.backgroundColor =  message.colors.countDownColor;
-//     }
-//     if (message.cueCountDownTimeInMS > 0) {
-//       document.getElementById("cueTime").style.backgroundColor =  message.colors.countUpColor;
-//     }
-    
-//   }else{
-//     document.getElementById("cueTime").style.backgroundColor = "#3b3b3b";
-//     document.getElementById("cueTime").textContent = "";
-//   }
-//     // AUTO Shrink text
-//     var textLength = $('#title').text().length;
-//     if (textLength < 13) {
-//       $('#title').css('font-size', '10vw');
-//     } else if (textLength > 13 && textLength < 19) {
-//       $('#title').css('font-size', '8vw');
-//     } else if (textLength > 18) {
-//       $('#title').css('font-size', '7vw');
-//     }
-// })
-
 WebSocketService.onEvent(KEYS.MIDI, (message) => {
   if (typeof(message) == "string") {
     document.getElementById("timeCode").textContent = message;
@@ -150,3 +121,9 @@ socket.on("alertText_stageUrl",function(data){
     $( ".blink" ).remove();
     });
 });
+
+//auto reload page once a day
+setInterval(function(){
+  location.reload();
+  }, 1000*60*60*24);
+  

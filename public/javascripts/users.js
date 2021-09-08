@@ -226,8 +226,8 @@ function pad(n, z) {
 
 var newArrayIndex = 0;
 var currentArrayIndex;
-var hideTime = 500;
-var overlayTime = 15*1000;
+var hideTime = 5000;
+var overlayTime = 5*1000;
 var fadeTime = 750;
 
 function cueTimeCountDown(timeCodeMs) {
@@ -257,6 +257,9 @@ function cueTimeCountDown(timeCodeMs) {
       }
       if (cuelistHideBool == false) {
         $(rowString).show(fadeTime);
+      }
+      if (timeCodeMs > (timeCodeArrayMs)) {
+        $(rowString).css( "color", "red" );
       }
 
 
@@ -304,4 +307,12 @@ function dragOverHandler(ev) {
 
   // Prevent default behavior (Prevent file from being opened)
   ev.preventDefault();
+}
+
+
+
+function markAsChecked(listIndex){
+  console.log("markAsChecked");
+  console.log(listIndex.parentElement.id);
+  $(listIndex.parentElement).css( "background-color", "green" );
 }
