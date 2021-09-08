@@ -35,7 +35,9 @@ async function Sorting(){
       var dd = new Date(`${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()} ${time}`);
 
       // console.log(Clock.CurrentTimeInMs());
-      // console.log((dd.getTime() + OffsetTime) + CountUp);
+      // console.log(d);
+      // console.log(dd);
+      // console.log(new Date((dd.getTime() + OffsetTime) + CountUp));
       // console.log(OffsetTime);
       // console.log(CountUp);
       // console.log(Clock.CurrentTimeInMs() > ((dd.getTime() + OffsetTime) + CountUp));
@@ -69,6 +71,20 @@ async function Sorting(){
 
 function reset_newArrayIndex(){
   newArrayIndex = 0;
+}
+
+function msToTime(s) {
+  var ms = s % 1000;
+  s = (s - ms) / 1000;
+  var secs = s % 60;
+  s = (s - secs) / 60;
+  var mins = s % 60;
+  var hrs = (s - mins) / 60;
+  return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
+}
+function pad(n, z) {
+  z = z || 2;
+  return ('00' + n).slice(-z);
 }
 
 module.exports = {

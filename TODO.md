@@ -21,7 +21,7 @@ https://babeljs.io/docs/en/
 24. - [ ] - Add support for added Midi Trigger tab on /admin (same thinking as Schedule tab)
 25. - [ ] - Add support for "offline" Timecode running. A normal timmr that you can enable and set startTime 
 26. - [ ] - Find solution for "Exit status 4294930435"
-27. - [ ] - OffsetTime still dosn't work as expected. If +8 minuts it jumps to next scheduled event after scheduled Time. Like Offsettime is missing in the calulation
+27. - [X] - OffsetTime still dosn't work as expected. If +8 minuts it jumps to next scheduled event after scheduled Time. Like Offsettime is missing in the calulation, Problem seams to be releated to OffsetTime no longer is saved in db-settings. Something I may have changed in the past but not on all places.
 ## Other
 2. - [ ] - Install Angular
 3. - [ ] - Install TypeScript

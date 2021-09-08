@@ -53,7 +53,7 @@ router.get('/Countdown', async function (req, res) {
 router.get('/Countdown/getCountDown', async function (req, res) {
   let adminSettingsData = await AdminSettings.getDbSettings();
   const CountDown = await SCModule.countDown()
-  console.log(CountDown)
+  // console.log(CountDown)
 
   res.json(CountDown)
 });

@@ -1,11 +1,9 @@
 //console.log("---------- countDown.js");
 const Clock             = require("./clock.js");
-//const DB                = require('./DB');
 const DB                = require('./../../../services/admin-settings');
 
-//const DB_SETTINGS       = require('./db-settings');
 const TimeArraySorting  = require('./TimeArraySorting');
-let _offsetTime         =0;
+let _offsetTime         = 0;
 
 const setTimeoutTime = 150;
 let countDownBool;
@@ -57,16 +55,14 @@ async function CountDown() {
     }
 
     const OffsetTime  = (adminSettings.timeSettings.offsetTime) *(60000);
-    // system.on("offsetTime",function(data){
-    //   _offsetTime = data;
-    // });
+    // console.log("---------- >>> countDown.js -> OffsetTime = " + OffsetTime)
     const CountUp     = (adminSettings.timeSettings.countUp)    *(60000);
     const CountDown   = (adminSettings.timeSettings.countDown)  *(60000);
     var time = "";
     var now = await Clock.CurrentTimeInMs();
     var startTime = StartTimeInMs(timeArraySorting_startTime);
-    //console.log("_offsetTime = "+_offsetTime);
-    startTime += (_offsetTime*60000);
+
+    startTime += (OffsetTime);
     var countDownTimeInMS = now - startTime;
 
     if (now > startTime) {
@@ -90,7 +86,7 @@ async function CountDown() {
     return {
       title:timeArraySorting_title,
       time:time,
-      offsetTime:_offsetTime,
+      offsetTime:OffsetTime / (60000),
       offsetTime_bool:offsetTime_bool,
       bool:countDownBool,
       CountUp:CountUp,
@@ -139,7 +135,8 @@ async function CueCountDown() {
     const CountDown         = adminSettings.timeSettings.cueCountDown    *(60000);
     var startTime           = StartTimeInMs(timeArraySorting_startTime);
     var cueStarTime = (startTime - cueLength);
-    cueStarTime += (_offsetTime*60000);
+    cueStarTime += (OffsetTime);
+
     var now = await Clock.CurrentTimeInMs();
     var cueCountDownTimeInMS = now - cueStarTime;
     var time = "";
@@ -169,14 +166,45 @@ async function CueCountDown() {
   };
 }
 
-function inc_Offset(){
-  _offsetTime++;
+async function inc_Offset(){
+  const adminSettings   = await DB.getDbSettings();
+  try{
+    adminSettings.timeSettings.offsetTime ++
+    console.log(adminSettings)
+    await DB.writeDbSettings(adminSettings)
+    await TimeArraySorting.reset_newArrayIndex()
+
+  }
+  catch(error){
+    console.log(error);
+  }
+
 }
-function dec_Offset(){
-  _offsetTime--;
+async function dec_Offset(){
+  const adminSettings   = await DB.getDbSettings();
+  try{
+    adminSettings.timeSettings.offsetTime --
+    console.log(adminSettings)
+    await DB.writeDbSettings(adminSettings)
+    await TimeArraySorting.reset_newArrayIndex()
+
+  }
+  catch(error){
+    console.log(error);
+  }
 }
-function reset_Offset(){
-  _offsetTime = 0;
+async function reset_Offset(){
+  const adminSettings   = await DB.getDbSettings();
+  try{
+    adminSettings.timeSettings.offsetTime = 0
+    console.log(adminSettings)
+    await DB.writeDbSettings(adminSettings)
+    await TimeArraySorting.reset_newArrayIndex()
+
+  }
+  catch(error){
+    console.log(error);
+  }
 }
 function setOffsetTime_bool(data){
   console.log("----------> setOffsetTime_bool <---------");
