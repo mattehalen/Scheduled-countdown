@@ -20,10 +20,17 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
 <details>
   <summary>CHANGE LOG</summary>
 
+## Alpha V.0.0.29
+    1. When selecting a cuelist auto Save as SelectedCuelist so the user don't need to push save as selectedCuelist !!
+    2. Force Reload On All Views Added and can be triggered from /admin -> Settings
+    3. Added option to Drop a Excel File on users tab for importing Cuelist. Cuelist only takes colum (A) from excel
+    4. Added Option to Hide buttons for cleaner look on user cuelist page (OBS CLICK ON USERNAME ON TOPROW TO HIDE)
+    5. Fixed OffsetTime not beeing stored in db.Settings and there for not working as expected
+
 ## Alpha V.0.0.28
     1. Fixed User href link on /admin user-tab.
 
-  ## Alpha V.0.0.27
+## Alpha V.0.0.27
     1. First apple aproved release
 
 ## Alpha V.0.0.23-26
@@ -114,7 +121,7 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
     example - if show should start at 12:00 and we start at 11:55 with the help of offsetMinus and Auto Reset is enabled this will cause the countdown to run again after the reset because the Auto Reset is triggered at the end of countUp. 
 2. - [ ] -  Windows Store Version - Scheduled Countdown Alpha V.0.0.5 - GIVES ERROR - Unhandled exception at 0x00007FF7AD1ACA5C in Scheduled-Countdown.exe: 0xC0000005: Access violation writing location 0x0000000000000000.
 3. - [X] -  [iOS] - APN - Sometimes the devidetoken ends with a ")". This make the send function fail and the device with ")" will not receive Push.
-4. - [ ] - [Backend] - Sometimes crashes when src\apis\index.js row 66 is triggerd  users.userName.forEach(function (arrayItem)
+4. - [X] - [Backend] - Sometimes crashes when src\apis\index.js row 66 is triggerd  users.userName.forEach(function (arrayItem)
 5. - [ ] - [Backend] - (node:3392) MaxListenersExceededWarning: Possible EventEmitter memory leak detected. 11 wakeup listeners added to [Connection]. Use emitter.setMaxListeners() to increase limit
 
 ## Known limitations

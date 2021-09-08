@@ -5,7 +5,7 @@ https://babeljs.io/docs/en/
 15. - [X] - iOS / Safari problem with websocket.
 16. - [ ] - Add a console Log on /admin that reflects all logs on server.
 17. - [ ] - Add seperat user tab for MIDI trigger so yousers can use time and Midi based triggers.
-18. - [ ] - Remove Watch URL when iOS/Watch app is upp and running and tested. No need for this page. 
+18. - [X] - Remove Watch URL when iOS/Watch app is upp and running and tested. No need for this page. 
 ## Back End / Database
 14. - [X] - Setting Up a Remote Notification Server - https://GitHub.com/node-apn/node-apn
 15. - [ ] - Setting Up a Remote Notification Server - https://docs.tizen.org/application/web/guides/messaging/push/
