@@ -6,9 +6,14 @@ html
   body(class='transp')
     p(hidden='')
     block content
-     .home-container
-      .some-other-class
-       p#countDown.color(hidden='')
+      .fiveMinContainer
+        .centerCenter
+          div.fiveMinNum#countDown 15
+          div.fiveMinText#text minutes to the next number
+      //- .home-container(style="overflow:hidden")
+      //- .hideThisDiv(style="background-color:black")
+        //- p#countDown.color.fiveMinNum(hidden='')
+        //- p.fiveMinText minutes to the next number
 
     // Libraries Included
     script(src='/socket.io/socket.io.js')

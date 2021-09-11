@@ -375,3 +375,30 @@ input[type=time] {
   overflow-x: hidden;
   overflow-y: scroll;
 } 
+
+
+
+
+
+
+/* THere starts 5minCountDown CSS */
+.fiveMinContainer{
+  /* background-color: black; */
+  height: 100%;
+  width: 100%;
+
+  display: table;
+  text-align: center;
+}
+.centerCenter{
+  display: table-cell;
+  vertical-align: middle;
+}
+.fiveMinNum{
+  font-size: 30vh;
+  font-weight: 800;
+}
+.fiveMinText{
+  font-size: 11vh;
+  /* margin: -100px; */
+}

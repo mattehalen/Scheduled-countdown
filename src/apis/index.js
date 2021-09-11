@@ -146,6 +146,55 @@ router.post('/users/submit/:userID', async function (req, res) {
   res.redirect('back');
 });
 
+router.post('/users/selectedsuelist/:userID', async function (req, res) {
+  var name = req.originalUrl.split('/users/selectedsuelist/')[1];
+  console.log("----------> = "+name);
+  try {
+    const users = await USERS_SETTINGS.get()
+    const data = JSON.parse(JSON.stringify(req.body));
+    console.log(data)
+
+
+    users.userName.forEach(async function (arrayItem) {
+      if (arrayItem.name.toLowerCase() === name.toLowerCase()) {
+        console.log("Inside forEach")
+        console.log(arrayItem)
+        // console.log("-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-")
+        // console.log(arrayItem.cuelist[0])
+        // console.log("-----------------------------------------------")
+        // console.log(arrayItem.cuelist[data.selectedsuelist])
+        // console.log(arrayItem.cuelist[data.selectedsuelist].cuelistName)
+        let cuelistName = arrayItem.cuelist[data.selectedsuelist].cuelistName
+        let selectedCueList = arrayItem.selectedCueList
+
+        console.log(arrayItem.selectedCueList)
+        arrayItem.selectedCueList = cuelistName
+        console.log(arrayItem.selectedCueList)
+
+
+        // const indexPos = arrayItem.cuelist.findIndex(({
+        //   cuelistName
+        // }) => cuelistName === data.SelectedCuelist);
+
+        // console.log(indexPos);
+        // console.log(arrayItem.cuelist[indexPos].cues);
+        // console.log(newCueListArray);
+
+        // newCueListArray.sort(function (a, b) {
+        //   return a.timecode.localeCompare(b.timecode);
+        // });
+
+
+        // arrayItem.cuelist[indexPos].cues = newCueListArray;
+        // await USERS_SETTINGS.write(users)
+      }
+    });
+    
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 
 const EVENTS = {
   ADDNEWCUEROW:                     "AddNewCueRow",

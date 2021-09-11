@@ -47,6 +47,7 @@ async function CountDown() {
     let timeArraySorting    = await TimeArraySorting.Sorting();
     let timeArraySorting_title = await timeArraySorting[0];
     let timeArraySorting_startTime = await timeArraySorting[1];
+    let timeArraySorting_fiveBool    = await timeArraySorting[4];
     let colors = adminSettings.Color;
 
 
@@ -89,6 +90,7 @@ async function CountDown() {
       offsetTime:OffsetTime / (60000),
       offsetTime_bool:offsetTime_bool,
       bool:countDownBool,
+      fiveBool:timeArraySorting_fiveBool,
       CountUp:CountUp,
       CountDown:CountDown,
       countDownTimeInMS:countDownTimeInMS,
