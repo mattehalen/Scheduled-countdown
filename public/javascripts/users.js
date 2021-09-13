@@ -1,5 +1,8 @@
 "use strict";
 let timeCodeMs;
+let newMessage, oldMessage
+let generateTC = false
+let stopTC = false
 
 const KEYS = {
   'GET_CURRENTTIME': 'currentTime',
@@ -14,20 +17,20 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
   document.getElementById("nowTopRow").textContent = message;
 })
 
-WebSocketService.onEvent(KEYS.MIDI, (message) => {
-  timeCodeMs = timeStringToMs(message);
-  // console.log(message);
-  // console.log(timeStringToMs(message));
-  cueTimeCountDown(timeStringToMs(message));
-  // $("#timecodeMs").text(timeStringToMs(message));
+WebSocketService.onEvent(KEYS.MIDI, async (message) => {
+  try {
+    newMessage = message
+    if (newMessage != oldMessage) {
+      oldMessage = newMessage
+      timeCode(message)
+    }
 
-
-  if (typeof (message) == "string") {
-    document.getElementById("timeCode").textContent = message;
-
-  } else {
-    document.getElementById("timeCode").textContent = "";
+  } catch (error) {
+    console.log(error);
   }
+
+
+
 
 })
 WebSocketService.onEvent(KEYS.ALLUSERSURL, (message) => {
@@ -40,6 +43,9 @@ WebSocketService.onEvent(KEYS.ALLUSERSURL, (message) => {
 })
 
 
+// generateTimeCode("00:00:00")
+
+
 
 
 
@@ -49,13 +55,13 @@ var cuelistHideBool = false;
 var fullscreenToggle = false
 
 $("#AddNewCueRow").on('click', function () {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
   console.log(selectedCuelist);
   sendSocketMessage("AddNewCueRow", {
     user: user,
-    selectedCuelist:selectedCuelist
+    selectedCuelist: selectedCuelist
   });
-    document.location.reload(true)
+  document.location.reload(true)
 });
 $("#ToggleTC").on('click', function () {
   if (timeCodeBool == true) {
@@ -69,8 +75,8 @@ $("#ToggleTC").on('click', function () {
   };
 
 });
-$("#ResetTC").on('click', function () {
-  cueTimeCountDown(1000);
+$("#cuelistHideBool").on('click', function () {
+  cueTimeCountDown(0);
   if (cuelistHideBool == true) {
     cuelistHideBool = false;
     return
@@ -81,97 +87,109 @@ $("#ResetTC").on('click', function () {
   }
 });
 $("#SelectedCuelistButton").on('click', function () {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
   console.log(selectedCuelist);
   sendSocketMessage("selectedCueList", {
     user: user,
-    selectedCuelist:selectedCuelist
+    selectedCuelist: selectedCuelist
   });
-    document.location.reload(true)
+  document.location.reload(true)
 });
 $("#SelectedCuelist").change(function () {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
   console.log(selectedCuelist);
   sendSocketMessage("selectedCueList", {
     user: user,
-    selectedCuelist:selectedCuelist
+    selectedCuelist: selectedCuelist
   });
-    document.location.reload(true)
+  document.location.reload(true)
 })
+$("#generateTimeCode").on('click', function () {
+  console.log("fd5as64fds6a5445a64as56d4f564a56sd456 654564asd65f456asd46 4566546asdf");
+  if (generateTC) {
+    generateTC = false
+    stopTC = true
+  } else {
+    generateTC = true
+    stopTC = false
+  }
+
+  generateTimeCode("00:00:00")
+});
+
+
 
 $("#user").on('click', function () {
   console.log("TOGGLE FULLSCREEN");
-  
-  if(fullscreenToggle){
+
+  if (fullscreenToggle) {
     console.log("toggle true");
     fullscreenToggle = false
     hideForFullScreen()
-  }else{
+  } else {
     console.log("toggle false");
     fullscreenToggle = true
     showForFullScreen()
   }
 });
-
-function hideForFullScreen(){
-  $(".form-row").hide()
-  $(".btn-dark").hide()
-  $(".userCueList").removeClass("normalCueList")
-}
-function showForFullScreen(){
-  $(".form-row").show()
-  $(".btn-dark").show()
-  $(".userCueList").addClass( "normalCueList" );
-}
-
-
 //--------------------------------------------------
 $("#addNewCuelist").on('click', function () {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
-  var newCuelistName = $( "#createCuelist_input" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
+  var newCuelistName = $("#createCuelist_input").val();
   sendSocketMessage("addNewCuelist", {
     user: user,
-    selectedCuelist:selectedCuelist,
-    newCuelistName:newCuelistName
+    selectedCuelist: selectedCuelist,
+    newCuelistName: newCuelistName
   });
-    document.location.reload(true)
+  document.location.reload(true)
 });
 $("#loadCuelist").on('click', function () {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
-  var newCuelistName = $( "#createCuelist_input" ).val();
-  var cuelistDropdown_input = $( "#cuelistDropdown_input" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
+  var newCuelistName = $("#createCuelist_input").val();
+  var cuelistDropdown_input = $("#cuelistDropdown_input").val();
   sendSocketMessage("loadCuelist", {
     user: user,
-    selectedCuelist:selectedCuelist,
-    newCuelistName:newCuelistName,
-    cuelistDropdown_input:cuelistDropdown_input
+    selectedCuelist: selectedCuelist,
+    newCuelistName: newCuelistName,
+    cuelistDropdown_input: cuelistDropdown_input
   })
   document.location.reload(true)
 });
 $("#overwriteCuelist").on('click', function () {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
-  var newCuelistName = $( "#createCuelist_input" ).val();
-  var cuelistDropdown_input = $( "#cuelistDropdown_input" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
+  var newCuelistName = $("#createCuelist_input").val();
+  var cuelistDropdown_input = $("#cuelistDropdown_input").val();
   sendSocketMessage("overwriteCuelist", {
     user: user,
-    selectedCuelist:selectedCuelist,
-    newCuelistName:newCuelistName,
-    cuelistDropdown_input:cuelistDropdown_input
+    selectedCuelist: selectedCuelist,
+    newCuelistName: newCuelistName,
+    cuelistDropdown_input: cuelistDropdown_input
   })
   document.location.reload(true)
 });
 $("#deleteCuelist").on('click', function () {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
-  var cuelistDropdown_input = $( "#cuelistDropdown_input" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
+  var cuelistDropdown_input = $("#cuelistDropdown_input").val();
   sendSocketMessage("deleteCuelist", {
     user: user,
-    selectedCuelist:selectedCuelist,
-    cuelistDropdown_input:cuelistDropdown_input
+    selectedCuelist: selectedCuelist,
+    cuelistDropdown_input: cuelistDropdown_input
   })
   document.location.reload(true)
 });
 //--------------------------------------------------
 
+function hideForFullScreen() {
+  $(".form-row").hide()
+  $(".btn-dark").hide()
+  $(".userCueList").removeClass("normalCueList")
+}
+
+function showForFullScreen() {
+  $(".form-row").show()
+  $(".btn-dark").show()
+  $(".userCueList").addClass("normalCueList");
+}
 
 function captureTCButton(listIndex) {
   console.log(timeCodeMs);
@@ -181,11 +199,11 @@ function captureTCButton(listIndex) {
 };
 
 function delete_button_click(listIndex) {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
   console.log("delete_button_click");
   sendSocketMessage("send_Delete_CueButton_To_Socket", {
     listIndex: listIndex,
-    selectedCuelist:selectedCuelist,
+    selectedCuelist: selectedCuelist,
     user: user
   });
   document.location.reload(true)
@@ -227,7 +245,7 @@ function pad(n, z) {
 var newArrayIndex = 0;
 var currentArrayIndex;
 var hideTime = 5000;
-var overlayTime = 5*1000;
+var overlayTime = 5 * 1000;
 var fadeTime = 750;
 
 function cueTimeCountDown(timeCodeMs) {
@@ -259,7 +277,7 @@ function cueTimeCountDown(timeCodeMs) {
         $(rowString).show(fadeTime);
       }
       if (timeCodeMs > (timeCodeArrayMs)) {
-        $(rowString).css( "color", "red" );
+        $(rowString).css("color", "red");
       }
 
 
@@ -283,7 +301,7 @@ function cueTimeCountDown(timeCodeMs) {
 
 // exel import
 function dropHandler(ev) {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var selectedCuelist = $("#SelectedCuelist").val();
 
   console.log('File(s) dropped');
 
@@ -291,17 +309,17 @@ function dropHandler(ev) {
   ev.preventDefault();
   console.log(ev.dataTransfer.files);
   readXlsxFile(ev.dataTransfer.files[0])
-  .then(function(rows) {
-    console.log(rows);
-    sendSocketMessage("AddNewCueFromExcel", {
-      user: user,
-      selectedCuelist:selectedCuelist,
-      excelItems:rows
-    });
-  })
-  .then(    document.location.reload(true)
-  )
+    .then(function (rows) {
+      console.log(rows);
+      sendSocketMessage("AddNewCueFromExcel", {
+        user: user,
+        selectedCuelist: selectedCuelist,
+        excelItems: rows
+      });
+    })
+    .then(document.location.reload(true))
 }
+
 function dragOverHandler(ev) {
   console.log('File(s) in drop zone');
 
@@ -311,8 +329,67 @@ function dragOverHandler(ev) {
 
 
 
-function markAsChecked(listIndex){
+function markAsChecked(listIndex) {
   console.log("markAsChecked");
   console.log(listIndex.parentElement.id);
-  $(listIndex.parentElement).css( "background-color", "green" );
+  $(listIndex.parentElement).css("background-color", "green");
+}
+
+let timeCodetimeCode_New
+let timeCodetimeCode_Old
+
+function timeCode(message) {
+  try {
+    timeCodetimeCode_New = message
+
+    if (timeCodetimeCode_New != timeCodetimeCode_Old) {
+      if (generateTC) {
+        timeCodeMs = timeStringToMs(message);
+        if (typeof (message) == "string") {
+          document.getElementById("timeCode").textContent = message+":00";
+          cueTimeCountDown(timeStringToMs(message));
+        }
+
+      } else {
+        timeCodeMs = timeStringToMs(message);
+        if (typeof (message) == "string") {
+          document.getElementById("timeCode").textContent = message;
+
+        } else {
+          document.getElementById("timeCode").textContent = "";
+          cueTimeCountDown(timeStringToMs("00:00:00"));
+
+        }
+
+      }
+      timeCodetimeCode_New = timeCodetimeCode_Old
+    }
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function generateTimeCode(timeString) {
+  try {
+    if (generateTC) {
+      // console.log(timeString);
+      let ms = timeStringToMs(timeString)
+      let timmer = setInterval(() => {
+ 
+        timeCode(msToTime(ms))
+        if (stopTC) {
+          clearInterval(timmer);
+        }
+        ms += 1000
+      }, 1000);
+
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+
+
 }
