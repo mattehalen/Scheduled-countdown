@@ -11,10 +11,29 @@ block content
           
   .container-fluid
     .row.justify-content-center
-      .col-xl-9.col-sm-12.col-xs-12(style="font-size: calc(5px + 1vw)")
-        form.overflow-auto-x(method='POST' action='submit/'+name )
+      //- Settings Panel
+      .col-xl-3.col-sm-1.col-xs-1
+        h3 Settings
+        button.btn.btn-dark(type='submit' style='width: 100%' form="form-Cuelist") Save
+        button.btn.btn-dark(type="button",style='width: 100%' id="AddNewCueRow") Add new Row
+        button.btn.btn-dark(type="button",style='width: 50%' id="ToggleTC") TimeCode
+        button.btn.btn-dark(type="button",style='width: 50%' id="ResetTC") Hide Rows
+        hr(style='height:5px;background-color:white')
+
+        h3 Add Cuelist
+        button#addNewCuelist.btn.btn-dark(type='button' style="width: 100%") Add New Cuelist
+        input.form-control(type='text', value="Cuelist", name="createCuelist_input", id="createCuelist_input" style='width: 100%')
+        h3 Load / Delete
+        button#loadCuelist.btn.btn-dark(type='button' style="width: 100%") Load Cuelist
+        button#deleteCuelist.btn.btn-dark(type='button' style="width: 100%") Delete Cuelist
+        select.form-control(type='select',name="cuelistDropdown_input",id="cuelistDropdown_input",)
+              each list, index in cuelist
+                    option= list.cuelistName
+
+      .col-xl-9.col-sm-11.col-xs-11(style="font-size: calc(5px + 1vw)")
+        form(method='POST' action='submit/'+name id="form-Cuelist")
           div.form-row
-            .col-8
+            .col-12
               select.form-control(type='select',name="SelectedCuelist",id="SelectedCuelist",)
                   each list, index in cuelist
                     if (list.cuelistName == selectedCueList)
@@ -22,17 +41,17 @@ block content
                     else
                       option= list.cuelistName
                     
-            .col-4
-              button.btn.btn-dark(type="button",style='width: 100%' id="SelectedCuelistButton") Save as SelectedCuelist
+            //- .col-4
+            //-   button.btn.btn-dark(type="button",style='width: 100%' id="SelectedCuelistButton") Save as SelectedCuelist
 
-          button.btn.btn-dark(type='submit' style='width: 100%') Save
-          button.btn.btn-dark(type="button",style='width: 50%' id="AddNewCueRow") Add new Row
-          button.btn.btn-dark(type="button",style='width: 25%' id="ToggleTC") TimeCode is ON
-          button.btn.btn-dark(type="button",style='width: 25%' id="ResetTC") Hide Rows ON/OFF
+          //- button.btn.btn-dark(type='submit' style='width: 100%') Save
+          //- button.btn.btn-dark(type="button",style='width: 50%' id="AddNewCueRow") Add new Row
+          //- button.btn.btn-dark(type="button",style='width: 25%' id="ToggleTC") TimeCode is ON
+          //- button.btn.btn-dark(type="button",style='width: 25%' id="ResetTC") Hide Rows ON/OFF
 
           div(class="userCueList normalCueList")
-            h4#user
-              | The selected cuelist is -> #{selectedCueList}
+            h3#user
+              | #{selectedCueList}
             .form-row
               .col-1.text-right(onclick="alert('This works')")
                 | #
@@ -60,35 +79,35 @@ block content
                 .col-2
                   p(id="timecodeMs" + index)
                 .col-1
-                  button.btn.btn-success(type="button",name="captureTCButton" + index, id=index, onClick="captureTCButton(this.id)") TC
+                  button.btn.btn-success(type="button",name="captureTCButton" + index, id="captureTCButton" + index, onClick="captureTCButton(this.id)") TC
                 .col-1
-                  button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
+                  button.btn.btn-danger(type="reset",name="deleteButton" + index, id="deleteButton" + index, onClick="delete_button_click(this.id)") x
     
     
     
   
   
   
-  .shadow.p-3.mb-5.rounded.fixed-bottom
-    div.form-row
-      .col-12             
-        | This Section is NOT READY YET
-      div.form-row
-      .col-8
-        button#addNewCuelist.btn.btn-dark(type='button' style="width: 100%") Add New Cuelist
-        //button.btn.btn-dark(type='submit' id="addNewCuelist" style='width: 100%' formaction='submit/'+name+'/addNewCuelist') Add New Cuelist
-      .col-4
-          input.form-control(type='text', value="Cuelist", name="createCuelist_input", id="createCuelist_input")
-      .col-6
-          button#loadCuelist.btn.btn-dark(type='button' style="width: 100%") Load Cuelist
-      //- .col-4
-      //-     button#overwriteCuelist.btn.btn-dark(type='button' style="width: 100%") Overwrite Cuelist
-      .col-6
-          button#deleteCuelist.btn.btn-dark(type='button' style="width: 100%") Delete Cuelist
-      .col-12
-          select.form-control(type='select',name="cuelistDropdown_input",id="cuelistDropdown_input",)
-              each list, index in cuelist
-                    option= list.cuelistName
+  //- .shadow.p-3.mb-5.rounded.fixed-bottom
+  //-   div.form-row
+  //-     .col-12             
+  //-       | This Section is NOT READY YET
+  //-     div.form-row
+  //-     .col-8
+  //-       button#addNewCuelist.btn.btn-dark(type='button' style="width: 100%") Add New Cuelist
+  //-       //button.btn.btn-dark(type='submit' id="addNewCuelist" style='width: 100%' formaction='submit/'+name+'/addNewCuelist') Add New Cuelist
+  //-     .col-4
+  //-         input.form-control(type='text', value="Cuelist", name="createCuelist_input", id="createCuelist_input")
+  //-     .col-6
+  //-         button#loadCuelist.btn.btn-dark(type='button' style="width: 100%") Load Cuelist
+  //-     //- .col-4
+  //-     //-     button#overwriteCuelist.btn.btn-dark(type='button' style="width: 100%") Overwrite Cuelist
+  //-     .col-6
+  //-         button#deleteCuelist.btn.btn-dark(type='button' style="width: 100%") Delete Cuelist
+  //-     .col-12
+  //-         select.form-control(type='select',name="cuelistDropdown_input",id="cuelistDropdown_input",)
+  //-             each list, index in cuelist
+  //-                   option= list.cuelistName
 block pagescripts
   // Users Scripts
   script(src="/javascripts/users.js")

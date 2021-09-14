@@ -174,17 +174,20 @@ $("#deleteCuelist").on('click', function () {
 
 
 function captureTCButton(listIndex) {
+  var index = listIndex.replace('captureTCButton','');
+
   console.log(timeCodeMs);
-  console.log("captureTCButton with listIndex = " + listIndex);
-  var string = "#timeCode" + listIndex
+  console.log("captureTCButton with listIndex = " + index);
+  var string = "#timeCode" + index
   $(string).val(msToTime(timeCodeMs))
 };
 
 function delete_button_click(listIndex) {
   var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var index = listIndex.replace('deleteButton','');
   console.log("delete_button_click");
   sendSocketMessage("send_Delete_CueButton_To_Socket", {
-    listIndex: listIndex,
+    listIndex: index,
     selectedCuelist:selectedCuelist,
     user: user
   });

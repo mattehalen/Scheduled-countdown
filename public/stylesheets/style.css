@@ -371,7 +371,7 @@ input[type=time] {
 
 }
 .normalCueList{
-  height: 50vh;
+  height: 85vh;
   overflow-x: hidden;
   overflow-y: scroll;
 } 
