@@ -104,6 +104,7 @@ router.post('/users/submit/:userID', async function (req, res) {
   try {
     const users = await USERS_SETTINGS.get()
     const data = JSON.parse(JSON.stringify(req.body));
+    console.log(data);
     const newCueListArray=[];
 
   //---------- the - 1 here in T is for the added SelectedCuelist in the form that dosnt need to be in the loop

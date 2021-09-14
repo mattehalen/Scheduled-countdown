@@ -192,18 +192,21 @@ function showForFullScreen() {
 }
 
 function captureTCButton(listIndex) {
+  var index = listIndex.replace('captureTCButton','');
+
   console.log(timeCodeMs);
-  console.log("captureTCButton with listIndex = " + listIndex);
-  var string = "#timeCode" + listIndex
+  console.log("captureTCButton with listIndex = " + index);
+  var string = "#timeCode" + index
   $(string).val(msToTime(timeCodeMs))
 };
 
 function delete_button_click(listIndex) {
-  var selectedCuelist = $("#SelectedCuelist").val();
+  var selectedCuelist = $( "#SelectedCuelist" ).val();
+  var index = listIndex.replace('deleteButton','');
   console.log("delete_button_click");
   sendSocketMessage("send_Delete_CueButton_To_Socket", {
-    listIndex: listIndex,
-    selectedCuelist: selectedCuelist,
+    listIndex: index,
+    selectedCuelist:selectedCuelist,
     user: user
   });
   document.location.reload(true)
