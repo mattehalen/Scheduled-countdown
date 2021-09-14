@@ -5,6 +5,7 @@ block content
   p(hidden='')
   .topRow(ondrop='dropHandler(event);' ondragover='dragOverHandler(event);')
     #timeCode.timeCodeText
+    button.btn.btn-dark(type="button" id="generateTimeCode") Generate
     h4#user=name
     #nowTopRow.topRowText
 
@@ -14,7 +15,7 @@ block content
       .col-xl-9.col-sm-12.col-xs-12(style="font-size: calc(5px + 1vw)")
         form.overflow-auto-x(method='POST' action='submit/'+name )
           div.form-row
-            .col-8
+            .col-12
               select.form-control(type='select',name="SelectedCuelist",id="SelectedCuelist",)
                   each list, index in cuelist
                     if (list.cuelistName == selectedCueList)
@@ -22,13 +23,13 @@ block content
                     else
                       option= list.cuelistName
                     
-            .col-4
-              button.btn.btn-dark(type="button",style='width: 100%' id="SelectedCuelistButton") Save as SelectedCuelist
+            //- .col-4
+            //-   button.btn.btn-dark(type="button",style='width: 100%' id="SelectedCuelistButton") Save as SelectedCuelist
 
           button.btn.btn-dark(type='submit' style='width: 100%') Save
           button.btn.btn-dark(type="button",style='width: 50%' id="AddNewCueRow") Add new Row
-          button.btn.btn-dark(type="button",style='width: 25%' id="ToggleTC") TimeCode is ON
-          button.btn.btn-dark(type="button",style='width: 25%' id="ResetTC") Hide Rows ON/OFF
+          //- button.btn.btn-dark(type="button",style='width: 25%' id="ToggleTC") ToggleTC
+          button.btn.btn-dark(type="button",style='width: 50%' id="cuelistHideBool") Hide Rows ON/OFF
 
           div(class="userCueList normalCueList")
             h4#user
@@ -48,8 +49,8 @@ block content
                 | DEL
               
             each person, index in cuelist[selectedCueListIndex].cues
-              div.form-row.mywrapper(id="cueListRow" + index)
-                .centeredOverlay(id="centeredOverlay" + index)
+              div.form-row.mywrapper(id="cueListRow" + index )
+                .centeredOverlay(id="centeredOverlay" + index hidden='')
                   //- span Loading...
 
                 .col-1.text-right(onClick="markAsChecked(this)")= index+1
