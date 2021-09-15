@@ -43,16 +43,11 @@ WebSocketService.onEvent(KEYS.ALLUSERSURL, (message) => {
 })
 
 
-// generateTimeCode("00:00:00")
-
-
-
-
-
 var user = document.getElementById("user").textContent;
 var timeCodeBool = true;
 var cuelistHideBool = false;
 var fullscreenToggle = false
+var centeredOverlayBool = false
 
 $("#AddNewCueRow").on('click', function () {
   var selectedCuelist = $("#SelectedCuelist").val();
@@ -116,7 +111,19 @@ $("#generateTimeCode").on('click', function () {
 
   generateTimeCode("00:00:00")
 });
-
+$("#centeredOverlayButton").on('click', function () {
+  changeColorOnCenteredOverlayButton()
+});
+function changeColorOnCenteredOverlayButton(){
+  if (centeredOverlayBool) {
+    centeredOverlayBool=false
+    $("#centeredOverlayButton").css("background-color","darkred")
+  }else{
+    centeredOverlayBool = true
+    $("#centeredOverlayButton").css("background-color","darkgreen")
+  }
+}
+changeColorOnCenteredOverlayButton()
 
 
 $("#user").on('click', function () {
@@ -288,15 +295,21 @@ function cueTimeCountDown(timeCodeMs) {
     }
 
     if (timeCodeMs > (timeCodeArrayMs - overlayTime)) {
-      $(centeredOverlay).fadeIn(fadeTime);
-      $(centeredOverlay).animate({
-        width: "0%"
-      }, overlayTime - 1000);
+      // $(centeredOverlay).fadeIn(fadeTime);
+      // $(centeredOverlay).animate({
+      //   width: "0%"
+      // }, overlayTime - 1000);
     } else {
-      $(centeredOverlay).fadeOut(fadeTime);
-      $(centeredOverlay).animate({
-        width: "100%"
-      }, 0);
+      // $(centeredOverlay).fadeOut(fadeTime);
+      // $(centeredOverlay).animate({
+      //   width: "100%"
+      // }, 0);
+    }
+
+    if (timeCodeMs >= timeCodeArrayMs && centeredOverlayBool) {
+            $(centeredOverlay).fadeIn(0);
+    }else{
+      $(centeredOverlay).fadeOut(0);
     }
   }
 }
@@ -359,7 +372,7 @@ function timeCode(message) {
           document.getElementById("timeCode").textContent = message;
 
         } else {
-          document.getElementById("timeCode").textContent = "";
+          document.getElementById("timeCode").textContent = "00:00:00:00";
           cueTimeCountDown(timeStringToMs("00:00:00"));
 
         }

@@ -5,8 +5,9 @@ block content
   p(hidden='')
   .topRow(ondrop='dropHandler(event);' ondragover='dragOverHandler(event);')
     #timeCode.timeCodeText
-    button.btn.btn-dark(type="button" id="generateTimeCode") Generate
-    h4#user=name
+    div
+      button.btn.btn-dark(type="button" id="generateTimeCode") Generate
+    h4#user(style="margin:0")=name
     #nowTopRow.topRowText
 
           
@@ -17,8 +18,10 @@ block content
         h3 Settings
         button.btn.btn-dark(type='submit' style='width: 100%' form="form-Cuelist") Save
         button.btn.btn-dark(type="button",style='width: 100%' id="AddNewCueRow") Add new Row
-        button.btn.btn-dark(type="button",style='width: 50%' id="ToggleTC") TimeCode
-        button.btn.btn-dark(type="button",style='width: 50%' id="ResetTC") Hide Rows
+        //- button.btn.btn-dark(type="button",style='width: 50%' id="ToggleTC") TimeCode
+        //- button.btn.btn-dark(type="button",style='width: 50%' id="ResetTC") Hide Rows
+        button.btn.btn-dark(type="button",style='width: 100%' id="centeredOverlayButton") Overlay
+
         hr(style='height:5px;background-color:white')
 
         h3 Add Cuelist
@@ -55,7 +58,7 @@ block content
             h3#user
               | #{selectedCueList}
             .form-row
-              .col-1.text-right(onclick="alert('This works')")
+              .col-1.text-right
                 | #
               .col-4.text-left
                 | Title
@@ -70,7 +73,7 @@ block content
               
             each person, index in cuelist[selectedCueListIndex].cues
               div.form-row.mywrapper(id="cueListRow" + index )
-                .centeredOverlay(id="centeredOverlay" + index hidden='')
+                .centeredOverlay(id="centeredOverlay" + index )
                   //- span Loading...
 
                 .col-1.text-right(onClick="markAsChecked(this)")= index+1
