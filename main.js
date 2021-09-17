@@ -8,6 +8,12 @@ const {
 app.disableHardwareAcceleration()
 app.commandLine.appendSwitch('trace-warnings')
 
+const path = require('path')
+
+// require('electron-reload')(__dirname, {
+//   electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
+// });
+
 //----------------------------------------------------------------------
 const log = require('electron-log');
 console.log = log.log;

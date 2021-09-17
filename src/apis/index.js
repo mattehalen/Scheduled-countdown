@@ -437,5 +437,27 @@ router.get('/celebration', async function (req, res) {
     title: 'Scheduled-CountDown'
   });
 });
+router.post('/celebrationList/submit', function (req, res) {
+  console.log("----------> celebrationList/submit");
+  console.log(req.body);
+  let tableNr = req.body.tableNr;
+  let name = req.body.name;
+  let reason = req.body.reason;
+  let years = req.body.years;
+  let info = req.body.info;
+  console.log(tableNr);
+  console.log(name);
+  console.log(reason);
+  console.log(years);
+  console.log(info);
+
+  try {
+    
+  } catch (error) {
+    console.log(error);
+  }
+  res.redirect('back');
+});
+
 
 module.exports = router;
