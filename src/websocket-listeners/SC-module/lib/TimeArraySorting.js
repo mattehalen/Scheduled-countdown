@@ -73,6 +73,12 @@ function reset_newArrayIndex(){
   newArrayIndex = 0;
 }
 
+function reset_newArrayIndex_onceAday() {
+  newArrayIndex = 0;
+  setInterval(reset_newArrayIndex_onceAday, 1000 * 60 * 60 * 24);
+}
+reset_newArrayIndex_onceAday()
+
 function msToTime(s) {
   var ms = s % 1000;
   s = (s - ms) / 1000;

@@ -427,4 +427,15 @@ WebSocketService.onEvent(EVENTS.DELETECUELIST, async (messageEvent) => {
   }
 });
 
+
+
+//-------------------------------------------------------------------------
+// Celebration Page
+//-------------------------------------------------------------------------
+router.get('/celebration', async function (req, res) {
+  res.render('celebration', {
+    title: 'Scheduled-CountDown'
+  });
+});
+
 module.exports = router;

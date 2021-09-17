@@ -373,7 +373,7 @@ input[type=time] {
 .normalCueList{
   height: 85vh;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 } 
 
 
@@ -401,4 +401,11 @@ input[type=time] {
 .fiveMinText{
   font-size: 11vh;
   /* margin: -100px; */
+}
+
+
+
+/* Celebration */
+#formTable{
+  font-size: 1.5vh;
 }

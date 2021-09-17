@@ -47,7 +47,7 @@ var user = document.getElementById("user").textContent;
 var timeCodeBool = true;
 var cuelistHideBool = false;
 var fullscreenToggle = false
-var centeredOverlayBool = false
+var centeredOverlayBool = true
 
 $("#AddNewCueRow").on('click', function () {
   var selectedCuelist = $("#SelectedCuelist").val();
@@ -114,13 +114,15 @@ $("#generateTimeCode").on('click', function () {
 $("#centeredOverlayButton").on('click', function () {
   changeColorOnCenteredOverlayButton()
 });
-function changeColorOnCenteredOverlayButton(){
+
+function changeColorOnCenteredOverlayButton() {
   if (centeredOverlayBool) {
-    centeredOverlayBool=false
-    $("#centeredOverlayButton").css("background-color","darkred")
-  }else{
+    centeredOverlayBool = false
+    $("#centeredOverlayButton").css("background-color", "darkred")
+    $(".centeredOverlay").fadeOut(0);
+  } else {
     centeredOverlayBool = true
-    $("#centeredOverlayButton").css("background-color","darkgreen")
+    $("#centeredOverlayButton").css("background-color", "darkgreen")
   }
 }
 changeColorOnCenteredOverlayButton()
@@ -199,7 +201,7 @@ function showForFullScreen() {
 }
 
 function captureTCButton(listIndex) {
-  var index = listIndex.replace('captureTCButton','');
+  var index = listIndex.replace('captureTCButton', '');
 
   console.log(timeCodeMs);
   console.log("captureTCButton with listIndex = " + index);
@@ -208,12 +210,12 @@ function captureTCButton(listIndex) {
 };
 
 function delete_button_click(listIndex) {
-  var selectedCuelist = $( "#SelectedCuelist" ).val();
-  var index = listIndex.replace('deleteButton','');
+  var selectedCuelist = $("#SelectedCuelist").val();
+  var index = listIndex.replace('deleteButton', '');
   console.log("delete_button_click");
   sendSocketMessage("send_Delete_CueButton_To_Socket", {
     listIndex: index,
-    selectedCuelist:selectedCuelist,
+    selectedCuelist: selectedCuelist,
     user: user
   });
   document.location.reload(true)
@@ -306,11 +308,16 @@ function cueTimeCountDown(timeCodeMs) {
       // }, 0);
     }
 
-    if (timeCodeMs >= timeCodeArrayMs && centeredOverlayBool) {
-            $(centeredOverlay).fadeIn(0);
-    }else{
+    if (centeredOverlayBool) {
+      if (timeCodeMs >= timeCodeArrayMs) {
+        $(centeredOverlay).fadeIn(0);
+      } else {
+        $(centeredOverlay).fadeOut(0);
+      }
+    } else {
       $(centeredOverlay).fadeOut(0);
     }
+
   }
 }
 
@@ -362,7 +369,7 @@ function timeCode(message) {
       if (generateTC) {
         timeCodeMs = timeStringToMs(message);
         if (typeof (message) == "string") {
-          document.getElementById("timeCode").textContent = message+":00";
+          document.getElementById("timeCode").textContent = message + ":00";
           cueTimeCountDown(timeStringToMs(message));
         }
 
@@ -370,6 +377,7 @@ function timeCode(message) {
         timeCodeMs = timeStringToMs(message);
         if (typeof (message) == "string") {
           document.getElementById("timeCode").textContent = message;
+          cueTimeCountDown(timeStringToMs(message));
 
         } else {
           document.getElementById("timeCode").textContent = "00:00:00:00";
@@ -393,7 +401,7 @@ function generateTimeCode(timeString) {
       // console.log(timeString);
       let ms = timeStringToMs(timeString)
       let timmer = setInterval(() => {
- 
+
         timeCode(msToTime(ms))
         if (stopTC) {
           clearInterval(timmer);

@@ -40,3 +40,5 @@ public/scheduledTimes-backup.json
 *.provisionprofile
 *.p8
 electron-builder.env
+src/views/celebration.pug
+public/javascripts/celebration.js

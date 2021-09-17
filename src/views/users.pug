@@ -14,12 +14,12 @@ block content
   .container-fluid
     .row.justify-content-center
       //- Settings Panel
-      .col-xl-3.col-sm-1.col-xs-1
+      .col-xl-2.col-sm-1.col-xs-1
         h3 Settings
         button.btn.btn-dark(type='submit' style='width: 100%' form="form-Cuelist") Save
         button.btn.btn-dark(type="button",style='width: 100%' id="AddNewCueRow") Add new Row
-        //- button.btn.btn-dark(type="button",style='width: 50%' id="ToggleTC") TimeCode
-        //- button.btn.btn-dark(type="button",style='width: 50%' id="ResetTC") Hide Rows
+        button.btn.btn-dark(type="button",style='width: 50%' id="ToggleTC") TimeCode
+        button.btn.btn-dark(type="button",style='width: 50%' id="ResetTC") Hide Rows
         button.btn.btn-dark(type="button",style='width: 100%' id="centeredOverlayButton") Overlay
 
         hr(style='height:5px;background-color:white')
@@ -34,7 +34,7 @@ block content
               each list, index in cuelist
                     option= list.cuelistName
 
-      .col-xl-9.col-sm-11.col-xs-11(style="font-size: calc(5px + 1vw)")
+      .col-xl-10.col-sm-11.col-xs-11(style="font-size: calc(5px + 1vw)")
         form(method='POST' action='submit/'+name id="form-Cuelist")
           div.form-row
             .col-12
