@@ -1,0 +1,75 @@
+extends layout
+
+block content
+  .topRow()
+    #nowTopRow.topRowText
+  .container
+    .col-12
+      | Celebration List - List closes at 20:00
+    hr.color(style="background-color: White")
+    
+    form(action='/celebration/submit' method='post')
+      .row
+        .col-2
+          input.form-control(type='number' placeholder='Table Nr' name='tableNr' required)
+        .col-3
+          input.form-control(type='text' placeholder='First name' name='name' required)
+        .col-2
+          select#exampleFormControlSelect1.form-control(name="reason" required)
+            option(value='' disabled='' selected='' hidden='') Please Choose...
+            option Birthday
+            option Anniversary
+            option Jubiliee
+            option Confirmation
+        .col-2
+          input.form-control(type='number' placeholder='Years' name='years' required)
+        .col-3
+          input.form-control(type='text' placeholder='Info In enlish' name='info')
+      button.btn.btn-success(type="submit", style="width:100%") Submit
+
+      hr.color(style="background-color: White")
+    form(action='/celebration/update' method='post')
+      if celebrationList
+        table.table.table-dark(style="font-size:17px")
+          thead
+            tr
+              th(scope='col').col-1 order
+              th(scope='col').col-1 tableNr
+              th(scope='col').col-3 name
+              th(scope='col').col-2 reason
+              th(scope='col').col-2 years
+              th(scope='col').col-3 info
+          tbody
+          each item,index in celebrationList
+              tr
+                th
+                  input.form-control(type='number' name='order'+index value=item.order)
+                td
+                  input.form-control(type='number' placeholder='Table Nr' name='tableNr'+index value=item.tableNr)
+                td
+                  input.form-control(type='text' placeholder='First name' name='name'+index   value=item.name)
+                td
+                  select#exampleFormControlSelect1.form-control(name="reason"+index)
+                    option(value='' disabled='' selected='' hidden='')=item.reason
+                    option Birthday
+                    option Anniversary
+                    option Jubiliee
+                    option Confirmation
+                td
+                  input.form-control(type='number' placeholder='Years' name='years'+index value=item.years)
+                td
+                  input.form-control(type='text' name='info'+index value=item.info)
+        button.btn.btn-success(type="submit") Update List
+      else
+        p No celebrations registred today
+
+
+
+
+    
+
+block pagescripts
+  // INDEX Scripts
+  //- script(src="/javascripts/script.js")
+  script(src="/javascripts/celebration.js")
+

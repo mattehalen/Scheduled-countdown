@@ -1,0 +1,62 @@
+extends layout
+
+block content
+  .topRow()
+    #nowTopRow.topRowText
+  .container
+    .col-12
+      | Celebration List - List closes at 20:00
+    hr.color(style="background-color: White")
+    
+    form(action='/celebration/submit' method='post')
+      .row
+        .col-2
+          input.form-control(type='number' placeholder='Table Nr' name='tableNr' required)
+        .col-3
+          input.form-control(type='text' placeholder='First name' name='name' required)
+        .col-2
+          select#exampleFormControlSelect1.form-control(name="reason" required)
+            option(value='' disabled='' selected='' hidden='') Please Choose...
+            option Birthday
+            option Anniversary
+            option Jubiliee
+            option Confirmation
+        .col-2
+          input.form-control(type='number' placeholder='Years' name='years' required)
+        .col-3
+          input.form-control(type='text' placeholder='Info In enlish' name='info')
+      button.btn.btn-success(type="submit", style="width:100%") Submit
+
+      hr.color(style="background-color: White")
+
+      table.table.table-dark(style="font-size:17px")
+        thead
+          tr
+            th(scope='col') order
+            th(scope='col') tableNr
+            th(scope='col') name
+            th(scope='col') reason
+            th(scope='col') years
+            th(scope='col') info
+        tbody
+        if celebrationList
+          each item in celebrationList
+            tr
+              th=item.order
+              td=item.tableNr
+              td=item.name
+              td=item.reason
+              td=item.years
+              td=item.info
+        else
+          p No celebrations registred today
+
+
+
+    
+
+block pagescripts
+  // INDEX Scripts
+  //- script(src="/javascripts/script.js")
+  script(src="/javascripts/celebration.js")
+
