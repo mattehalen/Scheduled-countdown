@@ -67,10 +67,10 @@ async function CountDown() {
     var countDownTimeInMS = now - startTime;
 
     if (now > startTime) {
-        time = now - startTime
+        time = now - (startTime)
         time = (msToTime(time))
     } else {
-        time = startTime - now
+        time = (startTime+1000) - now
         time = "-" + (msToTime(time))
     }
 
@@ -147,7 +147,7 @@ async function CueCountDown() {
         time = now - cueStarTime
         time = (msToTime(time))
     } else {
-        time = cueStarTime - now
+        time = (cueStarTime+1000) - now
         time = "-" + (msToTime(time))
     }
 

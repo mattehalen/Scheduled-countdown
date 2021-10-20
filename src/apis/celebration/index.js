@@ -11,6 +11,10 @@ router.get('/', async function (req, res) {
     var date = yourDate.toISOString().split('T')[0]
 
     var celebrationList = await Service.get()
+    if (!celebrationList){
+        celebrationList = {}
+    }
+    console.log(celebrationList);
     res.render('celebration', {
         title: 'Scheduled-CountDown',
         celebrationList: celebrationList[`${date}`]
@@ -27,6 +31,15 @@ router.get('/admin', async function (req, res) {
         title: 'Scheduled-CountDown',
         celebrationList: celebrationList[`${date}`]
     });
+});
+router.get('/getCelebrationList', async function (req, res) {
+    var d = new Date()
+    const offset = d.getTimezoneOffset()
+    var yourDate = new Date(d.getTime() - (offset * 60 * 1000))
+    var date = yourDate.toISOString().split('T')[0]
+
+    var celebrationList = await Service.get()
+    res.json(celebrationList[`${date}`]);
 });
 router.post('/submit', async function (req, res) {
     try {

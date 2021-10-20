@@ -20,6 +20,10 @@ https://github.com/mattehalen/Scheduled-countdown/wiki/How-to
 <details>
   <summary>CHANGE LOG</summary>
 
+## Alpha V.0.0.30
+    1. Fix Countdown wrong by 1sec
+    2. Added getCelebrationList to API
+    3. Added startTop to FOH & removing Audio
 ## Alpha V.0.0.29
     1. When selecting a cuelist auto Save as SelectedCuelist so the user don't need to push save as selectedCuelist !!
     2. Force Reload On All Views Added and can be triggered from /admin -> Settings

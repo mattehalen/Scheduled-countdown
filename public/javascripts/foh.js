@@ -21,6 +21,8 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
 
 WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   //console.log(message);
+  document.getElementById("startTop").textContent = message.time
+
   if (message.bool) {
     document.getElementById("title").textContent = message.title
     document.getElementById("start").textContent = message.time
