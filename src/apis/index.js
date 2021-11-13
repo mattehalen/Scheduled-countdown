@@ -58,12 +58,12 @@ router.get('/Countdown/getCountDown', async function (req, res) {
   res.json(CountDown)
 });
 
-// router.get('/watch', async function (req, res) {
-//   res.render('watch', {
-//     title: 'Scheduled-CountDown',
-//     now: "s"
-//   });
-// });
+router.get('/watch', async function (req, res) {
+  res.render('watch', {
+    title: 'Scheduled-CountDown',
+    now: "s"
+  });
+});
 
 router.get('/users/:userID', async function (req, res) {
   const db_settings   = await AdminSettings.getDbSettings();
