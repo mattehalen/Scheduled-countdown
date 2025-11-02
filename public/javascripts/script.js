@@ -8,10 +8,15 @@ const KEYS = {
   "RELOAD": "reload"
 };
 
+// Dedupe: only update the visible time if it actually changed
+let _lastNowText = '';
 WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
-  document.getElementById("nowTopRow").textContent = message;
-  document.getElementById("now").textContent = message;
-})
+  if (message !== _lastNowText) {
+    _lastNowText = message;
+    document.getElementById("nowTopRow").textContent = message;
+    document.getElementById("now").textContent = message;
+  }
+});
 WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
   //console.log('Message from server: ', message);
 })
@@ -25,8 +30,65 @@ let countdownAnim = {
   rafId: null,
   title: '',
   colors: { countDownColor: '#FF0000', countUpColor: '#00FF00' },
-  bool: false
+  bool: false,
+  titleChanged: false
 };
+
+// Track last displayed value to avoid unnecessary DOM writes
+let _lastDisplayedSecond = null; // when animating locally
+let _lastDisplayedString = '';
+let _lastTitle = '';
+
+// Edge-triggered audio: track last crossing and enablement
+let _prevCountDownMs = null;
+let _audioEnabled = false;
+const _audioPlayed = {
+  m6: false,
+  m5: false,
+  m4: false,
+  m3: false,
+  m2: false,
+  m1: false
+};
+
+function resetAudioState() {
+  _prevCountDownMs = null;
+  for (const k in _audioPlayed) _audioPlayed[k] = false;
+}
+
+function tryPlay(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const p = el.play();
+  if (p && typeof p.catch === 'function') {
+    p.catch(() => {/* ignore autoplay errors */});
+  }
+}
+
+// Detect crossings of thresholds and play once per event
+function maybeTriggerAudio(prevMs, currMs) {
+  if (!_audioEnabled) return;
+  if (typeof prevMs !== 'number' || typeof currMs !== 'number') return;
+
+  const T = {
+    m6: -6 * 60000,
+    m5: -5 * 60000,
+    m4: -4 * 60000,
+    m3: -3 * 60000,
+    m2: -2 * 60000,
+    m1: -1 * 60000
+  };
+
+  // crossing helper: from <= threshold to > threshold
+  const crossed = (th) => prevMs <= th && currMs > th;
+
+  if (!_audioPlayed.m6 && crossed(T.m6)) { _audioPlayed.m6 = true; tryPlay('musiclong6'); }
+  if (!_audioPlayed.m5 && crossed(T.m5)) { _audioPlayed.m5 = true; tryPlay('music5'); }
+  if (!_audioPlayed.m4 && crossed(T.m4)) { _audioPlayed.m4 = true; tryPlay('musiclong4'); }
+  if (!_audioPlayed.m3 && crossed(T.m3)) { _audioPlayed.m3 = true; tryPlay('music3'); }
+  if (!_audioPlayed.m2 && crossed(T.m2)) { _audioPlayed.m2 = true; tryPlay('musiclong2'); }
+  if (!_audioPlayed.m1 && crossed(T.m1)) { _audioPlayed.m1 = true; tryPlay('music1'); }
+}
 
 function pad(n, z) {
   z = z || 2;
@@ -49,26 +111,41 @@ function renderCountdown(nowMs) {
   const elapsed = performance.now() - countdownAnim.timestamp;
   const remaining = countdownAnim.startMs - elapsed;
 
-  // Update DOM
-  document.getElementById('title').textContent = countdownAnim.title || '';
-  document.getElementById('start').textContent = msToTime(remaining);
+  // Update title only when it changes (prevents layout thrash)
+  if (_lastTitle !== countdownAnim.title) {
+    _lastTitle = countdownAnim.title || '';
+    document.getElementById('title').textContent = _lastTitle;
 
-  if (countdownAnim.startMs < (3 * -60000)) {
-    document.body.style.backgroundColor = '#2b2b2b';
-  } else if (remaining > 0) {
-    document.body.style.backgroundColor = countdownAnim.colors.countUpColor;
-  } else {
-    document.body.style.backgroundColor = countdownAnim.colors.countDownColor;
+    // Auto-shrink title text (only when title changes)
+    var textLength = _lastTitle.length;
+    if (textLength <= 14) {
+      $('#title').css('font-size', '10vw');
+    } else if (textLength > 14 && textLength < 19) {
+      $('#title').css('font-size', '8vw');
+    } else if (textLength > 18) {
+      $('#title').css('font-size', '7vw');
+    }
   }
 
-  // Auto-shrink title text
-  var textLength = $('#title').text().length;
-  if (textLength <= 14) {
-    $('#title').css('font-size', '10vw');
-  } else if (textLength > 14 && textLength < 19) {
-    $('#title').css('font-size', '8vw');
-  } else if (textLength > 18) {
-    $('#title').css('font-size', '7vw');
+  // Local animation path: Only update countdown text when whole second changes
+  const displaySeconds = Math.floor(remaining / 1000);
+  if (displaySeconds !== _lastDisplayedSecond) {
+    _lastDisplayedSecond = displaySeconds;
+    document.getElementById('start').textContent = msToTime(displaySeconds * 1000);
+  }
+
+  // Only flip background color when it changes (reduces flicker/repaints)
+  let nextBg;
+  if (countdownAnim.startMs < (3 * -60000)) {
+    nextBg = '#2b2b2b';
+  } else if (remaining > 0) {
+    nextBg = countdownAnim.colors.countUpColor;
+  } else {
+    nextBg = countdownAnim.colors.countDownColor;
+  }
+  if (document.body._lastBgColor !== nextBg) {
+    document.body.style.backgroundColor = nextBg;
+    document.body._lastBgColor = nextBg;
   }
 
   if (countdownAnim.running) {
@@ -80,8 +157,7 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
   // message.countDownTimeInMS expected (ms remaining, can be negative)
   if (message && message.bool) {
     countdownAnim.bool = true;
-    countdownAnim.startMs = (typeof message.countDownTimeInMS === 'number') ? message.countDownTimeInMS : 0;
-    countdownAnim.timestamp = performance.now();
+    const incomingMs = (typeof message.countDownTimeInMS === 'number') ? message.countDownTimeInMS : 0;
     countdownAnim.title = message.title || '';
     countdownAnim.colors = message.colors || countdownAnim.colors;
 
@@ -89,9 +165,51 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
     document.getElementById('centerNowText').style.display = 'none';
     document.getElementById('titleContentBox').style.display = 'block';
 
-    if (!countdownAnim.running) {
-      countdownAnim.running = true;
-      countdownAnim.rafId = requestAnimationFrame(renderCountdown);
+    // SERVER-AUTHORITATIVE RENDERING: display exactly what server sent (no local ticking)
+    // Update title only when changed
+    if (_lastTitle !== countdownAnim.title) {
+      _lastTitle = countdownAnim.title;
+      document.getElementById('title').textContent = _lastTitle;
+      const textLength = _lastTitle.length;
+      if (textLength <= 14) {
+        $('#title').css('font-size', '10vw');
+      } else if (textLength > 14 && textLength < 19) {
+        $('#title').css('font-size', '8vw');
+      } else if (textLength > 18) {
+        $('#title').css('font-size', '7vw');
+      }
+    }
+
+    // Update countdown string from server directly
+    const serverString = message.time || msToTime(incomingMs);
+    if (serverString !== _lastDisplayedString) {
+      _lastDisplayedString = serverString;
+      document.getElementById('start').textContent = serverString;
+    }
+
+    // Edge-triggered audio on threshold crossings
+    maybeTriggerAudio(_prevCountDownMs, incomingMs);
+    _prevCountDownMs = incomingMs;
+
+    // Background color changes based on sign/thresholds
+    let nextBg;
+    if (incomingMs < (3 * -60000)) {
+      nextBg = '#2b2b2b';
+    } else if (incomingMs > 0) {
+      nextBg = countdownAnim.colors.countUpColor;
+    } else {
+      nextBg = countdownAnim.colors.countDownColor;
+    }
+    if (document.body._lastBgColor !== nextBg) {
+      document.body.style.backgroundColor = nextBg;
+      document.body._lastBgColor = nextBg;
+    }
+
+    // Ensure no local animation continues when server drives UI
+    if (countdownAnim.running && countdownAnim.rafId) {
+      cancelAnimationFrame(countdownAnim.rafId);
+      countdownAnim.running = false;
+      countdownAnim.rafId = null;
     }
 
     // Audio triggers should be based on transitions — still use existing logic but
@@ -125,6 +243,10 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
       cancelAnimationFrame(countdownAnim.rafId);
       countdownAnim.rafId = null;
     }
+    _lastDisplayedSecond = null;
+    _lastDisplayedString = '';
+    _lastTitle = '';
+    resetAudioState();
     document.getElementById('centerNowText').style.display = 'block';
     document.getElementById('titleContentBox').style.display = 'none';
     document.body.style.backgroundColor = '#2b2b2b';
@@ -162,6 +284,7 @@ function timeStringToMs(t) {
  playButton.hidden = false;
 // //--------------------------------------------------
  function startPlayback() {
+   _audioEnabled = true;
    return document.querySelector('.countDownSound').play();
  }
  startPlayback().then(function () {

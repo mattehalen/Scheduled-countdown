@@ -129,7 +129,7 @@ class ServerClock {
             this._lastBroadcast = now;
 
             // Log the state along with the measured interval
-            console.log('Broadcasting state:', this._currentState, `intervalMs=${intervalMs}`);
+            //console.log('Broadcasting state:', this._currentState, `intervalMs=${intervalMs}`);
             ServerClock.io.emit('state_update', this._currentState);
         } else {
             console.log('Warning: Socket.IO not initialized');

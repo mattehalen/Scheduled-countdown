@@ -11,6 +11,7 @@ const EVENTS = {
 };
 
 async function start() {
+  const BROADCAST_INTERVAL_MS = Number(process.env.BROADCAST_INTERVAL_MS) || 1000; // default 1s
   setInterval(async () => {
     const currentTime   = SCModuleService.currentTime();
     const currentTimeMs = SCModuleService.currentTimeMs();
@@ -24,7 +25,7 @@ async function start() {
     WebSocketService.broadcastToAll(EVENTS.CUE_COUNTDOWN, cueCountDown);
     WebSocketService.broadcastToAll(EVENTS.SETTINGS, settings);
 
-  }, 250);
+  }, BROADCAST_INTERVAL_MS);
 
   setInterval(async () => {
     const settings  = await SCModuleService.settings();

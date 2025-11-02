@@ -54,6 +54,7 @@ app.get('/favicon.ico', (req, res) => res.status(204).send());
 app.use('/favicon.ico', express.static('public/favicon.ico'));
 app.use('/',      require('./apis/index'));
 app.use('/admin', require('./apis/admin'));
+app.use('/admin/api', require('./apis/admin-memory'));  // Memory management API
 app.use('/users',  require('./apis/user'));
 app.use('/celebration',  require('./apis/celebration'));
 

@@ -23,6 +23,8 @@ block content
             a#alert-tab.nav-link(data-toggle='tab' href='#alert' role='tab' aria-controls='alert' aria-selected='false') Alert
           li.nav-item
             a#alert-tab.nav-link(data-toggle='tab' href='#users' role='tab' aria-controls='users' aria-selected='false') Users
+          li.nav-item
+            a#memory-tab.nav-link(data-toggle='tab' href='#memory' role='tab' aria-controls='memory' aria-selected='false') Memory
         #myTabContent.tab-content.shadow.p-3.mb-5.rounded
           #Schedule.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='Schedule-tab' style="font-size: calc(5px + 1vw)")
             include db/db-dayOfWeek.pug
@@ -98,6 +100,34 @@ block content
                 button.btn.btn-danger(type="reset",name="testPush", id="testPush", onClick="testPush()" style='width: 100%') Send Push
 
           #users.tab-pane.fade(role='tabpanel' aria-labelledby='users-tab')
+
+          #memory.tab-pane.fade(role='tabpanel' aria-labelledby='memory-tab')
+            .card.bg-dark.text-white.mb-4
+              .card-header.d-flex.justify-content-between.align-items-center
+                h5.mb-0 Memory Usage
+                button.btn.btn-sm.btn-outline-info#refreshMemoryStatus(type='button') Refresh
+              .card-body
+                .row
+                  .col-md-6
+                    .progress.mb-2(style='height: 25px')
+                      .progress-bar.bg-info#heapUsageBar(role='progressbar' style='width: 0%')
+                        span.px-2#heapUsageText 0%
+                    p.small.text-muted Heap Usage (Used/Total)
+                    p#heapDetails.mb-3 ...
+                    p.small.text-muted RSS (Resident Set Size)
+                    p#rssValue.mb-3 ...
+                  .col-md-6
+                    .card.bg-dark
+                      .card-body
+                        h6.card-title Memory Monitor
+                        p#monitorStatus.card-text ...
+                        button.btn.btn-sm.btn-primary#takeSnapshot(type='button' disabled) Take Heap Snapshot
+                        .mt-2.small#snapshotResult
+            .card.bg-dark.text-white.mt-3
+              .card-header Recent Memory Snapshots
+              .card-body
+                ul#snapshotList.list-unstyled.small
+                  li Loading...
             include db/users.pug
   .downSite
     #cueTime.fiveMinute

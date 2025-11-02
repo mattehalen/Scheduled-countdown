@@ -26,30 +26,14 @@ socket.on('message', (data) => {
 
 // Listen for state updates from server
 socket.on('state_update', (data) => {
-  // Log received state for debugging
-  console.log('Received state update:', data);
-
-  // Forward useful parts to WebSocketService so UI modules can react
-  try {
-    if (data.currentTime) {
-      WebSocketService.onMessage('currentTime', data.currentTime);
-    }
-    if (typeof data.currentTimeMs !== 'undefined') {
-      WebSocketService.onMessage('currentTimeMs', data.currentTimeMs);
-    }
-
-    // Build countdown message compatible with existing client handlers
-    const countdownPayload = {
-      bool: !!data.isCountingDown,
-      time: data.countdownTime,
-      title: data.nextEvent || '',
-      countDownTimeInMS: typeof data.countDownTimeInMS !== 'undefined' ? data.countDownTimeInMS : 0,
-      colors: (data.colors || { countDownColor: '#FF0000', countUpColor: '#00FF00' })
-    };
-    WebSocketService.onMessage('countDown', countdownPayload);
-  } catch (err) {
-    console.error('Error forwarding state_update to WebSocketService:', err);
-  }
+  // Received server 'state_update' (from server-clock). We do NOT forward this
+  // into WebSocketService because the SC-module already broadcasts the same
+  // events via WebSocketService.broadcastToAll at a higher frequency. Forwarding
+  // both causes duplicate updates and visual flicker. Keep a debug log only.
+  //
+  // If you want to use server-clock's state_update exclusively, remove the
+  // SC-module broadcaster (src/websocket-listeners/SC-module/index.js) instead.
+  console.debug('Received state_update (ignored for forwarding):', data);
 });
 
 // This method will gets called when socket is connected.

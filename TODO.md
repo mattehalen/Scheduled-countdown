@@ -40,3 +40,5 @@ https://babeljs.io/docs/en/
 2. - [ ] Import cue-list / Timecode cue-list from - HOG - GrandMA - Avolites...
 
 
+### node updates
+1. - [X] Update so app is no longer so far behind on modules versions (2025-11-02)
