@@ -2,7 +2,7 @@
 /* Website ALL */
 /* --------------------------------------------------*/
 body {
-  background: #2b2b2b;
+  background: var(--bg-color, #2b2b2b);
   height: 100vh;
   margin: 0;
   font-size: calc(16px + 1vw);
@@ -177,13 +177,12 @@ input[type=time] {
 /* .row {
   flex-direction: column;
 } */
-.titleContentBox {
-}
+.titleContentBox { min-height: 0; }
 .audiobutton {
   float:left;
 }
 .topRow {
-  background-color: #3b3b3b;
+  background-color: var(--accent-color, #3b3b3b);
   height: 10%;
   width: 100%;
   display: flex;
@@ -212,15 +211,81 @@ input[type=time] {
 /* --------------------------------------------------*/
 /* Admin */
 /* --------------------------------------------------*/
+/* Pill-style tabs */
+#myTab.nav-tabs {
+  border-bottom: none;
+  background: var(--accent-color, #3b3b3b);
+  padding: 8px;
+  border-radius: 8px;
+  margin-bottom: 0;
+}
+
+#myTab .nav-item {
+  margin-bottom: 0;
+}
+
+#myTab .nav-link {
+  color: #bdbdbd;
+  border: none;
+  border-radius: 6px;
+  margin: 0 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  height: 42px;
+  padding: 0 16px;
+}
+
+#myTab .nav-link:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#myTab .nav-link.active {
+  color: #ffffff;
+  background: #007bff; /* Bootstrap primary blue */
+  box-shadow: 0 2px 8px rgba(0, 123, 255, 0.4);
+  font-weight: 600;
+}
+
+/* Normalize the first control row (offset controls) */
+.topRow + .container-fluid .form-row {
+  align-items: center;
+}
+.topRow + .container-fluid .form-row form {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+.topRow + .container-fluid .form-row .btn,
+.topRow + .container-fluid .form-row .form-control {
+  /* Use Bootstrap's default control sizing so inputs and buttons match */
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: .375rem .75rem;
+  border-radius: .25rem;
+  height: calc(1.5em + .75rem + 2px); /* Force exact match */
+  box-sizing: border-box;
+}
+.topRow + .container-fluid .form-row input[type="text"].form-control {
+  /* Extra fix for text inputs - ensure they match button height exactly */
+  padding-top: .375rem;
+  padding-bottom: .375rem;
+}
+.topRow + .container-fluid .form-row input[type="checkbox"].form-control {
+  /* prevent oversized checkbox */
+  height: 24px;
+  width: 24px;
+  padding: 0;
+}
 .cueTime {
   width: 100%;
   font-size: 4vw;
   height: 4.2vw;
 }
-.floatl{
-  /* overflow-y: scroll;
-  height: 100%; */
-}
+.floatl{ min-height: 0; }
 .preview {
   overflow:hidden;
   width: 100%;
@@ -273,7 +338,7 @@ input[type=time] {
   font-size: 23vh;
 }
 .fiveMinute {
-  background-color: #3b3b3b;
+  background-color: var(--accent-color, #3b3b3b);
   height: 4.2vw;
   font-size: 4vw;
   width: 100%;
@@ -351,25 +416,32 @@ input[type=time] {
   from {background-color:darkred;}
   to {background-color:black;}
 }
+@keyframes blinker {
+  from {background-color:darkred;}
+  to {background-color:black;}
+}
 .blink{
 
   height: 100%;
-  width: : 100%;
+  width: 100%;
   align-items: center;
   justify-content: center;
 
 	text-decoration: blink;
-	-webkit-animation-name: blinker;
-	-webkit-animation-duration: 0.6s;
-	-webkit-animation-iteration-count:infinite;
-	-webkit-animation-timing-function:ease-in-out;
-	-webkit-animation-direction: alternate;
+  -webkit-animation-name: blinker;
+  animation-name: blinker;
+  -webkit-animation-duration: 0.6s;
+  animation-duration: 0.6s;
+  -webkit-animation-iteration-count:infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-timing-function:ease-in-out;
+  animation-timing-function: ease-in-out;
+  -webkit-animation-direction: alternate;
+  animation-direction: alternate;
 }
 
 
-.userCueList{
-
-}
+.userCueList{ min-height: 0; }
 .normalCueList{
   height: 85vh;
   overflow-x: hidden;
@@ -397,10 +469,12 @@ input[type=time] {
 .fiveMinNum{
   font-size: 30vh;
   font-weight: 800;
+  color: rgba(255, 255, 255, 0); /* hidden by default, shown by JS */
 }
 .fiveMinText{
   font-size: 11vh;
   /* margin: -100px; */
+  color: rgba(255, 255, 255, 0); /* hidden by default, shown by JS */
 }
 
 

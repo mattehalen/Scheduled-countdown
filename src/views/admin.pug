@@ -1,5 +1,14 @@
 extends layout
 
+block append head
+  - var bg = (typeof settings !== 'undefined' && settings && settings.Color && (settings.Color.Background || settings.Color.background || settings.Color.bg || settings.Color.bgColor)) || '#2b2b2b'
+  - var acc = (typeof settings !== 'undefined' && settings && settings.Color && (settings.Color.HeaderFooter || settings.Color.headerFooter || settings.Color.accent || settings.Color.headerBG || settings.Color.footerBG)) || '#3b3b3b'
+  style.
+    :root {
+      --bg-color: #{bg};
+      --accent-color: #{acc};
+    }
+
 block content
   p(hidden='')
   .topRow.shadow.p-3.mb-5.rounded.sticky-top
@@ -11,7 +20,8 @@ block content
     .row.justify-content-center.overflow-hidden
       
       .col-xl-9.col-sm-12.col-xs-12
-        include db/offsetTime.pug
+        .mb-3
+          include db/offsetTime.pug
         ul#myTab.nav.nav-tabs(role='tablist')
           li.nav-item
             a#Schedule-tab.nav-link.active(data-toggle='tab' href='#Schedule' role='tab' aria-controls='Schedule' aria-selected='true') Schedule
@@ -44,9 +54,9 @@ block content
               .col
                 p FOH
                 iframe.preview(src='/foh')
-              //- .col
-              //-   p 5Min countdown
-              //-   iframe.preview(src='/countdown')
+              .col
+                p 5Min countdown
+                iframe.preview(src='/countdown')
               //- .col
               //-   p Watch
               //-   iframe.preview(src='/watch')

@@ -1,5 +1,5 @@
 // db-times
-form#formTable(method='POST' action='/admin/submit')
+form#form_one(method='POST' action='/admin/submit')
     button.btn.btn-dark(type='submit' style='width: 100%' name="adminsubmit", id="adminsubmit") Save
     .form-row
         .col-1.text-right
@@ -27,9 +27,9 @@ form#formTable(method='POST' action='/admin/submit')
                 .col-2
                     input.form-control(type='time', value=person.cueLength, name="cueLength" + index, id="cueLength" + index step=1)
                 .col-1
-                    input.slider(type="range",value=person.cueBool, name="cueBool" + index, id="cueBool" + index, min="0" max="1")
+                    input.slider.w-100(type="range",value=person.cueBool, name="cueBool" + index, id="cueBool" + index, min="0" max="1")
                 .col-1
-                    input.slider(type="range",value=person.fiveBool, name="fiveBool" + index, id="fiveBool" + index,, min="0" max="1")
+                    input.slider.w-100(type="range",value=person.fiveBool, name="fiveBool" + index, id="fiveBool" + index, min="0" max="1")
                 .col-1
                     button.btn.btn-danger(type="reset",name="deleteButton" + index, id=index, onClick="delete_button_click(this.id)") x
     div.form-row
