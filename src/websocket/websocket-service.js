@@ -8,6 +8,7 @@ module.exports = {
         if (!websocketInstance) {
             websocketInstance = new WebSocketServer(httpServer);
         }
+        return websocketInstance.getServer();
     },
 
     stop: () => {

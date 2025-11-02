@@ -1,150 +1,191 @@
-const {
-  ipcRenderer
-} = require('electron')
-const package = require('./package.json');
-// const revision = require('child_process')
-//   .execSync('git rev-parse HEAD')
-//   .toString().trim()
-
+// Using the exposed APIs from the preload script
 async function get_github_revision() {
-  var data = await ipcRenderer.sendSync('get_github_revision', 'get_github_revision');
-  $("#appTitle").text(package.name + " V." + package.version + " [" + data + "]");
+  try {
+    const revision = await window.api.getGithubRevision();
+    const packageInfo = await window.api.getPackageInfo();
+    // packageInfo may be an object with name/version or an error object
+    if (packageInfo && packageInfo.name && packageInfo.version) {
+      $("#appTitle").text(packageInfo.name + " V." + packageInfo.version + " [" + revision + "]");
+    } else {
+      $("#appTitle").text("Unknown App V.unknown [" + revision + "]");
+    }
+  } catch (error) {
+    console.error('Error getting revision:', error);
+  }
 }
-get_github_revision();
+
+// Initialize
+(async function init() {
+    await get_github_revision();
+    await getNetworkIPs();
+})();
 
 var myIpArray = "";
-var getNetworkIPs = (function () {
-  var ignoreRE = /^(127\.0\.0\.1|::1|fe80(:1)?::1(%.*)?)$/i;
-
-  var exec = require('child_process').exec;
-  var cached;
-  var command;
-  var filterRE;
-
-  switch (process.platform) {
-    case 'win32':
-      //case 'win64': // TODO: test
-      command = 'ipconfig';
-      filterRE = /\bIPv[46][^:\r\n]+:\s*([^\s]+)/g;
-      break;
-    case 'darwin':
-      command = 'ifconfig';
-      filterRE = /\binet\s+([^\s]+)/g;
-      // filterRE = /\binet6\s+([^\s]+)/g; // IPv6
-      break;
-    default:
-      command = 'ifconfig';
-      filterRE = /\binet\b[^:]+:\s*([^\s]+)/g;
-      // filterRE = /\binet6[^:]+:\s*([^\s]+)/g; // IPv6
-      break;
+async function getNetworkIPs() {
+  try {
+    const ips = await window.api.getNetworkIPs();
+    myIpArray = ips;
+    console.log("Log All ips from Socket", myIpArray);
+  } catch (error) {
+    console.error('Error getting network IPs:', error);
+    myIpArray = [];
   }
 
-  return function (callback, bypassCache) {
-    if (cached && !bypassCache) {
-      callback(null, cached);
+}
+
+$('#SaveIP_Button').click(async function () {
+  try {
+    var port = document.getElementById("port");
+    console.log("SaveIP_Button = " + port);
+    const result = await window.api.saveIP({
+      port: port.value
+    });
+    if (!result.success) {
+      console.error('Failed to save IP:', result.error);
+    }
+  } catch (error) {
+    console.error('Error in SaveIP_Button:', error);
+  }
+});
+
+$('#LoopbackIP_Button').click(async function () {
+  try {
+    var port = document.getElementById("port");
+    console.log("LoopbackIP_Button = ");
+    const result = await window.api.loopbackIP({
+      ipadress: "127.0.0.1",
+      port: port.value
+    });
+    if (!result.success) {
+      console.error('Failed to set loopback IP:', result.error);
+    }
+    console.log("LoopbackIP_Button");
+  } catch (error) {
+    console.error('Error in LoopbackIP_Button:', error);
+  }
+});
+$(document).ready(function() {
+    console.log('Document ready');
+    console.log('API object available:', !!window.api);
+});
+
+$('#start_server').click(async function () {
+  try {
+    console.log("start_server button clicked");
+    console.log("API object:", window.api);
+    if (!window.api) {
+      console.error('API not available');
       return;
     }
-    // system call
-    exec(command, function (error, stdout, sterr) {
-      cached = [];
-      var ip;
-      var matches = stdout.match(filterRE) || [];
-      //if (!error) {
-      for (var i = 0; i < matches.length; i++) {
-        ip = matches[i].replace(filterRE, '$1')
-        if (!ignoreRE.test(ip)) {
-          // addToSelect(ip);
-          cached.push(ip);
-        }
-      }
-      //}
-      callback(error, cached);
-    });
-  };
-})();
-getNetworkIPs(function (error, ip) {
-  myIpArray = ip
-  console.log("Log All ips from Socket", myIpArray);
-
-  if (error) {
-    console.log('error:', error);
+    const result = await window.api.startServer();
+    console.log("Start server result:", result);
+    if (result && result.success) {
+      $('#app_state').text("Online !");
+      $('#start_server').hide();
+      $('#stop_server').show();
+      $('#openLinks').show();
+    } else {
+      console.error('Failed to start server:', result ? result.error : 'No result');
+    }
+  } catch (error) {
+    console.error('Error starting server:', error);
   }
-}, false);
+});
 
-$('#SaveIP_Button').click(function () {
-  var e = document.getElementById("ipSelect");
-  var port = document.getElementById("port");
-  //var selectedIP = e.options[e.selectedIndex].value;
-  console.log("SaveIP_Button = " + port);
-  ipcRenderer.send('saveIP', {
-    //ipadress:selectedIP,
-    port: port.value
-  })
+$('#stop_server').click(async function () {
+  try {
+    console.log("stop_server = ");
+    const result = await window.api.stopServer();
+    if (result.success) {
+      $('#app_state').text("Offline !");
+      $('#start_server').show();
+      $('#stop_server').hide();
+      $('#openLinks').hide();
+    } else {
+      console.error('Failed to stop server:', result.error);
+    }
+  } catch (error) {
+    console.error('Error stopping server:', error);
+  }
 });
-$('#LoopbackIP_Button').click(function () {
-  var port = document.getElementById("port");
-  console.log("LoopbackIP_Button = ");
-  ipcRenderer.send('loopbackIP', {
-    ipadress: "127.0.0.1",
-    port: port.value
-  })
-  console.log("LoopbackIP_Button");
-});
-$('#start_server').click(function () {
-  console.log("start_server");
-  ipcRenderer.send('start_server', {})
-  $('#app_state').text("Online !");
-  $('#start_server').hide();
-  $('#stop_server').show();
-  $('#openLinks').show();
 
+$('#open_admin').click(async function () {
+  try {
+    var port = document.getElementById("port");
+    const result = await window.api.openAdmin({
+      port: port.value
+    });
+    if (!result.success) {
+      console.error('Failed to open admin:', result.error);
+    }
+  } catch (error) {
+    console.error('Error opening admin:', error);
+  }
 });
-$('#stop_server').click(function () {
-  console.log("stop_server = ");
-  ipcRenderer.send('stop_server', {})
-  $('#app_state').text("Offline !");
-  $('#start_server').show();
-  $('#stop_server').hide();
-  $('#openLinks').hide();
+
+$('#open_root').click(async function () {
+  try {
+    var port = document.getElementById("port");
+    const result = await window.api.openRoot({
+      port: port.value
+    });
+    if (!result.success) {
+      console.error('Error opening root:', result.error);
+    }
+  } catch (error) {
+    console.error('Error opening root:', error);
+  }
 });
-$('#open_admin').click(function () {
-  var port = document.getElementById("port");
-  ipcRenderer.send('open_admin', {
-    port: port.value
-  })
+$('#AutoStart').change(async function () {
+  try {
+    console.log("AutoStart Checkbox");
+    var AutoStart = document.getElementById("AutoStart");
+    const result = await window.api.setAutoStart({
+      autoStart: AutoStart.checked
+    });
+    if (!result.success) {
+      console.error('Failed to set AutoStart:', result.error);
+    }
+  } catch (error) {
+    console.error('Error setting AutoStart:', error);
+  }
 });
-$('#open_root').click(function () {
-  var port = document.getElementById("port");
-  ipcRenderer.send('open_root', {
-    port: port.value
-  })
-});
-$('#AutoStart').change(function () {
-  console.log("AutoStart Checkbox");
-  var AutoStart = document.getElementById("AutoStart");
-  ipcRenderer.send('AutoStart', {
-    autoStart: AutoStart.checked
-  })
-});
-$('#openLog').click(function () {
-  console.log("openLog Button was presed");
-  ipcRenderer.send('openLog')
+
+$('#openLog').click(async function () {
+  try {
+    console.log("openLog Button was pressed");
+    const result = await window.api.openLog();
+    if (!result.success) {
+      console.error('Failed to open log:', result.error);
+    }
+  } catch (error) {
+    console.error('Error opening log:', error);
+  }
 });
 
 async function getAutoStart() {
-  var bool = await ipcRenderer.sendSync('getAutoStart', 'ping').autoStart;
-
-  if (bool) {
-    $("#start_server").click();
+  try {
+    const settings = await window.api.getAutoStart();
+    if (settings && settings.autoStart) {
+      $("#start_server").click();
+    }
+    $("#AutoStart").prop('checked', settings.autoStart);
+    return settings.autoStart;
+  } catch (error) {
+    console.error('Error getting AutoStart:', error);
+    return false;
   }
-
-
-  $("#AutoStart").prop('checked', bool);
-  return bool
 }
 getAutoStart();
+
 async function getPort() {
-  var data = await ipcRenderer.sendSync('get_port', 'get_port');
-  $("#port").val(data);
+  try {
+    const port = await window.api.getPort();
+    if (port) {
+      $("#port").val(port);
+    }
+  } catch (error) {
+    console.error('Error getting port:', error);
+  }
 }
 getPort();

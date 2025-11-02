@@ -1,4 +1,4 @@
-const socket = io({ path: '/ws' });
+const socket = io();
 
 // It stores socket messages untill socket is connecter, or socket is disconnected.
 // Once socket is connected, it will send all stored messages.
@@ -22,6 +22,34 @@ socket.on('message', (data) => {
     //console.log('message received from server - ', data);
     const { type, message } = data;
     WebSocketService.onMessage(type, message);
+});
+
+// Listen for state updates from server
+socket.on('state_update', (data) => {
+  // Log received state for debugging
+  console.log('Received state update:', data);
+
+  // Forward useful parts to WebSocketService so UI modules can react
+  try {
+    if (data.currentTime) {
+      WebSocketService.onMessage('currentTime', data.currentTime);
+    }
+    if (typeof data.currentTimeMs !== 'undefined') {
+      WebSocketService.onMessage('currentTimeMs', data.currentTimeMs);
+    }
+
+    // Build countdown message compatible with existing client handlers
+    const countdownPayload = {
+      bool: !!data.isCountingDown,
+      time: data.countdownTime,
+      title: data.nextEvent || '',
+      countDownTimeInMS: typeof data.countDownTimeInMS !== 'undefined' ? data.countDownTimeInMS : 0,
+      colors: (data.colors || { countDownColor: '#FF0000', countUpColor: '#00FF00' })
+    };
+    WebSocketService.onMessage('countDown', countdownPayload);
+  } catch (err) {
+    console.error('Error forwarding state_update to WebSocketService:', err);
+  }
 });
 
 // This method will gets called when socket is connected.

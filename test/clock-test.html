@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clock Test</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        window.onload = function() {
+            const socket = io('http://localhost:3000');
+            
+            socket.on('connect', () => {
+                console.log('Connected to server');
+                document.getElementById('status').textContent = 'Connected';
+            });
+            
+            socket.on('state_update', (data) => {
+                console.log('Received state:', data);
+                document.getElementById('time').textContent = data.currentTime;
+            });
+            
+            socket.on('connect_error', (error) => {
+                console.error('Connection error:', error);
+                document.getElementById('status').textContent = 'Connection error: ' + error.message;
+            });
+        };
+    </script>
+</head>
+<body>
+    <h1>Clock Test</h1>
+    <p>Status: <span id="status">Connecting...</span></p>
+    <p>Time: <span id="time">--:--:--</span></p>
+</body>
+</html>

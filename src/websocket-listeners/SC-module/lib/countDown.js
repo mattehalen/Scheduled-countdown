@@ -1,15 +1,14 @@
-//console.log("---------- countDown.js");
-const Clock             = require("./clock.js");
-const DB                = require('./../../../services/admin-settings');
+const serverClock = require("./server-clock");
+const DB = require('./../../../services/admin-settings');
+const TimeArraySorting = require('./TimeArraySorting');
 
-const TimeArraySorting  = require('./TimeArraySorting');
-let _offsetTime         = 0;
-
+let _offsetTime = 0;
 const setTimeoutTime = 150;
 let countDownBool;
 let cueCountDownBool;
 let offsetTime_bool = true;
 
+// Convert milliseconds to HH:MM:SS format
 function msToTime(s) {
     var ms = s % 1000;
     s = (s - ms) / 1000;
@@ -19,14 +18,20 @@ function msToTime(s) {
     var hrs = (s - mins) / 60;
     return pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
 }
+
+// Convert time string to milliseconds
 function timeStringToMs(t) {
-    if (t > 5) {
-        var r = Number(t.split(':')[0]) * (60 * 60000) + Number(t.split(':')[1]) * (60000) + Number(t.split(':')[2]) * (1000);
-    } else {
-        t = t + ":00"
-        var r = Number(t.split(':')[0]) * (60 * 60000) + Number(t.split(':')[1]) * (60000) + Number(t.split(':')[2]) * (1000);
+    // Add seconds if not provided
+    if (!t.includes(':')) {
+        t += ':00';
     }
-    return r;
+    
+    const parts = t.split(':');
+    return (
+        Number(parts[0]) * 3600000 + // hours to ms
+        Number(parts[1]) * 60000 +   // minutes to ms
+        (parts[2] ? Number(parts[2]) * 1000 : 0) // seconds to ms (if provided)
+    );
 
 }
 function pad(n, z) {
@@ -42,46 +47,45 @@ function StartTimeInMs(time) {
 }
 
 async function CountDown() {
-  try{
-    const adminSettings     = await DB.getDbSettings();
-    let timeArraySorting    = await TimeArraySorting.Sorting();
-    let timeArraySorting_title = await timeArraySorting[0];
-    let timeArraySorting_startTime = await timeArraySorting[1];
-    let timeArraySorting_fiveBool    = await timeArraySorting[4];
-    let colors = adminSettings.Color;
+    try {
+        const adminSettings = await DB.getDbSettings();
+        let timeArraySorting = await TimeArraySorting.Sorting();
+        let timeArraySorting_title = await timeArraySorting[0];
+        let timeArraySorting_startTime = await timeArraySorting[1];
+        let timeArraySorting_fiveBool = await timeArraySorting[4];
+        let colors = adminSettings.Color;
 
+        if (timeArraySorting[0] === false) {
+            return "CountDown STOPPED due to > " + timeArraySorting[1];
+        }
 
-    if (timeArraySorting[0] === false) {
-      return "CountDown STOPED due to > "+timeArraySorting[1]
-    }
+        // Get time settings in milliseconds
+        const OffsetTime = adminSettings.timeSettings.offsetTime * 60000;  // minutes to ms
+        const CountUp = adminSettings.timeSettings.countUp * 60000;       // minutes to ms
+        const CountDown = adminSettings.timeSettings.countDown * 60000;   // minutes to ms
 
-    const OffsetTime  = (adminSettings.timeSettings.offsetTime) *(60000);
-    // console.log("---------- >>> countDown.js -> OffsetTime = " + OffsetTime)
-    const CountUp     = (adminSettings.timeSettings.countUp)    *(60000);
-    const CountDown   = (adminSettings.timeSettings.countDown)  *(60000);
-    var time = "";
-    var now = await Clock.CurrentTimeInMs();
-    var startTime = StartTimeInMs(timeArraySorting_startTime);
+        // Get current time from synchronized server clock
+        const now = serverClock.getCurrentTimeMs();
+        const startTime = StartTimeInMs(timeArraySorting_startTime) + OffsetTime;
+        const countDownTimeInMS = now - startTime;
 
-    startTime += (OffsetTime);
-    var countDownTimeInMS = now - startTime;
+        // Calculate display time
+        let time;
+        if (now > startTime) {
+            // Count up
+            time = msToTime(now - startTime);
+        } else {
+            // Count down
+            time = "-" + msToTime((startTime + 1000) - now);
+        }
 
-    if (now > startTime) {
-        time = now - (startTime)
-        time = (msToTime(time))
-    } else {
-        time = (startTime+1000) - now
-        time = "-" + (msToTime(time))
-    }
+        // Check if we're in the countdown period
+        countDownBool = now > (startTime - CountDown) && now < (startTime + CountUp);
 
-    //-----
-    if (now > (startTime-CountDown) &&  now < (startTime+CountUp)) {
-      countDownBool=true;
-    }else{countDownBool=false}
-
-    if (time == "-aN:aN:aN"){
-      time = "No more entries today";
-    }
+        // Handle invalid time
+        if (time === "-aN:aN:aN") {
+            time = "No more entries today";
+        }
 
 
     return {
@@ -139,7 +143,7 @@ async function CueCountDown() {
     var cueStarTime = (startTime - cueLength);
     cueStarTime += (OffsetTime);
 
-    var now = await Clock.CurrentTimeInMs();
+    var now = serverClock.getCurrentTimeMs();
     var cueCountDownTimeInMS = now - cueStarTime;
     var time = "";
 

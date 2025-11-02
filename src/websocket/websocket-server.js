@@ -25,17 +25,31 @@ class WebSocket {
   allClients = [];
 
   socketOptions = {
-    'path': '/ws',
-    'pingInterval': 10000
+    'pingInterval': 10000,
+    'pingTimeout': 5000,
+    'transports': ['polling', 'websocket'],
+    'allowEIO3': true,
+    'path': '/socket.io/',
+    'serveClient': true
+  }
+
+  getServer() {
+    return this.socket;
   }
 
   constructor(httpServer) {
-    //-------------------------------------------------------
-    // this.socket = socketio(httpServer, this.socketOptions);
-    //-------------------------------------------------------
-    this.socket = socketio();
-    this.socket.attach(httpServer, this.socketOptions);
-    //-------------------------------------------------------
+    // Initialize Socket.IO with CORS and other options
+    this.socket = new socketio.Server(httpServer, {
+      ...this.socketOptions,
+      cors: {
+        origin: "*",
+        methods: ["GET", "POST"],
+        credentials: true
+      },
+      allowEIO3: true,
+      serveClient: true,
+      transports: ['polling', 'websocket']
+    });
 
     this.socket.on('connection', (client) => {
       this.onConnection(client);

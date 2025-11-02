@@ -10,9 +10,13 @@ app.commandLine.appendSwitch('trace-warnings')
 
 const path = require('path')
 
-// require('electron-reload')(__dirname, {
-//   electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
-// });
+// Activate live reload for development
+if (process.env.NODE_ENV === 'development') {
+  require('@electron/reload')(__dirname, {
+    electron: path.join(__dirname, 'node_modules', '.bin', 'electron'),
+    awaitWriteFinish: true
+  });
+}
 
 //----------------------------------------------------------------------
 const log = require('electron-log');
@@ -27,7 +31,7 @@ console.log = log.log;
 //----------------------------------------------------------------------
 
 const isMac = process.platform === 'darwin'
-var RPC = require('electron-rpc/server')
+const { enable } = require('@electron/remote/main');
 const AdminSettings = require("./src/services/admin-settings");
 
 console.log("////////////////////////////////////////////////////////////////////////////////////////////")
@@ -48,24 +52,20 @@ function createWindow() {
     resizable: false,
     autoHideMenuBar: true,
     webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false
+      nodeIntegration: false,
+      contextIsolation: true,
+        preload: path.join(__dirname, 'preload.js'),
+        enableRemoteModule: true
     }
   })
-  var rpc = new RPC();
-  rpc.configure(mainWindow.webContents);
+    enable(mainWindow.webContents);
 
-  rpc.on('saveIP', async function (req, cb) {
-    const db_settings = await AdminSettings.getDbSettings();
-    console.log("----------> saveIP from MAIN window");
-    console.log(db_settings.ipsettings);
-  });
 
   // and load the index.html of the app.
   mainWindow.loadFile('index.html')
 
   // Open the DevTools.
-  //mainWindow.webContents.openDevTools()
+  mainWindow.webContents.openDevTools()
 }
 app.whenReady().then(() => {
   createWindow()

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO Test</title>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const socket = io('http://localhost:3000', {
+                transports: ['websocket', 'polling'],
+                path: '/socket.io/',
+                reconnection: true,
+                reconnectionAttempts: Infinity,
+                reconnectionDelay: 1000,
+                reconnectionDelayMax: 5000,
+                timeout: 20000
+            });
+
+            function log(msg, type = 'info') {
+                const div = document.createElement('div');
+                const timestamp = new Date().toISOString();
+                div.textContent = `${timestamp} - ${msg}`;
+                div.className = type;
+                // Insert at the top for better visibility of new events
+                const logElement = document.getElementById('log');
+                logElement.insertBefore(div, logElement.firstChild);
+                console.log(`${timestamp} - ${msg}`);
+
+                // Limit the number of log entries to prevent memory issues
+                while (logElement.children.length > 100) {
+                    logElement.removeChild(logElement.lastChild);
+                }
+            }
+
+            // Log initial connection details
+            log(`Initializing Socket.IO connection:
+                URL: ${window.location.href}
+                Protocol: ${window.location.protocol}
+                Transport Options: ${['websocket', 'polling']}
+            `, 'info');
+
+            socket.on('connect', () => {
+                log(`Connected to server!
+                    Socket ID: ${socket.id}
+                    Transport: ${socket.io.engine.transport.name}
+                    Upgrade: ${socket.io.engine.upgrade}`, 'success');
+                document.getElementById('status').textContent = 'Connected';
+                document.getElementById('status').className = 'connected';
+            });
+
+            socket.on('state_update', (data) => {
+                log(`Received state update:
+                    Time: ${data.currentTime}
+                    Countdown: ${data.countdownTime}
+                    Is Counting: ${data.isCountingDown}
+                    Next Event: ${data.nextEvent}
+                    Time to Next: ${data.timeToNextEvent}
+                    Full state: ${JSON.stringify(data)}`, 'info');
+                document.getElementById('time').textContent = data.currentTime;
+                // Add countdown display
+                const countdownDiv = document.getElementById('countdown');
+                if (!countdownDiv) {
+                    const div = document.createElement('div');
+                    div.id = 'countdown';
+                    div.innerHTML = `<h3>Countdown: <span id="countdown-value">--:--:--</span></h3>`;
+                    document.querySelector('.topRow').appendChild(div);
+                }
+                document.getElementById('countdown-value').textContent = data.countdownTime;
+            });
+
+            socket.on('connect_error', (error) => {
+                log(`Connection error:
+                    Message: ${error.message}
+                    Type: ${error.type}
+                    Transport: ${socket.io?.engine?.transport?.name || 'N/A'}`, 'error');
+                document.getElementById('status').textContent = 'Connection Error';
+                document.getElementById('status').className = 'error';
+            });
+
+            socket.on('disconnect', (reason) => {
+                log(`Disconnected from server
+                    Reason: ${reason}
+                    Was connected: ${socket.connected}
+                    Will reconnect: ${socket.io.reconnection}`, 'warning');
+                document.getElementById('status').textContent = 'Disconnected';
+                document.getElementById('status').className = 'disconnected';
+            });
+
+            socket.on('reconnect_attempt', (attemptNumber) => {
+                log(`Reconnection attempt ${attemptNumber}
+                    Transport: ${socket.io.engine?.transport?.name || 'N/A'}`, 'info');
+            });
+
+            socket.on('reconnect', (attemptNumber) => {
+                log(`Reconnected after ${attemptNumber} attempts`, 'success');
+            });
+
+            socket.on('reconnect_error', (error) => {
+                log(`Reconnection error:
+                    Message: ${error.message}
+                    Type: ${error.type}`, 'error');
+            });
+
+            socket.on('ping', () => {
+                log('Ping sent to server', 'info');
+            });
+
+            socket.on('pong', (latency) => {
+                log(`Pong received from server. Latency: ${latency}ms`, 'info');
+            });
+        });
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #status { 
+            padding: 10px; 
+            margin-bottom: 10px; 
+            border-radius: 4px;
+            display: inline-block;
+        }
+        #time {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        .connected { background-color: #4CAF50; color: white; }
+        .disconnected { background-color: #ff9800; color: white; }
+        .error { background-color: #f44336; color: white; }
+        #log { 
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            height: 300px;
+            overflow-y: auto;
+        }
+        .info { color: #2196F3; }
+        .success { color: #4CAF50; }
+        .warning { color: #ff9800; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+    <h1>Socket.IO Test Page</h1>
+    <div id="status">Connecting...</div>
+    <div>Current Time: <span id="time">--:--:--</span></div>
+    <div id="log"></div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-var apn = require('apn');
+var apn = require('@parse/node-apn');
 const iOSTokens = require("../services/iosToken-settings");
 var SC = require('../websocket-listeners/SC-module/service');
 

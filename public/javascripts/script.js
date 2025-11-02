@@ -15,54 +15,53 @@ WebSocketService.onEvent(KEYS.GET_CURRENTTIME, (message) => {
 WebSocketService.onEvent(KEYS.GET_CURRENTTIMEMS, (message) => {
   //console.log('Message from server: ', message);
 })
-WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
-  //console.log('Message from server: ', message);
-  
-  if (message.bool) {
-    document.getElementById("title").textContent = message.title
-    document.getElementById("start").textContent = message.time
+// Smooth/animated countdown rendering
+// We'll interpolate countdown using the ms value from the server (countDownTimeInMS)
+// and animate via requestAnimationFrame for smooth visuals.
+let countdownAnim = {
+  running: false,
+  startMs: 0, // ms remaining at last server update
+  timestamp: 0, // performance.now() when last server update arrived
+  rafId: null,
+  title: '',
+  colors: { countDownColor: '#FF0000', countUpColor: '#00FF00' },
+  bool: false
+};
 
-    document.getElementById("centerNowText").style.display = "none";
-    document.getElementById("titleContentBox").style.display = "block";
+function pad(n, z) {
+  z = z || 2;
+  return ('00' + n).slice(-z);
+}
 
-    if (message.countDownTimeInMS < ((3*-60000))) {
-      document.body.style.backgroundColor = "#2b2b2b";
-    }
-    if (message.countDownTimeInMS > ((3*-60000))) {
-      document.body.style.backgroundColor = message.colors.countDownColor;
-    }
-    if (message.countDownTimeInMS > 0) {
-      document.body.style.backgroundColor = message.colors.countUpColor;
-    }
+function msToTime(s) {
+  const sign = s < 0 ? '-' : '';
+  s = Math.abs(Math.round(s));
+  const ms = s % 1000;
+  s = (s - ms) / 1000;
+  const secs = s % 60;
+  s = (s - secs) / 60;
+  const mins = s % 60;
+  const hrs = (s - mins) / 60;
+  return sign + pad(hrs) + ':' + pad(mins) + ':' + pad(secs);
+}
 
-    // Audio Alarms
-    //--------------------------------------------------
-    if (message.countDownTimeInMS > ((6*-60000)) && message.countDownTimeInMS < ((6*-60000)+500) ) {
-      document.getElementById('musiclong6').play();
-    }
-    if (message.countDownTimeInMS > ((5*-60000)) && message.countDownTimeInMS < ((5*-60000)+500) ) {
-      document.getElementById('music5').play();
-    }
-    if (message.countDownTimeInMS > ((4*-60000)) && message.countDownTimeInMS < ((4*-60000)+500) ) {
-      document.getElementById('musiclong4').play();
-    }
-    if (message.countDownTimeInMS > ((3*-60000)) && message.countDownTimeInMS < ((3*-60000)+500) ) {
-      document.getElementById('music3').play();
-    }
-    if (message.countDownTimeInMS > ((2*-60000)) && message.countDownTimeInMS < ((2*-60000)+500) ) {
-      document.getElementById('musiclong2').play();
-    }
-    if (message.countDownTimeInMS > ((1*-60000)) && message.countDownTimeInMS < ((1*-60000)+500) ) {
-      document.getElementById('music1').play();
-    }
+function renderCountdown(nowMs) {
+  const elapsed = performance.now() - countdownAnim.timestamp;
+  const remaining = countdownAnim.startMs - elapsed;
 
-  }else{
-    document.getElementById("centerNowText").style.display = "block";
-    document.getElementById("titleContentBox").style.display = "none";
-    document.body.style.backgroundColor = "#2b2b2b";
+  // Update DOM
+  document.getElementById('title').textContent = countdownAnim.title || '';
+  document.getElementById('start').textContent = msToTime(remaining);
+
+  if (countdownAnim.startMs < (3 * -60000)) {
+    document.body.style.backgroundColor = '#2b2b2b';
+  } else if (remaining > 0) {
+    document.body.style.backgroundColor = countdownAnim.colors.countUpColor;
+  } else {
+    document.body.style.backgroundColor = countdownAnim.colors.countDownColor;
   }
 
-  // AUTO Shrink text
+  // Auto-shrink title text
   var textLength = $('#title').text().length;
   if (textLength <= 14) {
     $('#title').css('font-size', '10vw');
@@ -72,7 +71,65 @@ WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
     $('#title').css('font-size', '7vw');
   }
 
-})
+  if (countdownAnim.running) {
+    countdownAnim.rafId = requestAnimationFrame(renderCountdown);
+  }
+}
+
+WebSocketService.onEvent(KEYS.COUNTDOWN, (message) => {
+  // message.countDownTimeInMS expected (ms remaining, can be negative)
+  if (message && message.bool) {
+    countdownAnim.bool = true;
+    countdownAnim.startMs = (typeof message.countDownTimeInMS === 'number') ? message.countDownTimeInMS : 0;
+    countdownAnim.timestamp = performance.now();
+    countdownAnim.title = message.title || '';
+    countdownAnim.colors = message.colors || countdownAnim.colors;
+
+    // Switch view
+    document.getElementById('centerNowText').style.display = 'none';
+    document.getElementById('titleContentBox').style.display = 'block';
+
+    if (!countdownAnim.running) {
+      countdownAnim.running = true;
+      countdownAnim.rafId = requestAnimationFrame(renderCountdown);
+    }
+
+    // Audio triggers should be based on transitions — still use existing logic but
+    // derive from the numeric ms value to avoid missed triggers. Keep existing checks
+    // but use the ms value.
+    const ms = countdownAnim.startMs;
+    if (ms > ((6 * -60000)) && ms < ((6 * -60000) + 500)) {
+      document.getElementById('musiclong6').play();
+    }
+    if (ms > ((5 * -60000)) && ms < ((5 * -60000) + 500)) {
+      document.getElementById('music5').play();
+    }
+    if (ms > ((4 * -60000)) && ms < ((4 * -60000) + 500)) {
+      document.getElementById('musiclong4').play();
+    }
+    if (ms > ((3 * -60000)) && ms < ((3 * -60000) + 500)) {
+      document.getElementById('music3').play();
+    }
+    if (ms > ((2 * -60000)) && ms < ((2 * -60000) + 500)) {
+      document.getElementById('musiclong2').play();
+    }
+    if (ms > ((1 * -60000)) && ms < ((1 * -60000) + 500)) {
+      document.getElementById('music1').play();
+    }
+
+  } else {
+    // Stop animation and show Now
+    countdownAnim.bool = false;
+    countdownAnim.running = false;
+    if (countdownAnim.rafId) {
+      cancelAnimationFrame(countdownAnim.rafId);
+      countdownAnim.rafId = null;
+    }
+    document.getElementById('centerNowText').style.display = 'block';
+    document.getElementById('titleContentBox').style.display = 'none';
+    document.body.style.backgroundColor = '#2b2b2b';
+  }
+});
 WebSocketService.onEvent(KEYS.SETTINGS, (message) => {
   //console.log('Message from server: ', message);
 })

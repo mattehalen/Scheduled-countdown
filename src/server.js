@@ -20,9 +20,8 @@ const app = express();
 
 // PORT Set
 const PORT = async () => {
-    return await UtilityService.getPort();
+    return 3000; // Fixed port for consistency
 }
- 
 
 
 // Creating Http Server
@@ -103,18 +102,41 @@ module.exports = {
     startSocket: () => {
         // WebSocket Initialize - socket should be started only after HTTP Server is started.
         const WebSocketService = require('./websocket/websocket-service');
-        WebSocketService.start(httpServer);
+        const wss = WebSocketService.start(httpServer);
 
         const WebSocketListeners = require('./websocket-listeners');
-        WebSocketListeners.registerSocketListeners();
+        WebSocketListeners.registerSocketListeners(wss);
     },
     stopServer: async () => {
         console.log("----------> ./src/server -> stopServer");
-        httpServer.close()
+        return new Promise((resolve, reject) => {
+            try {
+                const WebSocketService = require('./websocket/websocket-service');
+                WebSocketService.stop();
 
-        const WebSocketService = require('./websocket/websocket-service');
-        WebSocketService.stop();
+                if (!httpServer) {
+                    console.log("Server was not running");
+                    return resolve();
+                }
 
-        const WebSocketListeners = require('./websocket-listeners');
+                httpServer.close((err) => {
+                    if (err) {
+                        console.error("Error stopping server:", err);
+                        return reject(err);
+                    }
+                    console.log("Server stopped successfully");
+                    resolve();
+                });
+
+                // Force close any remaining connections
+                setTimeout(() => {
+                    httpServer.emit('close');
+                    resolve();
+                }, 1000);
+            } catch (error) {
+                console.error("Error in stopServer:", error);
+                reject(error);
+            }
+        });
     },
 }
